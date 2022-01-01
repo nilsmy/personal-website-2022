@@ -53,11 +53,20 @@
     </item>
     
     <item>
-      <title>package</title>
-      <link>/categories/package/</link>
-      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate>
+      <title>Psychometrics</title>
+      <link>/categories/psychometrics/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/categories/package/</guid>
+      <guid>/categories/psychometrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Test development</title>
+      <link>/categories/test-development/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/test-development/</guid>
       <description></description>
     </item>
     

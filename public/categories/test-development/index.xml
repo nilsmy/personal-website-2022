@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Test development on Nils Myszkowski</title>
+    <link>/categories/test-development/</link>
+    <description>Recent content in Test development on Nils Myszkowski</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/test-development/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>A Mokken Scale Analysis of the Last Series of the Standard Progressive Matrices (SPM-LS)</title>
+      <link>/publications/a-mokken-scale-analysis-of-the-last-series-of-the-standard-progressive-matrices-spm-ls/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/a-mokken-scale-analysis-of-the-last-series-of-the-standard-progressive-matrices-spm-ls/</guid>
+      <description>What it’s about In this paper, I reanalyze a dataset for a special issue of Journal of Intelligence. The analysis uses the framework of Mokken Scale Analysis (MSA), which is a non-parametric approach to relations between item responses and attributes (i.e. Item-Response Theory).
+ Abstract Raven’s Standard Progressive Matrices (Raven 1941) is a widely used 60-item long measure of general mental ability. It was recently suggested that, for situations where taking this test is too time consuming, a shorter version, comprised of only the last series of the Standard Progressive Matrices (Myszkowski and Storme 2018) could be used, while preserving satisfactory psychometric properties (Garcia-Garzon et al.</description>
+    </item>
+    
+  </channel>
+</rss>
