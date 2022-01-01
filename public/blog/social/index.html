@@ -45,7 +45,7 @@
  site header (set in config.toml), site footer (set in config.toml),  homepage (set in content/_index.md),  about page in the sidebar (set in content/about/sidebar/index.md), and  contact page (set in content/form/contact.md).  Read on to learn how to set up your social icons, and how to show/hide them.
 Configure social     Wherever you end up wanting to show your social icons, you&rsquo;ll need to start by setting up the links in your site config."><meta itemprop="datePublished" content="2021-01-28T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-01-28T00:00:00+00:00" />
-<meta itemprop="wordCount" content="499"><meta itemprop="image" content="/blog/social/featured.jpg">
+<meta itemprop="wordCount" content="508"><meta itemprop="image" content="/blog/social/featured.jpg">
 <meta itemprop="keywords" content="" />
   
   
@@ -74,27 +74,17 @@ Configure social     Wherever you end up wanting to show your social icons, you&
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About">About</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
-      
-        
-        
-        
       <a class="link f6 f5-l dib pv1 ph2 " href="/publications/" title="Publications">Publications</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/collection/" title="A collection">A collection</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/r-packages/" title="R packages">R packages</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/elements/" title="Element Page">Elements</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Contact form">Contact</a>
       
       
     </div>
@@ -137,19 +127,19 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Wherever you end up wanting to show your social icons, you&rsquo;ll need to start by setting up the links in your site <code>config.toml</code> file. Open that up and scroll down to the <code>[[params.social]]</code> section. The start of it looks like this:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[params]
-  <span style="color:#a61717;background-color:#e3d2d2">&lt;!</span>--snip snip--<span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">params</span>]
+  <span style="color:#960050;background-color:#1e0010">&lt;!</span><span style="color:#a6e22e">--snip</span> <span style="color:#a6e22e">snip--</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
   
-  <span style="color:#999;font-style:italic"># Social icons may appear on your site header, footer, and other pages</span>
-  <span style="color:#999;font-style:italic"># Add as many icons as you like below</span>
-  <span style="color:#999;font-style:italic"># Icon pack &#34;fab&#34; includes brand icons, see: https://fontawesome.com/icons?d=gallery&amp;s=brands&amp;m=free</span>
-  <span style="color:#999;font-style:italic"># Icon pack &#34;fas&#34; includes solid icons, see: https://fontawesome.com/icons?d=gallery&amp;s=solid&amp;m=free</span>
-  <span style="color:#999;font-style:italic"># Icon pack &#34;far&#34; includes regular icons, see: https://fontawesome.com/icons?d=gallery&amp;s=regular&amp;m=free</span>
-  [[params.social]]
-      icon      = <span style="color:#ed9d13">&#34;github&#34;</span> <span style="color:#999;font-style:italic"># icon name without the &#39;fa-&#39;</span>
-      icon_pack = <span style="color:#ed9d13">&#34;fab&#34;</span>
-      url       = <span style="color:#ed9d13">&#34;https://github.com/apreshill/apero&#34;</span>
-  [[params.social]] <span style="color:#a61717;background-color:#e3d2d2">&lt;!</span>--lather, rinse, repeat--<span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+  <span style="color:#75715e"># Social icons may appear on your site header, footer, and other pages</span>
+  <span style="color:#75715e"># Add as many icons as you like below</span>
+  <span style="color:#75715e"># Icon pack &#34;fab&#34; includes brand icons, see: https://fontawesome.com/icons?d=gallery&amp;s=brands&amp;m=free</span>
+  <span style="color:#75715e"># Icon pack &#34;fas&#34; includes solid icons, see: https://fontawesome.com/icons?d=gallery&amp;s=solid&amp;m=free</span>
+  <span style="color:#75715e"># Icon pack &#34;far&#34; includes regular icons, see: https://fontawesome.com/icons?d=gallery&amp;s=regular&amp;m=free</span>
+  [[<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">social</span>]]
+      <span style="color:#a6e22e">icon</span>      = <span style="color:#e6db74">&#34;github&#34;</span> <span style="color:#75715e"># icon name without the &#39;fa-&#39;</span>
+      <span style="color:#a6e22e">icon_pack</span> = <span style="color:#e6db74">&#34;fab&#34;</span>
+      <span style="color:#a6e22e">url</span>       = <span style="color:#e6db74">&#34;https://github.com/apreshill/apero&#34;</span>
+  [[<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">social</span>]] <span style="color:#960050;background-color:#1e0010">&lt;!</span><span style="color:#a6e22e">--lather</span>, <span style="color:#a6e22e">rinse</span>, <span style="color:#a6e22e">repeat--</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
 </code></pre></div><p>For each link, you&rsquo;ll need to start a new portion that begins with <code>[[params.social]]</code>. Then, pick your <code>icon</code> and <code>icon_pack</code> from the 
 <a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> free icon library:</p>
 <ul>
@@ -179,13 +169,13 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Let&rsquo;s start with the header and footer, as those are site-wide. Open up your site <code>config.toml</code> file again and scroll down to the <code>[params]</code> section (it is actually 🆙 from where you configured these icons):</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[params]
-  <span style="color:#a61717;background-color:#e3d2d2">&lt;!</span>--snip snip--<span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">params</span>]
+  <span style="color:#960050;background-color:#1e0010">&lt;!</span><span style="color:#a6e22e">--snip</span> <span style="color:#a6e22e">snip--</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
   
-  <span style="color:#999;font-style:italic"># show/hide social icons in site header &amp; footer</span>
-  <span style="color:#999;font-style:italic"># configure social icons and links below in [[params.social]]</span>
-  socialInHeader = <span style="color:#6ab825;font-weight:bold">false</span>
-  socialInFooter = <span style="color:#6ab825;font-weight:bold">true</span>
+  <span style="color:#75715e"># show/hide social icons in site header &amp; footer</span>
+  <span style="color:#75715e"># configure social icons and links below in [[params.social]]</span>
+  <span style="color:#a6e22e">socialInHeader</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#a6e22e">socialInFooter</span> = <span style="color:#66d9ef">true</span>
 </code></pre></div><p>That was easy!</p>
 
 
@@ -198,8 +188,8 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Open up <code>content/_index.md</code>. That file&rsquo;s YAML controls what you see on the homepage. Set <code>show_social_links</code> like so:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6ab825;font-weight:bold">show_social_links</span>:<span style="color:#666"> </span><span style="color:#6ab825;font-weight:bold">true</span><span style="color:#666"> </span><span style="color:#999;font-style:italic"># specify social accounts in site config</span><span style="color:#666">
-</span></code></pre></div><p>If you set this to <code>true</code> to show the icons on the homepage, your social icons in the footer will not show up even when you set <code>socialInFooter = true</code>, so as not to litter your site with too many icons.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">show_social_links</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># specify social accounts in site config</span>
+</code></pre></div><p>If you set this to <code>true</code> to show the icons on the homepage, your social icons in the footer will not show up even when you set <code>socialInFooter = true</code>, so as not to litter your site with too many icons.</p>
 
 
 
@@ -211,8 +201,8 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Open up <code>content/about/sidebar/index.md</code>. That file&rsquo;s YAML controls what you see in the sidebar on the about page. Set <code>show_social_links</code> like so:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#6ab825;font-weight:bold">show_social_links</span>:<span style="color:#666"> </span><span style="color:#6ab825;font-weight:bold">true</span><span style="color:#666"> </span><span style="color:#999;font-style:italic"># specify social accounts in site config</span><span style="color:#666">
-</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">show_social_links</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># specify social accounts in site config</span>
+</code></pre></div>
 
 
 
@@ -223,10 +213,10 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>You may use the YAML for your contact page (located in <code>content/form/contact.md</code>):</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#447fcf;text-decoration:underline">---</span><span style="color:#666">
-</span><span style="color:#666"></span><span style="color:#6ab825;font-weight:bold">show_social_links</span>:<span style="color:#666"> </span><span style="color:#6ab825;font-weight:bold">true</span><span style="color:#666"> </span><span style="color:#999;font-style:italic"># specify social accounts in site config</span><span style="color:#666">
-</span><span style="color:#666"></span><span style="color:#447fcf;text-decoration:underline">---</span><span style="color:#666">
-</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">show_social_links</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># specify social accounts in site config</span>
+---
+</code></pre></div>
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
@@ -235,7 +225,7 @@ Configure social     Wherever you end up wanting to show your social icons, you&
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">3 minute read, 499 words</dd>
+    <dd class="fw5 ml0">3 minute read, 508 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

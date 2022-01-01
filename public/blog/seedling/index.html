@@ -77,27 +77,17 @@ Hello! 👋 hello
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About">About</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
-      
-        
-        
-        
       <a class="link f6 f5-l dib pv1 ph2 " href="/publications/" title="Publications">Publications</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/collection/" title="A collection">A collection</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/r-packages/" title="R packages">R packages</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/elements/" title="Element Page">Elements</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Contact form">Contact</a>
       
       
     </div>
@@ -134,14 +124,14 @@ Hello! 👋 hello
 
 </div>
 <p>Was created by combining this theme&rsquo;s <code>panelset</code> and <code>panel</code> shortcodes:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">{{&lt; panelset class=<span style="color:#ed9d13">&#34;greetings&#34;</span> &gt;}}
-{{&lt; panel name=<span style="color:#ed9d13">&#34;Hello! :wave:&#34;</span> &gt;}}
-  hello
-{{&lt; /panel &gt;}}
-{{&lt; panel name=<span style="color:#ed9d13">&#34;Goodbye :dash:&#34;</span> &gt;}}
-  goodbye
-{{&lt; /panel &gt;}}
-{{&lt; /panelset &gt;}}
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">{{&lt; <span style="color:#a6e22e">panelset</span> <span style="color:#a6e22e">class</span>=<span style="color:#e6db74">&#34;greetings&#34;</span> &gt;}}
+{{&lt; <span style="color:#a6e22e">panel</span> <span style="color:#a6e22e">name</span>=<span style="color:#e6db74">&#34;Hello! :wave:&#34;</span> &gt;}}
+  <span style="color:#a6e22e">hello</span>
+{{&lt; <span style="color:#f92672">/</span><span style="color:#a6e22e">panel</span> &gt;}}
+{{&lt; <span style="color:#a6e22e">panel</span> <span style="color:#a6e22e">name</span>=<span style="color:#e6db74">&#34;Goodbye :dash:&#34;</span> &gt;}}
+  <span style="color:#a6e22e">goodbye</span>
+{{&lt; <span style="color:#f92672">/</span><span style="color:#a6e22e">panel</span> &gt;}}
+{{&lt; <span style="color:#f92672">/</span><span style="color:#a6e22e">panelset</span> &gt;}}
 </code></pre></div><p>You could also revert to HTML as well. For example, this panelset:</p>
 <div class="panelset">
   <div class="panel">
@@ -156,18 +146,18 @@ Hello! 👋 hello
   </div>
 </div>
 <p>Was created with this HTML code:</p>
-<div class="highlight"><pre style="color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#6ab825;font-weight:bold">div</span> <span style="color:#bbb">class</span>=<span style="color:#ed9d13">&#34;panelset&#34;</span>&gt;
-  &lt;<span style="color:#6ab825;font-weight:bold">div</span> <span style="color:#bbb">class</span>=<span style="color:#ed9d13">&#34;panel&#34;</span>&gt;
-    &lt;<span style="color:#6ab825;font-weight:bold">div</span> <span style="color:#bbb">class</span>=<span style="color:#ed9d13">&#34;panel-name&#34;</span>&gt;Question&lt;/<span style="color:#6ab825;font-weight:bold">div</span>&gt;
-    <span style="color:#999;font-style:italic">&lt;!-- Panel content --&gt;</span>
-    &lt;<span style="color:#6ab825;font-weight:bold">p</span>&gt;Which came first: the 🐔 or the 🥚?&lt;/<span style="color:#6ab825;font-weight:bold">p</span>&gt;
-  &lt;/<span style="color:#6ab825;font-weight:bold">div</span>&gt;
-  &lt;<span style="color:#6ab825;font-weight:bold">div</span> <span style="color:#bbb">class</span>=<span style="color:#ed9d13">&#34;panel&#34;</span>&gt;
-    &lt;<span style="color:#6ab825;font-weight:bold">div</span> <span style="color:#bbb">class</span>=<span style="color:#ed9d13">&#34;panel-name&#34;</span>&gt;Answer 🐣&lt;/<span style="color:#6ab825;font-weight:bold">div</span>&gt;
-    <span style="color:#999;font-style:italic">&lt;!-- Panel content --&gt;</span>
-    &lt;<span style="color:#6ab825;font-weight:bold">p</span>&gt;Team 🥚 FTW!&lt;/<span style="color:#6ab825;font-weight:bold">p</span>&gt;
-  &lt;/<span style="color:#6ab825;font-weight:bold">div</span>&gt;
-&lt;/<span style="color:#6ab825;font-weight:bold">div</span>&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panelset&#34;</span>&gt;
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel-name&#34;</span>&gt;Question&lt;/<span style="color:#f92672">div</span>&gt;
+    <span style="color:#75715e">&lt;!-- Panel content --&gt;</span>
+    &lt;<span style="color:#f92672">p</span>&gt;Which came first: the 🐔 or the 🥚?&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel&#34;</span>&gt;
+    &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;panel-name&#34;</span>&gt;Answer 🐣&lt;/<span style="color:#f92672">div</span>&gt;
+    <span style="color:#75715e">&lt;!-- Panel content --&gt;</span>
+    &lt;<span style="color:#f92672">p</span>&gt;Team 🥚 FTW!&lt;/<span style="color:#f92672">p</span>&gt;
+  &lt;/<span style="color:#f92672">div</span>&gt;
+&lt;/<span style="color:#f92672">div</span>&gt;
 </code></pre></div>
         
         <details closed class="f6 fw7 input-reset">

@@ -17,5 +17,16 @@
  Abstract Raven’s Standard Progressive Matrices (Raven 1941) is a widely used 60-item long measure of general mental ability. It was recently suggested that, for situations where taking this test is too time consuming, a shorter version, comprised of only the last series of the Standard Progressive Matrices (Myszkowski and Storme 2018) could be used, while preserving satisfactory psychometric properties (Garcia-Garzon et al.</description>
     </item>
     
+    <item>
+      <title>jrt – Item Response Theory Modeling and Scoring for Judgment Data</title>
+      <link>/r-packages/jrt/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/jrt/</guid>
+      <description>What it’s about The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+ Myszkowski, N. (2021).</description>
+    </item>
+    
   </channel>
 </rss>

@@ -214,6 +214,17 @@ Hello! 👋 hello
     </item>
     
     <item>
+      <title>jrt – Item Response Theory Modeling and Scoring for Judgment Data</title>
+      <link>/r-packages/jrt/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/jrt/</guid>
+      <description>What it’s about The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+ Myszkowski, N. (2021).</description>
+    </item>
+    
+    <item>
       <title>A seedling</title>
       <link>/talk/seedling/</link>
       <pubDate>Mon, 13 Jan 2020 14:15:59 -0600</pubDate>
