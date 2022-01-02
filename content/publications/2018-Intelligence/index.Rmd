@@ -1,0 +1,28 @@
+---
+title: A snapshot of g? Binary and polytomous item-response theory investigations of the last series of the Standard Progressive Matrices (SPM-LS)
+author: Nils Myszkowski
+date: '2018-12-12'
+slug: []
+categories: [Psychometrics, Test development, Item-Response Theory]
+tags: []
+excerpt: In this paper, we propose the use of the last series of the last series of the Standard Progressive Matrices (SPM-LS) as a viable snapshot measure of g. We provide an extensive Item-Response Theory (IRT) analysis of the instrument, based on the binary (pass/fail) and nominal (response categories) data.
+links:
+- icon: file-pdf
+  icon_pack: fa
+  name: PDF
+  url: Publication_pdf/Myszkowski and Storme - 2018 - A snapshot of g Binary and polytomous item-respon.pdf
+---
+
+# What it's about
+
+In this paper, we propose the use of the last series of the last series of the Standard Progressive Matrices (SPM-LS) as a viable snapshot measure of g. We provide an extensive Item-Response Theory (IRT) analysis of the instrument, based on the binary (pass/fail) and nominal (response categories) data.
+
+# Abstract
+
+Raven’s progressive matrices (Raven, 1941) are extremely popular measures of general mental ability. However, their length may not suit every researcher’s or practitioner’s needs. Short versions of the Advanced version have resulted in problematic factor structures and internal consistencies (Arthur, Tubre, Paul, & Sanchez-Ku, 1999; Bors & Stokes, 1998): Is the last series of the Standard Progressive Matrices a more viable option? The aim of this research was to investigate the structural validity and internal reliability of the last series of the SPM (SPM-LS) as a standalone measure. The SPM-LS binary (correct/incorrect) responses of 499 undergraduate students were investigated through unidimensional Item-Response Theory (IRT) 1–4 Parameter Logistic (PL) models. They were satisfactorily modeled by unidimensional models ($CFI_{3PL} = 0.974, TLI_{3PL} = 0.959, RMSEA_{3PL} = 0.059, SRMR_{3PL} = 0.056$), offering good empirical reliability ($r_{xx′,3PL} = 0.843$), and outperforming the short Advanced Progressive Matrices’ previously reported qualities. Full nominal responses – recovering information from the distractor responses – were further examined with recently introduced 2–4 Parameter Logistic Nested (PLN) models (Suh & Bolt, 2010), providing significant reliability gains ($\Delta r_{xx′} = 0.029, Bootstrapped 95% CI $[0.019, 0.036], $z = 6.06, p < .001$). Uses, limitations, conditional reliability and scoring strategies are further examined and discussed.
+
+
+# How to access the paper
+
+You can access the full paper [here](http://dx.doi.org/10.1016/j.intell.2018.03.010).
+

@@ -9,11 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.84.4" />
-<title>Set up your social | Nils Myszkowski, PhD</title>
+<title>Set up your social | Nils Myszkowski</title>
 
-
-<meta property="twitter:site" content="@apreshill">
-<meta property="twitter:creator" content="@apreshill">
 
 
 
@@ -27,8 +24,8 @@
 <meta name="description" content="Social icons may appear on several pages throughout your site. Learn how to set them up, and control where they show up.">
 
 
-<meta property="og:site_name" content="Nils Myszkowski, PhD">
-<meta property="og:title" content="Set up your social | Nils Myszkowski, PhD">
+<meta property="og:site_name" content="Nils Myszkowski">
+<meta property="og:title" content="Set up your social | Nils Myszkowski">
 <meta property="og:description" content="Social icons may appear on several pages throughout your site. Learn how to set them up, and control where they show up." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="/blog/social/" />
@@ -48,7 +45,7 @@
  site header (set in config.toml), site footer (set in config.toml),  homepage (set in content/_index.md),  about page in the sidebar (set in content/about/sidebar/index.md), and  contact page (set in content/form/contact.md).  Read on to learn how to set up your social icons, and how to show/hide them.
 Configure social     Wherever you end up wanting to show your social icons, you&rsquo;ll need to start by setting up the links in your site config."><meta itemprop="datePublished" content="2021-01-28T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2021-01-28T00:00:00+00:00" />
-<meta itemprop="wordCount" content="499"><meta itemprop="image" content="/blog/social/featured.jpg">
+<meta itemprop="wordCount" content="508"><meta itemprop="image" content="/blog/social/featured.jpg">
 <meta itemprop="keywords" content="" />
   
   
@@ -57,7 +54,7 @@ Configure social     Wherever you end up wanting to show your social icons, you&
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.5477c20f89738a32763391bbc2f43dbdfc2db0e7faba550c86cac92c99efa6b6.css" integrity="sha256-VHfCD4lzijJ2M5G7wvQ9vfwtsOf6ulUMhsrJLJnvprY=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.72226c3b55d47215addd3c4163f7b77ef42f8a1cfcc9d2e55a3b8ebaac4368fa.css" integrity="sha256-ciJsO1XUchWt3TxBY/e3fvQvihz8ydLlWjuOuqxDaPo=" media="screen">
   
   
   <script src="/panelset.min.078a92db9bd3228df502db3d9e0453c3cf3d910abe3f8deca0ad196c7071ad41.js" type="text/javascript"></script>
@@ -70,39 +67,24 @@ Configure social     Wherever you end up wanting to show your social icons, you&
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
     <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="/" title="Home">
-      <img src="/img/blogophonic-mark-dark.png" class="dib db-l h2 w-auto" alt="Nils Myszkowski, PhD">
+      <img src="/Images/home-solid.svg" class="dib db-l h2 w-auto" alt="Nils Myszkowski">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="About Blogophonic">About</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/publications/" title="Publications">Publications</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Blog">Blog</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/r-packages/" title="R packages">R packages</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/project/" title="Project Portfolio">Projects</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/talk/" title="Talks">Talks</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/collection/" title="A collection">A collection</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/elements/" title="Element Page">Elements</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Contact form">Contact</a>
       
       
     </div>
@@ -145,19 +127,19 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Wherever you end up wanting to show your social icons, you&rsquo;ll need to start by setting up the links in your site <code>config.toml</code> file. Open that up and scroll down to the <code>[[params.social]]</code> section. The start of it looks like this:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[params]
-  <span style="color:#a61717;background-color:#e3d2d2">&lt;!</span>--snip snip--<span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">params</span>]
+  <span style="color:#960050;background-color:#1e0010">&lt;!</span><span style="color:#a6e22e">--snip</span> <span style="color:#a6e22e">snip--</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
   
-  <span style="color:#998;font-style:italic"># Social icons may appear on your site header, footer, and other pages</span>
-  <span style="color:#998;font-style:italic"># Add as many icons as you like below</span>
-  <span style="color:#998;font-style:italic"># Icon pack &#34;fab&#34; includes brand icons, see: https://fontawesome.com/icons?d=gallery&amp;s=brands&amp;m=free</span>
-  <span style="color:#998;font-style:italic"># Icon pack &#34;fas&#34; includes solid icons, see: https://fontawesome.com/icons?d=gallery&amp;s=solid&amp;m=free</span>
-  <span style="color:#998;font-style:italic"># Icon pack &#34;far&#34; includes regular icons, see: https://fontawesome.com/icons?d=gallery&amp;s=regular&amp;m=free</span>
-  [[params.social]]
-      icon      = <span style="color:#d14">&#34;github&#34;</span> <span style="color:#998;font-style:italic"># icon name without the &#39;fa-&#39;</span>
-      icon_pack = <span style="color:#d14">&#34;fab&#34;</span>
-      url       = <span style="color:#d14">&#34;https://github.com/apreshill/apero&#34;</span>
-  [[params.social]] <span style="color:#a61717;background-color:#e3d2d2">&lt;!</span>--lather, rinse, repeat--<span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+  <span style="color:#75715e"># Social icons may appear on your site header, footer, and other pages</span>
+  <span style="color:#75715e"># Add as many icons as you like below</span>
+  <span style="color:#75715e"># Icon pack &#34;fab&#34; includes brand icons, see: https://fontawesome.com/icons?d=gallery&amp;s=brands&amp;m=free</span>
+  <span style="color:#75715e"># Icon pack &#34;fas&#34; includes solid icons, see: https://fontawesome.com/icons?d=gallery&amp;s=solid&amp;m=free</span>
+  <span style="color:#75715e"># Icon pack &#34;far&#34; includes regular icons, see: https://fontawesome.com/icons?d=gallery&amp;s=regular&amp;m=free</span>
+  [[<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">social</span>]]
+      <span style="color:#a6e22e">icon</span>      = <span style="color:#e6db74">&#34;github&#34;</span> <span style="color:#75715e"># icon name without the &#39;fa-&#39;</span>
+      <span style="color:#a6e22e">icon_pack</span> = <span style="color:#e6db74">&#34;fab&#34;</span>
+      <span style="color:#a6e22e">url</span>       = <span style="color:#e6db74">&#34;https://github.com/apreshill/apero&#34;</span>
+  [[<span style="color:#a6e22e">params</span>.<span style="color:#a6e22e">social</span>]] <span style="color:#960050;background-color:#1e0010">&lt;!</span><span style="color:#a6e22e">--lather</span>, <span style="color:#a6e22e">rinse</span>, <span style="color:#a6e22e">repeat--</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
 </code></pre></div><p>For each link, you&rsquo;ll need to start a new portion that begins with <code>[[params.social]]</code>. Then, pick your <code>icon</code> and <code>icon_pack</code> from the 
 <a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> free icon library:</p>
 <ul>
@@ -187,13 +169,13 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Let&rsquo;s start with the header and footer, as those are site-wide. Open up your site <code>config.toml</code> file again and scroll down to the <code>[params]</code> section (it is actually 🆙 from where you configured these icons):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[params]
-  <span style="color:#a61717;background-color:#e3d2d2">&lt;!</span>--snip snip--<span style="color:#a61717;background-color:#e3d2d2">&gt;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">params</span>]
+  <span style="color:#960050;background-color:#1e0010">&lt;!</span><span style="color:#a6e22e">--snip</span> <span style="color:#a6e22e">snip--</span><span style="color:#960050;background-color:#1e0010">&gt;</span>
   
-  <span style="color:#998;font-style:italic"># show/hide social icons in site header &amp; footer</span>
-  <span style="color:#998;font-style:italic"># configure social icons and links below in [[params.social]]</span>
-  socialInHeader = <span style="color:#000;font-weight:bold">false</span>
-  socialInFooter = <span style="color:#000;font-weight:bold">true</span>
+  <span style="color:#75715e"># show/hide social icons in site header &amp; footer</span>
+  <span style="color:#75715e"># configure social icons and links below in [[params.social]]</span>
+  <span style="color:#a6e22e">socialInHeader</span> = <span style="color:#66d9ef">false</span>
+  <span style="color:#a6e22e">socialInFooter</span> = <span style="color:#66d9ef">true</span>
 </code></pre></div><p>That was easy!</p>
 
 
@@ -206,8 +188,8 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Open up <code>content/_index.md</code>. That file&rsquo;s YAML controls what you see on the homepage. Set <code>show_social_links</code> like so:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">show_social_links</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># specify social accounts in site config</span><span style="color:#bbb">
-</span></code></pre></div><p>If you set this to <code>true</code> to show the icons on the homepage, your social icons in the footer will not show up even when you set <code>socialInFooter = true</code>, so as not to litter your site with too many icons.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">show_social_links</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># specify social accounts in site config</span>
+</code></pre></div><p>If you set this to <code>true</code> to show the icons on the homepage, your social icons in the footer will not show up even when you set <code>socialInFooter = true</code>, so as not to litter your site with too many icons.</p>
 
 
 
@@ -219,8 +201,8 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>Open up <code>content/about/sidebar/index.md</code>. That file&rsquo;s YAML controls what you see in the sidebar on the about page. Set <code>show_social_links</code> like so:</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#000080">show_social_links</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># specify social accounts in site config</span><span style="color:#bbb">
-</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">show_social_links</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># specify social accounts in site config</span>
+</code></pre></div>
 
 
 
@@ -231,10 +213,10 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     </svg></a>
 </h2>
 <p>You may use the YAML for your contact page (located in <code>content/form/contact.md</code>):</p>
-<div class="highlight"><pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#555">---</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#000080">show_social_links</span>:<span style="color:#bbb"> </span><span style="color:#000;font-weight:bold">true</span><span style="color:#bbb"> </span><span style="color:#998;font-style:italic"># specify social accounts in site config</span><span style="color:#bbb">
-</span><span style="color:#bbb"></span><span style="color:#555">---</span><span style="color:#bbb">
-</span></code></pre></div>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">show_social_links</span>: <span style="color:#66d9ef">true</span> <span style="color:#75715e"># specify social accounts in site config</span>
+---
+</code></pre></div>
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
@@ -243,7 +225,7 @@ Configure social     Wherever you end up wanting to show your social icons, you&
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">3 minute read, 499 words</dd>
+    <dd class="fw5 ml0">3 minute read, 508 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -278,7 +260,7 @@ Configure social     Wherever you end up wanting to show your social icons, you&
 <div class="post-comments pa0 pa4-l mt4">
   
   <script src="https://utteranc.es/client.js"
-          repo="apreshill/apero"
+          repo="nilsmy/personal-website-2022"
           issue-term="pathname"
           theme="boxy-light"
           label="comments :crystal_ball:"
@@ -295,7 +277,7 @@ Configure social     Wherever you end up wanting to show your social icons, you&
 <footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
   <nav class="db dt-l w-100">
     <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
-      &copy; 2021 RStudio, Anywhere
+      &copy; 2022 Nils Myszkowski
       <span class="middot-divider"></span>
       Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
       <br />
@@ -318,8 +300,21 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/apreshill/apero" title="github" target="_blank" rel="noopener">
-      <i class="fab fa-github fa-lg fa-fw"></i>
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/nilsmyszkowski/" title="linkedin-in" target="_blank" rel="noopener">
+      <i class="fab fa-linkedin-in fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://scholar.google.com/citations?user=ShJFBuYAAAAJ&amp;hl=en" title="google-scholar" target="_blank" rel="noopener">
+      <i class="ai ai-google-scholar fa-lg fa-fw"></i>
     </a>
   
     
@@ -333,38 +328,8 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.facebook.com/hashtag/ap%C3%A9ro" title="facebook-square" target="_blank" rel="noopener">
-      <i class="fab fa-facebook-square fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/explore/tags/apero/" title="instagram" target="_blank" rel="noopener">
-      <i class="fab fa-instagram fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://twitter.com/hashtag/ap%c3%a9ro" title="twitter" target="_blank" rel="noopener">
-      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.researchgate.net/profile/Nils-Myszkowski" title="researchgate" target="_blank" rel="noopener">
+      <i class="fab fa-researchgate fa-lg fa-fw"></i>
     </a>
   
     
@@ -376,20 +341,7 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://impactstory.org/u/0000-0002-8082-1890" title="impactstory" target="_blank" rel="noopener">
-      <i class="ai ai-impactstory fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-    
-    
-    
-    
-      
-    
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="http://orcid.org/0000-0002-8082-1890" title="orcid" target="_blank" rel="noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://orcid.org/0000-0003-1322-0777" title="orcid" target="_blank" rel="noopener">
       <i class="ai ai-orcid fa-lg fa-fw"></i>
     </a>
   
@@ -404,8 +356,8 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/blog/index.xml" title="rss" >
-      <i class="fas fa-rss fa-lg fa-fw"></i>
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/nilsmy/" title="github" target="_blank" rel="noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
     </a>
   
 </div>
@@ -417,8 +369,6 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
       <a class="dib pv1 ph2 link" href="/license/" title="License">License</a>
       
       <a class="dib pv1 ph2 link" href="/contact/" title="Contact form">Contact</a>
-      
-      <a class="dib pv1 ph2 link" href="/contributors/" title="Contributors">Contributors</a>
       
     </div>
   </nav>

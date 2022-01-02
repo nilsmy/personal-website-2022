@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hugo Apéro on Nils Myszkowski, PhD</title>
+    <title>Nils Myszkowski, PhD on Nils Myszkowski</title>
     <link>/</link>
-    <description>Recent content in Hugo Apéro on Nils Myszkowski, PhD</description>
+    <description>Recent content in Nils Myszkowski, PhD on Nils Myszkowski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 28 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Netlify</title>
       <link>/collection/day02/01-netlify/</link>
@@ -119,6 +119,38 @@ My content section is: collection  My layout is: single-series   part 2!     doe
     </item>
     
     <item>
+      <title>jrt – Item Response Theory Modeling and Scoring for Judgment Data</title>
+      <link>/r-packages/jrt/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/jrt/</guid>
+      <description>What it&amp;rsquo;s about   The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+ Myszkowski, N.</description>
+    </item>
+    
+    <item>
+      <title>Accounting for Variable Task Discrimination in Divergent Thinking Fluency Measurement – An Example of the Benefits of a 2-Parameter Poisson Counts Model and its Bifactor Extension Over the Rasch Poisson Counts Model</title>
+      <link>/publications/2021-2ppcm/</link>
+      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2021-2ppcm/</guid>
+      <description>What it’s about In this paper, we introduce new psychometric models for count/fluency tasks (tasks in which individuals have to provide many instances). Notably, we extent the Rasch Poisson Counts Model (RPCM) to account for variable discrimination (2-Parameter Poisson Counts Model) and to account for local dependencies/nuisance factors (Bifactor 2-Parameter Poisson Counts Model).
+ Abstract Fluency tasks are among the most common item formats for the assessment of certain cognitive abilities, such as verbal fluency or divergent thinking.</description>
+    </item>
+    
+    <item>
+      <title>AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</title>
+      <link>/r-packages/nhstplot/</link>
+      <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/nhstplot/</guid>
+      <description>AMCTestmakeR provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
+It&amp;rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
+So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&amp;rsquo;s how most people use Auto Multiple Choice.</description>
+    </item>
+    
+    <item>
       <title>Set up your social</title>
       <link>/blog/social/</link>
       <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
@@ -204,6 +236,38 @@ Hello! 👋 hello
     </item>
     
     <item>
+      <title>A Mokken Scale Analysis of the Last Series of the Standard Progressive Matrices (SPM-LS)</title>
+      <link>/publications/2020-mokken/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2020-mokken/</guid>
+      <description>What it’s about In this paper, I reanalyze a dataset for a special issue of Journal of Intelligence. The analysis uses the framework of Mokken Scale Analysis (MSA), which is a non-parametric approach to relations between item responses and attributes (i.e. Item-Response Theory).
+ Abstract Raven’s Standard Progressive Matrices (Raven 1941) is a widely used 60-item long measure of general mental ability. It was recently suggested that, for situations where taking this test is too time consuming, a shorter version, comprised of only the last series of the Standard Progressive Matrices (Myszkowski and Storme 2018) could be used, while preserving satisfactory psychometric properties (Garcia-Garzon et al.</description>
+    </item>
+    
+    <item>
+      <title>Creativity and unethicality – A systematic review and meta-analysis</title>
+      <link>/publications/2021-creativity-unethicality/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2021-creativity-unethicality/</guid>
+      <description>What it’s about In this paper, we provide a meta-analysis of correlations between (un)ethical behavior and creativity, notably controlling for how the constructs were measured – which, as it turns out, is important when considering the heterogeneity of the findings.
+ Abstract A growing line of research suggests that creativity and unethicality are intrinsically related to one another. However, the idea has been challenged both by theoretical arguments and by heterogeneous empirical findings.</description>
+    </item>
+    
+    <item>
+      <title>nhstplot – Plot Null Hypothesis Significance Tests</title>
+      <link>/r-packages/amctestmaker/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/amctestmaker/</guid>
+      <description>nhstplot is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
+The basics   After installing the library with install.packages(&amp;quot;nhstplot&amp;quot;) you need to load the library:
+library(nhstplot) &amp;lsquo;nhstplot&amp;rsquo; is composed of 4 functions, one for each major NHST test &amp;ldquo;family&amp;rdquo; :
+ \(\chi^2\) tests (with the plotchisqtest function) \(F\) tests (with the plotftest function) \(t\) tests (with the plotttest function) \(z\) tests (with the plotztest function)  Let&amp;rsquo;s see how to use each one without changing the graphical options.</description>
+    </item>
+    
+    <item>
       <title>A seedling</title>
       <link>/talk/seedling/</link>
       <pubDate>Mon, 13 Jan 2020 14:15:59 -0600</pubDate>
@@ -213,12 +277,13 @@ Hello! 👋 hello
     </item>
     
     <item>
-      <title>Tachyons for Style</title>
-      <link>/project/giraffes/</link>
-      <pubDate>Wed, 03 Jul 2019 00:00:00 +0000</pubDate>
+      <title>Same Test, Better Scores – Boosting the Reliability of Short Online Intelligence Recruitment Tests with Nested Logit Item Response Theory Models</title>
+      <link>/publications/2019-same_test/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/project/giraffes/</guid>
-      <description>Tachyons is a design system that allows you to design gorgeous interfaces in the browser with little effort.      Because Speed     Building this static site generator theme was the first time I used an Atomic (or Functional) CSS system like Tachyons. It&amp;rsquo;s a design system that provides very small (which means fast) CSS modules that you can use in your HTML. So, rather than writing every line of CSS, you apply the style you need as you write your HTML with easy to understand shorthand class names.</description>
+      <guid>/publications/2019-same_test/</guid>
+      <description>What it’s about In this paper, we propose to generalize the use of Nested Logit Models and implement its use for online personnel selection procedures that use reasoning tests with multiple choices (e.g., matrix-type tests). We find that using such models results in gains of reliability, especially at low ability levels.
+ Abstract Assessing job applicants’ general mental ability online poses psychometric challenges due to the necessity of having brief but accurate tests.</description>
     </item>
     
     <item>
@@ -232,25 +297,6 @@ Hello! 👋 hello
     </item>
     
     <item>
-      <title>Palmer Penguins</title>
-      <link>/project/penguins/</link>
-      <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/project/penguins/</guid>
-      <description>“Grid is the very first CSS module created specifically to solve the layout problems we&amp;rsquo;ve all been hacking our way around for as long as we&amp;rsquo;ve been making websites.”     — Chris House, A Complete Guide to CSS Grid Layout 1
- Since I began building websites in Y2K, I&amp;rsquo;ve lost count how many times the phrase &amp;ldquo;&amp;hellip;there&amp;rsquo;s got to be a better way to do this&amp;rdquo; has passed my lips.</description>
-    </item>
-    
-    <item>
-      <title>Bakeoff</title>
-      <link>/project/bakeoff/</link>
-      <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/project/bakeoff/</guid>
-      <description>Formspree makes it easy to receive submissions from HTML forms on your static website.      Functional Form     This theme has a form-to-email feature built in, thanks to the simple Formspree integration. All you need to activate the form is a valid recipient email address saved in the front matter of the form (/content/forms/contact.md). Of course, the example shown below (your@email.here) must not be used.</description>
-    </item>
-    
-    <item>
       <title>Built-in Contact Form</title>
       <link>/blog/built-in-contact-form/</link>
       <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
@@ -260,7 +306,7 @@ Hello! 👋 hello
     </item>
     
     <item>
-      <title>Contact</title>
+      <title>Hi there !</title>
       <link>/contact/</link>
       <pubDate>Mon, 25 Feb 2019 13:38:41 -0600</pubDate>
       
@@ -284,6 +330,16 @@ Formspree requires a (free) account and new form to be set up. The link is made 
 (20px) 1rem
 (16px) .875rem
 (14px)     Type Samples Head&amp;shy;line Sub&amp;shy;head&amp;shy;line Level 1 Heading One page to rule them all...well, not really. This page displays sample typography and page elements to illustrate their style. Things like headings and paragraphs showing the beautiful type scale, form elements, tabular data, and image layouts just to name a few.</description>
+    </item>
+    
+    <item>
+      <title>A snapshot of g? Binary and polytomous item-response theory investigations of the last series of the Standard Progressive Matrices (SPM-LS)</title>
+      <link>/publications/2018-intelligence/</link>
+      <pubDate>Wed, 12 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2018-intelligence/</guid>
+      <description>What it’s about In this paper, we propose the use of the last series of the last series of the Standard Progressive Matrices (SPM-LS) as a viable snapshot measure of g. We provide an extensive Item-Response Theory (IRT) analysis of the instrument, based on the binary (pass/fail) and nominal (response categories) data.
+ Abstract Raven’s progressive matrices (Raven, 1941) are extremely popular measures of general mental ability. However, their length may not suit every researcher’s or practitioner’s needs.</description>
     </item>
     
     <item>

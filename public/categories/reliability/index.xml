@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reliability on Nils Myszkowski</title>
+    <link>/categories/reliability/</link>
+    <description>Recent content in Reliability on Nils Myszkowski</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 10 Jul 2019 00:00:00 +0000</lastBuildDate><atom:link href="/categories/reliability/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Same Test, Better Scores – Boosting the Reliability of Short Online Intelligence Recruitment Tests with Nested Logit Item Response Theory Models</title>
+      <link>/publications/2019-same_test/</link>
+      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2019-same_test/</guid>
+      <description>What it’s about In this paper, we propose to generalize the use of Nested Logit Models and implement its use for online personnel selection procedures that use reasoning tests with multiple choices (e.g., matrix-type tests). We find that using such models results in gains of reliability, especially at low ability levels.
+ Abstract Assessing job applicants’ general mental ability online poses psychometric challenges due to the necessity of having brief but accurate tests.</description>
+    </item>
+    
+  </channel>
+</rss>

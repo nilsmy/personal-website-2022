@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Inference on Nils Myszkowski</title>
+    <link>/categories/inference/</link>
+    <description>Recent content in Inference on Nils Myszkowski</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 14 Apr 2021 00:00:00 +0000</lastBuildDate><atom:link href="/categories/inference/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</title>
+      <link>/r-packages/nhstplot/</link>
+      <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/nhstplot/</guid>
+      <description>AMCTestmakeR provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
+It&amp;rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
+So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&amp;rsquo;s how most people use Auto Multiple Choice.</description>
+    </item>
+    
+    <item>
+      <title>nhstplot – Plot Null Hypothesis Significance Tests</title>
+      <link>/r-packages/amctestmaker/</link>
+      <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/amctestmaker/</guid>
+      <description>nhstplot is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
+The basics   After installing the library with install.packages(&amp;quot;nhstplot&amp;quot;) you need to load the library:
+library(nhstplot) &amp;lsquo;nhstplot&amp;rsquo; is composed of 4 functions, one for each major NHST test &amp;ldquo;family&amp;rdquo; :
+ \(\chi^2\) tests (with the plotchisqtest function) \(F\) tests (with the plotftest function) \(t\) tests (with the plotttest function) \(z\) tests (with the plotztest function)  Let&amp;rsquo;s see how to use each one without changing the graphical options.</description>
+    </item>
+    
+  </channel>
+</rss>
