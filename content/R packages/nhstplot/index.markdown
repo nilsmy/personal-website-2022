@@ -1,474 +1,305 @@
 ---
-title: "AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)"
-date: '2021-04-14'
+title: nhstplot – Plot Null Hypothesis Significance Tests
+date: '2020-04-14'
 slug: []
 categories: [Education, Inference]
 tags: []
-excerpt: A package to facilitate the use of AutoMultipleChoice with R.
+excerpt: A package to plot p values easily, based on ggplot2.
 links:
 - icon: r-project
   icon_pack: fab
   name: View on CRAN
-  url: https://CRAN.R-project.org/package=AMCTestmakeR
+  url: https://CRAN.R-project.org/package=nhstplot
 ---
 
+![](nhstplot_demo.gif)
 
 
-`AMCTestmakeR` provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
-
-It's main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
-
-So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it's how most people use Auto Multiple Choice.
-
-# Install the library
-
-Install the library with `install.packages("AMCTestmakeR")`, and load it with:
+`nhstplot` is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
 
 
-```r
-library(AMCTestmakeR)
-```
+# The basics
 
-
-# Load the library
+After installing the library with `install.packages("nhstplot")` you need to load the library:
 
 
 ```r
-library(AMCTestmakeR)
+library(nhstplot)
 ```
 
-# Basic Use : Generating questions
+'nhstplot' is composed of 4 functions, one for each major NHST test "family" :
 
-## Generating code for one question
+- `\(\chi^2\)` tests (with the `plotchisqtest` function)
+- `\(F\)` tests (with the `plotftest` function)
+- `\(t\)` tests (with the `plotttest` function)
+- `\(z\)` tests (with the `plotztest` function)
 
-Let's say that we have a simple question to add:
-- How much is `\(1+1\)`?
-- The correct answer is `\(2\)` (if you didn't get this one, you're probably at the wrong place)
-- The incorrect ones are `\(3\)` and `\(11\)`
+Let's see how to use each one without changing the graphical options.
+
+## `\(\chi^2\)` tests
+
+The `plotchisqtest` function only requires 2 arguments : The first one is the `\(\chi^2\)` value (parameter : `chisq`), and the second one is the degrees of freedom (parameter `df`).
+
+Here's an example with respectively 8 and 4.
 
 
 ```r
-AMCcreatequestions(
-  question = "How much is $1+1$?",
-  correctanswers = 2,
-  incorrectanswers = list(3, 11))
+plotchisqtest(chisq = 8, df = 4)
 ```
 
-```
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%| List of questions |%%%%%%%%%%
-%%% (copy & paste in main .tex file) %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
-\element{general}
- {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
- How much is $1+1$?
- \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
- \wrongchoice{3}
- \wrongchoice{11}
- \correctchoice{2}
- \end{choices}\end{multicols}\end{question}
-}
- 
-```
+Note that the same is achieved with `plotchisqtest(8,4)`.
 
-```
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%| List of elements |%%%%%%%%%
-%%% (copy & paste after questions) %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{general}
-\shufflegroup{general}
-\insertgroup{general}
-```
-
-Or, more simply `AMCcreatequestions("How much is `\(1+1\)`?",2,list(3, 11))`.
-
-## Writing questions to a .tex file
-
-R escapes different characters than LaTeX, so doing a copy-and-paste of the console output will require than you tweak things a bit.
-
-Instead of doing that, I recommend to use the optional argument `writefile = TRUE` to write the generated code into a file. The default creates a `questions.tex` file in the working directory, but you can indicate another path with `filepath`, and append to an existing file -- rather than overwriting the existing file -- with `append = TRUE`).
-
-
-## Generating code for multiple questions
-
-If you have an entire questionnaire to generate, the `AMCcreatequestions` can use vectors for many of its arguments.
-
-Let's first create 3 questions, putting the questions and answers in vectors.
+You can also use the function by passing an object created by `chisq.test()`...
 
 
 ```r
-question <- c("How much is $1+1$ ?",
-              "How much is $1 \\times 1$ ?",
-              "How much is $\\frac{1}{2}$ ?")
-correct <- c(2,1,0.5)
-incorrect1 <- c(3,4,10)
-incorrect2 <- c(1,3,100)
-incorrect3 <- c(4,8,NA)
+test <- chisq.test(c(A = 37, B = 18, C = 25))
+plotchisqtest(test)
 ```
 
-Note that the third question has only 2 incorrect answers: `AMCTestmakeR` will simply skip missing values (`NA` and `""`).
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+## `\(F\)` tests
+
+The `plotftest` function only requires 3 arguments : The first one is the `\(F\)` value (parameter : `f`), and the second and third ones are respectively the degrees of freedom of the numerator (parameter `dfnum`) and the denominator (parameter `dfdenom`).
+
+Here's an example with respectively 4, 3 and 5.
 
 
 ```r
-AMCcreatequestions(question = question,
-   correctanswers = correct,
-   incorrectanswers = list(incorrect1,incorrect2,incorrect3))
+plotftest(f = 4, dfnum = 3, dfdenom = 5)
 ```
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy & paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{general}
-##  {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{1}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \correctchoice{2}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{Q2}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \wrongchoice{8}
-##  \wrongchoice{3}
-##  \correctchoice{1}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{Q3}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{0.5}
-##  \wrongchoice{10}
-##   \wrongchoice{100}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-```
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy & paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{general}
-## \shufflegroup{general}
-## \insertgroup{general}
-```
+Note that the same is achieved with `plotftest(4,3,5)`.
 
-Like before, copy-paste is not optimal, as R escapes different characters than LaTeX. Using `writefile = TRUE` is more convenient to take care of this and translate R text into LaTeX (see above for details). Also, consider using the function `AMCcreatetest()` to handle the full test creation (described later as *Suggested Workflow 1*).
-
-
-## Additional options
-
-### Changing the element
-
-The element in AMC corresponds to a group of questions. They can for example correspond to different learning outcomes or chapters of a book. AMC is able to randomize questions within elements.
-
-Provide a character value or vector to the argument `element` to define it. If you provide a value, all questions will have this value as element. If you provide a vector, each question will have its corresponding element.
+You can also use the function by passing an object created by `lm()`...
 
 
 ```r
-AMCcreatequestions(element = c("ADD", "MULT", "DIV"),
-   question = question,
-   correctanswers = correct,
-   incorrectanswers = list(incorrect1,incorrect2,incorrect3))
+x <- rnorm(10) ; y <- x + rnorm(10)
+fit <- lm(y ~ x)
+plotftest(fit)
 ```
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy & paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{ADD}
-##  {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{3}
-##  \correctchoice{2}
-##  \wrongchoice{4}
-##  \wrongchoice{1}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{MULT}
-##  {\begin{question}{Q2}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \wrongchoice{8}
-##  \wrongchoice{3}
-##  \correctchoice{1}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{DIV}
-##  {\begin{question}{Q3}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{100}
-##   \correctchoice{0.5}
-##  \wrongchoice{10}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-```
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy & paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{ADD}
-## \shufflegroup{ADD}
-## \insertgroup{ADD}
-## \section*{MULT}
-## \shufflegroup{MULT}
-## \insertgroup{MULT}
-## \section*{DIV}
-## \shufflegroup{DIV}
-## \insertgroup{DIV}
-```
 
-The default element is `general`.
+## `\(t\)` tests
 
-### Changing the question codes
+The `plotttest` function only requires 2 arguments : The first one is the `\(t\)` value (parameter : `t`), and the second one is the degrees of freedom of the numerator (argument `df`).
 
-In AMC, each question should have a unique code.
-
-The code can be provided in `AMCTestmakeR` through the argument `code` (like for the `element` argument, a character value or vector can be used).
+Here's an example with respectively 2 and 10.
 
 
 ```r
-AMCcreatequestions(code = c("ADD1", "MULT1", "DIV1"),
-   question = question,
-   correctanswers = correct,
-   incorrectanswers = list(incorrect1,incorrect2,incorrect3))
+plotttest(t = 2, df = 10)
 ```
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy & paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{general}
-##  {\begin{question}{ADD1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{1}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \correctchoice{2}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{MULT1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{1}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \wrongchoice{8}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{DIV1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{0.5}
-##   \wrongchoice{100}
-##  \wrongchoice{10}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-```
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy & paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{general}
-## \shufflegroup{general}
-## \insertgroup{general}
-```
+Note that the same is achieved with `plotttest(2,10)`.
 
-A lazy version of this is, instead of codes, to input a code prefix with the `codeprefix` argument. Unique codes will be generated by the function by incrementing numbers after the prefix.
+By default, the `plotttest` function plots a two-tailed test. However, a one-tailed test can be plotted by adding the argument `tails = "one"`:
 
 
 ```r
-AMCcreatequestions(codeprefix = "MATH",
-   question = question,
-   correctanswers = correct,
-   incorrectanswers = list(incorrect1,incorrect2,incorrect3))
+plotttest(2, 10, tails = "one")
 ```
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy & paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{general}
-##  {\begin{question}{MATH1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \wrongchoice{1}
-##  \correctchoice{2}
-##  \wrongchoice{3}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{MATH2}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \correctchoice{1}
-##  \wrongchoice{8}
-##  \wrongchoice{3}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{MATH3}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##   \wrongchoice{10}
-##  \correctchoice{0.5}
-##  \wrongchoice{100}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-```
-
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy & paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{general}
-## \shufflegroup{general}
-## \insertgroup{general}
-```
-
-# Once the questions are ready...
-
-When your questions are ready and the `AMCcreatequestions()` gives a satisfactory result. I suggest to directly use `AMCcreatetest()` to create the other .tex files and to have a fully working test easily (*Workflow 1*).
-
-## Workflow 1: Creating the test files from scratch with `AMCcreatetest()`
-
-`AMCTestmakeR` can create a test from scratch with the function `AMCcreatetest()`. It creates 3 .tex files (groups.tex, questions.tex, elements.tex) that can be directly used in the AMC project folder.
-
-The first arguments of this function are passed to the `AMCcreatequestions()` function (see above for how to use it). The rest of the arguments are used to set test options (like `fontsize`, `separateanswersheet`, `title`, `identifier`, etc.). See the function documentation for a full list of options. If you don't pass any option (except for the questions of course), you should have a useable -- albeit not customized -- test.
-
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+The left or right tail is automatically selected using the sign of provided `\(t\)`:
 
 
 ```r
-AMCcreatetest("How much is $1+2$?",2,list("3", "11"))
+plotttest(-2, 10, tails = "one")
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 
-### More options
-
-Separate answer sheets, font size, title, instructions, etc.
+You can also use the function by passing an object created by `t.test()`...
 
 
 ```r
-AMCcreatetest(
-  #This part is passed to the AMCcreatequestions() function:
-  question = "How much is $1+1$?",
-  2,
-  list("3", "11"),
-  #The next part is passed to AMCcreateelements():
-  shuffle = T,
-  sections = T,
-  #The last part is for general test options:
-  title = "Exam", #Custom title
-  paper = "a4", #change the paper for a4
-  fontsize = 11, #change fontsize
-  identifier = "ID Number", #change identifier
-  twosided = F, #print in one sided
-  instructions = "Don't respond here.", #show an instructions block
-  separateanswersheet = T, #use a separate answer sheet
-  answersheettitle = "Respond Here", #Change answer sheet title
-  answersheetinstructions = "Fill the boxes."#Answer sheet instructions
-)
+test <- t.test(rnorm(10), rnorm(10))
+plotttest(test)
 ```
 
-When working on the questions, I suggest to work using `AMCcreatequestions()` with the default output as notes (to check the result without opening a separate .tex file). Once your questions are ready, I suggest to switch to `AMCcreatequestions()`, using the same beginning arguments, and changing the rest.
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
-
-## Workflow 2: Doing things manually with your own template and `AMCcreateelements()`
-
-If you want to customize more, you can do things step by step. If doing that, I highly recommend starting by reading the AMC documentation.
-
-When using `AMCcreatequestions()` to create a questionnaire in AMC, I suggest to create, with `writefile = TRUE`, the questions in a separate questions file (e.g. `questions.tex`) in your AMC project folder.
-
-From there, in your main .tex document (usually, that's named `groups.tex` by AMC), add `\input{questions.tex}` at the beginning (but still after your `\begin{document}`).
-
-Then, where you want to place the different `elements`, in your main .tex, add `\insertgroup{element}` for each of them. Before the `\insertgroup{}` command, you can use `\shufflegroup{element}` to shuffle the questions within the element.
-
-### The `AMCcreateelements()` function
-
-If you have many elements in your document, and therefore many `\insertgroup{}` (and `\shufflegroup{}`) to insert, you may want to use the function `AMCcreateelements()` function. It will show as a console message (which you can, this time, easily copy-and-paste into your main .tex document) the commands to insert (and shuffle, if desired, through the `shufflequestions` argument) the elements:
+...or `cor.test()`.
 
 
 ```r
-AMCcreateelements(element = c("ADD", "MULT", "DIV"), shufflequestions = T, sections = T)
+test <- cor.test(rnorm(10), rnorm(10))
+plotttest(test)
 ```
 
-```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy & paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{ADD}
-## \shufflegroup{ADD}
-## \insertgroup{ADD}
-## \section*{MULT}
-## \shufflegroup{MULT}
-## \insertgroup{MULT}
-## \section*{DIV}
-## \shufflegroup{DIV}
-## \insertgroup{DIV}
-```
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
-Note that, if the same element is input multiple times (which often happens if you pass to this function the same vector of elements as the one used in `AMCcreatequestions()`), it is not a problem, since only unique values are output:
+
+## `\(z\)` tests
+
+The `plotztest` function only requires 1 argument : The `\(z\)` value (parameter `z`).
+
+Here's an example with a `\(z\)` value of 2.
 
 
 ```r
-AMCcreateelements(element = c("MATH", "MATH", "MATH", "STAT"), shufflequestions = F, sections = F)
+plotztest(z = 2)
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+
+Note that the same is achieved with `plozttest(2)`.
+
+By default, the `plotztest` function plots a two-tailed test. However, a one-tailed test can be plotted by adding the argument `tails = "one"`:
+
+
+```r
+plotztest(2, tails = "one")
 ```
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy & paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \insertgroup{MATH}
-## \insertgroup{STAT}
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+The left or right tail is automatically selected using the sign of provided `\(t\)`:
+
+
+```r
+plotztest(-2, tails = "one")
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
 
 
-# Future features
 
-Auto multiple choice s a great freeware that is able to do a lot more that what `AMCTestmakeR` helps for, so I will try to add the most helpful features here soon. This software feels the In any case, I strongly encourage to read the documentation of how to use LaTeX in Auto Multiple Choice to get a sense of its many possibilities.
 
+# Customizing the output
+
+## Blanking the plot
+
+NHST is a process that isn't straightforward to explain or understand. Before looking at the `\(p\)` value itself, it starts with stating a null hypothesis. As a consequence, it can be helpful to provide a "step-by-step" explanation of process that may require to plot the density probability function before adding the cutline and p-value.
+
+Hopefully, all the functions in `nhstplot` can do that very simply by passing the argument `blank = TRUE`. 
+
+
+```r
+plotztest(-2, blank = TRUE)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+
+In reality, when `blank = TRUE`, every thing is plotted the same way as with `blank = FALSE` (default), but some objects are simply make transparent. This means that the two plots are scaled exactly the same way, which can be useful to plot one version after another, for example in slides of a presentation or in an animated gif.
+
+
+## Changing the x-axis limits
+
+The argument `xmax` can be used to manually provide a maximum for the x-axis. For symmetrical distributions ($t$ and `\(z\)`), the minimum is set automatically, so only one value (the maximum) should be provided.
+
+
+```r
+plotztest(2, xmax = 10)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+
+
+
+
+
+
+## Color themes
+
+
+For all 4 functions, the default theme is light blue and red (like seen above). But other themes are available with the `theme`parameter, as shown below.
+
+
+```r
+plotztest(2, theme = "blackandwhite")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
+```r
+plotztest(2, theme = "whiteandred")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-2.png" width="672" />
+
+```r
+plotztest(2, theme = "blueandred")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-3.png" width="672" />
+
+```r
+plotztest(2, theme = "greenandred")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-4.png" width="672" />
+
+```r
+plotztest(2, theme = "goldandblue")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-5.png" width="672" />
+
+## Custom colors
+
+A first important note : The `theme`argument supersedes any custom colors you may use, so don't provide anything (or `default`) to the `theme` parameter if you want to use custom colors.
+
+* `\(\chi^2\)` and `\(f\)` : The parameters `colorleft`, `colorleftcurve`, `colorright` and `colorrightcurve` control the curve and areas under the curve colors in the `plotchisqtest` and `plotftest` functions. Additionnally, `colorplabel` and `colorcutline` control the colors of the p value label and of the cut line. For example:
+
+
+```r
+plotftest(4, 3, 5, colorleft = "lightgreen", colorleftcurve = "red", colorright = "indianred", colorrightcurve = "blue", colorplabel = "darkgrey", colorcut = "#FFA500")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+
+* `\(t\)` and `\(z\)` :The parameters `colormiddle`, `colormiddlecurve`, `colorsides` and `colorsidescurve` control the curve and areas under the curve colors in the `plotttest` and `plotztest` functions. Additionnally, `colorplabel` (defaults to the same and `colorcutline` control the colors of the p value label and of the cut line. For example:
+
+
+```r
+plotztest(2, colormiddle = "lightgreen", colormiddlecurve = "red", colorsides = "indianred", colorsidescurve = "blue", colorplabel = "darkgrey", colorcut = "#FFA500")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+
+## Custom fonts
+
+The font family of all the text in the graph can be changed using the `fontfamily` argument (you can for example use `mono`, `Palatino`, `Helvetica` or `sans`. The default is `serif`.
+
+
+```r
+plotztest(2, fontfamily = "Helvetica")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+
+- Note that the package `extrafonts` can be used to provide your own fonts (e.g. to match your slides font), and appears to work well with `nhstplot`. Fonts loaded through `extrafonts` can be called in the `fontfamily` argument in the `nhstplot` functions (e.g., `plotztest(2, fontfamily = "Roboto")`).
+
+
+## Line size
+
+The `cutlinesize`and the `curvelinesize` control the size of the line sizes. By default, the `cutlinesize`is the same as the `curvelinesize`.
+
+
+```r
+plotztest(2, cutlinesize = 2, curvelinesize = 1)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+
+## Digits
+
+The number of significant digits can be modified in all functions using `signifdigitschisq` / `signifdigitsf` / `signifdigitst` / `signifdigitsz` for the test statistic. The default is `3` for all.
+
+
+```r
+plotztest(2.134553, signifdigitsz = 2)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-21-1.png" width="672" />

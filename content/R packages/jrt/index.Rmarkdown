@@ -13,9 +13,12 @@ links:
   url: https://CRAN.R-project.org/package=jrt
 ---
 
-# What it's about
 
-The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+![](demo_jrt.gif)
+
+
+
+# What it's about
 
 The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
 

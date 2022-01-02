@@ -125,8 +125,7 @@ My content section is: collection  My layout is: single-series   part 2!     doe
       
       <guid>/r-packages/jrt/</guid>
       <description>What it&amp;rsquo;s about   The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
-The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
- Myszkowski, N.</description>
+ Myszkowski, N. (2021). Development of the R library &amp;ldquo;jrt&amp;rdquo;: Automated item response theory procedures for judgment data and their application with the consensual assessment technique. Psychology of Aesthetics, Creativity, and the Arts, 15(3), 426-438.</description>
     </item>
     
     <item>
@@ -141,10 +140,10 @@ The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on 
     
     <item>
       <title>AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</title>
-      <link>/r-packages/nhstplot/</link>
+      <link>/r-packages/amc/</link>
       <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/nhstplot/</guid>
+      <guid>/r-packages/amc/</guid>
       <description>AMCTestmakeR provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
 It&amp;rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
 So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&amp;rsquo;s how most people use Auto Multiple Choice.</description>
@@ -257,10 +256,10 @@ Hello! 👋 hello
     
     <item>
       <title>nhstplot – Plot Null Hypothesis Significance Tests</title>
-      <link>/r-packages/amctestmaker/</link>
+      <link>/r-packages/nhstplot/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/amctestmaker/</guid>
+      <guid>/r-packages/nhstplot/</guid>
       <description>nhstplot is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
 The basics   After installing the library with install.packages(&amp;quot;nhstplot&amp;quot;) you need to load the library:
 library(nhstplot) &amp;lsquo;nhstplot&amp;rsquo; is composed of 4 functions, one for each major NHST test &amp;ldquo;family&amp;rdquo; :

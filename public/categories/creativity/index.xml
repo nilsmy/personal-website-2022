@@ -14,8 +14,7 @@
       
       <guid>/r-packages/jrt/</guid>
       <description>What it&amp;rsquo;s about   The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
-The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
- Myszkowski, N.</description>
+ Myszkowski, N. (2021). Development of the R library &amp;ldquo;jrt&amp;rdquo;: Automated item response theory procedures for judgment data and their application with the consensual assessment technique. Psychology of Aesthetics, Creativity, and the Arts, 15(3), 426-438.</description>
     </item>
     
     <item>

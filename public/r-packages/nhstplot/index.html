@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.84.4" />
-<title>AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC) | Nils Myszkowski</title>
+<title>nhstplot – Plot Null Hypothesis Significance Tests | Nils Myszkowski</title>
 
 
 
@@ -21,12 +21,12 @@
   
     
   
-<meta name="description" content="A package to facilitate the use of AutoMultipleChoice with R.">
+<meta name="description" content="A package to plot p values easily, based on ggplot2.">
 
 
 <meta property="og:site_name" content="Nils Myszkowski">
-<meta property="og:title" content="AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC) | Nils Myszkowski">
-<meta property="og:description" content="A package to facilitate the use of AutoMultipleChoice with R." />
+<meta property="og:title" content="nhstplot – Plot Null Hypothesis Significance Tests | Nils Myszkowski">
+<meta property="og:description" content="A package to plot p values easily, based on ggplot2." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="/r-packages/nhstplot/" />
 <meta property="og:locale" content="en">
@@ -40,12 +40,13 @@
         <meta name="twitter:image" content="/r-packages/sidebar-listing.jpg" >
     
     
-  <meta itemprop="name" content="AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)">
-<meta itemprop="description" content="AMCTestmakeR provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
-It&rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
-So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&rsquo;s how most people use Auto Multiple Choice."><meta itemprop="datePublished" content="2021-04-14T00:00:00+00:00" />
-<meta itemprop="dateModified" content="2021-04-14T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1804">
+  <meta itemprop="name" content="nhstplot – Plot Null Hypothesis Significance Tests">
+<meta itemprop="description" content="nhstplot is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
+The basics   After installing the library with install.packages(&quot;nhstplot&quot;) you need to load the library:
+library(nhstplot) &lsquo;nhstplot&rsquo; is composed of 4 functions, one for each major NHST test &ldquo;family&rdquo; :
+ \(\chi^2\) tests (with the plotchisqtest function) \(F\) tests (with the plotftest function) \(t\) tests (with the plotttest function) \(z\) tests (with the plotztest function)  Let&rsquo;s see how to use each one without changing the graphical options."><meta itemprop="datePublished" content="2020-04-14T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2020-04-14T00:00:00+00:00" />
+<meta itemprop="wordCount" content="1018">
 <meta itemprop="keywords" content="" />
   
   
@@ -95,7 +96,7 @@ So far, the features are limited to generating AMC-LaTeX code questions for Mult
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">nhstplot – Plot Null Hypothesis Significance Tests</h1>
         
         <p class="f6 measure lh-copy mv1"> in <a href="/categories/education">Education</a>  <a href="/categories/inference">Inference</a> </p>
         
@@ -114,7 +115,7 @@ So far, the features are limited to generating AMC-LaTeX code questions for Mult
     
       
       
-  <a class="btn-links mr2 ba dib" href="https://CRAN.R-project.org/package=AMCTestmakeR" target="_blank" rel="noopener"><i class="fab fa-r-project fa-lg fa-fw mr2"></i>View on CRAN</a>
+  <a class="btn-links mr2 ba dib" href="https://CRAN.R-project.org/package=nhstplot" target="_blank" rel="noopener"><i class="fab fa-r-project fa-lg fa-fw mr2"></i>View on CRAN</a>
 
 
       </div>
@@ -122,459 +123,243 @@ So far, the features are limited to generating AMC-LaTeX code questions for Mult
 
       </header>
       <section class="post-body pt5 pb4">
-        <p><code>AMCTestmakeR</code> provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (<a href="https://www.auto-multiple-choice.net/)">https://www.auto-multiple-choice.net/)</a>.</p>
-<p>It&rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.</p>
-<p>So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&rsquo;s how most people use Auto Multiple Choice.</p>
+        <p><img src="nhstplot_demo.gif" alt=""></p>
+<p><code>nhstplot</code> is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.</p>
 
 
 
 
-<h1 id="install-the-library">Install the library
-  <a href="#install-the-library"></a>
+<h1 id="the-basics">The basics
+  <a href="#the-basics"></a>
 </h1>
-<p>Install the library with <code>install.packages(&quot;AMCTestmakeR&quot;)</code>, and load it with:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">library</span>(AMCTestmakeR)
-</code></pre></div>
-
-
-
-<h1 id="load-the-library">Load the library
-  <a href="#load-the-library"></a>
-</h1>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">library</span>(AMCTestmakeR)
-</code></pre></div>
-
-
-
-<h1 id="basic-use--generating-questions">Basic Use : Generating questions
-  <a href="#basic-use--generating-questions"></a>
-</h1>
-
-
-
-
-<h2 id="generating-code-for-one-question">Generating code for one question
-  <a href="#generating-code-for-one-question"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h2>
-<p>Let&rsquo;s say that we have a simple question to add:</p>
+<p>After installing the library with <code>install.packages(&quot;nhstplot&quot;)</code> you need to load the library:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">library</span>(nhstplot)
+</code></pre></div><p>&lsquo;nhstplot&rsquo; is composed of 4 functions, one for each major NHST test &ldquo;family&rdquo; :</p>
 <ul>
-<li>How much is <code>\(1+1\)</code>?</li>
-<li>The correct answer is <code>\(2\)</code> (if you didn&rsquo;t get this one, you&rsquo;re probably at the wrong place)</li>
-<li>The incorrect ones are <code>\(3\)</code> and <code>\(11\)</code></li>
+<li><code>\(\chi^2\)</code> tests (with the <code>plotchisqtest</code> function)</li>
+<li><code>\(F\)</code> tests (with the <code>plotftest</code> function)</li>
+<li><code>\(t\)</code> tests (with the <code>plotttest</code> function)</li>
+<li><code>\(z\)</code> tests (with the <code>plotztest</code> function)</li>
 </ul>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatequestions</span>(
-  question <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;How much is $1+1$?&#34;</span>,
-  correctanswers <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>,
-  incorrectanswers <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">11</span>))
-</code></pre></div><pre><code>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%| List of questions |%%%%%%%%%%
-%%% (copy &amp; paste in main .tex file) %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\element{general}
- {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
- How much is $1+1$?
- \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
- \wrongchoice{3}
- \wrongchoice{11}
- \correctchoice{2}
- \end{choices}\end{multicols}\end{question}
-}
- 
-</code></pre><pre><code>%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%| List of elements |%%%%%%%%%
-%%% (copy &amp; paste after questions) %%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{general}
-\shufflegroup{general}
-\insertgroup{general}
-</code></pre><p>Or, more simply <code>AMCcreatequestions(&quot;How much is </code>(1+1)<code>?&quot;,2,list(3, 11))</code>.</p>
+<p>Let&rsquo;s see how to use each one without changing the graphical options.</p>
 
 
 
 
-<h2 id="writing-questions-to-a-tex-file">Writing questions to a .tex file
-  <a href="#writing-questions-to-a-tex-file"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="chi2-tests"><code>\(\chi^2\)</code> tests
+  <a href="#chi2-tests"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>R escapes different characters than LaTeX, so doing a copy-and-paste of the console output will require than you tweak things a bit.</p>
-<p>Instead of doing that, I recommend to use the optional argument <code>writefile = TRUE</code> to write the generated code into a file. The default creates a <code>questions.tex</code> file in the working directory, but you can indicate another path with <code>filepath</code>, and append to an existing file &ndash; rather than overwriting the existing file &ndash; with <code>append = TRUE</code>).</p>
+<p>The <code>plotchisqtest</code> function only requires 2 arguments : The first one is the <code>\(\chi^2\)</code> value (parameter : <code>chisq</code>), and the second one is the degrees of freedom (parameter <code>df</code>).</p>
+<p>Here&rsquo;s an example with respectively 8 and 4.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotchisqtest</span>(chisq <span style="color:#f92672">=</span> <span style="color:#ae81ff">8</span>, df <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Note that the same is achieved with <code>plotchisqtest(8,4)</code>.</p>
+<p>You can also use the function by passing an object created by <code>chisq.test()</code>&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">test <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">chisq.test</span>(<span style="color:#a6e22e">c</span>(A <span style="color:#f92672">=</span> <span style="color:#ae81ff">37</span>, B <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>, C <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>))
+<span style="color:#a6e22e">plotchisqtest</span>(test)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 
 
 
 
-<h2 id="generating-code-for-multiple-questions">Generating code for multiple questions
-  <a href="#generating-code-for-multiple-questions"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="f-tests"><code>\(F\)</code> tests
+  <a href="#f-tests"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>If you have an entire questionnaire to generate, the <code>AMCcreatequestions</code> can use vectors for many of its arguments.</p>
-<p>Let&rsquo;s first create 3 questions, putting the questions and answers in vectors.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">question <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;How much is $1+1$ ?&#34;</span>,
-              <span style="color:#e6db74">&#34;How much is $1 \\times 1$ ?&#34;</span>,
-              <span style="color:#e6db74">&#34;How much is $\\frac{1}{2}$ ?&#34;</span>)
-correct <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0.5</span>)
-incorrect1 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">10</span>)
-incorrect2 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">100</span>)
-incorrect3 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">8</span>,<span style="color:#66d9ef">NA</span>)
-</code></pre></div><p>Note that the third question has only 2 incorrect answers: <code>AMCTestmakeR</code> will simply skip missing values (<code>NA</code> and <code>&quot;&quot;</code>).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatequestions</span>(question <span style="color:#f92672">=</span> question,
-   correctanswers <span style="color:#f92672">=</span> correct,
-   incorrectanswers <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(incorrect1,incorrect2,incorrect3))
-</code></pre></div><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy &amp; paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{general}
-##  {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{1}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \correctchoice{2}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{Q2}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \wrongchoice{8}
-##  \wrongchoice{3}
-##  \correctchoice{1}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{Q3}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{0.5}
-##  \wrongchoice{10}
-##   \wrongchoice{100}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-</code></pre><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy &amp; paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{general}
-## \shufflegroup{general}
-## \insertgroup{general}
-</code></pre><p>Like before, copy-paste is not optimal, as R escapes different characters than LaTeX. Using <code>writefile = TRUE</code> is more convenient to take care of this and translate R text into LaTeX (see above for details). Also, consider using the function <code>AMCcreatetest()</code> to handle the full test creation (described later as <em>Suggested Workflow 1</em>).</p>
+<p>The <code>plotftest</code> function only requires 3 arguments : The first one is the <code>\(F\)</code> value (parameter : <code>f</code>), and the second and third ones are respectively the degrees of freedom of the numerator (parameter <code>dfnum</code>) and the denominator (parameter <code>dfdenom</code>).</p>
+<p>Here&rsquo;s an example with respectively 4, 3 and 5.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotftest</span>(f <span style="color:#f92672">=</span> <span style="color:#ae81ff">4</span>, dfnum <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>, dfdenom <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Note that the same is achieved with <code>plotftest(4,3,5)</code>.</p>
+<p>You can also use the function by passing an object created by <code>lm()</code>&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">x <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">10</span>) ; y <span style="color:#f92672">&lt;-</span> x <span style="color:#f92672">+</span> <span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">10</span>)
+fit <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">lm</span>(y <span style="color:#f92672">~</span> x)
+<span style="color:#a6e22e">plotftest</span>(fit)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 
 
 
 
-<h2 id="additional-options">Additional options
-  <a href="#additional-options"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="t-tests"><code>\(t\)</code> tests
+  <a href="#t-tests"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
+<p>The <code>plotttest</code> function only requires 2 arguments : The first one is the <code>\(t\)</code> value (parameter : <code>t</code>), and the second one is the degrees of freedom of the numerator (argument <code>df</code>).</p>
+<p>Here&rsquo;s an example with respectively 2 and 10.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotttest</span>(t <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, df <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Note that the same is achieved with <code>plotttest(2,10)</code>.</p>
+<p>By default, the <code>plotttest</code> function plots a two-tailed test. However, a one-tailed test can be plotted by adding the argument <code>tails = &quot;one&quot;</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotttest</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">10</span>, tails <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;one&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+The left or right tail is automatically selected using the sign of provided <code>\(t\)</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotttest</span>(<span style="color:#ae81ff">-2</span>, <span style="color:#ae81ff">10</span>, tails <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;one&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>You can also use the function by passing an object created by <code>t.test()</code>&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">test <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">t.test</span>(<span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">10</span>), <span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">10</span>))
+<span style="color:#a6e22e">plotttest</span>(test)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>&hellip;or <code>cor.test()</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">test <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">cor.test</span>(<span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">10</span>), <span style="color:#a6e22e">rnorm</span>(<span style="color:#ae81ff">10</span>))
+<span style="color:#a6e22e">plotttest</span>(test)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 
 
 
 
-<h3 id="changing-the-element">Changing the element
-  <a href="#changing-the-element"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="z-tests"><code>\(z\)</code> tests
+  <a href="#z-tests"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
-<p>The element in AMC corresponds to a group of questions. They can for example correspond to different learning outcomes or chapters of a book. AMC is able to randomize questions within elements.</p>
-<p>Provide a character value or vector to the argument <code>element</code> to define it. If you provide a value, all questions will have this value as element. If you provide a vector, each question will have its corresponding element.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatequestions</span>(element <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;ADD&#34;</span>, <span style="color:#e6db74">&#34;MULT&#34;</span>, <span style="color:#e6db74">&#34;DIV&#34;</span>),
-   question <span style="color:#f92672">=</span> question,
-   correctanswers <span style="color:#f92672">=</span> correct,
-   incorrectanswers <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(incorrect1,incorrect2,incorrect3))
-</code></pre></div><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy &amp; paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{ADD}
-##  {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{3}
-##  \correctchoice{2}
-##  \wrongchoice{4}
-##  \wrongchoice{1}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{MULT}
-##  {\begin{question}{Q2}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \wrongchoice{8}
-##  \wrongchoice{3}
-##  \correctchoice{1}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{DIV}
-##  {\begin{question}{Q3}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{100}
-##   \correctchoice{0.5}
-##  \wrongchoice{10}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-</code></pre><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy &amp; paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{ADD}
-## \shufflegroup{ADD}
-## \insertgroup{ADD}
-## \section*{MULT}
-## \shufflegroup{MULT}
-## \insertgroup{MULT}
-## \section*{DIV}
-## \shufflegroup{DIV}
-## \insertgroup{DIV}
-</code></pre><p>The default element is <code>general</code>.</p>
+</h2>
+<p>The <code>plotztest</code> function only requires 1 argument : The <code>\(z\)</code> value (parameter <code>z</code>).</p>
+<p>Here&rsquo;s an example with a <code>\(z\)</code> value of 2.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(z <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Note that the same is achieved with <code>plozttest(2)</code>.</p>
+<p>By default, the <code>plotztest</code> function plots a two-tailed test. However, a one-tailed test can be plotted by adding the argument <code>tails = &quot;one&quot;</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, tails <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;one&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+The left or right tail is automatically selected using the sign of provided <code>\(t\)</code>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">-2</span>, tails <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;one&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 
 
 
 
-<h3 id="changing-the-question-codes">Changing the question codes
-  <a href="#changing-the-question-codes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
-<p>In AMC, each question should have a unique code.</p>
-<p>The code can be provided in <code>AMCTestmakeR</code> through the argument <code>code</code> (like for the <code>element</code> argument, a character value or vector can be used).</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatequestions</span>(code <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;ADD1&#34;</span>, <span style="color:#e6db74">&#34;MULT1&#34;</span>, <span style="color:#e6db74">&#34;DIV1&#34;</span>),
-   question <span style="color:#f92672">=</span> question,
-   correctanswers <span style="color:#f92672">=</span> correct,
-   incorrectanswers <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(incorrect1,incorrect2,incorrect3))
-</code></pre></div><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy &amp; paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{general}
-##  {\begin{question}{ADD1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{1}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \correctchoice{2}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{MULT1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{1}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \wrongchoice{8}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{DIV1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{0.5}
-##   \wrongchoice{100}
-##  \wrongchoice{10}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-</code></pre><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy &amp; paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{general}
-## \shufflegroup{general}
-## \insertgroup{general}
-</code></pre><p>A lazy version of this is, instead of codes, to input a code prefix with the <code>codeprefix</code> argument. Unique codes will be generated by the function by incrementing numbers after the prefix.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatequestions</span>(codeprefix <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;MATH&#34;</span>,
-   question <span style="color:#f92672">=</span> question,
-   correctanswers <span style="color:#f92672">=</span> correct,
-   incorrectanswers <span style="color:#f92672">=</span> <span style="color:#a6e22e">list</span>(incorrect1,incorrect2,incorrect3))
-</code></pre></div><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of questions |%%%%%%%%%%
-## %%% (copy &amp; paste in main .tex file) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## 
-## \element{general}
-##  {\begin{question}{MATH1}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1+1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \wrongchoice{1}
-##  \correctchoice{2}
-##  \wrongchoice{3}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{MATH2}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $1 \times 1$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{4}
-##  \correctchoice{1}
-##  \wrongchoice{8}
-##  \wrongchoice{3}
-##  \end{choices}\end{multicols}\end{question}
-## }
-##  
-## \element{general}
-##  {\begin{question}{MATH3}\scoring{b=1,m=0,v=0,e=0,b=0}
-##  How much is $\frac{1}{2}$ ?
-##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##   \wrongchoice{10}
-##  \correctchoice{0.5}
-##  \wrongchoice{100}
-##  \end{choices}\end{multicols}\end{question}
-## }
-## 
-</code></pre><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy &amp; paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{general}
-## \shufflegroup{general}
-## \insertgroup{general}
-</code></pre>
-
-
-
-<h1 id="once-the-questions-are-ready">Once the questions are ready&hellip;
-  <a href="#once-the-questions-are-ready"></a>
+<h1 id="customizing-the-output">Customizing the output
+  <a href="#customizing-the-output"></a>
 </h1>
-<p>When your questions are ready and the <code>AMCcreatequestions()</code> gives a satisfactory result. I suggest to directly use <code>AMCcreatetest()</code> to create the other .tex files and to have a fully working test easily (<em>Workflow 1</em>).</p>
 
 
 
 
-<h2 id="workflow-1-creating-the-test-files-from-scratch-with-amccreatetest">Workflow 1: Creating the test files from scratch with <code>AMCcreatetest()</code>
-  <a href="#workflow-1-creating-the-test-files-from-scratch-with-amccreatetest"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="blanking-the-plot">Blanking the plot
+  <a href="#blanking-the-plot"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p><code>AMCTestmakeR</code> can create a test from scratch with the function <code>AMCcreatetest()</code>. It creates 3 .tex files (groups.tex, questions.tex, elements.tex) that can be directly used in the AMC project folder.</p>
-<p>The first arguments of this function are passed to the <code>AMCcreatequestions()</code> function (see above for how to use it). The rest of the arguments are used to set test options (like <code>fontsize</code>, <code>separateanswersheet</code>, <code>title</code>, <code>identifier</code>, etc.). See the function documentation for a full list of options. If you don&rsquo;t pass any option (except for the questions of course), you should have a useable &ndash; albeit not customized &ndash; test.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatetest</span>(<span style="color:#e6db74">&#34;How much is $1+2$?&#34;</span>,<span style="color:#ae81ff">2</span>,<span style="color:#a6e22e">list</span>(<span style="color:#e6db74">&#34;3&#34;</span>, <span style="color:#e6db74">&#34;11&#34;</span>))
-</code></pre></div>
-
-
-
-<h3 id="more-options">More options
-  <a href="#more-options"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
-<p>Separate answer sheets, font size, title, instructions, etc.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreatetest</span>(
-  <span style="color:#75715e">#This part is passed to the AMCcreatequestions() function:</span>
-  question <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;How much is $1+1$?&#34;</span>,
-  <span style="color:#ae81ff">2</span>,
-  <span style="color:#a6e22e">list</span>(<span style="color:#e6db74">&#34;3&#34;</span>, <span style="color:#e6db74">&#34;11&#34;</span>),
-  <span style="color:#75715e">#The next part is passed to AMCcreateelements():</span>
-  shuffle <span style="color:#f92672">=</span> T,
-  sections <span style="color:#f92672">=</span> T,
-  <span style="color:#75715e">#The last part is for general test options:</span>
-  title <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Exam&#34;</span>, <span style="color:#75715e">#Custom title</span>
-  paper <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;a4&#34;</span>, <span style="color:#75715e">#change the paper for a4</span>
-  fontsize <span style="color:#f92672">=</span> <span style="color:#ae81ff">11</span>, <span style="color:#75715e">#change fontsize</span>
-  identifier <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;ID Number&#34;</span>, <span style="color:#75715e">#change identifier</span>
-  twosided <span style="color:#f92672">=</span> F, <span style="color:#75715e">#print in one sided</span>
-  instructions <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Don&#39;t respond here.&#34;</span>, <span style="color:#75715e">#show an instructions block</span>
-  separateanswersheet <span style="color:#f92672">=</span> T, <span style="color:#75715e">#use a separate answer sheet</span>
-  answersheettitle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Respond Here&#34;</span>, <span style="color:#75715e">#Change answer sheet title</span>
-  answersheetinstructions <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Fill the boxes.&#34;</span><span style="color:#75715e">#Answer sheet instructions</span>
-)
-</code></pre></div><p>When working on the questions, I suggest to work using <code>AMCcreatequestions()</code> with the default output as notes (to check the result without opening a separate .tex file). Once your questions are ready, I suggest to switch to <code>AMCcreatequestions()</code>, using the same beginning arguments, and changing the rest.</p>
+<p>NHST is a process that isn&rsquo;t straightforward to explain or understand. Before looking at the <code>\(p\)</code> value itself, it starts with stating a null hypothesis. As a consequence, it can be helpful to provide a &ldquo;step-by-step&rdquo; explanation of process that may require to plot the density probability function before adding the cutline and p-value.</p>
+<p>Hopefully, all the functions in <code>nhstplot</code> can do that very simply by passing the argument <code>blank = TRUE</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">-2</span>, blank <span style="color:#f92672">=</span> <span style="color:#66d9ef">TRUE</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>In reality, when <code>blank = TRUE</code>, every thing is plotted the same way as with <code>blank = FALSE</code> (default), but some objects are simply make transparent. This means that the two plots are scaled exactly the same way, which can be useful to plot one version after another, for example in slides of a presentation or in an animated gif.</p>
 
 
 
 
-<h2 id="workflow-2-doing-things-manually-with-your-own-template-and-amccreateelements">Workflow 2: Doing things manually with your own template and <code>AMCcreateelements()</code>
-  <a href="#workflow-2-doing-things-manually-with-your-own-template-and-amccreateelements"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="changing-the-x-axis-limits">Changing the x-axis limits
+  <a href="#changing-the-x-axis-limits"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>If you want to customize more, you can do things step by step. If doing that, I highly recommend starting by reading the AMC documentation.</p>
-<p>When using <code>AMCcreatequestions()</code> to create a questionnaire in AMC, I suggest to create, with <code>writefile = TRUE</code>, the questions in a separate questions file (e.g. <code>questions.tex</code>) in your AMC project folder.</p>
-<p>From there, in your main .tex document (usually, that&rsquo;s named <code>groups.tex</code> by AMC), add <code>\input{questions.tex}</code> at the beginning (but still after your <code>\begin{document}</code>).</p>
-<p>Then, where you want to place the different <code>elements</code>, in your main .tex, add <code>\insertgroup{element}</code> for each of them. Before the <code>\insertgroup{}</code> command, you can use <code>\shufflegroup{element}</code> to shuffle the questions within the element.</p>
+<p>The argument <code>xmax</code> can be used to manually provide a maximum for the x-axis. For symmetrical distributions ($t$ and <code>\(z\)</code>), the minimum is set automatically, so only one value (the maximum) should be provided.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, xmax <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 
 
 
 
-<h3 id="the-amccreateelements-function">The <code>AMCcreateelements()</code> function
-  <a href="#the-amccreateelements-function"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="color-themes">Color themes
+  <a href="#color-themes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
-<p>If you have many elements in your document, and therefore many <code>\insertgroup{}</code> (and <code>\shufflegroup{}</code>) to insert, you may want to use the function <code>AMCcreateelements()</code> function. It will show as a console message (which you can, this time, easily copy-and-paste into your main .tex document) the commands to insert (and shuffle, if desired, through the <code>shufflequestions</code> argument) the elements:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreateelements</span>(element <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;ADD&#34;</span>, <span style="color:#e6db74">&#34;MULT&#34;</span>, <span style="color:#e6db74">&#34;DIV&#34;</span>), shufflequestions <span style="color:#f92672">=</span> T, sections <span style="color:#f92672">=</span> T)
-</code></pre></div><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy &amp; paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \section*{ADD}
-## \shufflegroup{ADD}
-## \insertgroup{ADD}
-## \section*{MULT}
-## \shufflegroup{MULT}
-## \insertgroup{MULT}
-## \section*{DIV}
-## \shufflegroup{DIV}
-## \insertgroup{DIV}
-</code></pre><p>Note that, if the same element is input multiple times (which often happens if you pass to this function the same vector of elements as the one used in <code>AMCcreatequestions()</code>), it is not a problem, since only unique values are output:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">AMCcreateelements</span>(element <span style="color:#f92672">=</span> <span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;MATH&#34;</span>, <span style="color:#e6db74">&#34;MATH&#34;</span>, <span style="color:#e6db74">&#34;MATH&#34;</span>, <span style="color:#e6db74">&#34;STAT&#34;</span>), shufflequestions <span style="color:#f92672">=</span> F, sections <span style="color:#f92672">=</span> F)
-</code></pre></div><pre><code>## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## %%%%%%%%%| List of elements |%%%%%%%%%
-## %%% (copy &amp; paste after questions) %%%
-## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-## \insertgroup{MATH}
-## \insertgroup{STAT}
-</code></pre>
+</h2>
+<p>For all 4 functions, the default theme is light blue and red (like seen above). But other themes are available with the <code>theme</code>parameter, as shown below.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blackandwhite&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;whiteandred&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blueandred&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-16-3.png" width="672" /></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;greenandred&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-16-4.png" width="672" /></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, theme <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;goldandblue&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-16-5.png" width="672" /></p>
 
 
 
-<h1 id="future-features">Future features
-  <a href="#future-features"></a>
-</h1>
-<p>Auto multiple choice s a great freeware that is able to do a lot more that what <code>AMCTestmakeR</code> helps for, so I will try to add the most helpful features here soon. This software feels the In any case, I strongly encourage to read the documentation of how to use LaTeX in Auto Multiple Choice to get a sense of its many possibilities.</p>
+
+<h2 id="custom-colors">Custom colors
+  <a href="#custom-colors"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>A first important note : The <code>theme</code>argument supersedes any custom colors you may use, so don&rsquo;t provide anything (or <code>default</code>) to the <code>theme</code> parameter if you want to use custom colors.</p>
+<ul>
+<li><code>\(\chi^2\)</code> and <code>\(f\)</code> : The parameters <code>colorleft</code>, <code>colorleftcurve</code>, <code>colorright</code> and <code>colorrightcurve</code> control the curve and areas under the curve colors in the <code>plotchisqtest</code> and <code>plotftest</code> functions. Additionnally, <code>colorplabel</code> and <code>colorcutline</code> control the colors of the p value label and of the cut line. For example:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotftest</span>(<span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, colorleft <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lightgreen&#34;</span>, colorleftcurve <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;red&#34;</span>, colorright <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;indianred&#34;</span>, colorrightcurve <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blue&#34;</span>, colorplabel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;darkgrey&#34;</span>, colorcut <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;#FFA500&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<ul>
+<li><code>\(t\)</code> and <code>\(z\)</code> :The parameters <code>colormiddle</code>, <code>colormiddlecurve</code>, <code>colorsides</code> and <code>colorsidescurve</code> control the curve and areas under the curve colors in the <code>plotttest</code> and <code>plotztest</code> functions. Additionnally, <code>colorplabel</code> (defaults to the same and <code>colorcutline</code> control the colors of the p value label and of the cut line. For example:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, colormiddle <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;lightgreen&#34;</span>, colormiddlecurve <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;red&#34;</span>, colorsides <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;indianred&#34;</span>, colorsidescurve <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;blue&#34;</span>, colorplabel <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;darkgrey&#34;</span>, colorcut <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;#FFA500&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+
+
+
+
+<h2 id="custom-fonts">Custom fonts
+  <a href="#custom-fonts"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>The font family of all the text in the graph can be changed using the <code>fontfamily</code> argument (you can for example use <code>mono</code>, <code>Palatino</code>, <code>Helvetica</code> or <code>sans</code>. The default is <code>serif</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, fontfamily <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Helvetica&#34;</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<ul>
+<li>Note that the package <code>extrafonts</code> can be used to provide your own fonts (e.g. to match your slides font), and appears to work well with <code>nhstplot</code>. Fonts loaded through <code>extrafonts</code> can be called in the <code>fontfamily</code> argument in the <code>nhstplot</code> functions (e.g., <code>plotztest(2, fontfamily = &quot;Roboto&quot;)</code>).</li>
+</ul>
+
+
+
+
+<h2 id="line-size">Line size
+  <a href="#line-size"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>The <code>cutlinesize</code>and the <code>curvelinesize</code> control the size of the line sizes. By default, the <code>cutlinesize</code>is the same as the <code>curvelinesize</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2</span>, cutlinesize <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>, curvelinesize <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+
+
+
+
+<h2 id="digits">Digits
+  <a href="#digits"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>The number of significant digits can be modified in all functions using <code>signifdigitschisq</code> / <code>signifdigitsf</code> / <code>signifdigitst</code> / <code>signifdigitsz</code> for the test statistic. The default is <code>3</code> for all.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">plotztest</span>(<span style="color:#ae81ff">2.134553</span>, signifdigitsz <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>)
+</code></pre></div><p><img src="/r-packages/nhstplot/index_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Posted on:</dt>
-    <dd class="fw5 ml0">April 14, 2021</dd>
+    <dd class="fw5 ml0">April 14, 2020</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">9 minute read, 1804 words</dd>
+    <dd class="fw5 ml0">5 minute read, 1018 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -596,12 +381,9 @@ incorrect3 <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="/r-packages/jrt/">&larr; jrt – Item Response Theory Modeling and Scoring for Judgment Data</a>
+    href="/r-packages/amc/">&larr; AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</a>
   
   
-  
-    <a class="next dtc pl2 tr v-top fw6"
-    href="/r-packages/amctestmaker/">nhstplot – Plot Null Hypothesis Significance Tests &rarr;</a>
   
 </div>
 
