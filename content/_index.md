@@ -8,7 +8,7 @@ images:
 - Images/headshot_v3.jpg
 show_action_link: true
 show_social_links: true
-subtitle: Quantitative methods and psychometrics, applied in organizational, vocational, UX and marketing contexts.
+subtitle: Quantitative methods and psychometrics, applied in organizational, vocational, UX and marketing contexts
 text_align_left: false
 title: Nils Myszkowski, PhD
 type: home
