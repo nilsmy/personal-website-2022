@@ -1,0 +1,32 @@
+---
+title: Same Test, Better Scores – Boosting the Reliability of Short Online Intelligence Recruitment Tests with Nested Logit Item Response Theory Models
+author: Nils Myszkowski
+date: '2019-07-10'
+slug: []
+categories: [Psychometrics, Reliability, Item-Response Theory]
+tags: []
+excerpt: In this paper, we propose to generalize the use of Nested Logit Models and implement its use for online personnel selection procedures that use reasoning tests with multiple choices (e.g., matrix-type tests). We find that using such models results in gains of reliability, especially at low ability levels.
+links:
+- icon: file-pdf
+  icon_pack: fa
+  name: PDF
+  url: Publication_pdf/Storme et al. - 2019 - Same Test, Better Scores Boosting the Reliability.pdf
+---
+
+# What it's about
+
+In this paper, we propose to generalize the use of Nested Logit Models and implement its use for online personnel selection procedures that use reasoning tests with multiple choices (e.g., matrix-type tests). We find that using such models results in gains of reliability, especially at low ability levels.
+
+# Abstract
+
+Assessing job applicants’ general mental ability online poses psychometric challenges due to the necessity of having brief but accurate tests. Recent research (Myszkowski & Storme, 2018)
+suggests that recovering distractor information through Nested Logit Models (NLM; Suh & Bolt, 2010) increases the reliability of ability estimates in reasoning matrix-type tests. In the present research,
+we extended this result to a different context (online intelligence testing for recruitment) and in a larger sample (N = 2949 job applicants). We found that the NLMs outperformed the Nominal
+Response Model (Bock, 1970) and provided significant reliability gains compared with their binary logistic counterparts. In line with previous research, the gain in reliability was especially obtained at
+low ability levels. Implications and practical recommendations are discussed.
+
+
+# How to access the paper
+
+You can access the full paper [here](https://doi.org/10.3390/jintelligence7030017).
+

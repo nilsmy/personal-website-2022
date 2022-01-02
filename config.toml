@@ -30,9 +30,9 @@ enableEmoji = true
 [params]
   orgName = "Nils Myszkowski"
   orgLocal = ""
-  description = "Quantiative Psychologist & Psychometrician"
+  description = "Quantitative Psychologist & Psychometrician"
   favicon = "/img/favicon.ico"
-  logo = "/img/blogophonic-mark-dark.png"
+  logo = "/Images/home-solid.svg"
   mainSections = ["blog", "project", "talk"]
   navallcaps = true
   # show/hide social icons in site header & footer
@@ -41,27 +41,27 @@ enableEmoji = true
   socialInFooter = true
   # Default image for social sharing and search engines. 
   # Place image file in `static` folder and specify image name here.
-  sharing_image = "/img/papillons.jpg"
+  sharing_image = "/Images/headshot_v2.jpg"
   # Twitter username (without @). Used when a visitor shares your site on Twitter.
   #twitter = "apreshill"
   
   # use a built-in color theme
   # one of: forest / grayscale / peach / plum /
   #         poppy / sky / violet / water 
-  theme = "sky"
+  theme = ""
   
   # or, leave theme empty & make your own palette
   # see docs at https://hugo-apero.netlify.app/blog/color-themes/
   # the custom scss file must be in the assets/ folder
   # add the filename name here, without extension
   # to use hex colors instead of named tachyons colors, include "hex" in filename
-  custom_theme = "" 
+  custom_theme = "theme_1" 
   
   # use an embedded font-family
   # serif options: Fraunces / EB Garamond / Bitter
   # sans-serif options: Commissioner / Atkinson Hyperlegible / Metropolis
   # if you import your own fonts, name them here too
-  customtextFontFamily = "Atkinson Hyperlegible"
+  customtextFontFamily = "Commissioner"
   customheadingFontFamily = "EB Garamond"
   # alternatively, leave empty and select basic font options: sans-serif or serif
   # for more http://tachyons.io/docs/typography/font-family/
@@ -128,6 +128,7 @@ enableEmoji = true
     title = "Contact form"
     url = "/contact/"
     weight = 3
+
     
   # Configure footer  
   [[menu.footer]]

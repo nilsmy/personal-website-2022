@@ -1,0 +1,135 @@
+---
+title: jrt – Item Response Theory Modeling and Scoring for Judgment Data
+author: Nils Myszkowski
+date: '2022-01-01'
+slug: []
+categories: [Psychometrics, Creativity, Rater-mediated assessment]
+tags: []
+excerpt: A package for the Psychometric analysis and scoring of judgment data using polytomous Item-Response Theory (IRT) models.
+links:
+- icon: r-project
+  icon_pack: fab
+  name: View on CRAN
+  url: https://CRAN.R-project.org/package=jrt
+---
+
+# What it's about
+
+The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+
+The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+
+* Myszkowski, N. (2021). Development of the R library "jrt": Automated item response theory procedures for judgment data and their application with the consensual assessment technique. *Psychology of Aesthetics, Creativity, and the Arts, 15*(3), 426-438. http://dx.doi.org/10.1037/aca0000287
+
+## Vignette
+
+The vignette can be found at https://cran.r-project.org/web/packages/jrt/vignettes/my-vignette.html
+
+
+
+## Installation
+
+You can install the released version of jrt from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("jrt")
+```
+
+## Example use
+
+- Load the library
+
+
+```r
+library(jrt)
+```
+
+```
+## Loading required package: directlabels
+```
+
+- Load example dataset
+
+
+```r
+data <- jrt::ratings
+```
+
+- To automatically select models 
+
+
+```r
+fit <- jrt(data)
+```
+
+- To select models a priori
+
+
+```r
+fit <- jrt(data, irt.model = "PCM")
+```
+
+
+
+- To plot all category curves
+
+
+```r
+jcc.plot(fit)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+
+- To plot one judge's category curves
+
+
+```r
+jcc.plot(fit, judge = 1)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+
+- Graphical options
+
+
+```r
+jcc.plot(fit, 
+         judge = 1,
+         overlay.reliability = T, 
+         greyscale = T, 
+         theme = "classic",
+         font.family = "serif")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+
+- To plot total information
+
+
+```r
+info.plot(fit)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
+- To plot judge information
+
+
+```r
+info.plot(fit, judge = 1)
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+
+- Other options for information plots
+
+
+```r
+info.plot(fit, type = "Reliability",
+          y.line = .70,
+          y.limits = c(0,1),
+          theta.span = 4,
+          theme = "classic")
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" />

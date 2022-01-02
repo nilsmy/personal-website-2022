@@ -38,13 +38,52 @@
     <loc>/collection/day02/03-blogdown/</loc>
     <lastmod>2021-01-02T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/</loc>
-    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/categories/</loc>
-    <lastmod>2021-01-28T00:00:00+00:00</lastmod>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/creativity/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/r-packages/jrt/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/r-packages/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/psychometrics/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/rater-mediated-assessment/</loc>
+    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2021-2ppcm/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/item-response-theory/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/log-linear-models/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/poisson-models/</loc>
+    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/r-packages/nhstplot/</loc>
+    <lastmod>2021-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/education/</loc>
+    <lastmod>2021-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/inference/</loc>
+    <lastmod>2021-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/blog/</loc>
     <lastmod>2021-01-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/blog/social/</loc>
@@ -110,26 +149,35 @@
     <loc>/blog/rmarkdown/</loc>
     <lastmod>2020-12-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publications/a-mokken-scale-analysis-of-the-last-series-of-the-standard-progressive-matrices-spm-ls/</loc>
+    <loc>/publications/2020-mokken/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/r-packages/jrt/</loc>
+    <loc>/publications/2021-creativity-unethicality/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/publications/</loc>
+    <loc>/categories/ethical-behavior/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/r-packages/</loc>
+    <loc>/categories/meta-analysis/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/psychometrics/</loc>
+    <loc>/categories/scaling/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/test-development/</loc>
     <lastmod>2020-05-12T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/r-packages/amctestmaker/</loc>
+    <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/talk/seedling/</loc>
     <lastmod>2020-01-13T14:15:59-06:00</lastmod>
+  </url><url>
+    <loc>/categories/reliability/</loc>
+    <lastmod>2019-07-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2019-same_test/</loc>
+    <lastmod>2019-07-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/blog/css-grid-scaffold/</loc>
     <lastmod>2019-07-02T00:00:00+00:00</lastmod>
@@ -145,6 +193,9 @@
   </url><url>
     <loc>/elements/</loc>
     <lastmod>2019-02-18T12:27:33-06:00</lastmod>
+  </url><url>
+    <loc>/publications/2018-intelligence/</loc>
+    <lastmod>2018-12-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/about/</loc>
   </url><url>

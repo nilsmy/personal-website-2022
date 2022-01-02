@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ethical behavior on Nils Myszkowski</title>
+    <link>/categories/ethical-behavior/</link>
+    <description>Recent content in Ethical behavior on Nils Myszkowski</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/ethical-behavior/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creativity and unethicality – A systematic review and meta-analysis</title>
+      <link>/publications/2021-creativity-unethicality/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2021-creativity-unethicality/</guid>
+      <description>What it’s about In this paper, we provide a meta-analysis of correlations between (un)ethical behavior and creativity, notably controlling for how the constructs were measured – which, as it turns out, is important when considering the heterogeneity of the findings.
+ Abstract A growing line of research suggests that creativity and unethicality are intrinsically related to one another. However, the idea has been challenged both by theoretical arguments and by heterogeneous empirical findings.</description>
+    </item>
+    
+  </channel>
+</rss>

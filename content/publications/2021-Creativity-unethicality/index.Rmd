@@ -1,0 +1,28 @@
+---
+title: Creativity and unethicality – A systematic review and meta-analysis
+author: Nils Myszkowski
+date: '2020-05-12'
+slug: []
+categories: [Meta-analysis, Creativity, Ethical behavior]
+tags: []
+excerpt: In this paper, we provide a meta-analysis of correlations between (un)ethical behavior and creativity, notably controlling for how the constructs were measured -- which, as it turns out, is important when considering the heterogeneity of the findings.
+links:
+- icon: file-pdf
+  icon_pack: fa
+  name: PDF
+  url: Publication_pdf/Storme et al. - 2020 - Creativity and unethicality A systematic review a.pdf
+---
+
+# What it's about
+
+In this paper, we provide a meta-analysis of correlations between (un)ethical behavior and creativity, notably controlling for how the constructs were measured -- which, as it turns out, is important when considering the heterogeneity of the findings.
+
+# Abstract
+
+A growing line of research suggests that creativity and unethicality are intrinsically related to one another. However, the idea has been challenged both by theoretical arguments and by heterogeneous empirical findings. In the present work, we review the literature to reconcile seemingly opposed theoretical views on the relationship between creativity and unethicality. We then conduct a meta- analysis to clear up confusion about heterogeneous empirical findings in the literature ($k= 36$, $N=6783$). We find a weak positive correlation between the 2 constructs ($r= .09$, 95% confidence interval $[.01, .17]$, $t = 2.24$, $p < .05$). Consistent with social desirability response bias theory (Randall & Fernandes, 1991), we find that the correlation is significant in studies that rely upon objective measures of unethicality—that is, behavioral measures or other-reports—but not in studies that rely upon self- reports of unethicality. Altogether, our work suggests that creativity and unethicality are positively related as predicted by theory, and that some studies have failed at finding it because they used self-reports to assess unethicality rather than objective measures. Theoretical, methodological, and practical implications are discussed.
+
+
+# How to access the paper
+
+You can access the full paper [here](http://dx.doi.org/10.1037/aca0000332).
+

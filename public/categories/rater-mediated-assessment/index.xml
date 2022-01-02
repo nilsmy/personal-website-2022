@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rater-mediated assessment on Nils Myszkowski</title>
+    <link>/categories/rater-mediated-assessment/</link>
+    <description>Recent content in Rater-mediated assessment on Nils Myszkowski</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/rater-mediated-assessment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>jrt – Item Response Theory Modeling and Scoring for Judgment Data</title>
+      <link>/r-packages/jrt/</link>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/r-packages/jrt/</guid>
+      <description>What it&amp;rsquo;s about   The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
+ Myszkowski, N.</description>
+    </item>
+    
+  </channel>
+</rss>
