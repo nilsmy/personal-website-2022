@@ -8,7 +8,7 @@ links:
 - icon: file-pdf
   icon_pack: fa
   name: PDF
-  url: Storme et al. - 2020 - A forgotten antecedent of career adaptability A s.pdf
+  url: Storme-et-al-2020-A-forgotten.pdf
 categories:
   - Item-Response Theory
   - Within-Person variability
