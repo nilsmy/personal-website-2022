@@ -11,7 +11,7 @@ cascade:
 description: A list and short description of (some of) my publications.
 layout: list-grid
 show_author_byline: false
-show_button_links: false
+show_button_links: true
 show_post_date: false
 show_post_thumbnail: false
 sidebar:
