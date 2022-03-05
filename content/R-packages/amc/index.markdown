@@ -64,9 +64,9 @@ AMCcreatequestions(
  {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
  How much is $1+1$?
  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
- \wrongchoice{3}
- \wrongchoice{11}
  \correctchoice{2}
+ \wrongchoice{11}
+ \wrongchoice{3}
  \end{choices}\end{multicols}\end{question}
 }
  
@@ -128,8 +128,8 @@ AMCcreatequestions(question = question,
 ##  How much is $1+1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
 ##  \correctchoice{2}
-##  \wrongchoice{4}
 ##  \wrongchoice{1}
+##  \wrongchoice{4}
 ##  \wrongchoice{3}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
@@ -138,10 +138,10 @@ AMCcreatequestions(question = question,
 ##  {\begin{question}{Q2}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $1 \times 1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{3}
-##  \wrongchoice{4}
-##  \correctchoice{1}
 ##  \wrongchoice{8}
+##  \wrongchoice{3}
+##  \correctchoice{1}
+##  \wrongchoice{4}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
 ##  
@@ -149,9 +149,9 @@ AMCcreatequestions(question = question,
 ##  {\begin{question}{Q3}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $\frac{1}{2}$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{100}
-##  \wrongchoice{10}
 ##  \correctchoice{0.5}
+##  \wrongchoice{10}
+##  \wrongchoice{100}
 ##   \end{choices}\end{multicols}\end{question}
 ## }
 ## 
@@ -196,9 +196,9 @@ AMCcreatequestions(element = c("ADD", "MULT", "DIV"),
 ##  {\begin{question}{Q1}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $1+1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{2}
 ##  \wrongchoice{1}
 ##  \wrongchoice{3}
+##  \correctchoice{2}
 ##  \wrongchoice{4}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
@@ -208,9 +208,9 @@ AMCcreatequestions(element = c("ADD", "MULT", "DIV"),
 ##  How much is $1 \times 1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
 ##  \wrongchoice{8}
+##  \correctchoice{1}
 ##  \wrongchoice{4}
 ##  \wrongchoice{3}
-##  \correctchoice{1}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
 ##  
@@ -218,9 +218,9 @@ AMCcreatequestions(element = c("ADD", "MULT", "DIV"),
 ##  {\begin{question}{Q3}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $\frac{1}{2}$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
+##  \wrongchoice{10}
 ##  \correctchoice{0.5}
 ##   \wrongchoice{100}
-##  \wrongchoice{10}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
 ## 
@@ -268,9 +268,9 @@ AMCcreatequestions(code = c("ADD1", "MULT1", "DIV1"),
 ##  {\begin{question}{ADD1}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $1+1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
+##  \wrongchoice{3}
 ##  \wrongchoice{4}
 ##  \correctchoice{2}
-##  \wrongchoice{3}
 ##  \wrongchoice{1}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
@@ -279,8 +279,8 @@ AMCcreatequestions(code = c("ADD1", "MULT1", "DIV1"),
 ##  {\begin{question}{MULT1}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $1 \times 1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{8}
 ##  \wrongchoice{4}
+##  \wrongchoice{8}
 ##  \wrongchoice{3}
 ##  \correctchoice{1}
 ##  \end{choices}\end{multicols}\end{question}
@@ -290,10 +290,10 @@ AMCcreatequestions(code = c("ADD1", "MULT1", "DIV1"),
 ##  {\begin{question}{DIV1}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $\frac{1}{2}$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
+##   \wrongchoice{10}
 ##  \correctchoice{0.5}
 ##  \wrongchoice{100}
-##  \wrongchoice{10}
-##   \end{choices}\end{multicols}\end{question}
+##  \end{choices}\end{multicols}\end{question}
 ## }
 ## 
 ```
@@ -328,10 +328,10 @@ AMCcreatequestions(codeprefix = "MATH",
 ##  {\begin{question}{MATH1}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $1+1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \correctchoice{2}
 ##  \wrongchoice{1}
 ##  \wrongchoice{3}
 ##  \wrongchoice{4}
+##  \correctchoice{2}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
 ##  
@@ -339,9 +339,9 @@ AMCcreatequestions(codeprefix = "MATH",
 ##  {\begin{question}{MATH2}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $1 \times 1$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
-##  \wrongchoice{3}
-##  \correctchoice{1}
 ##  \wrongchoice{8}
+##  \correctchoice{1}
+##  \wrongchoice{3}
 ##  \wrongchoice{4}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
@@ -350,9 +350,9 @@ AMCcreatequestions(codeprefix = "MATH",
 ##  {\begin{question}{MATH3}\scoring{b=1,m=0,v=0,e=0,b=0}
 ##  How much is $\frac{1}{2}$ ?
 ##  \begin{multicols}{2}\AMCBoxedAnswers\begin{choices}
+##   \wrongchoice{100}
+##  \correctchoice{0.5}
 ##  \wrongchoice{10}
-##  \wrongchoice{100}
-##   \correctchoice{0.5}
 ##  \end{choices}\end{multicols}\end{question}
 ## }
 ## 
