@@ -15,7 +15,7 @@ links:
 - icon: file-pdf
   icon_pack: fa
   name: PDF
-  url: Myszkowski - 2022 - Exploring the associations between personality and.pdf
+  url: Myszkowski-2022-Exploring.pdf
 ---
 
 # What it's about
