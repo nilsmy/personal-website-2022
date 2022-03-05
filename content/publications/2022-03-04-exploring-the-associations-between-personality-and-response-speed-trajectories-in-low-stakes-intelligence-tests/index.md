@@ -15,7 +15,7 @@ links:
 - icon: file-pdf
   icon_pack: fa
   name: PDF
-  url: Myszkowski-2022-Exploring.pdf
+  url: Publication_pdf/Myszkowski-2022-Exploring.pdf
 ---
 
 # What it's about
