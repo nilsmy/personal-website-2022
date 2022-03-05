@@ -1,7 +1,7 @@
 ---
 title: Exploring the associations between personality and response speed trajectories in low-stakes intelligence tests
 author: Nils Myszkowski
-date: '2022-04-03'
+date: '2022-03-03'
 slug: []
 categories: [Item-Response Theory, Response times, Logical Reasoning, Personality]
 tags: []
