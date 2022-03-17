@@ -6,7 +6,70 @@
     <description>Recent content in Categories on Nils Myszkowski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Item-Response Theory</title>
+      <link>/categories/item-response-theory/</link>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/item-response-theory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Negotiation</title>
+      <link>/categories/negotiation/</link>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/negotiation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Personality</title>
+      <link>/categories/personality/</link>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/personality/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Within-Person variability</title>
+      <link>/categories/within-person-variability/</link>
+      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/within-person-variability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Log-linear models</title>
+      <link>/categories/log-linear-models/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/log-linear-models/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychometrics</title>
+      <link>/categories/psychometrics/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychometrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Response times</title>
+      <link>/categories/response-times/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/response-times/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Creativity</title>
       <link>/categories/creativity/</link>
@@ -17,38 +80,11 @@
     </item>
     
     <item>
-      <title>Psychometrics</title>
-      <link>/categories/psychometrics/</link>
-      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/psychometrics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Rater-mediated assessment</title>
       <link>/categories/rater-mediated-assessment/</link>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>/categories/rater-mediated-assessment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Item-Response Theory</title>
-      <link>/categories/item-response-theory/</link>
-      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/item-response-theory/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Log-linear models</title>
-      <link>/categories/log-linear-models/</link>
-      <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/log-linear-models/</guid>
       <description></description>
     </item>
     
@@ -157,6 +193,15 @@
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/categories/test-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Career adaptability</title>
+      <link>/categories/career-adaptability/</link>
+      <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/career-adaptability/</guid>
       <description></description>
     </item>
     

@@ -6,7 +6,17 @@
     <description>Recent content in Psychometrics on Nils Myszkowski</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/psychometrics/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 03 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/psychometrics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Exploring the associations between personality and response speed trajectories in low-stakes intelligence tests</title>
+      <link>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</link>
+      <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, using Log-Normal Item-Response Theory models for response time data, we study how personality traits predict response speed trajectories in low-stakes reasoning tasks. We found that some traits are associated with increasing in speed vs. decreasing in speed, controlling for item effects.
+Abstract   Previous research suggests a negative relationship between test taking speed and performance in mental ability testing, inviting researchers to explore the origin of individual differences in test taking speed.</description>
+    </item>
+    
     <item>
       <title>jrt – Item Response Theory Modeling and Scoring for Judgment Data</title>
       <link>/r-packages/jrt/</link>
