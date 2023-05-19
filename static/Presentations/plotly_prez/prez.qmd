@@ -1,0 +1,19 @@
+---
+title: "Essai"
+format: revealjs
+editor: visual
+---
+
+# Super plot
+
+```{r}
+#library(tidyverse)
+library(ggplot2)
+library(plotly)
+
+data(gapminder, package = "gapminder")
+gg <- ggplot(gapminder, aes(gdpPercap, lifeExp, color = continent)) +
+  geom_point(aes(size = pop, frame = year, ids = country)) +
+  scale_x_log10() + theme_minimal()
+ggplotly(gg)
+```
