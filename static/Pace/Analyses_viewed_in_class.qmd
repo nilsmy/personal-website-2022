@@ -54,7 +54,7 @@ df$link_youtube_excel[which(grepl(x = df$link_youtube_excel , pattern = "href='N
 
 # Colnames
 colnames(df) <- gsub(x = colnames(df), pattern = "seen_in_", replacement = "")
-colnames(df) <- gsub(x = colnames(df), pattern = "PSY", replacement = "")
+#colnames(df) <- gsub(x = colnames(df), pattern = "PSY", replacement = "")
 colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_spss", replacement = "Video SPSS")
 colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_jasp", replacement = "Video JASP")
 colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_R", replacement = "Video R")
@@ -62,6 +62,8 @@ colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_excel", replaceme
 
 colnames(df) <- gsub(x = colnames(df), pattern = "_", replacement = " ")
 
+# Sort by analysis
+df <- dplyr::arrange(df, Analysis)
 
 library(DT)
 # Render the interactive table with DT
