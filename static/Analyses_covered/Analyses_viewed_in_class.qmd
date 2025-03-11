@@ -1,0 +1,81 @@
+---
+title: "Analysis covered in statistics classes"
+subtitle: "Pace University -- Doctoral programs in Psychology"
+author: "Nils Myszkowski"
+date: last-modified
+format: 
+  html:
+    page-layout: full
+    grid:
+      body-width: 1200px
+    toc: true
+    number-sections: false
+    code-tools: false
+    df-print: paged
+    embed-resources: true
+    theme:
+      light: cosmo
+    anchor-sections: true
+    fig-align: center
+    citation-location: document
+    csl: apa
+    link-external-icon: true
+editor: visual
+---
+
+```{r}
+#| echo: false
+# Import data table from excel
+library(readxl)
+df <- readxl::read_excel("Analyses_viewed_in_class.xlsx")
+```
+
+```{r}
+#| echo: false
+# Add link to urls
+df$link_youtube_spss <- paste0("<a href='", df$link_youtube_spss, "' target='_blank'>Video</a>")
+# Remove NAs
+df$link_youtube_spss[which(grepl(x = df$link_youtube_spss , pattern = "href='NA'"))] <- NA
+
+# Add link to urls
+df$link_youtube_jasp <- paste0("<a href='", df$link_youtube_jasp, "' target='_blank'>Video</a>")
+# Remove NAs
+df$link_youtube_jasp[which(grepl(x = df$link_youtube_jasp , pattern = "href='NA'"))] <- NA
+
+# Add link to urls
+df$link_youtube_R <- paste0("<a href='", df$link_youtube_R, "' target='_blank'>Video</a>")
+# Remove NAs
+df$link_youtube_R[which(grepl(x = df$link_youtube_R , pattern = "href='NA'"))] <- NA
+
+# Add link to urls
+df$link_youtube_excel <- paste0("<a href='", df$link_youtube_excel, "' target='_blank'>Video</a>")
+# Remove NAs
+df$link_youtube_excel[which(grepl(x = df$link_youtube_excel , pattern = "href='NA'"))] <- NA
+
+# Colnames
+colnames(df) <- gsub(x = colnames(df), pattern = "seen_in_", replacement = "")
+#colnames(df) <- gsub(x = colnames(df), pattern = "PSY", replacement = "")
+colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_spss", replacement = "Video SPSS")
+colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_jasp", replacement = "Video JASP")
+colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_R", replacement = "Video R")
+colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_excel", replacement = "Video Excel")
+
+colnames(df) <- gsub(x = colnames(df), pattern = "_", replacement = " ")
+
+# Sort by analysis
+df <- dplyr::arrange(df, Analysis)
+
+library(DT)
+# Render the interactive table with DT
+datatable(df, 
+          escape = FALSE, 
+          options = list(pageLength = nrow(df), 
+                         autoWidth = F, 
+                         dom = 'ftip', 
+                         searchHighlight = TRUE),
+          rownames = FALSE,
+          filter = 'top', 
+          #fillContainer = T
+          )
+
+```
