@@ -63,7 +63,7 @@ colnames(df) <- gsub(x = colnames(df), pattern = "link_youtube_excel", replaceme
 colnames(df) <- gsub(x = colnames(df), pattern = "_", replacement = " ")
 
 # Sort by analysis
-df <- dplyr::arrange(df, Analysis)
+df <- dplyr::arrange(df, Analysis) 
 
 library(DT)
 # Render the interactive table with DT
