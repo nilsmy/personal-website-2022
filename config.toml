@@ -1,8 +1,8 @@
 baseURL = "/"
 theme = "hugo-apero"
 languageCode = "en"
-title = "Nils Myszkowski"
-author = "Nils Myszkowski"
+title = "Nils Myszkowski, PhD"
+author = "Nils Myszkowski, PhD"
 copyright = "" # set to override the auto generated copyright using org info and now year
 googleAnalytics = ""
 disqusShortname = "" # see params.utterances to use utterances instead of Disqus
@@ -41,7 +41,7 @@ enableEmoji = true
   socialInFooter = true
   # Default image for social sharing and search engines. 
   # Place image file in `static` folder and specify image name here.
-  sharing_image = "/Images/headshot_v2.jpg"
+  sharing_image = "/Images/headshot_2025_website_01.jpg"
   # Twitter username (without @). Used when a visitor shares your site on Twitter.
   #twitter = "apreshill"
   
