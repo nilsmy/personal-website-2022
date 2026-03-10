@@ -62,6 +62,7 @@
 - Content is page-bundle oriented (`content/<section>/<slug>/index.*` + local assets).
 - Front matter is YAML (`---`) and commonly includes:
   - `title`, `author`, `date`, `draft`, `excerpt`, `layout`, `categories`, `tags`, `links`.
+- Personal-site byline convention: use `author: Nils Myszkowski` on publication pages (do not list full coauthor strings in page bylines).
 - Publications and package pages use `links:` with icon metadata for PDF/CRAN links.
 - Section-level behavior comes from `_index.md` cascade settings; preserve cascade semantics.
 
@@ -112,6 +113,8 @@
   - Add menu entry in `config.toml` only if requested.
 
 ## Default PDF Intake Workflow
+- Before creating a new publication entry, always run a duplicate check across existing `content/publications/` items using DOI, normalized title, slug, and PDF filename.
+- If a likely match already exists, update the existing entry instead of creating a duplicate folder/page.
 - If the user drops a paper PDF without extra instructions, default destination is `content/publications/<slug>/`.
 - Default output to generate:
   - publication-style short abstract/excerpt in current site style

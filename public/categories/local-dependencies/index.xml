@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Local dependencies on Nils Myszkowski, PhD</title>
+    <link>/categories/local-dependencies/</link>
+    <description>Recent content in Local dependencies on Nils Myszkowski, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 15 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="/categories/local-dependencies/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Modeling Sequential Dependencies in Progressive Matrices: An Auto-Regressive Item Response Theory (AR-IRT) Approach</title>
+      <link>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</link>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we propose auto-regressive item response theory models for progressive matrices, allowing each item response to depend not only on latent ability and item parameters, but also on prior responses in sequence.
+Abstract   Standard measurement models typically assume local independence among item responses conditional on latent traits. This article argues that, in sequential cognitive tasks such as progressive matrices, responses may show meaningful lagged dependencies that should be modeled directly.</description>
+    </item>
+    
+  </channel>
+</rss>

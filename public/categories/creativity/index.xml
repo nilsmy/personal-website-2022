@@ -6,7 +6,17 @@
     <description>Recent content in Creativity on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/creativity/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/creativity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models</title>
+      <link>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine how a single creativity score in PISA can mask two separable dimensions of judged responses, and we propose generalized item response tree modeling to estimate appropriateness and originality components explicitly.
+Abstract   Creative-thinking judgments in large-scale assessments often combine multiple evaluative criteria into one score, which can blur interpretation and measurement precision. This article focuses on PISA creative-thinking judgments and introduces a generalized item response tree approach to separate appropriateness and originality into distinct latent components.</description>
+    </item>
+    
     <item>
       <title>Bayesian Estimation of Generalized Log-Linear Poisson Item Response Models for Fluency Scores Using brms and Stan</title>
       <link>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
@@ -15,6 +25,36 @@
       <guid>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we present a Bayesian estimation workflow for generalized log-linear Poisson item-response models applied to fluency scores in divergent-thinking assessment, with practical implementation using brms and Stan.
 Abstract   Divergent-thinking tests often rely on fluency scores (counts of ideas generated per prompt), and these counts can be modeled with Poisson item-response models. This paper revisits the Rasch Poisson Counts Model and its generalized two-parameter extension (2PPCM), and shows how both can be estimated in a Bayesian multilevel regression framework through brms (Stan backend).</description>
+    </item>
+    
+    <item>
+      <title>Unscrambling Creativity Measurement: An Invitation to Better Formalize the Domain Generality-Specificity of Creativity with Psychometric Modeling</title>
+      <link>/publications/2024-unscrambling-creativity-measurement/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2024-unscrambling-creativity-measurement/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we discuss how the domain generality-specificity debate in creativity research can be clarified by explicitly modeling measurement structure, instead of relying on underspecified score interpretations.
+Abstract   Creativity assessment often conflates multiple sources of variance, making it difficult to determine what a given score truly reflects. This article argues for a more formal psychometric treatment of the domain generality-specificity question in creativity measurement.</description>
+    </item>
+    
+    <item>
+      <title>Creativity with 6 Degrees of Freedom: Feasibility Study of Visual Creativity Assessment in Virtual Reality</title>
+      <link>/publications/2023-creativity-with-6-degrees-of-freedom/</link>
+      <pubDate>Sat, 08 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2023-creativity-with-6-degrees-of-freedom/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we test whether creativity can be assessed through an immersive visual task in virtual reality, and examine how well this approach captures meaningful individual differences.
+Abstract   The study introduces and evaluates a virtual-reality visual creativity assessment designed to move creativity measurement into richer digital environments. The paper examines feasibility and reports psychometric evidence, including analyses of structural validity, internal reliability, and criterion-related validity.</description>
+    </item>
+    
+    <item>
+      <title>Can We “Read” Art...at All? A Psychometric Perspective on the Possibility of Measuring Artwork Attributes</title>
+      <link>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine the claim that we can “read” artworks and evaluate what is psychometrically required for such measurement claims to be valid and interpretable.
+Abstract   This article offers a psychometric commentary on the possibility of measuring artwork attributes. It focuses on the conceptual and measurement assumptions needed to support inferences about what can be extracted from artworks through assessment. The discussion highlights construct-definition issues, score-interpretation limits, and the importance of formal measurement models when evaluating claims about art-based judgments.</description>
     </item>
     
     <item>

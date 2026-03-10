@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Forced-choice on Nils Myszkowski, PhD</title>
+    <link>/categories/forced-choice/</link>
+    <description>Recent content in Forced-choice on Nils Myszkowski, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Wed, 10 Jan 2024 00:00:00 +0000</lastBuildDate><atom:link href="/categories/forced-choice/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Personality Traits Leading Respondents to Refuse to Answer a Forced-Choice Personality Item: An Item Response Tree (IRTree) Model</title>
+      <link>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we study why respondents refuse to answer forced-choice personality items, and we model both refusal and refusal reasons within an item response tree framework.
+Abstract   The study examines individual differences in refusal behavior when respondents are given forced-choice personality items with an explicit option to decline choosing between statements. When refusing, respondents also indicate whether both statements fit equally well or neither fits adequately.</description>
+    </item>
+    
+  </channel>
+</rss>

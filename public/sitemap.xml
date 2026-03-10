@@ -38,40 +38,79 @@
     <loc>/collection/day02/03-blogdown/</loc>
     <lastmod>2021-01-02T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/categories/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/creativity/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/educational-assessment/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/item-response-theory/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/pisa/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/psychometrics/</loc>
+    <lastmod>2025-05-20T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/categories/bayesian-estimation/</loc>
     <lastmod>2025-02-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</loc>
     <lastmod>2025-02-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/creativity/</loc>
-    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/item-response-theory/</loc>
-    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publications/</loc>
-    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
-    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/categories/poisson-models/</loc>
     <lastmod>2025-02-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/psychometrics/</loc>
-    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+    <loc>/categories/local-dependencies/</loc>
+    <lastmod>2024-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</loc>
+    <lastmod>2024-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/progressive-matrices/</loc>
+    <lastmod>2024-01-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/forced-choice/</loc>
+    <lastmod>2024-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/personality/</loc>
+    <lastmod>2024-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</loc>
+    <lastmod>2024-01-10T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/measurement/</loc>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2024-unscrambling-creativity-measurement/</loc>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2023-creativity-with-6-degrees-of-freedom/</loc>
+    <lastmod>2023-04-08T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/aesthetics/</loc>
+    <lastmod>2023-01-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</loc>
+    <lastmod>2023-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/negotiation/</loc>
-    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/personality/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/within-person-variability/</loc>
@@ -193,6 +232,12 @@
   </url><url>
     <loc>/r-packages/nhstplot/</loc>
     <lastmod>2020-04-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/museum-studies/</loc>
+    <lastmod>2020-03-05T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</loc>
+    <lastmod>2020-03-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publications/2020-within-person-adaptability/</loc>
     <lastmod>2020-03-04T00:00:00+00:00</lastmod>

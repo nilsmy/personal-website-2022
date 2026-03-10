@@ -6,7 +6,17 @@
     <description>Recent content in My publications on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="/publications/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 20 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/publications/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models</title>
+      <link>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine how a single creativity score in PISA can mask two separable dimensions of judged responses, and we propose generalized item response tree modeling to estimate appropriateness and originality components explicitly.
+Abstract   Creative-thinking judgments in large-scale assessments often combine multiple evaluative criteria into one score, which can blur interpretation and measurement precision. This article focuses on PISA creative-thinking judgments and introduces a generalized item response tree approach to separate appropriateness and originality into distinct latent components.</description>
+    </item>
+    
     <item>
       <title>Bayesian Estimation of Generalized Log-Linear Poisson Item Response Models for Fluency Scores Using brms and Stan</title>
       <link>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
@@ -15,6 +25,56 @@
       <guid>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we present a Bayesian estimation workflow for generalized log-linear Poisson item-response models applied to fluency scores in divergent-thinking assessment, with practical implementation using brms and Stan.
 Abstract   Divergent-thinking tests often rely on fluency scores (counts of ideas generated per prompt), and these counts can be modeled with Poisson item-response models. This paper revisits the Rasch Poisson Counts Model and its generalized two-parameter extension (2PPCM), and shows how both can be estimated in a Bayesian multilevel regression framework through brms (Stan backend).</description>
+    </item>
+    
+    <item>
+      <title>Modeling Sequential Dependencies in Progressive Matrices: An Auto-Regressive Item Response Theory (AR-IRT) Approach</title>
+      <link>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</link>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we propose auto-regressive item response theory models for progressive matrices, allowing each item response to depend not only on latent ability and item parameters, but also on prior responses in sequence.
+Abstract   Standard measurement models typically assume local independence among item responses conditional on latent traits. This article argues that, in sequential cognitive tasks such as progressive matrices, responses may show meaningful lagged dependencies that should be modeled directly.</description>
+    </item>
+    
+    <item>
+      <title>Personality Traits Leading Respondents to Refuse to Answer a Forced-Choice Personality Item: An Item Response Tree (IRTree) Model</title>
+      <link>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we study why respondents refuse to answer forced-choice personality items, and we model both refusal and refusal reasons within an item response tree framework.
+Abstract   The study examines individual differences in refusal behavior when respondents are given forced-choice personality items with an explicit option to decline choosing between statements. When refusing, respondents also indicate whether both statements fit equally well or neither fits adequately.</description>
+    </item>
+    
+    <item>
+      <title>Unscrambling Creativity Measurement: An Invitation to Better Formalize the Domain Generality-Specificity of Creativity with Psychometric Modeling</title>
+      <link>/publications/2024-unscrambling-creativity-measurement/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2024-unscrambling-creativity-measurement/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we discuss how the domain generality-specificity debate in creativity research can be clarified by explicitly modeling measurement structure, instead of relying on underspecified score interpretations.
+Abstract   Creativity assessment often conflates multiple sources of variance, making it difficult to determine what a given score truly reflects. This article argues for a more formal psychometric treatment of the domain generality-specificity question in creativity measurement.</description>
+    </item>
+    
+    <item>
+      <title>Creativity with 6 Degrees of Freedom: Feasibility Study of Visual Creativity Assessment in Virtual Reality</title>
+      <link>/publications/2023-creativity-with-6-degrees-of-freedom/</link>
+      <pubDate>Sat, 08 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2023-creativity-with-6-degrees-of-freedom/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we test whether creativity can be assessed through an immersive visual task in virtual reality, and examine how well this approach captures meaningful individual differences.
+Abstract   The study introduces and evaluates a virtual-reality visual creativity assessment designed to move creativity measurement into richer digital environments. The paper examines feasibility and reports psychometric evidence, including analyses of structural validity, internal reliability, and criterion-related validity.</description>
+    </item>
+    
+    <item>
+      <title>Can We “Read” Art...at All? A Psychometric Perspective on the Possibility of Measuring Artwork Attributes</title>
+      <link>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine the claim that we can “read” artworks and evaluate what is psychometrically required for such measurement claims to be valid and interpretable.
+Abstract   This article offers a psychometric commentary on the possibility of measuring artwork attributes. It focuses on the conceptual and measurement assumptions needed to support inferences about what can be extracted from artworks through assessment. The discussion highlights construct-definition issues, score-interpretation limits, and the importance of formal measurement models when evaluating claims about art-based judgments.</description>
     </item>
     
     <item>
@@ -28,7 +88,7 @@ Abstract   Prior research on the value of personality traits for predicting nego
     </item>
     
     <item>
-      <title>Exploring the associations between personality and response speed trajectories in low-stakes intelligence tests</title>
+      <title>Exploring the Associations Between Personality and Response Speed Trajectories in Low-Stakes Intelligence Tests</title>
       <link>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
@@ -68,7 +128,17 @@ Abstract   Previous research suggests a negative relationship between test takin
     </item>
     
     <item>
-      <title>A forgotten antecedent of career adaptability: A study on the predictive role of within-person variability in personality</title>
+      <title>Using Visual Aesthetic Sensitivity Measures in Museum Studies</title>
+      <link>/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</link>
+      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine the use of visual aesthetic sensitivity measures in museum contexts and outline psychometric issues that matter when selecting and interpreting these instruments.
+Abstract   Visual aesthetic sensitivity has long been assessed with tests intended to capture individual differences in judgments of artistic quality. This article discusses how such measures can be used in museum studies and what kinds of validity evidence are needed for defensible interpretation.</description>
+    </item>
+    
+    <item>
+      <title>A Forgotten Antecedent of Career Adaptability: A Study on the Predictive Role of Within-Person Variability in Personality</title>
       <link>/publications/2020-within-person-adaptability/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       

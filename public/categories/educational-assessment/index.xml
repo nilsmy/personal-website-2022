@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Educational assessment on Nils Myszkowski, PhD</title>
+    <link>/categories/educational-assessment/</link>
+    <description>Recent content in Educational assessment on Nils Myszkowski, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 20 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/educational-assessment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models</title>
+      <link>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine how a single creativity score in PISA can mask two separable dimensions of judged responses, and we propose generalized item response tree modeling to estimate appropriateness and originality components explicitly.
+Abstract   Creative-thinking judgments in large-scale assessments often combine multiple evaluative criteria into one score, which can blur interpretation and measurement precision. This article focuses on PISA creative-thinking judgments and introduces a generalized item response tree approach to separate appropriateness and originality into distinct latent components.</description>
+    </item>
+    
+    <item>
+      <title>Creativity with 6 Degrees of Freedom: Feasibility Study of Visual Creativity Assessment in Virtual Reality</title>
+      <link>/publications/2023-creativity-with-6-degrees-of-freedom/</link>
+      <pubDate>Sat, 08 Apr 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2023-creativity-with-6-degrees-of-freedom/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we test whether creativity can be assessed through an immersive visual task in virtual reality, and examine how well this approach captures meaningful individual differences.
+Abstract   The study introduces and evaluates a virtual-reality visual creativity assessment designed to move creativity measurement into richer digital environments. The paper examines feasibility and reports psychometric evidence, including analyses of structural validity, internal reliability, and criterion-related validity.</description>
+    </item>
+    
+  </channel>
+</rss>

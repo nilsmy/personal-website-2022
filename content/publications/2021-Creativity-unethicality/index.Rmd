@@ -1,5 +1,5 @@
 ---
-title: Creativity and unethicality – A systematic review and meta-analysis
+title: Creativity and Unethicality – A Systematic Review and Meta-Analysis
 author: Nils Myszkowski
 date: '2020-05-12'
 slug: []
@@ -25,4 +25,3 @@ A growing line of research suggests that creativity and unethicality are intrins
 # How to access the paper
 
 You can access the full paper [here](http://dx.doi.org/10.1037/aca0000332).
-

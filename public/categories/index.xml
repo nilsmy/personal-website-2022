@@ -6,31 +6,58 @@
     <description>Recent content in Categories on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Bayesian estimation</title>
-      <link>/categories/bayesian-estimation/</link>
-      <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/bayesian-estimation/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Tue, 20 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Creativity</title>
       <link>/categories/creativity/</link>
-      <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
       
       <guid>/categories/creativity/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>Educational assessment</title>
+      <link>/categories/educational-assessment/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/educational-assessment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Item-Response Theory</title>
       <link>/categories/item-response-theory/</link>
-      <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
       
       <guid>/categories/item-response-theory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>PISA</title>
+      <link>/categories/pisa/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/pisa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychometrics</title>
+      <link>/categories/psychometrics/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychometrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Bayesian estimation</title>
+      <link>/categories/bayesian-estimation/</link>
+      <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/bayesian-estimation/</guid>
       <description></description>
     </item>
     
@@ -44,11 +71,56 @@
     </item>
     
     <item>
-      <title>Psychometrics</title>
-      <link>/categories/psychometrics/</link>
-      <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+      <title>Local dependencies</title>
+      <link>/categories/local-dependencies/</link>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>/categories/psychometrics/</guid>
+      <guid>/categories/local-dependencies/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Progressive matrices</title>
+      <link>/categories/progressive-matrices/</link>
+      <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/progressive-matrices/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Forced-choice</title>
+      <link>/categories/forced-choice/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/forced-choice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Personality</title>
+      <link>/categories/personality/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/personality/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Measurement</title>
+      <link>/categories/measurement/</link>
+      <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/measurement/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Aesthetics</title>
+      <link>/categories/aesthetics/</link>
+      <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/aesthetics/</guid>
       <description></description>
     </item>
     
@@ -58,15 +130,6 @@
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
       <guid>/categories/negotiation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Personality</title>
-      <link>/categories/personality/</link>
-      <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/personality/</guid>
       <description></description>
     </item>
     
@@ -202,6 +265,15 @@
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/categories/test-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Museum studies</title>
+      <link>/categories/museum-studies/</link>
+      <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/museum-studies/</guid>
       <description></description>
     </item>
     

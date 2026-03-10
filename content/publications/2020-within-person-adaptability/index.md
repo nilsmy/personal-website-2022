@@ -1,5 +1,5 @@
 ---
-title: 'A forgotten antecedent of career adaptability: A study on the predictive role of within-person variability in personality'
+title: "A Forgotten Antecedent of Career Adaptability: A Study on the Predictive Role of Within-Person Variability in Personality"
 author: Nils Myszkowski
 date: '2020-03-04'
 slug: []
@@ -30,4 +30,3 @@ Several studies have focused on stable personality traits as antecedents of care
 # How to access the paper
 
 You can access the full paper [here](http://dx.doi.org/10.1016/j.paid.2020.109936).
-
