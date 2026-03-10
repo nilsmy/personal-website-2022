@@ -119,6 +119,12 @@
   - `links.url` pointing to the provided PDF path (typically under `static/Publication_pdf/`).
 - Do not default these PDF entries to `content/blog/` unless explicitly requested.
 
+## PDF Intake Implementation Notes (Repo-Verified)
+- Sorting: publication listing order follows front matter date (newest first in current setup). Set `date` to publication date for correct placement.
+- Build verification: use `Rscript -e "blogdown::build_site()"` if `hugo` is not available on shell PATH.
+- Tooling fallback: `pdftotext`/`pdfinfo` are not installed in this environment; if needed, extract PDF metadata via `strings` for title/date/DOI/keywords.
+- File placement: copy new paper PDFs to `static/Publication_pdf/` and link them from front matter `links.url`.
+
 ## Files to Avoid Changing Unless Necessary
 - `netlify.toml`
 - `config.toml` (especially menus, taxonomies, params, privacy/integration settings)

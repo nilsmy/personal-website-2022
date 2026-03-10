@@ -6,7 +6,17 @@
     <description>Recent content in My publications on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 17 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="/publications/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="/publications/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Bayesian Estimation of Generalized Log-Linear Poisson Item Response Models for Fluency Scores Using brms and Stan</title>
+      <link>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
+      <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we present a Bayesian estimation workflow for generalized log-linear Poisson item-response models applied to fluency scores in divergent-thinking assessment, with practical implementation using brms and Stan.
+Abstract   Divergent-thinking tests often rely on fluency scores (counts of ideas generated per prompt), and these counts can be modeled with Poisson item-response models. This paper revisits the Rasch Poisson Counts Model and its generalized two-parameter extension (2PPCM), and shows how both can be estimated in a Bayesian multilevel regression framework through brms (Stan backend).</description>
+    </item>
+    
     <item>
       <title>Individual Differences in Within-Person Variability in Personality Positively Predict Economic Gains and Satisfaction in Negotiations</title>
       <link>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</link>

@@ -38,22 +38,37 @@
     <loc>/collection/day02/03-blogdown/</loc>
     <lastmod>2021-01-02T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/categories/bayesian-estimation/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/categories/</loc>
-    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/creativity/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/item-response-theory/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/publications/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/poisson-models/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/psychometrics/</loc>
+    <lastmod>2025-02-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/item-response-theory/</loc>
-    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/publications/</loc>
-    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/categories/negotiation/</loc>
-    <lastmod>2022-03-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/</loc>
     <lastmod>2022-03-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/personality/</loc>
@@ -68,14 +83,8 @@
     <loc>/categories/log-linear-models/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/psychometrics/</loc>
-    <lastmod>2022-03-03T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/categories/response-times/</loc>
     <lastmod>2022-03-03T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/creativity/</loc>
-    <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/r-packages/jrt/</loc>
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
@@ -87,9 +96,6 @@
     <lastmod>2022-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/publications/2021-2ppcm/</loc>
-    <lastmod>2021-12-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/poisson-models/</loc>
     <lastmod>2021-12-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/r-packages/amc/</loc>
