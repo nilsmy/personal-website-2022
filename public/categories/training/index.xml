@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Training on Nils Myszkowski, PhD</title>
+    <link>/categories/training/</link>
+    <description>Recent content in Training on Nils Myszkowski, PhD</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 01 May 2014 00:00:00 +0000</lastBuildDate><atom:link href="/categories/training/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Learning to Judge Creativity: The Underlying Mechanisms in Creativity Training for Non-Expert Judges</title>
+      <link>/publications/2014-learning-to-judge-creativity-underlying-mechanisms/</link>
+      <pubDate>Thu, 01 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2014-learning-to-judge-creativity-underlying-mechanisms/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we study the processes through which non-expert judges improve creativity evaluations after training.
+Abstract   Evaluating creativity reliably is a central challenge in creativity research and practice. This study examines training procedures for non-expert judges and analyzes the mechanisms associated with improved judgment quality. The results clarify how exposure and calibration processes can enhance evaluation consistency and validity. Implications are discussed for creativity assessment contexts that rely on human raters.</description>
+    </item>
+    
+  </channel>
+</rss>

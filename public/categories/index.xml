@@ -71,6 +71,60 @@
     </item>
     
     <item>
+      <title>Mental health</title>
+      <link>/categories/mental-health/</link>
+      <pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/mental-health/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychophysiology</title>
+      <link>/categories/psychophysiology/</link>
+      <pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychophysiology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stress</title>
+      <link>/categories/stress/</link>
+      <pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/stress/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cross-cultural research</title>
+      <link>/categories/cross-cultural-research/</link>
+      <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/cross-cultural-research/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Happiness</title>
+      <link>/categories/happiness/</link>
+      <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/happiness/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Well-being</title>
+      <link>/categories/well-being/</link>
+      <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/well-being/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Local dependencies</title>
       <link>/categories/local-dependencies/</link>
       <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
@@ -112,6 +166,24 @@
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
       
       <guid>/categories/measurement/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychoeducation</title>
+      <link>/categories/psychoeducation/</link>
+      <pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychoeducation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>School psychology</title>
+      <link>/categories/school-psychology/</link>
+      <pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/school-psychology/</guid>
       <description></description>
     </item>
     
@@ -287,11 +359,182 @@
     </item>
     
     <item>
+      <title>Empathy</title>
+      <link>/categories/empathy/</link>
+      <pubDate>Thu, 24 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/empathy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychiatry</title>
+      <link>/categories/psychiatry/</link>
+      <pubDate>Thu, 24 Oct 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychiatry/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Reliability</title>
       <link>/categories/reliability/</link>
       <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/categories/reliability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Judgment</title>
+      <link>/categories/judgment/</link>
+      <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/judgment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scale development</title>
+      <link>/categories/scale-development/</link>
+      <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/scale-development/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Individual differences</title>
+      <link>/categories/individual-differences/</link>
+      <pubDate>Thu, 03 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/individual-differences/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Intelligence</title>
+      <link>/categories/intelligence/</link>
+      <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/intelligence/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Health</title>
+      <link>/categories/health/</link>
+      <pubDate>Wed, 19 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/health/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Giftedness</title>
+      <link>/categories/giftedness/</link>
+      <pubDate>Mon, 12 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/giftedness/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Innovation</title>
+      <link>/categories/innovation/</link>
+      <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/innovation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Management</title>
+      <link>/categories/management/</link>
+      <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/management/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Work psychology</title>
+      <link>/categories/work-psychology/</link>
+      <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/work-psychology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Emotion</title>
+      <link>/categories/emotion/</link>
+      <pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/emotion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Social psychology</title>
+      <link>/categories/social-psychology/</link>
+      <pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/social-psychology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Consumer behavior</title>
+      <link>/categories/consumer-behavior/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/consumer-behavior/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Marketing</title>
+      <link>/categories/marketing/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/marketing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychology</title>
+      <link>/categories/psychology/</link>
+      <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Self-monitoring</title>
+      <link>/categories/self-monitoring/</link>
+      <pubDate>Tue, 01 Jul 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/self-monitoring/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Training</title>
+      <link>/categories/training/</link>
+      <pubDate>Thu, 01 May 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/training/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Creative process</title>
+      <link>/categories/creative-process/</link>
+      <pubDate>Sun, 24 Feb 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/creative-process/</guid>
       <description></description>
     </item>
     

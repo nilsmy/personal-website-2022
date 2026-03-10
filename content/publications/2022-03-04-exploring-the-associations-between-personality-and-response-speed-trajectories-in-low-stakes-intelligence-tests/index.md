@@ -10,7 +10,7 @@ categories:
   - Personality
   - Response times
 tags: []
-excerpt: In this paper, using log-normal Item-Response Theory models for response time data, we study how personality traits predict response speed trajectories in low-stakes reasoning tasks. We found that some traits are associated with increasing in speed vs. decreasing in speed, controlling for item effects.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1016/j.paid.2022.111580"><em>Personality and Individual Differences</em></a>, using log-normal Item-Response Theory models for response time data, we study how personality traits predict response speed trajectories in low-stakes reasoning tasks. We found that some traits are associated with increasing in speed vs. decreasing in speed, controlling for item effects.'
 links:
 - icon: file-pdf
   icon_pack: fa

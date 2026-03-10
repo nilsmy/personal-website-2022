@@ -8,7 +8,7 @@ categories:
   - Aesthetics
   - Museum studies
 tags: []
-excerpt: In this paper, we discuss how visual aesthetic sensitivity measures can be used in museum research, with a focus on validity considerations and measurement choices.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.3389/fpsyg.2020.00414"><em>Frontiers in Psychology</em></a>, we discuss how visual aesthetic sensitivity measures can be used in museum research, with a focus on validity considerations and measurement choices.'
 links:
 - icon: file-pdf
   icon_pack: fa

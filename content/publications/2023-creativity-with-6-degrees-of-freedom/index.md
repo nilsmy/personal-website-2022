@@ -8,7 +8,7 @@ categories:
   - Psychometrics
   - Educational assessment
 tags: []
-excerpt: In this paper, we evaluate the feasibility and psychometric properties of a visual creativity assessment implemented in immersive virtual reality, including evidence on structural validity, reliability, and criterion validity.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1080/10400419.2023.2193040"><em>Creativity Research Journal</em></a>, we evaluate the feasibility and psychometric properties of a visual creativity assessment implemented in immersive virtual reality, including evidence on structural validity, reliability, and criterion validity.'
 links:
 - icon: file-pdf
   icon_pack: fa

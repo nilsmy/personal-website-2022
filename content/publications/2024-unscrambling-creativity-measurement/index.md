@@ -8,7 +8,7 @@ categories:
   - Creativity
   - Measurement
 tags: []
-excerpt: In this paper, we revisit how creativity is conceptualized and measured, and invite researchers to better formalize the domain generality-specificity question using explicit psychometric models.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1016/j.lindif.2023.102401"><em>Learning and Individual Differences</em></a>, we revisit how creativity is conceptualized and measured, and invite researchers to better formalize the domain generality-specificity question using explicit psychometric models.'
 links:
 - icon: file-pdf
   icon_pack: fa

@@ -9,7 +9,7 @@ categories:
   - Personality
   - Item-Response Theory
 tags: []
-excerpt: In this paper, we study how within-person variability (the tendency of a person to vary in personality) predicts success in negotiations.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1007/s10726-022-09778-x"><em>Group Decision and Negotiation</em></a>, we study how within-person variability (the tendency of a person to vary in personality) predicts success in negotiations.'
 links:
 - icon: file-pdf
   icon_pack: fa

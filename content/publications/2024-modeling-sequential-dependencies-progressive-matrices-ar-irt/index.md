@@ -9,7 +9,7 @@ categories:
   - Progressive matrices
   - Local dependencies
 tags: []
-excerpt: In this paper, we extend binary item-response models to include auto-regressive sequential dependencies, and show that AR-IRT can improve fit and yield more conservative parameter estimates in progressive matrices data.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.3390/jintelligence12010007"><em>Journal of Intelligence</em></a>, we extend binary item-response models to include auto-regressive sequential dependencies, and show that AR-IRT can improve fit and yield more conservative parameter estimates in progressive matrices data.'
 links:
 - icon: file-pdf
   icon_pack: fa

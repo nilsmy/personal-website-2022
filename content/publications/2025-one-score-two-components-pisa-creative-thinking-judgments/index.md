@@ -10,7 +10,7 @@ categories:
   - Educational assessment
   - PISA
 tags: []
-excerpt: In this paper, we disentangle appropriateness and originality in PISA creative-thinking judgments by modeling them as distinct latent components within a generalized item response tree framework.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1002/jocb.70033"><em>Journal of Creative Behavior</em></a>, we disentangle appropriateness and originality in PISA creative-thinking judgments by modeling them as distinct latent components within a generalized item response tree framework.'
 links:
 - icon: file-pdf
   icon_pack: fa

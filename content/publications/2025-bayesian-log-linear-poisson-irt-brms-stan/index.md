@@ -10,7 +10,7 @@ categories:
   - Creativity
   - Bayesian estimation
 tags: []
-excerpt: In this paper, we show how generalized log-linear Poisson item-response models for fluency scores (including the 2-Parameter Poisson Counts Model) can be estimated and interpreted in a Bayesian multilevel framework using brms and Stan.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.3390/jintelligence13030026"><em>Journal of Intelligence</em></a>, we show how generalized log-linear Poisson item-response models for fluency scores (including the 2-Parameter Poisson Counts Model) can be estimated and interpreted in a Bayesian multilevel framework using brms and Stan.'
 links:
 - icon: file-pdf
   icon_pack: fa

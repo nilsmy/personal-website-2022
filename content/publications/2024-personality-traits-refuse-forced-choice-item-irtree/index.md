@@ -9,7 +9,7 @@ categories:
   - Item-Response Theory
   - Forced-choice
 tags: []
-excerpt: In this paper, we investigate which personality traits predict refusal to choose in forced-choice personality items, using an IRTree model to jointly model skipping behavior and reported reasons for refusal.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.3390/psych6010006"><em>Psych</em></a>, we investigate which personality traits predict refusal to choose in forced-choice personality items, using an IRTree model to jointly model skipping behavior and reported reasons for refusal.'
 links:
 - icon: file-pdf
   icon_pack: fa

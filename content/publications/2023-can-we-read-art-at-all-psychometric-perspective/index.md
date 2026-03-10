@@ -1,5 +1,5 @@
 ---
-title: "Can We “Read” Art...at All? A Psychometric Perspective on the Possibility of Measuring Artwork Attributes"
+title: "Can We “Read” Art...At All? A Psychometric Perspective on the Possibility of Measuring Artwork Attributes"
 author: Nils Myszkowski
 date: '2023-01-01'
 slug: []
@@ -8,7 +8,7 @@ categories:
   - Creativity
   - Aesthetics
 tags: []
-excerpt: In this paper, we discuss from a psychometric perspective whether and how artwork attributes can be meaningfully measured, and what this implies for claims about “reading” art.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1016/j.plrev.2022.11.010"><em>Physics of Life Reviews</em></a>, we discuss from a psychometric perspective whether and how artwork attributes can be meaningfully measured, and what this implies for claims about “reading” art.'
 links:
 - icon: file-pdf
   icon_pack: fa

@@ -3,7 +3,7 @@ title: "A Forgotten Antecedent of Career Adaptability: A Study on the Predictive
 author: Nils Myszkowski
 date: '2020-03-04'
 slug: []
-excerpt: In this paper, we study the relation between within-person variability in personality (the extent to which one changes in personality across situations) and career adaptability.
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1016/j.paid.2020.109936"><em>Personality and Individual Differences</em></a>, we study the relation between within-person variability in personality (the extent to which one changes in personality across situations) and career adaptability.'
 links:
 - icon: file-pdf
   icon_pack: fa

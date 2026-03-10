@@ -1,0 +1,29 @@
+---
+title: "Is Visual Aesthetic Sensitivity Independent from Intelligence, Personality, and Creativity?"
+author: Nils Myszkowski
+date: '2014-01-14'
+slug: []
+categories:
+  - Aesthetics
+  - Personality
+  - Creativity
+tags: []
+excerpt: 'In this paper, published in <a href="https://doi.org/10.1016/j.paid.2013.10.021"><em>Personality and Individual Differences</em></a>, we test whether visual aesthetic sensitivity is independent from intelligence, personality, and creativity.'
+links:
+- icon: file-pdf
+  icon_pack: fa
+  name: PDF
+  url: Publication_pdf/Myszkowski et al. - 2014 - Is visual aesthetic sensitivity independent from i.pdf
+---
+
+# What it's about
+
+In this paper, we examine is visual aesthetic sensitivity independent from intelligence, personality, and creativity?.
+
+# Abstract
+
+This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
+
+# How to access the paper
+
+You can access the full paper [here](https://doi.org/10.1016/j.paid.2013.10.021).

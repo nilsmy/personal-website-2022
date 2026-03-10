@@ -5,7 +5,7 @@ date: '2020-05-12'
 slug: []
 categories: [Psychometrics, Test development, Item-Response Theory, Scaling]
 tags: []
-excerpt: In this paper, I reanalyze a dataset for a special issue of Journal of Intelligence. The analysis uses the framework of Mokken Scale Analysis (MSA), which is a non-parametric approach to relations between item responses and attributes (i.e. Item-Response Theory).
+excerpt: "In this paper, published in <a href=\"https://doi.org/10.3390/jintelligence8020022\"><em>Journal of Intelligence</em></a>, I reanalyze a dataset for a special issue of Journal of Intelligence. The analysis uses the framework of Mokken Scale Analysis (MSA), which is a non-parametric approach to relations between item responses and attributes (i.e. Item-Response Theory)."
 links:
 - icon: file-pdf
   icon_pack: fa
