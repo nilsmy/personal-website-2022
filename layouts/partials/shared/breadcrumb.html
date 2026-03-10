@@ -1,0 +1,22 @@
+<h4 class="breadcrumb pb5">
+  {{ $currentID := .RelPermalink }}
+  {{ with .File }}{{ $currentID = .UniqueID }}{{ end }}
+  {{ template "breadcrumb" dict "currentPage" .Page "id" $currentID }}
+</h4>
+
+{{ define "breadcrumb" }}
+  {{ if .currentPage.Parent }}
+    {{ if not .currentPage.Parent.IsHome }}
+      {{ template "breadcrumb" dict "currentPage" .currentPage.Parent "id" .id }}
+    {{ end }}
+
+    {{ $pageID := .currentPage.RelPermalink }}
+    {{ with .currentPage.File }}{{ $pageID = .UniqueID }}{{ end }}
+
+    {{ if eq .id $pageID }}
+      {{ .currentPage.Title }}
+    {{ else }}
+      <a href="{{ .currentPage.RelPermalink }}">{{ .currentPage.Title }}</a> >
+    {{ end }}
+  {{ end }}
+{{ end }}
