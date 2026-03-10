@@ -26,4 +26,6 @@ The Visual Aesthetic Sensitivity Test-Revised (VAST-R) is used to assess differe
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.paid.2017.05.041).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.paid.2017.05.041).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202017%20-%20Measuring%20%E2%80%9CGood%20Taste%E2%80%9D%20with%20the%20Visual%20Aesthetic%20S.pdf).

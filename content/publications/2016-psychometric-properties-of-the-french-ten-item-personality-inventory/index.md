@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1027/1614-0001/a000204).
+Go to the journal page for this article [here](https://doi.org/10.1027/1614-0001/a000204).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202016%20-%20Psychometric%20Properties%20of%20the%20French%20Ten-Item%20Per.pdf).

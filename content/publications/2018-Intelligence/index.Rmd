@@ -24,4 +24,6 @@ Raven’s progressive matrices (Raven, 1941) are extremely popular measures of g
 
 # How to access the paper
 
-You can access the full paper [here](http://dx.doi.org/10.1016/j.intell.2018.03.010).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.intell.2018.03.010\).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202018%20-%20A%20snapshot%20of%20g%20Binary%20and%20polytomous%20item-respon.pdf).

@@ -26,4 +26,6 @@ This research examines the social functionality of negative emotion expression f
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1111/bjso.12149).
+Go to the journal page for this article [here](https://doi.org/10.1111/bjso.12149).
+
+Download the PDF [here](/Publication_pdf/Celik%20et%20al.%20-%202016%20-%20Anger%20and%20sadness%20as%20adaptive%20emotion%20expression%20s.pdf).

@@ -26,4 +26,6 @@ The study introduces and evaluates a virtual-reality visual creativity assessmen
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1080/10400419.2023.2193040).
+Go to the journal page for this article [here](https://doi.org/10.1080/10400419.2023.2193040).
+
+Download the PDF [here](/Publication_pdf/Barbot%20et%20al.%20-%202023%20-%20Creativity%20with%206%20Degrees%20of%20Freedom%20Feasibility%20.pdf).

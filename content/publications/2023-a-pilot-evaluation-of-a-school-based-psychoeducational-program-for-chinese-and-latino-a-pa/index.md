@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1007/s40688-023-00453-9).
+Go to the journal page for this article [here](https://doi.org/10.1007/s40688-023-00453-9).
+
+Download the PDF [here](/Publication_pdf/Rao%20et%20al.%20-%202024%20-%20A%20Pilot%20Evaluation%20of%20a%20School-Based%20Psychoeducational%20Program%20for%20Chinese%20and%20Latinoa%20Parents%20Per.pdf).

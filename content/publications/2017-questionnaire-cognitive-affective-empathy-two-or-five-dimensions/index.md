@@ -26,4 +26,6 @@ The dimensional structure of empathy questionnaires has direct consequences for 
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.psychres.2017.05.047).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.psychres.2017.05.047).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20et%20al.%20-%202017%20-%20Is%20the%20Questionnaire%20of%20Cognitive%20and%20Affective%20Em.pdf).

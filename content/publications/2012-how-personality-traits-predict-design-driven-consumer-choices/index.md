@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.5964/ejop.v8i4.523).
+Go to the journal page for this article [here](https://doi.org/10.5964/ejop.v8i4.523).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202012%20-%20How%20Personality%20Traits%20Predict%20Design-Driven%20Consu.pdf).

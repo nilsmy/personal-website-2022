@@ -26,4 +26,6 @@ Evaluating creativity reliably is a central challenge in creativity research and
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.lindif.2014.03.002).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.lindif.2014.03.002).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202014%20-%20Learning%20to%20judge%20creativity%20The%20underlying%20mecha.pdf).

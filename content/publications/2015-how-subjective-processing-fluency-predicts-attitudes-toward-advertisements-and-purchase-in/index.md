@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1108/JCM-10-2014-1187).
+Go to the journal page for this article [here](https://doi.org/10.1108/JCM-10-2014-1187).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202015%20-%20How%20subjective%20processing%20fluency%20predicts%20attitud2.pdf).

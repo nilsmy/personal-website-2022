@@ -29,4 +29,6 @@ Previous research suggests a negative relationship between test taking speed and
 
 # How to access the paper
 
-You can access the full paper [here](http://dx.doi.org/10.1016/j.paid.2022.111580).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.paid.2022.111580).
+
+Download the PDF [here](/Publication_pdf/Myszkowski-2022-Exploring.pdf).

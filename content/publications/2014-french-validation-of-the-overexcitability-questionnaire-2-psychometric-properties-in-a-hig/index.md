@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1080/00223891.2014.938750).
+Go to the journal page for this article [here](https://doi.org/10.1080/00223891.2014.938750).
+
+Download the PDF [here](/Publication_pdf/Botella%20et%20al.%20-%20French%20Validation%20of%20the%20Overexcitability%20Question.pdf).

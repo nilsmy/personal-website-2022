@@ -8,7 +8,7 @@ cascade:
     show_sidebar_adunit: true
     text_link_label: View all projects
     text_link_url: /publications/
-description: A list and short description of (some of) my publications.
+description: A list and short description of (most of) my publications, sorted from most recent to oldest. For a more complete list, see my [Google Scholar](https://scholar.google.com/citations?user=DpOYOjUAAAAJ&hl=en&oi=ao) and [ResearchGate](https://www.researchgate.net/profile/Nils-Myszkowski) profiles.
 layout: list-grid
 show_author_byline: false
 show_button_links: true

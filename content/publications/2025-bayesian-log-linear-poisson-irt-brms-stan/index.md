@@ -28,4 +28,6 @@ Divergent-thinking tests often rely on fluency scores (counts of ideas generated
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3390/jintelligence13030026).
+Go to the journal page for this article [here](https://doi.org/10.3390/jintelligence13030026).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202025%20-%20Bayesian%20Estimation%20of%20Generalized%20Log-Linear%20Poisson%20Item%20Response%20Models%20for%20Fluency%20Scores%20Using.pdf).

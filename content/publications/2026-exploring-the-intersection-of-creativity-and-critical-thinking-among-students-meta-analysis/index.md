@@ -26,4 +26,6 @@ This meta-analysis synthesizes evidence on the relationship between creativity a
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.tsc.2025.102119).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.tsc.2025.102119).
+
+Download the PDF [here](/Publication_pdf/Park%20et%20al.%20-%202026%20-%20Exploring%20the%20intersection%20of%20creativity%20and%20critical%20thinking%20among%20students%20A%20meta-analysis.pdf).

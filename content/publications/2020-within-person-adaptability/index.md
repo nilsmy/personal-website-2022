@@ -29,4 +29,6 @@ Several studies have focused on stable personality traits as antecedents of care
 
 # How to access the paper
 
-You can access the full paper [here](http://dx.doi.org/10.1016/j.paid.2020.109936).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.paid.2020.109936).
+
+Download the PDF [here](/Publication_pdf/Storme-et-al-2020-A-forgotten.pdf).

@@ -24,4 +24,6 @@ A growing line of research suggests that creativity and unethicality are intrins
 
 # How to access the paper
 
-You can access the full paper [here](http://dx.doi.org/10.1037/aca0000332).
+Go to the journal page for this article [here](https://doi.org/10.1037/aca0000332\).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202020%20-%20Creativity%20and%20unethicality%20A%20systematic%20review%20a.pdf).

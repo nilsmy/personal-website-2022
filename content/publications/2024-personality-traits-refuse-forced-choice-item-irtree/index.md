@@ -27,4 +27,6 @@ The study examines individual differences in refusal behavior when respondents a
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3390/psych6010006).
+Go to the journal page for this article [here](https://doi.org/10.3390/psych6010006).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202024%20-%20Personality%20Traits%20Leading%20Respondents%20to%20Refuse%20to%20Answer%20a%20Forced-Choice%20Personality%20Item%20An%20Item.pdf).

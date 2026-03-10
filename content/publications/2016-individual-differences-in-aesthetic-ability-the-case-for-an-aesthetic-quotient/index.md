@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3389/fpsyg.2016.00750).
+Go to the journal page for this article [here](https://doi.org/10.3389/fpsyg.2016.00750).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Zenasni%20-%202016%20-%20Individual%20differences%20in%20aesthetic%20ability%20The%20c.pdf).

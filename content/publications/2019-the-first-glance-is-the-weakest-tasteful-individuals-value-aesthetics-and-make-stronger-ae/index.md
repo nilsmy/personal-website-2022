@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.paid.2019.01.010).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.paid.2019.01.010).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20-%202019%20-%20The%20first%20glance%20is%20the%20weakest%20%E2%80%9CTasteful%E2%80%9D%20indivi.pdf).

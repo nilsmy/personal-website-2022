@@ -24,5 +24,6 @@ Raven’s Standard Progressive Matrices (Raven 1941) is a widely used 60-item lo
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3390/jintelligence8020022).
+Go to the journal page for this article [here](https://doi.org/10.3390/jintelligence8020022\).
 
+Download the PDF [here](/Publication_pdf/Myszkowski%20-%202020%20-%20A%20Mokken%20Scale%20Analysis%20of%20the%20Last%20Series%20of%20the%20.pdf).

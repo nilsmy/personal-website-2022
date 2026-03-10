@@ -26,4 +26,6 @@ Very short scales are widely used when testing time is limited, but they raise s
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1111/jopy.12395).
+Go to the journal page for this article [here](https://doi.org/10.1111/jopy.12395).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20et%20al.%20-%202019%20-%20Are%20reflective%20models%20appropriate%20for%20very%20short%20s.pdf).

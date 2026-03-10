@@ -26,4 +26,6 @@ This article offers a psychometric commentary on the possibility of measuring ar
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.plrev.2022.11.010).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.plrev.2022.11.010).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20-%202023%20-%20Can%20we%20%E2%80%9Cread%E2%80%9D%20art%E2%80%A6at%20all%20A%20psychometric%20perspecti.pdf).

@@ -27,4 +27,6 @@ Standard measurement models typically assume local independence among item respo
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3390/jintelligence12010007).
+Go to the journal page for this article [here](https://doi.org/10.3390/jintelligence12010007).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202024%20-%20Modeling%20Sequential%20Dependencies%20in%20Progressive%20Matrices%20An%20Auto-Regressive%20Item%20Response%20Theory%20%28A.pdf).

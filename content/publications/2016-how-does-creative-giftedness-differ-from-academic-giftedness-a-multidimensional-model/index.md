@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.lindif.2016.09.003).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.lindif.2016.09.003).
+
+Download the PDF [here](/Publication_pdf/Zenasni%20et%20al.%20-%202016%20-%20How%20does%20creative%20giftedness%20differ%20from%20academic%20.pdf).

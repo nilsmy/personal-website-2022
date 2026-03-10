@@ -1,0 +1,14 @@
+/* Keep homepage intro links visually like surrounding text */
+main.page-main section.page-content .mh4.w-50-l.tr > p.f4.mt4.lh-copy a,
+main.page-main section.page-content .mh4.w-50-l.tr > p.f4.mt4.lh-copy a:visited {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+main.page-main section.page-content .mh4.w-50-l.tr > p.f4.mt4.lh-copy a:hover,
+main.page-main section.page-content .mh4.w-50-l.tr > p.f4.mt4.lh-copy a:focus {
+  color: inherit !important;
+  text-decoration: underline !important;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.08em;
+}

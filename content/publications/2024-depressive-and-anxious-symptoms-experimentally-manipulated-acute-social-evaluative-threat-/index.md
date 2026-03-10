@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1097/PSY.0000000000001336).
+Go to the journal page for this article [here](https://doi.org/10.1097/PSY.0000000000001336).
+
+Download the PDF [here](/Publication_pdf/Strickland%20et%20al.%20-%202024%20-%20Depressive%20and%20Anxious%20Symptoms%2C%20Experimentally%20Manipulated%20Acute%20Social-Evaluative%20Threat%2C%20and%20Cort.pdf).

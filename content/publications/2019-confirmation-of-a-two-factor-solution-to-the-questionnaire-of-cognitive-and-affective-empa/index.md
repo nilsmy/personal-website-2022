@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3389/fpsyt.2019.00751).
+Go to the journal page for this article [here](https://doi.org/10.3389/fpsyt.2019.00751).
+
+Download the PDF [here](/Publication_pdf/Brunet-Gouet%20et%20al.%20-%202019%20-%20Confirmation%20of%20a%20Two-Factor%20Solution%20to%20the%20Quest.pdf).

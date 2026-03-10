@@ -26,4 +26,6 @@ Visual aesthetic sensitivity has long been assessed with tests intended to captu
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3389/fpsyg.2020.00414).
+Go to the journal page for this article [here](https://doi.org/10.3389/fpsyg.2020.00414).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Zenasni%20-%202020%20-%20Using%20Visual%20Aesthetic%20Sensitivity%20Measures%20in%20Mus.pdf).

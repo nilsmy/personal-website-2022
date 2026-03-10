@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1080/13548506.2016.1220599).
+Go to the journal page for this article [here](https://doi.org/10.1080/13548506.2016.1220599).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20et%20al.%20-%202017%20-%20Monitoring%20stress%20among%20internal%20medicine%20resident.pdf).

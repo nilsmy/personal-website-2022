@@ -28,5 +28,6 @@ low ability levels. Implications and practical recommendations are discussed.
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.3390/jintelligence7030017).
+Go to the journal page for this article [here](https://doi.org/10.3390/jintelligence7030017\).
 
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202019%20-%20Same%20Test%2C%20Better%20Scores%20Boosting%20the%20Reliability.pdf).

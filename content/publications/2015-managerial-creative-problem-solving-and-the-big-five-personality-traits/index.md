@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1108/JMD-12-2013-0160).
+Go to the journal page for this article [here](https://doi.org/10.1108/JMD-12-2013-0160).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20et%20al.%20-%202015%20-%20Managerial%20creative%20problem%20solving%20and%20the%20Big%20Fi.pdf).

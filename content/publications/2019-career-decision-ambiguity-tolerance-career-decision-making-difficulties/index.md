@@ -26,4 +26,6 @@ Career decisions often involve uncertainty, and individuals differ in how well t
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1177/1069072717748958).
+Go to the journal page for this article [here](https://doi.org/10.1177/1069072717748958).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202019%20-%20Career%20Decision%20Ambiguity%20Tolerance%20and%20Career%20Dec.pdf).

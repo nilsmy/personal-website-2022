@@ -26,4 +26,6 @@ The article examines task specificity in creativity by comparing performance pat
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1002/jocb.123).
+Go to the journal page for this article [here](https://doi.org/10.1002/jocb.123).
+
+Download the PDF [here](/Publication_pdf/Storme%20et%20al.%20-%202017%20-%20A%20cross%E2%80%90cultural%20study%20of%20task%20specificity%20in%20crea.pdf).

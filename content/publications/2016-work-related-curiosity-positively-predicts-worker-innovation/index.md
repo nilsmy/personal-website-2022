@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1108/JMD-01-2016-0013).
+Go to the journal page for this article [here](https://doi.org/10.1108/JMD-01-2016-0013).
+
+Download the PDF [here](/Publication_pdf/Celik%20et%20al.%20-%202016%20-%20Work-related%20curiosity%20positively%20predicts%20worker%20.pdf).

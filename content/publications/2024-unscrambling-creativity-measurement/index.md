@@ -26,4 +26,6 @@ Creativity assessment often conflates multiple sources of variance, making it di
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.lindif.2023.102401).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.lindif.2023.102401).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20et%20al.%20-%202024%20-%20Unscrambling%20creativity%20measurement%20An%20invitation%20to%20better%20formalize%20the%20domain%20generality-specifi.pdf).

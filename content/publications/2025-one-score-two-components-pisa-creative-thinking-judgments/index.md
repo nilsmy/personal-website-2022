@@ -28,4 +28,6 @@ Creative-thinking judgments in large-scale assessments often combine multiple ev
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1002/jocb.70033).
+Go to the journal page for this article [here](https://doi.org/10.1002/jocb.70033).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202025%20-%20One%20Score%2C%20Two%20Components%20Disentangling%20Appropriateness%20and%20Originality%20in%20PISA%20Creative%20Thinking%20J.pdf).

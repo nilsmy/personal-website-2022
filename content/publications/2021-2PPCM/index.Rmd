@@ -24,5 +24,6 @@ Fluency tasks are among the most common item formats for the assessment of certa
 
 # How to access the paper
 
-You can access the full paper [here](http://dx.doi.org/10.1002/jocb.490).
+Go to the journal page for this article [here](https://doi.org/10.1002/jocb.490\).
 
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202021%20-%20Accounting%20for%20Variable%20Task%20Discrimination%20in%20Div.pdf).

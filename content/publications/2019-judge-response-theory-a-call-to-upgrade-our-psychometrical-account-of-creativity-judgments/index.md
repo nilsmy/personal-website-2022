@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1037/aca0000225).
+Go to the journal page for this article [here](https://doi.org/10.1037/aca0000225).
+
+Download the PDF [here](/Publication_pdf/Myszkowski%20and%20Storme%20-%202019%20-%20Judge%20response%20theory%20A%20call%20to%20upgrade%20our%20psych.pdf).

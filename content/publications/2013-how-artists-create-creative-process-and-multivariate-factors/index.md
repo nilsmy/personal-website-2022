@@ -26,4 +26,6 @@ This paper examines the focal construct and reports empirical and/or psychometri
 
 # How to access the paper
 
-You can access the full paper [here](https://doi.org/10.1016/j.lindif.2013.02.008).
+Go to the journal page for this article [here](https://doi.org/10.1016/j.lindif.2013.02.008).
+
+Download the PDF [here](/Publication_pdf/Botella%20et%20al.%20-%202013%20-%20How%20artists%20create%20Creative%20process%20and%20multivari.pdf).
