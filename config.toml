@@ -119,15 +119,25 @@ enableEmoji = true
     url = "/publications/"
     weight = 1
   [[menu.header]]
+    name = "Book"
+    title = "Item Response Theory for Creativity Measurement"
+    url = "https://www.cambridge.org/us/universitypress/subjects/psychology/psychology-general-interest/item-response-theory-creativity-measurement?format=PB"
+    weight = 2
+  [[menu.header]]
     name = "R packages"
     title = "R packages"
     url = "/R packages/"
-    weight = 2
+    weight = 3
+  [[menu.header]]
+    name = "CV"
+    title = "Curriculum Vitae"
+    url = "/cv/cv.pdf"
+    weight = 4
   [[menu.header]]
     name = "Contact"
     title = "Contact form"
     url = "/contact/"
-    weight = 3
+    weight = 5
 
     
   # Configure footer  

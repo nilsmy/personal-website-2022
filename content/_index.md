@@ -1,6 +1,6 @@
 ---
 action_label: My CV (pdf) &rarr;
-action_link: CV/CV.pdf
+action_link: cv/cv.pdf
 action_type: text
 description: I am a tenured [Associate Professor in the Department of Psychology at Pace University, NYC](https://www.pace.edu/profile/nils-myszkowski), and freelance psychometrics and survey methods consultant. I received my PhD from Université Paris Descartes (France), and my main research interest is the application and improvement of psychometric methods to measure and understand creative, aesthetic and interpersonal skills. I have authored over 50 peer-reviewed [publications](/publications/), the book [*Item Response Theory for Creativity Measurement (Cambridge University Press, 2024)*](https://www.cambridge.org/us/universitypress/subjects/psychology/psychology-general-interest/item-response-theory-creativity-measurement?format=PB) and 3 [packages](/r-packages/) for the statistical programming language R, and received the *2020 Berlyne Award for Outstanding Contributions by an Early Career Scholar* from the *American Psychological Association* (Division 10). I regularly collaborate with researchers around the world and have worked as a psychometrics and statistics consultant for multiple international companies and R&D teams.
 image_left: true
