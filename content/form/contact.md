@@ -1,6 +1,6 @@
 ---
 date: "2019-02-25T13:38:41-06:00"
-description: Feel free to reach out for **questions** regarding my work or if you are interested in **collaborating**.
+description: Feel free to reach out for **questions** regarding my work, **collaboration**, or **psychometrics and survey methods consulting, whether in the New York area or elsewhere**.
 draft: false
 formspree_form_id: meqnozke
 layout: split-right

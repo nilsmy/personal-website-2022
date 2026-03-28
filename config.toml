@@ -30,7 +30,7 @@ enableEmoji = true
 [params]
   orgName = "Nils Myszkowski"
   orgLocal = ""
-  description = "Quantitative Psychologist & Psychometrician"
+  description = "Quantitative Psychologist, Psychometrician, and Survey Methods Consultant"
   favicon = "/img/favicon-multisize.ico"
   logo = "/Images/home-solid.svg"
   mainSections = ["blog", "project", "talk"]
