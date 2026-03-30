@@ -2,6 +2,13 @@
 title: "Anger and Sadness as Adaptive Emotion Expression Strategies in Response to Negative Competence and Warmth Evaluations"
 author: Nils Myszkowski
 date: '2016-06-30'
+journal: "British Journal of Social Psychology"
+doi: "10.1111/bjso.12149"
+citation_authors:
+  - "Pinar Celik"
+  - "Martin Storme"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Celik%20et%20al.%20-%202016%20-%20Anger%20and%20sadness%20as%20adaptive%20emotion%20expression%20s.pdf"
 slug: []
 categories:
   - Personality

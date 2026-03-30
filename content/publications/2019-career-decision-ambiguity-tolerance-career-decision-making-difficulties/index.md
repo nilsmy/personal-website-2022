@@ -2,6 +2,13 @@
 title: "Career Decision Ambiguity Tolerance and Career Decision-Making Difficulties in a French Sample: The Mediating Role of Career Decision Self-Efficacy"
 author: Nils Myszkowski
 date: '2019-04-12'
+journal: "Journal of Career Assessment"
+doi: "10.1177/1069072717748958"
+citation_authors:
+  - "Martin Storme"
+  - "Pinar Celik"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Storme%20et%20al.%20-%202019%20-%20Career%20Decision%20Ambiguity%20Tolerance%20and%20Career%20Dec.pdf"
 slug: []
 categories:
   - Career adaptability

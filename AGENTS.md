@@ -85,6 +85,7 @@
 - `assets/` is Hugo pipeline input (SCSS/JS); keep changes compatible with Hugo 0.84.4.
 - Avoid renaming/moving files referenced in front matter (`images`, `sharing_image`, PDF links) unless all references are updated.
 - CV handling: the live website CV is served from `static/cv/cv.pdf`, with links currently pointing to `/cv/cv.pdf` in `config.toml` and `content/_index.md`. When updating the CV, replace that file in place instead of changing links or introducing a new path, unless explicitly asked.
+- Publication PDFs support long-term discoverability and citation access. Preserve existing public PDF URLs under `static/Publication_pdf/` when possible, and prefer replacing files in place over renaming or moving them.
 
 ## SEO / Metadata / Social Preview
 - Preserve existing metadata behavior in `config.toml`:
@@ -96,6 +97,11 @@
   - `params.utterances` (GitHub issue comments)
   - `googleAnalytics`/privacy settings
   - contact form behavior (`content/form/contact.md`, Formspree settings).
+- Google Scholar metadata is handled locally through:
+  - `layouts/partials/scholar-meta.html`
+  - `layouts/partials/head.html`
+  - publication front matter fields `journal`, `doi`, `citation_authors`, `pdf_url`
+- Current `baseURL` is `/`, so `citation_pdf_url` is intentionally omitted at build time; do not hardcode a production domain or fake absolute URLs unless explicitly asked.
 
 ## Performance and Accessibility Expectations
 - Keep pages responsive and maintain existing layouts (`list`, `list-grid`, `list-sidebar`, `single`, `split-right`).
@@ -128,6 +134,25 @@
 - Build verification: use `Rscript -e "blogdown::build_site()"` if `hugo` is not available on shell PATH.
 - Tooling fallback: `pdftotext`/`pdfinfo` are not installed in this environment; if needed, extract PDF metadata via `strings` for title/date/DOI/keywords.
 - File placement: copy new paper PDFs to `static/Publication_pdf/` and link them from front matter `links.url`.
+
+## Scholar Metadata Workflow
+- Canonical metadata source for publication backfill is `metadata/zotero-publications.bib` (Zotero BibTeX export).
+- Reproducible sync command:
+  - `python3 scripts/sync_scholar_metadata.py --bib metadata/zotero-publications.bib --write`
+- The sync script updates non-draft `content/publications/*/index.md` files only when:
+  - a DOI can be found in the publication page content/front matter
+  - the DOI matches a BibTeX entry
+  - the BibTeX entry has a journal/booktitle and full author list
+  - the publication front matter already exposes a PDF link in `links:`
+- The sync script writes:
+  - `journal`
+  - `doi`
+  - `citation_authors` (full real author list for Scholar)
+  - `pdf_url` (root-relative, URL-encoded path for the local PDF)
+- Keep visible website bylines unchanged as `author: Nils Myszkowski`; use `citation_authors` for indexing metadata only.
+- Do not invent or infer missing Scholar metadata from the simplified page byline. If Zotero/BibTeX is missing, ambiguous, or duplicate in a risky way, leave the page as-is and fix the BibTeX source first.
+- After syncing metadata, rebuild locally and inspect one or two generated publication pages to confirm the expected `<meta name="citation_*">` tags are present in the HTML source.
+- Prefer keeping direct PDF access on publication pages when a hosted PDF already exists, since easy full-text access is part of the site's long-term discoverability strategy.
 
 ## Files to Avoid Changing Unless Necessary
 - `netlify.toml`

@@ -2,6 +2,14 @@
 title: "Learning to Judge Creativity: The Underlying Mechanisms in Creativity Training for Non-Expert Judges"
 author: Nils Myszkowski
 date: '2014-05-01'
+journal: "Learning and Individual Differences"
+doi: "10.1016/j.lindif.2014.03.002"
+citation_authors:
+  - "Martin Storme"
+  - "Nils Myszkowski"
+  - "Pinar Çelik"
+  - "Todd Lubart"
+pdf_url: "/Publication_pdf/Storme%20et%20al.%20-%202014%20-%20Learning%20to%20judge%20creativity%20The%20underlying%20mecha.pdf"
 slug: []
 categories:
   - Creativity

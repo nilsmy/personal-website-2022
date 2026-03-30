@@ -2,6 +2,12 @@
 title: "Measuring “Good Taste” with the Visual Aesthetic Sensitivity Test-Revised (VAST-R)"
 author: Nils Myszkowski
 date: '2017-10-15'
+journal: "Personality and Individual Differences"
+doi: "10.1016/j.paid.2017.05.041"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Storme%20-%202017%20-%20Measuring%20%E2%80%9CGood%20Taste%E2%80%9D%20with%20the%20Visual%20Aesthetic%20S.pdf"
 slug: []
 categories:
   - Aesthetics

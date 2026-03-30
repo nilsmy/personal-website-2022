@@ -2,6 +2,12 @@
 title: Bayesian Estimation of Generalized Log-Linear Poisson Item Response Models for Fluency Scores Using brms and Stan
 author: Nils Myszkowski
 date: '2025-02-23'
+journal: "Journal of Intelligence"
+doi: "10.3390/jintelligence13030026"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Storme%20-%202025%20-%20Bayesian%20Estimation%20of%20Generalized%20Log-Linear%20Poisson%20Item%20Response%20Models%20for%20Fluency%20Scores%20Using.pdf"
 slug: []
 categories:
   - Psychometrics

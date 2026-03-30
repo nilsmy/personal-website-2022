@@ -2,6 +2,17 @@
 title: "How Artists Create: Creative Process and Multivariate Factors"
 author: Nils Myszkowski
 date: '2013-02-24'
+journal: "Learning and Individual Differences"
+doi: "10.1016/j.lindif.2013.02.008"
+citation_authors:
+  - "Marion Botella"
+  - "Vlad Glaveanu"
+  - "Franck Zenasni"
+  - "Martin Storme"
+  - "Nils Myszkowski"
+  - "Marion Wolff"
+  - "Todd Lubart"
+pdf_url: "/Publication_pdf/Botella%20et%20al.%20-%202013%20-%20How%20artists%20create%20Creative%20process%20and%20multivari.pdf"
 slug: []
 categories:
   - Creativity

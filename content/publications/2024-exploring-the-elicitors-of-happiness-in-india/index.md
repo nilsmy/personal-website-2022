@@ -2,6 +2,14 @@
 title: "Exploring the Elicitors of Happiness in India"
 author: Nils Myszkowski
 date: '2024-08-13'
+journal: "Psychological Studies"
+doi: "10.1007/s12646-024-00797-z"
+citation_authors:
+  - "Sonia Suchday"
+  - "Kamlesh Singh"
+  - "Ruby Pavri"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Suchday%20et%20al.%20-%202024%20-%20Exploring%20the%20Elicitors%20of%20Happiness%20in%20India.pdf"
 slug: []
 categories:
   - Happiness

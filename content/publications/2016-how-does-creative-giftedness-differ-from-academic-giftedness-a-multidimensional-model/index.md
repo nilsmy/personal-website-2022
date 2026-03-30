@@ -2,6 +2,15 @@
 title: "How Does Creative Giftedness Differ from Academic Giftedness? A Multidimensional Model"
 author: Nils Myszkowski
 date: '2016-09-12'
+journal: "Learning and Individual Differences"
+doi: "10.1016/j.lindif.2016.09.003"
+citation_authors:
+  - "F. Zenasni"
+  - "C. Mourgues"
+  - "J. Nelson"
+  - "C. Muter"
+  - "N. Myszkowski"
+pdf_url: "/Publication_pdf/Zenasni%20et%20al.%20-%202016%20-%20How%20does%20creative%20giftedness%20differ%20from%20academic%20.pdf"
 slug: []
 categories:
   - Creativity

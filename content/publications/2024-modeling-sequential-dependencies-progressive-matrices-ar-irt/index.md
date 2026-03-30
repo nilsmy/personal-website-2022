@@ -2,6 +2,12 @@
 title: "Modeling Sequential Dependencies in Progressive Matrices: An Auto-Regressive Item Response Theory (AR-IRT) Approach"
 author: Nils Myszkowski
 date: '2024-01-15'
+journal: "Journal of Intelligence"
+doi: "10.3390/jintelligence12010007"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Storme%20-%202024%20-%20Modeling%20Sequential%20Dependencies%20in%20Progressive%20Matrices%20An%20Auto-Regressive%20Item%20Response%20Theory%20%28A.pdf"
 slug: []
 categories:
   - Psychometrics

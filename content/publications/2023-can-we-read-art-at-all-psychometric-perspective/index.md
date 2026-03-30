@@ -2,6 +2,11 @@
 title: "Can We “Read” Art...At All? A Psychometric Perspective on the Possibility of Measuring Artwork Attributes"
 author: Nils Myszkowski
 date: '2023-01-01'
+journal: "Physics of Life Reviews"
+doi: "10.1016/j.plrev.2022.11.010"
+citation_authors:
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Myszkowski%20-%202023%20-%20Can%20we%20%E2%80%9Cread%E2%80%9D%20art%E2%80%A6at%20all%20A%20psychometric%20perspecti.pdf"
 slug: []
 categories:
   - Psychometrics

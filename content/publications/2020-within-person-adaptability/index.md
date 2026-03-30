@@ -2,6 +2,13 @@
 title: "A Forgotten Antecedent of Career Adaptability: A Study on the Predictive Role of Within-Person Variability in Personality"
 author: Nils Myszkowski
 date: '2020-03-04'
+journal: "Personality and Individual Differences"
+doi: "10.1016/j.paid.2020.109936"
+citation_authors:
+  - "Martin Storme"
+  - "Pinar Celik"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Storme-et-al-2020-A-forgotten.pdf"
 slug: []
 excerpt: 'In this paper, published in <a href="https://doi.org/10.1016/j.paid.2020.109936"><em>Personality and Individual Differences</em></a>, we study the relation between within-person variability in personality (the extent to which one changes in personality across situations) and career adaptability.'
 links:

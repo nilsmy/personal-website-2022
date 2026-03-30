@@ -2,6 +2,15 @@
 title: "Depressive and Anxious Symptoms, Experimentally Manipulated Acute Social-Evaluative Threat, and Cortisol"
 author: Nils Myszkowski
 date: '2024-10-01'
+journal: "Psychosomatic Medicine"
+doi: "10.1097/psy.0000000000001336"
+citation_authors:
+  - "Megan G. Strickland"
+  - "Nils Myszkowski"
+  - "Emily D. Hooker"
+  - "Peggy M. Zoccola"
+  - "Sally S. Dickerson"
+pdf_url: "/Publication_pdf/Strickland%20et%20al.%20-%202024%20-%20Depressive%20and%20Anxious%20Symptoms%2C%20Experimentally%20Manipulated%20Acute%20Social-Evaluative%20Threat%2C%20and%20Cort.pdf"
 slug: []
 categories:
   - Mental health

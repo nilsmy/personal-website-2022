@@ -121,7 +121,7 @@ enableEmoji = true
   [[menu.header]]
     name = "Book"
     title = "Item Response Theory for Creativity Measurement"
-    url = "https://www.cambridge.org/us/universitypress/subjects/psychology/psychology-general-interest/item-response-theory-creativity-measurement?format=PB"
+    url = "/book/"
     weight = 2
   [[menu.header]]
     name = "R packages"

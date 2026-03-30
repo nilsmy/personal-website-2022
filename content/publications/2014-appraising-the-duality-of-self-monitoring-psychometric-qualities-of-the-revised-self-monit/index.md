@@ -2,6 +2,14 @@
 title: "Appraising the Duality of Self-Monitoring: Psychometric Qualities of the Revised Self-Monitoring Scale and the Concern for Appropriateness Scale in French"
 author: Nils Myszkowski
 date: '2014-07-01'
+journal: "Canadian Journal of Behavioural Science/Revue canadienne des sciences du comportement"
+doi: "10.1037/a0033107"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Franck Zenasni"
+  - "Todd I. Lubart"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202014%20-%20Appraising%20the%20duality%20of%20self-monitoring%20Psychom.pdf"
 slug: []
 categories:
   - Personality

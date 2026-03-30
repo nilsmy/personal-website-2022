@@ -2,6 +2,12 @@
 title: "Judge Response Theory? A Call to Upgrade Our Psychometrical Account of Creativity Judgments"
 author: Nils Myszkowski
 date: '2019-05-01'
+journal: "Psychology of Aesthetics, Creativity, and the Arts"
+doi: "10.1037/aca0000225"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Storme%20-%202019%20-%20Judge%20response%20theory%20A%20call%20to%20upgrade%20our%20psych.pdf"
 slug: []
 categories:
   - Creativity

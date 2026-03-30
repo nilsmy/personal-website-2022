@@ -2,6 +2,14 @@
 title: "Work-Related Curiosity Positively Predicts Worker Innovation"
 author: Nils Myszkowski
 date: '2016-07-14'
+journal: "Journal of Management Development"
+doi: "10.1108/jmd-01-2016-0013"
+citation_authors:
+  - "Pinar Celik"
+  - "Martin Storme"
+  - "Andrès Davila"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Celik%20et%20al.%20-%202016%20-%20Work-related%20curiosity%20positively%20predicts%20worker%20.pdf"
 slug: []
 categories:
   - Innovation

@@ -2,6 +2,13 @@
 title: "Creativity with 6 Degrees of Freedom: Feasibility Study of Visual Creativity Assessment in Virtual Reality"
 author: Nils Myszkowski
 date: '2023-04-08'
+journal: "Creativity Research Journal"
+doi: "10.1080/10400419.2023.2193040"
+citation_authors:
+  - "Baptiste Barbot"
+  - "James C. Kaufman"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Barbot%20et%20al.%20-%202023%20-%20Creativity%20with%206%20Degrees%20of%20Freedom%20Feasibility%20.pdf"
 slug: []
 categories:
   - Creativity

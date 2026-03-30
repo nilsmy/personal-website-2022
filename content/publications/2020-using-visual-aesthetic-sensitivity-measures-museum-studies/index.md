@@ -2,6 +2,12 @@
 title: Using Visual Aesthetic Sensitivity Measures in Museum Studies
 author: Nils Myszkowski
 date: '2020-03-05'
+journal: "Frontiers in Psychology"
+doi: "10.3389/fpsyg.2020.00414"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Franck Zenasni"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Zenasni%20-%202020%20-%20Using%20Visual%20Aesthetic%20Sensitivity%20Measures%20in%20Mus.pdf"
 slug: []
 categories:
   - Psychometrics

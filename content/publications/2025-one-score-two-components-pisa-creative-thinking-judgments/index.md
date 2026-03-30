@@ -2,6 +2,12 @@
 title: "One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models"
 author: Nils Myszkowski
 date: '2025-05-20'
+journal: "The Journal of Creative Behavior"
+doi: "10.1002/jocb.70033"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Storme%20-%202025%20-%20One%20Score%2C%20Two%20Components%20Disentangling%20Appropriateness%20and%20Originality%20in%20PISA%20Creative%20Thinking%20J.pdf"
 slug: []
 categories:
   - Psychometrics

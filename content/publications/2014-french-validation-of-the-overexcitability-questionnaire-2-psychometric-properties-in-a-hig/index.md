@@ -2,6 +2,16 @@
 title: "French Validation of the Overexcitability Questionnaire 2: Psychometric Properties in a High-Potential Sample"
 author: Nils Myszkowski
 date: '2014-05-27'
+journal: "Journal of Personality Assessment"
+doi: "10.1080/00223891.2014.938750"
+citation_authors:
+  - "Marion Botella"
+  - "Guillaume Fürst"
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Maria Pereira Da Costa"
+  - "Olivier Luminet"
+pdf_url: "/Publication_pdf/Botella%20et%20al.%20-%20French%20Validation%20of%20the%20Overexcitability%20Question.pdf"
 slug: []
 categories:
   - Psychometrics

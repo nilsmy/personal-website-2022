@@ -2,6 +2,14 @@
 title: "Personality Traits Leading Respondents to Refuse to Answer a Forced-Choice Personality Item: An Item Response Tree (IRTree) Model"
 author: Nils Myszkowski
 date: '2024-01-10'
+journal: "Psych"
+doi: "10.3390/psych6010006"
+citation_authors:
+  - "Martin Storme"
+  - "Nils Myszkowski"
+  - "Emeric Kubiak"
+  - "Simon Baron"
+pdf_url: "/Publication_pdf/Storme%20et%20al.%20-%202024%20-%20Personality%20Traits%20Leading%20Respondents%20to%20Refuse%20to%20Answer%20a%20Forced-Choice%20Personality%20Item%20An%20Item.pdf"
 slug: []
 categories:
   - Psychometrics

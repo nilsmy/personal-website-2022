@@ -2,6 +2,34 @@
 title: "Confirmation of a Two-Factor Solution to the Questionnaire of Cognitive and Affective Empathy in Schizophrenia"
 author: Nils Myszkowski
 date: '2019-10-24'
+journal: "Frontiers in Psychiatry"
+doi: "10.3389/fpsyt.2019.00751"
+citation_authors:
+  - "Eric Brunet-Gouet"
+  - "Nils Myszkowski"
+  - "Mickael Ehrminger"
+  - "Mathieu Urbach"
+  - "Bruno Aouizerate"
+  - "Lore Brunel"
+  - "Delphine Capdevielle"
+  - "Isabelle Chereau"
+  - "Caroline Dubertret"
+  - "Julien Dubreucq"
+  - "Guillaume Fond"
+  - "Christophe Lançon"
+  - "Sylvain Leignier"
+  - "Jasmina Mallet"
+  - "David Misdrahi"
+  - "Sylvie Pires"
+  - "Priscille Schneider"
+  - "Franck Schurhoff"
+  - "Hanan Yazbek"
+  - "Anna Zinetti-Bertschy"
+  - "Nadine Bazin"
+  - "Christine Passerieux"
+  - "Franck Zenasni"
+  - "Paul Roux"
+pdf_url: "/Publication_pdf/Brunet-Gouet%20et%20al.%20-%202019%20-%20Confirmation%20of%20a%20Two-Factor%20Solution%20to%20the%20Quest.pdf"
 slug: []
 categories:
   - Psychiatry

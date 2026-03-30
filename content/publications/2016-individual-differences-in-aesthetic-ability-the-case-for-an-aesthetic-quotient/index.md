@@ -2,6 +2,12 @@
 title: "Individual Differences in Aesthetic Ability: The Case for an Aesthetic Quotient"
 author: Nils Myszkowski
 date: '2016-05-14'
+journal: "Frontiers in Psychology"
+doi: "10.3389/fpsyg.2016.00750"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Franck Zenasni"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Zenasni%20-%202016%20-%20Individual%20differences%20in%20aesthetic%20ability%20The%20c.pdf"
 slug: []
 categories:
   - Aesthetics

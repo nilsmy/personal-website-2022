@@ -2,6 +2,14 @@
 title: "Managerial Creative Problem Solving and the Big Five Personality Traits"
 author: Nils Myszkowski
 date: '2015-06-08'
+journal: "Journal of Management Development"
+doi: "10.1108/jmd-12-2013-0160"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Andrés Davila"
+  - "Todd Lubart"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202015%20-%20Managerial%20creative%20problem%20solving%20and%20the%20Big%20Fi.pdf"
 slug: []
 categories:
   - Creativity

@@ -2,6 +2,13 @@
 title: "A Meta-Analysis of the Relationship Between Intelligence and Different Measures of Creative Potential"
 author: Nils Myszkowski
 date: '2018-02-01'
+journal: "Psychology of Aesthetics, Creativity, and the Arts"
+doi: "10.1037/aca0000099"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Pinar Çelik"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202018%20-%20A%20meta-analysis%20of%20the%20relationship%20between%20intell.pdf"
 slug: []
 categories:
   - Meta-analysis

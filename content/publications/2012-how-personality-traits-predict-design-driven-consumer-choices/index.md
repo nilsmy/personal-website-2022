@@ -2,6 +2,12 @@
 title: "How Personality Traits Predict Design-Driven Consumer Choices"
 author: Nils Myszkowski
 date: '2012-11-30'
+journal: "Europe’s Journal of Psychology"
+doi: "10.5964/ejop.v8i4.523"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+pdf_url: "/Publication_pdf/Myszkowski%20and%20Storme%20-%202012%20-%20How%20Personality%20Traits%20Predict%20Design-Driven%20Consu.pdf"
 slug: []
 categories:
   - Consumer behavior

@@ -2,6 +2,14 @@
 title: Exploring the Associations Between Personality and Response Speed Trajectories in Low-Stakes Intelligence Tests
 author: Nils Myszkowski
 date: '2022-03-03'
+journal: "Personality and Individual Differences"
+doi: "10.1016/j.paid.2022.111580"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Emeric Kubiak"
+  - "Simon Baron"
+pdf_url: "/Publication_pdf/Myszkowski-2022-Exploring.pdf"
 slug: []
 categories:
   - Item-Response Theory

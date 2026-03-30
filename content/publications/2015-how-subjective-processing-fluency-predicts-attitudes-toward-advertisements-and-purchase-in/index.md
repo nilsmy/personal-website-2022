@@ -2,6 +2,14 @@
 title: "How Subjective Processing Fluency Predicts Attitudes Toward Advertisements and Purchase Intention"
 author: Nils Myszkowski
 date: '2015-05-17'
+journal: "Journal of Consumer Marketing"
+doi: "10.1108/jcm-10-2014-1187"
+citation_authors:
+  - "Martin Storme"
+  - "Nils Myszkowski"
+  - "Andrés Davila"
+  - "Frank Bournois"
+pdf_url: "/Publication_pdf/Storme%20et%20al.%20-%202015%20-%20How%20subjective%20processing%20fluency%20predicts%20attitud2.pdf"
 slug: []
 categories:
   - Consumer behavior

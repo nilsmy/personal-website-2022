@@ -2,6 +2,14 @@
 title: "Is Visual Aesthetic Sensitivity Independent from Intelligence, Personality, and Creativity?"
 author: Nils Myszkowski
 date: '2014-01-14'
+journal: "Personality and Individual Differences"
+doi: "10.1016/j.paid.2013.10.021"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Franck Zenasni"
+  - "Todd Lubart"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202014%20-%20Is%20visual%20aesthetic%20sensitivity%20independent%20from%20i.pdf"
 slug: []
 categories:
   - Aesthetics

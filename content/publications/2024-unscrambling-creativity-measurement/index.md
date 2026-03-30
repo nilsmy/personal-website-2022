@@ -2,6 +2,13 @@
 title: "Unscrambling Creativity Measurement: An Invitation to Better Formalize the Domain Generality-Specificity of Creativity with Psychometric Modeling"
 author: Nils Myszkowski
 date: '2024-01-01'
+journal: "Learning and Individual Differences"
+doi: "10.1016/j.lindif.2023.102401"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Pinar Çelik"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202024%20-%20Unscrambling%20creativity%20measurement%20An%20invitation%20to%20better%20formalize%20the%20domain%20generality-specifi.pdf"
 slug: []
 categories:
   - Psychometrics

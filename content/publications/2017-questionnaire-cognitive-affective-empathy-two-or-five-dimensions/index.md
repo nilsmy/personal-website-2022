@@ -2,6 +2,17 @@
 title: "Is the Questionnaire of Cognitive and Affective Empathy Measuring Two or Five Dimensions? Evidence in a French Sample"
 author: Nils Myszkowski
 date: '2017-06-07'
+journal: "Psychiatry Research"
+doi: "10.1016/j.psychres.2017.05.047"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Eric Brunet-Gouet"
+  - "Paul Roux"
+  - "Léonore Robieux"
+  - "Antoine Malézieux"
+  - "Emilie Boujut"
+  - "Franck Zenasni"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202017%20-%20Is%20the%20Questionnaire%20of%20Cognitive%20and%20Affective%20Em.pdf"
 slug: []
 categories:
   - Psychometrics

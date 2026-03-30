@@ -2,6 +2,13 @@
 title: Individual Differences in Within-Person Variability in Personality Positively Predict Economic Gains and Satisfaction in Negotiations
 author: Nils Myszkowski
 date: '2022-03-17'
+journal: "Group Decision and Negotiation"
+doi: "10.1007/s10726-022-09778-x"
+citation_authors:
+  - "Pinar Celik"
+  - "Martin Storme"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Celik%20et%20al.%20-%202022%20-%20Individual%20Differences%20in%20Within-Person%20Variabilit.pdf"
 slug: []
 categories:
   - Within-Person variability

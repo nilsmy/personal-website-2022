@@ -2,6 +2,16 @@
 title: "A Cross-Cultural Study of Task Specificity in Creativity"
 author: Nils Myszkowski
 date: '2017-08-16'
+journal: "The Journal of Creative Behavior"
+doi: "10.1002/jocb.123"
+citation_authors:
+  - "Martin Storme"
+  - "Todd Lubart"
+  - "Nils Myszkowski"
+  - "Ping Chung Cheung"
+  - "Toby Tong"
+  - "Sing Lau"
+pdf_url: "/Publication_pdf/Storme%20et%20al.%20-%202017%20-%20A%20cross%E2%80%90cultural%20study%20of%20task%20specificity%20in%20crea.pdf"
 slug: []
 categories:
   - Creativity

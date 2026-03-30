@@ -2,6 +2,13 @@
 title: "Are Reflective Models Appropriate for Very Short Scales? Proofs of Concept of Formative Models Using the Ten-Item Personality Inventory"
 author: Nils Myszkowski
 date: '2019-03-19'
+journal: "Journal of Personality"
+doi: "10.1111/jopy.12395"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Martin Storme"
+  - "Jean‐Louis Tavani"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202019%20-%20Are%20reflective%20models%20appropriate%20for%20very%20short%20s.pdf"
 slug: []
 categories:
   - Psychometrics

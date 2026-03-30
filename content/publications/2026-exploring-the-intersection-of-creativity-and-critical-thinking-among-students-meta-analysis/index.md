@@ -2,6 +2,13 @@
 title: "Exploring the Intersection of Creativity and Critical Thinking Among Students: A Meta-Analysis"
 author: Nils Myszkowski
 date: '2026-06-01'
+journal: "Thinking Skills and Creativity"
+doi: "10.1016/j.tsc.2025.102119"
+citation_authors:
+  - "Ji Hoon Park"
+  - "Nils Myszkowski"
+  - "Weihua Niu"
+pdf_url: "/Publication_pdf/Park%20et%20al.%20-%202026%20-%20Exploring%20the%20intersection%20of%20creativity%20and%20critical%20thinking%20among%20students%20A%20meta-analysis.pdf"
 slug: []
 categories:
   - Creativity

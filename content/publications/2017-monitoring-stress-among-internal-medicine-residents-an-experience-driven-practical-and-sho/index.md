@@ -2,6 +2,15 @@
 title: "Monitoring Stress Among Internal Medicine Residents: An Experience-Driven, Practical and Short Measure"
 author: Nils Myszkowski
 date: '2017-04-19'
+journal: "Psychology, Health \\& Medicine"
+doi: "10.1080/13548506.2016.1220599"
+citation_authors:
+  - "Nils Myszkowski"
+  - "Barbara Villoing"
+  - "Franck Zenasni"
+  - "Philippe Jaury"
+  - "Emilie Boujut"
+pdf_url: "/Publication_pdf/Myszkowski%20et%20al.%20-%202017%20-%20Monitoring%20stress%20among%20internal%20medicine%20resident.pdf"
 slug: []
 categories:
   - Health

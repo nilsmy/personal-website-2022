@@ -2,6 +2,13 @@
 title: "Psychometric Properties of the French Ten-Item Personality Inventory"
 author: Nils Myszkowski
 date: '2016-06-15'
+journal: "Journal of Individual Differences"
+doi: "10.1027/1614-0001/a000204"
+citation_authors:
+  - "Martin Storme"
+  - "Jean-Louis Tavani"
+  - "Nils Myszkowski"
+pdf_url: "/Publication_pdf/Storme%20et%20al.%20-%202016%20-%20Psychometric%20Properties%20of%20the%20French%20Ten-Item%20Per.pdf"
 slug: []
 categories:
   - Personality
