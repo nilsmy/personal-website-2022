@@ -6,22 +6,40 @@
     <description>Recent content in Categories on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Creativity</title>
-      <link>/categories/creativity/</link>
-      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      <title>Education</title>
+      <link>/categories/education/</link>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       
-      <guid>/categories/creativity/</guid>
+      <guid>/categories/education/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Educational assessment</title>
       <link>/categories/educational-assessment/</link>
-      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       
       <guid>/categories/educational-assessment/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychometrics</title>
+      <link>/categories/psychometrics/</link>
+      <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/psychometrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Creativity</title>
+      <link>/categories/creativity/</link>
+      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/creativity/</guid>
       <description></description>
     </item>
     
@@ -40,15 +58,6 @@
       <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
       
       <guid>/categories/pisa/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Psychometrics</title>
-      <link>/categories/psychometrics/</link>
-      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/psychometrics/</guid>
       <description></description>
     </item>
     
@@ -238,15 +247,6 @@
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>/categories/rater-mediated-assessment/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Education</title>
-      <link>/categories/education/</link>
-      <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/categories/education/</guid>
       <description></description>
     </item>
     

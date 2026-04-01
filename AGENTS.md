@@ -50,6 +50,12 @@
 - Git repo on `main` branch (no `.github/workflows/` detected in this repo).
 - No in-repo CI guardrails: manually validate high-impact changes (build + spot-check relevant pages).
 - Keep diffs focused and minimal; avoid bulk formatting or mass content churn.
+- In final handoff, explicitly tell the user whether the change is:
+  - `safe to commit and push`
+  - `worth reviewing before push`
+  - or risky/blocked and why
+- Use `safe to commit and push` for routine, build-verified content/front-matter/PDF updates with low visual or behavioral risk.
+- Use `worth reviewing before push` when changes affect layout, styling, copy tone, navigation, metadata strategy, or anything the user may want to eyeball on the rendered site.
 
 ## Editing Rules
 - Prefer small, targeted edits over broad rewrites.
