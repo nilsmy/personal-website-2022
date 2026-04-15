@@ -6,7 +6,17 @@
     <description>Recent content in Item-Response Theory on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 20 May 2025 00:00:00 +0000</lastBuildDate><atom:link href="/categories/item-response-theory/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="/categories/item-response-theory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Solving the Paradox Between the Generalized Partial Credit Model and PISA&#39;s Rating Instructions: A Generalized IRTree Approach to Within-Rating Multidimensionality</title>
+      <link>/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</link>
+      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine whether PISA creative-thinking ratings can reasonably be scaled with the generalized partial credit model when the scoring instructions require different attributes at different thresholds.
+Abstract   Using the PISA 2022 Creative Thinking data, this paper tests the assumption that a single latent dimension underlies the progression from no credit to partial and full credit. We show that the rating instructions instead imply within-rating multidimensionality, because appropriateness and originality or diversity are invoked differently across thresholds.</description>
+    </item>
+    
     <item>
       <title>One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models</title>
       <link>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
