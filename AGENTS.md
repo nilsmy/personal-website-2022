@@ -90,7 +90,7 @@
 - `static/` is for pass-through files served at site root paths; keep stable URL paths when replacing assets.
 - `assets/` is Hugo pipeline input (SCSS/JS); keep changes compatible with Hugo 0.84.4.
 - Avoid renaming/moving files referenced in front matter (`images`, `sharing_image`, PDF links) unless all references are updated.
-- CV handling: the live website CV is served from `static/cv/cv.pdf`, with links currently pointing to `/cv/cv.pdf` in `config.toml` and `content/_index.md`. When updating the CV, replace that file in place instead of changing links or introducing a new path, unless explicitly asked.
+- CV handling: the live website CV is served from `static/cv/CV_Nils_Myszkowski.pdf`, with links currently pointing to `/cv/CV_Nils_Myszkowski.pdf` in `config.toml` and `content/_index.md`. When updating the CV, replace that file in place instead of changing links or introducing a new path, unless explicitly asked.
 - Publication PDFs support long-term discoverability and citation access. Preserve existing public PDF URLs under `static/Publication_pdf/` when possible, and prefer replacing files in place over renaming or moving them.
 
 ## SEO / Metadata / Social Preview

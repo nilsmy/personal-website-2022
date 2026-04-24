@@ -131,7 +131,7 @@ enableEmoji = true
   [[menu.header]]
     name = "CV"
     title = "Curriculum Vitae"
-    url = "/cv/cv.pdf"
+    url = "/cv/CV_Nils_Myszkowski.pdf"
     weight = 4
   [[menu.header]]
     name = "Contact"
