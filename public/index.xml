@@ -792,5 +792,15 @@ The book discusses classical test theory and its limits, core ideas in item resp
   </description>
     </item>
     
+    <item>
+      <title>Psychometrics and Survey Methods Consulting</title>
+      <link>https://www.nilsmyszkowski.com/consulting/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/consulting/</guid>
+      <description>I consult on psychometrics, survey methods, questionnaire development, and statistical modeling for researchers, organizations, and R&amp;amp;D teams that need measurement decisions to be defensible, interpretable, and practically useful.
+AI tools can be useful for drafting, summarizing, and accelerating parts of this work. They are less reliable at noticing unstated assumptions, construct ambiguity, or the consequences that small measurement choices can have for score interpretation. My role is to bring psychometric judgment to those decisions: what should be measured, how it should be scored or modeled, and what can reasonably be concluded from the resulting data.</description>
+    </item>
+    
   </channel>
 </rss>
