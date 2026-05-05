@@ -56,6 +56,7 @@
   - or risky/blocked and why
 - Use `safe to commit and push` for routine, build-verified content/front-matter/PDF updates with low visual or behavioral risk.
 - Use `worth reviewing before push` when changes affect layout, styling, copy tone, navigation, metadata strategy, or anything the user may want to eyeball on the rendered site.
+- When suggesting a commit message, put it in a copyable fenced `text` code block.
 
 ## Editing Rules
 - Prefer small, targeted edits over broad rewrites.
@@ -63,6 +64,7 @@
 - Reuse existing layouts/partials/shortcodes/content patterns before introducing new ones.
 - Avoid adding dependencies/tooling (Node/R packages/build steps) unless clearly required.
 - Do not edit generated files by hand unless task explicitly targets generated artifacts.
+- The user often dictates or types quick change requests; expect typos, speech-to-text substitutions, and occasional phrasing ambiguity. Use repository context and domain knowledge to infer likely intent, but call out important assumptions when a term seems garbled (for example, interpret likely psychometric terms such as `Cronbach's alpha` rather than literal transcription errors).
 
 ## Content Conventions
 - Content is page-bundle oriented (`content/<section>/<slug>/index.*` + local assets).

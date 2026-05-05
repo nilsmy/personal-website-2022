@@ -18,11 +18,14 @@ AI tools can be useful for drafting, summarizing, and accelerating parts of this
 - Designing or revising questionnaires, surveys, rating forms, and assessment tools.
 - Evaluating whether scores can be interpreted as intended.
 - Developing or validating scales, including short scales and multidimensional measures.
+- Examining classical reliability and scoring questions, including Cronbach's alpha, McDonald's omega, and related evidence for score consistency.
 - Modeling item responses, ratings, fluency scores, and other psychometric data.
+- Studying potential bias in scores and predictions, including measurement invariance, differential item functioning, differential test functioning, and prediction invariance.
 - Working with item response theory, latent variable models, rater-mediated assessment, and related statistical models.
 - Planning analyses and reporting results in a way that is technically sound and understandable to non-specialist stakeholders.
+- Preparing technical reports, white papers, certification-oriented documentation, and client-facing explanations of measurement instruments.
 
-I primarily work with coding-based statistical workflows, especially in R, but I also have experience with other statistical software used across my publications, including SPSS, Stata, Mplus, and JASP.
+I primarily work with coding-based statistical workflows, especially in R, but I also have experience with other statistical software used across my publications, including SPSS, Stata, Mplus, and JASP. I can also help translate technical psychometric evidence into materials used for official, internal, or client-facing purposes, including explaining or defending an instrument's design and interpretation to non-specialist audiences.
 
 ## Typical Questions
 

@@ -129,9 +129,9 @@ enableEmoji = true
     url = "/consulting/"
     weight = 3
   [[menu.header]]
-    name = "R packages"
-    title = "R packages"
-    url = "/R packages/"
+    name = "Software"
+    title = "Software"
+    url = "/r-packages/"
     weight = 4
   [[menu.header]]
     name = "CV"
