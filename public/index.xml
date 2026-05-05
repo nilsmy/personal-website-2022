@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nils Myszkowski, PhD</title>
-    <link>/</link>
+    <link>https://www.nilsmyszkowski.com/</link>
     <description>Recent content on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Netlify</title>
-      <link>/collection/day02/01-netlify/</link>
+      <link>https://www.nilsmyszkowski.com/collection/day02/01-netlify/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/day02/01-netlify/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/day02/01-netlify/</guid>
       <description>So far, we&amp;rsquo;ve been leveraging GitHub Pages for publishing. This works great, but for blogdown we&amp;rsquo;ll start using Netlify. Let&amp;rsquo;s start RIGHT NOW with a site we&amp;rsquo;ve already built and published.
 Pre-requisites     Pick either your postcards site, or your distill site from day 01. Refresh your memory- which repository was it again?</description>
     </item>
     
     <item>
       <title>A first post</title>
-      <link>/blog/spoonful-series/01-spoonful/</link>
+      <link>https://www.nilsmyszkowski.com/blog/spoonful-series/01-spoonful/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/spoonful-series/01-spoonful/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/spoonful-series/01-spoonful/</guid>
       <description>Hi, I&#39;m the here-bot cat! Use me to find your way in your website.
 Here I am: content/blog/spoonful-series/01-spoonful.md  To remove me, delete this line inside that file: {{&amp;lt; here &amp;gt;}}
 My content section is: blog  My layout is: single-series   does this work?     or this?      Let&amp;rsquo;s start.
@@ -31,10 +31,10 @@ beginning     middle     end     </description>
     
     <item>
       <title>A GitHub profile</title>
-      <link>/collection/day01/01-github/</link>
+      <link>https://www.nilsmyszkowski.com/collection/day01/01-github/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/day01/01-github/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/day01/01-github/</guid>
       <description>Profile     https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/personalizing-your-profile
 Pin projects to profile     https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/pinning-items-to-your-profile
 Profile README     This is new! Let&amp;rsquo;s do it:
@@ -43,20 +43,20 @@ https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/ma
     
     <item>
       <title>Prework</title>
-      <link>/collection/prework/</link>
+      <link>https://www.nilsmyszkowski.com/collection/prework/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/prework/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/prework/</guid>
       <description>Welcome to the Introducing Yourself Online workshop! We look forward to meeting you. Before attending the workshop, please complete the following prework.
 Set up RStudio Cloud     Sign up for a free RStudio Cloud account at https://rstudio.cloud/ before the workshop. I recommend logging in with an existing Google or GitHub account, if you have one (rather than creating a new account with another password you have to remember).</description>
     </item>
     
     <item>
       <title>A postcard</title>
-      <link>/collection/day01/02-postcards/</link>
+      <link>https://www.nilsmyszkowski.com/collection/day01/02-postcards/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/day01/02-postcards/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/day01/02-postcards/</guid>
       <description>Pre-requisites     First, make sure you have the latest version of the postcards package installed from CRAN:
 install.packages(&amp;quot;postcards&amp;quot;) Restart your R session. If you use RStudio, use the menu item Session &amp;gt; Restart R or the associated keyboard shortcut:
  Ctrl + Shift + F10 (Windows and Linux) or Command + Shift + F10 (Mac OS).  packageVersion(&amp;quot;postcards&amp;quot;) [1] ‘0.2.0’  Create GitHub repo     Online.</description>
@@ -64,10 +64,10 @@ install.packages(&amp;quot;postcards&amp;quot;) Restart your R session. If you u
     
     <item>
       <title>A second post</title>
-      <link>/blog/spoonful-series/02-spoonful/</link>
+      <link>https://www.nilsmyszkowski.com/blog/spoonful-series/02-spoonful/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/spoonful-series/02-spoonful/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/spoonful-series/02-spoonful/</guid>
       <description>Hi, I&#39;m the here-bot cat! Use me to find your way in your website.
 Here I am: content/blog/spoonful-series/02-spoonful/index.md  To remove me, delete this line inside that file: {{&amp;lt; here &amp;gt;}}
 My content section is: blog  My layout is: single-series  Images in this page bundle: /blog/spoonful-series/02-spoonful/sidebar-inverse.jpg   part 2!     does this work?      now for some very cool things     more     get ready!</description>
@@ -75,10 +75,10 @@ My content section is: blog  My layout is: single-series  Images in this page bu
     
     <item>
       <title>Using blogdown</title>
-      <link>/collection/day02/02-blogdown/</link>
+      <link>https://www.nilsmyszkowski.com/collection/day02/02-blogdown/</link>
       <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/day02/02-blogdown/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/day02/02-blogdown/</guid>
       <description>Pre-requisites     First, make sure you have the latest version of the blogdown package installed from CRAN:
 install.packages(&amp;quot;blogdoown&amp;quot;) Restart your R session. If you use RStudio, use the menu item Session &amp;gt; Restart R or the associated keyboard shortcut:
  Ctrl + Shift + F10 (Windows and Linux) or Command + Shift + F10 (Mac OS).  packageVersion(&amp;quot;blogdown&amp;quot;) [1] ‘1.0’  Create GitHub repo     Online.</description>
@@ -86,10 +86,10 @@ install.packages(&amp;quot;blogdoown&amp;quot;) Restart your R session. If you u
     
     <item>
       <title>A third post</title>
-      <link>/blog/spoonful-series/03-spoonful/</link>
+      <link>https://www.nilsmyszkowski.com/blog/spoonful-series/03-spoonful/</link>
       <pubDate>Sun, 03 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/spoonful-series/03-spoonful/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/spoonful-series/03-spoonful/</guid>
       <description>Hi, I&#39;m the here-bot cat! Use me to find your way in your website.
 Here I am: content/blog/spoonful-series/03-spoonful/index.markdown  Here is my R Markdown source file: blog/spoonful-series/03-spoonful/index.Rmarkdown You&#39;ll want to edit this file, then re-knit to see the changes take effect in your site preview.
  To remove me, delete this line inside that file: {{&amp;lt; here &amp;gt;}}
@@ -98,10 +98,10 @@ My content section is: blog  My layout is: single-series  Images in this page bu
     
     <item>
       <title>A distill site</title>
-      <link>/collection/day01/03-distill/</link>
+      <link>https://www.nilsmyszkowski.com/collection/day01/03-distill/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/day01/03-distill/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/day01/03-distill/</guid>
       <description>Pre-requisites     First, make sure you have the latest version of the distill package installed from CRAN:
 install.packages(&amp;quot;distill&amp;quot;)  Restart your R session. If you use RStudio, use the menu item Session &amp;gt; Restart R or the associated keyboard shortcut:
  Ctrl + Shift + F10 (Windows and Linux) or Command + Shift + F10 (Mac OS).  &amp;lt;!-- --&amp;gt; packageVersion(&amp;quot;distill&amp;quot;) [1] ‘1.2’  Create GitHub repo     Online.</description>
@@ -109,10 +109,10 @@ install.packages(&amp;quot;distill&amp;quot;)  Restart your R session. If you us
     
     <item>
       <title>Warm woolen mittens</title>
-      <link>/collection/day02/03-blogdown/</link>
+      <link>https://www.nilsmyszkowski.com/collection/day02/03-blogdown/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/collection/day02/03-blogdown/</guid>
+      <guid>https://www.nilsmyszkowski.com/collection/day02/03-blogdown/</guid>
       <description>Hi, I&#39;m the here-bot cat! Use me to find your way in your website.
 Here I am: content/collection/day02/03-blogdown/index.md  To remove me, delete this line inside that file: {{&amp;lt; here &amp;gt;}}
 My content section is: collection  My layout is: single-series   part 2!     does this work?      now for some very cool things     more     get ready!</description>
@@ -120,50 +120,50 @@ My content section is: collection  My layout is: single-series   part 2!     doe
     
     <item>
       <title>Solving the Paradox Between the Generalized Partial Credit Model and PISA&#39;s Rating Instructions: A Generalized IRTree Approach to Within-Rating Multidimensionality</title>
-      <link>/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</link>
       <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine whether PISA creative-thinking ratings can reasonably be scaled with the generalized partial credit model when the scoring instructions require different attributes at different thresholds.
 Abstract   Using the PISA 2022 Creative Thinking data, this paper tests the assumption that a single latent dimension underlies the progression from no credit to partial and full credit. We show that the rating instructions instead imply within-rating multidimensionality, because appropriateness and originality or diversity are invoked differently across thresholds.</description>
     </item>
     
     <item>
       <title>Predictive Validity of the Algebra Concept Inventory (ACI): The Importance of Algebraic Conceptual Understanding to College Math and STEM Outcomes</title>
-      <link>/publications/2026-predictive-validity-algebra-concept-inventory/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2026-predictive-validity-algebra-concept-inventory/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2026-predictive-validity-algebra-concept-inventory/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2026-predictive-validity-algebra-concept-inventory/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine whether algebraic conceptual understanding, as measured by the Algebra Concept Inventory (ACI), predicts college math performance and STEM-related outcomes.
 Abstract   Using ACI scores, this study investigates whether algebraic conceptual understanding predicts course grades, completion of math requirements for STEM majors, STEM versus non-STEM degree completion, and part of the observed differences in these outcomes by race/ethnicity and gender.</description>
     </item>
     
     <item>
       <title>One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models</title>
-      <link>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
       <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine how a single creativity score in PISA can mask two separable dimensions of judged responses, and we propose generalized item response tree modeling to estimate appropriateness and originality components explicitly.
 Abstract   Creative-thinking judgments in large-scale assessments often combine multiple evaluative criteria into one score, which can blur interpretation and measurement precision. This article focuses on PISA creative-thinking judgments and introduces a generalized item response tree approach to separate appropriateness and originality into distinct latent components.</description>
     </item>
     
     <item>
       <title>Bayesian Estimation of Generalized Log-Linear Poisson Item Response Models for Fluency Scores Using brms and Stan</title>
-      <link>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
       <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we present a Bayesian estimation workflow for generalized log-linear Poisson item-response models applied to fluency scores in divergent-thinking assessment, with practical implementation using brms and Stan.
 Abstract   Divergent-thinking tests often rely on fluency scores (counts of ideas generated per prompt), and these counts can be modeled with Poisson item-response models. This paper revisits the Rasch Poisson Counts Model and its generalized two-parameter extension (2PPCM), and shows how both can be estimated in a Bayesian multilevel regression framework through brms (Stan backend).</description>
     </item>
     
     <item>
       <title>Depressive and Anxious Symptoms, Experimentally Manipulated Acute Social-Evaluative Threat, and Cortisol</title>
-      <link>/publications/2024-depressive-and-anxious-symptoms-experimentally-manipulated-acute-social-evaluative-threat-/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-depressive-and-anxious-symptoms-experimentally-manipulated-acute-social-evaluative-threat-/</link>
       <pubDate>Tue, 01 Oct 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-depressive-and-anxious-symptoms-experimentally-manipulated-acute-social-evaluative-threat-/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-depressive-and-anxious-symptoms-experimentally-manipulated-acute-social-evaluative-threat-/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine depressive and anxious symptoms, experimentally manipulated acute social-evaluative threat, and cortisol.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -171,10 +171,10 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Exploring the Elicitors of Happiness in India</title>
-      <link>/publications/2024-exploring-the-elicitors-of-happiness-in-india/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-exploring-the-elicitors-of-happiness-in-india/</link>
       <pubDate>Tue, 13 Aug 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-exploring-the-elicitors-of-happiness-in-india/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-exploring-the-elicitors-of-happiness-in-india/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine exploring the elicitors of happiness in india.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -183,50 +183,50 @@ Download the PDF here.</description>
     
     <item>
       <title>Modeling Sequential Dependencies in Progressive Matrices: An Auto-Regressive Item Response Theory (AR-IRT) Approach</title>
-      <link>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</link>
       <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we propose auto-regressive item response theory models for progressive matrices, allowing each item response to depend not only on latent ability and item parameters, but also on prior responses in sequence.
 Abstract   Standard measurement models typically assume local independence among item responses conditional on latent traits. This article argues that, in sequential cognitive tasks such as progressive matrices, responses may show meaningful lagged dependencies that should be modeled directly.</description>
     </item>
     
     <item>
       <title>Personality Traits Leading Respondents to Refuse to Answer a Forced-Choice Personality Item: An Item Response Tree (IRTree) Model</title>
-      <link>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</link>
       <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study why respondents refuse to answer forced-choice personality items, and we model both refusal and refusal reasons within an item response tree framework.
 Abstract   The study examines individual differences in refusal behavior when respondents are given forced-choice personality items with an explicit option to decline choosing between statements. When refusing, respondents also indicate whether both statements fit equally well or neither fits adequately.</description>
     </item>
     
     <item>
       <title>Unscrambling Creativity Measurement: An Invitation to Better Formalize the Domain Generality-Specificity of Creativity with Psychometric Modeling</title>
-      <link>/publications/2024-unscrambling-creativity-measurement/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-unscrambling-creativity-measurement/</link>
       <pubDate>Mon, 01 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-unscrambling-creativity-measurement/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-unscrambling-creativity-measurement/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we discuss how the domain generality-specificity debate in creativity research can be clarified by explicitly modeling measurement structure, instead of relying on underspecified score interpretations.
 Abstract   Creativity assessment often conflates multiple sources of variance, making it difficult to determine what a given score truly reflects. This article argues for a more formal psychometric treatment of the domain generality-specificity question in creativity measurement.</description>
     </item>
     
     <item>
       <title>Creativity with 6 Degrees of Freedom: Feasibility Study of Visual Creativity Assessment in Virtual Reality</title>
-      <link>/publications/2023-creativity-with-6-degrees-of-freedom/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2023-creativity-with-6-degrees-of-freedom/</link>
       <pubDate>Sat, 08 Apr 2023 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2023-creativity-with-6-degrees-of-freedom/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2023-creativity-with-6-degrees-of-freedom/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we test whether creativity can be assessed through an immersive visual task in virtual reality, and examine how well this approach captures meaningful individual differences.
 Abstract   The study introduces and evaluates a virtual-reality visual creativity assessment designed to move creativity measurement into richer digital environments. The paper examines feasibility and reports psychometric evidence, including analyses of structural validity, internal reliability, and criterion-related validity.</description>
     </item>
     
     <item>
       <title>A Pilot Evaluation of a School-Based Psychoeducational Program for Chinese and Latino/a Parents</title>
-      <link>/publications/2023-a-pilot-evaluation-of-a-school-based-psychoeducational-program-for-chinese-and-latino-a-pa/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2023-a-pilot-evaluation-of-a-school-based-psychoeducational-program-for-chinese-and-latino-a-pa/</link>
       <pubDate>Mon, 23 Jan 2023 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2023-a-pilot-evaluation-of-a-school-based-psychoeducational-program-for-chinese-and-latino-a-pa/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2023-a-pilot-evaluation-of-a-school-based-psychoeducational-program-for-chinese-and-latino-a-pa/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine a pilot evaluation of a school-based psychoeducational program for chinese and latino/a parents.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -234,60 +234,60 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Can We “Read” Art...At All? A Psychometric Perspective on the Possibility of Measuring Artwork Attributes</title>
-      <link>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2023-can-we-read-art-at-all-psychometric-perspective/</link>
       <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2023-can-we-read-art-at-all-psychometric-perspective/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2023-can-we-read-art-at-all-psychometric-perspective/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine the claim that we can “read” artworks and evaluate what is psychometrically required for such measurement claims to be valid and interpretable.
 Abstract   This article offers a psychometric commentary on the possibility of measuring artwork attributes. It focuses on the conceptual and measurement assumptions needed to support inferences about what can be extracted from artworks through assessment. The discussion highlights construct-definition issues, score-interpretation limits, and the importance of formal measurement models when evaluating claims about art-based judgments.</description>
     </item>
     
     <item>
       <title>Individual Differences in Within-Person Variability in Personality Positively Predict Economic Gains and Satisfaction in Negotiations</title>
-      <link>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study how within-person variability (the tendency of a person to vary in personality) predicts success in negotiations.
 Abstract   Prior research on the value of personality traits for predicting negotiation outcomes is rather inconclusive. Building on prior research and in light of recent personality and negotiation theories, we discuss why the traditional approach to personality traits has had limited success and propose an alternative approach to predicting negotiation outcomes from personality assessments.</description>
     </item>
     
     <item>
       <title>Exploring the Associations Between Personality and Response Speed Trajectories in Low-Stakes Intelligence Tests</title>
-      <link>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</guid>
       <description>What it&amp;rsquo;s about   In this paper, using Log-Normal Item-Response Theory models for response time data, we study how personality traits predict response speed trajectories in low-stakes reasoning tasks. We found that some traits are associated with increasing in speed vs. decreasing in speed, controlling for item effects.
 Abstract   Previous research suggests a negative relationship between test taking speed and performance in mental ability testing, inviting researchers to explore the origin of individual differences in test taking speed.</description>
     </item>
     
     <item>
       <title>jrt – Item Response Theory Modeling and Scoring for Judgment Data</title>
-      <link>/r-packages/jrt/</link>
+      <link>https://www.nilsmyszkowski.com/r-packages/jrt/</link>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/jrt/</guid>
+      <guid>https://www.nilsmyszkowski.com/r-packages/jrt/</guid>
       <description>What it&amp;rsquo;s about   The goal of jrt is to provide tools to use Item-Response Theory (IRT) models on judgment data, especially in the context of the Consensual Assessment Technique, as presented in Myszkowski (2021).
  Myszkowski, N. (2021). Development of the R library &amp;ldquo;jrt&amp;rdquo;: Automated item response theory procedures for judgment data and their application with the consensual assessment technique. Psychology of Aesthetics, Creativity, and the Arts, 15(3), 426-438.</description>
     </item>
     
     <item>
       <title>Accounting for Variable Task Discrimination in Divergent Thinking Fluency Measurement – An Example of the Benefits of a 2-Parameter Poisson Counts Model and its Bifactor Extension Over the Rasch Poisson Counts Model</title>
-      <link>/publications/2021-2ppcm/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2021-2ppcm/</link>
       <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2021-2ppcm/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2021-2ppcm/</guid>
       <description>What it’s about In this paper, we introduce new psychometric models for count/fluency tasks (tasks in which individuals have to provide many instances). Notably, we extent the Rasch Poisson Counts Model (RPCM) to account for variable discrimination (2-Parameter Poisson Counts Model) and to account for local dependencies/nuisance factors (Bifactor 2-Parameter Poisson Counts Model).
  Abstract Fluency tasks are among the most common item formats for the assessment of certain cognitive abilities, such as verbal fluency or divergent thinking.</description>
     </item>
     
     <item>
       <title>AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</title>
-      <link>/r-packages/amc/</link>
+      <link>https://www.nilsmyszkowski.com/r-packages/amc/</link>
       <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/amc/</guid>
+      <guid>https://www.nilsmyszkowski.com/r-packages/amc/</guid>
       <description>AMCTestmakeR provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
 It&amp;rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
 So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&amp;rsquo;s how most people use Auto Multiple Choice.</description>
@@ -295,10 +295,10 @@ So far, the features are limited to generating AMC-LaTeX code questions for Mult
     
     <item>
       <title>Set up your social</title>
-      <link>/blog/social/</link>
+      <link>https://www.nilsmyszkowski.com/blog/social/</link>
       <pubDate>Thu, 28 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/social/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/social/</guid>
       <description>There are five places where you can choose to show social icons. Here is the tl;dr:
  site header (set in config.toml), site footer (set in config.toml),  homepage (set in content/_index.md),  about page in the sidebar (set in content/about/sidebar/index.md), and  contact page (set in content/form/contact.md).  Read on to learn how to set up your social icons, and how to show/hide them.
 Configure social     Wherever you end up wanting to show your social icons, you&amp;rsquo;ll need to start by setting up the links in your site config.</description>
@@ -306,30 +306,30 @@ Configure social     Wherever you end up wanting to show your social icons, you&
     
     <item>
       <title>Style your site colors</title>
-      <link>/blog/color-themes/</link>
+      <link>https://www.nilsmyszkowski.com/blog/color-themes/</link>
       <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/color-themes/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/color-themes/</guid>
       <description>You can totally customize your site&amp;rsquo;s theme colors within minutes of creating a new site. Read on to find out how, and decide which of the three options meets your needs.
 Use a color theme     Hugo Apéro includes 8 built-in color themes that work &amp;ldquo;out of the box.&amp;rdquo; This means you can use a color theme to quickly customize the look of your site without needing to write any CSS.</description>
     </item>
     
     <item>
       <title>Style your site typography</title>
-      <link>/blog/fonts/</link>
+      <link>https://www.nilsmyszkowski.com/blog/fonts/</link>
       <pubDate>Wed, 27 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/fonts/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/fonts/</guid>
       <description>As with color themes, you can completely customize your site&amp;rsquo;s fonts within minutes of creating a new site. How you do it depends on how much control and customization you need.
 Embedded fonts     Hugo Apéro includes 6 embedded fonts that work &amp;ldquo;out of the box.&amp;rdquo; We selected 3 serif and 3 sans-serif options that we thought looked good with this theme, in our humble opinions. All embedded fonts include real italics so you may emphasize to your heart&amp;rsquo;s content ❤️!</description>
     </item>
     
     <item>
       <title>An evergreen post</title>
-      <link>/blog/evergreen/</link>
+      <link>https://www.nilsmyszkowski.com/blog/evergreen/</link>
       <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/evergreen/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/evergreen/</guid>
       <description>Rendering mathematical equations     Examples from the mathjax demo. But they work with katex as well.
 Rmarkdown     In .Rmarkdown documents, you can use either
 $a \ne 0$ to get inline math: \(a \ne 0\). There is no conflict with using dollar symbols regularly, because knitr automatically escapes freestanding dollar symbols.
@@ -339,19 +339,19 @@ $x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$ to get a math paragraph:</description>
     
     <item>
       <title>A campfire</title>
-      <link>/talk/campfire/</link>
+      <link>https://www.nilsmyszkowski.com/talk/campfire/</link>
       <pubDate>Tue, 12 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/talk/campfire/</guid>
+      <guid>https://www.nilsmyszkowski.com/talk/campfire/</guid>
       <description>I&amp;rsquo;m really excited to give this talk! Stay tuned for video and slides.</description>
     </item>
     
     <item>
       <title>Using panelsets</title>
-      <link>/blog/seedling/</link>
+      <link>https://www.nilsmyszkowski.com/blog/seedling/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
       
-      <guid>/blog/seedling/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/seedling/</guid>
       <description>Courtesy of panelset.js by Garrick Aden-Buie, from his xaringanExtra package: https://pkg.garrickadenbuie.com/xaringanExtra/#/panelset
 For example, this panelset:
 Hello! 👋 hello
@@ -362,48 +362,48 @@ Hello! 👋 hello
     
     <item>
       <title>A seedling</title>
-      <link>/talk/second-seedling/</link>
+      <link>https://www.nilsmyszkowski.com/talk/second-seedling/</link>
       <pubDate>Fri, 01 Jan 2021 14:15:59 -0600</pubDate>
       
-      <guid>/talk/second-seedling/</guid>
+      <guid>https://www.nilsmyszkowski.com/talk/second-seedling/</guid>
       <description></description>
     </item>
     
     <item>
       <title>An Rmarkdown post</title>
-      <link>/blog/rmarkdown/</link>
+      <link>https://www.nilsmyszkowski.com/blog/rmarkdown/</link>
       <pubDate>Wed, 30 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>/blog/rmarkdown/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/rmarkdown/</guid>
       <description> Air quality     with(airquality, boxplot(Temp ~ Month)) with(airquality, plot(Ozone ~ Temp)) mlev &amp;lt;- levels(with(airquality, as.factor(Month))) with(airquality, plot(Ozone ~ Temp, pch = as.numeric(mlev), col = mlev)) </description>
     </item>
     
     <item>
       <title>A Mokken Scale Analysis of the Last Series of the Standard Progressive Matrices (SPM-LS)</title>
-      <link>/publications/2020-mokken/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2020-mokken/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2020-mokken/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2020-mokken/</guid>
       <description>What it’s about In this paper, I reanalyze a dataset for a special issue of Journal of Intelligence. The analysis uses the framework of Mokken Scale Analysis (MSA), which is a non-parametric approach to relations between item responses and attributes (i.e. Item-Response Theory).
  Abstract Raven’s Standard Progressive Matrices (Raven 1941) is a widely used 60-item long measure of general mental ability. It was recently suggested that, for situations where taking this test is too time consuming, a shorter version, comprised of only the last series of the Standard Progressive Matrices (Myszkowski and Storme 2018) could be used, while preserving satisfactory psychometric properties (Garcia-Garzon et al.</description>
     </item>
     
     <item>
       <title>Creativity and Unethicality – A Systematic Review and Meta-Analysis</title>
-      <link>/publications/2021-creativity-unethicality/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2021-creativity-unethicality/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2021-creativity-unethicality/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2021-creativity-unethicality/</guid>
       <description>What it’s about In this paper, we provide a meta-analysis of correlations between (un)ethical behavior and creativity, notably controlling for how the constructs were measured – which, as it turns out, is important when considering the heterogeneity of the findings.
  Abstract A growing line of research suggests that creativity and unethicality are intrinsically related to one another. However, the idea has been challenged both by theoretical arguments and by heterogeneous empirical findings.</description>
     </item>
     
     <item>
       <title>nhstplot – Plot Null Hypothesis Significance Tests</title>
-      <link>/r-packages/nhstplot/</link>
+      <link>https://www.nilsmyszkowski.com/r-packages/nhstplot/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/nhstplot/</guid>
+      <guid>https://www.nilsmyszkowski.com/r-packages/nhstplot/</guid>
       <description>nhstplot is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
 The basics   After installing the library with install.packages(&amp;quot;nhstplot&amp;quot;) you need to load the library:
 library(nhstplot) &amp;lsquo;nhstplot&amp;rsquo; is composed of 4 functions, one for each major NHST test &amp;ldquo;family&amp;rdquo; :
@@ -412,39 +412,39 @@ library(nhstplot) &amp;lsquo;nhstplot&amp;rsquo; is composed of 4 functions, one
     
     <item>
       <title>Using Visual Aesthetic Sensitivity Measures in Museum Studies</title>
-      <link>/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</link>
       <pubDate>Thu, 05 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2020-using-visual-aesthetic-sensitivity-measures-museum-studies/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine the use of visual aesthetic sensitivity measures in museum contexts and outline psychometric issues that matter when selecting and interpreting these instruments.
 Abstract   Visual aesthetic sensitivity has long been assessed with tests intended to capture individual differences in judgments of artistic quality. This article discusses how such measures can be used in museum studies and what kinds of validity evidence are needed for defensible interpretation.</description>
     </item>
     
     <item>
       <title>A Forgotten Antecedent of Career Adaptability: A Study on the Predictive Role of Within-Person Variability in Personality</title>
-      <link>/publications/2020-within-person-adaptability/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2020-within-person-adaptability/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2020-within-person-adaptability/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2020-within-person-adaptability/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study the relation between within-person variability in personality (the extent to which one changes in personality across situations) and career adaptability.
 Abstract   Several studies have focused on stable personality traits as antecedents of career adaptability, but few have investigated more dynamic aspects of personality in relation to career adaptability. Recent theories on personality such as Whole Trait Theory (Fleeson, 2015) recognize that traits are often aroused in one situation but not in another (Allport, 1937), and that individuals are more or less flexible in responding to different situations.</description>
     </item>
     
     <item>
       <title>A seedling</title>
-      <link>/talk/seedling/</link>
+      <link>https://www.nilsmyszkowski.com/talk/seedling/</link>
       <pubDate>Mon, 13 Jan 2020 14:15:59 -0600</pubDate>
       
-      <guid>/talk/seedling/</guid>
+      <guid>https://www.nilsmyszkowski.com/talk/seedling/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Confirmation of a Two-Factor Solution to the Questionnaire of Cognitive and Affective Empathy in Schizophrenia</title>
-      <link>/publications/2019-confirmation-of-a-two-factor-solution-to-the-questionnaire-of-cognitive-and-affective-empa/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-confirmation-of-a-two-factor-solution-to-the-questionnaire-of-cognitive-and-affective-empa/</link>
       <pubDate>Thu, 24 Oct 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-confirmation-of-a-two-factor-solution-to-the-questionnaire-of-cognitive-and-affective-empa/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-confirmation-of-a-two-factor-solution-to-the-questionnaire-of-cognitive-and-affective-empa/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine confirmation of a two-factor solution to the questionnaire of cognitive and affective empathy in schizophrenia.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -452,39 +452,39 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Same Test, Better Scores – Boosting the Reliability of Short Online Intelligence Recruitment Tests with Nested Logit Item Response Theory Models</title>
-      <link>/publications/2019-same_test/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-same_test/</link>
       <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-same_test/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-same_test/</guid>
       <description>What it’s about In this paper, we propose to generalize the use of Nested Logit Models and implement its use for online personnel selection procedures that use reasoning tests with multiple choices (e.g., matrix-type tests). We find that using such models results in gains of reliability, especially at low ability levels.
  Abstract Assessing job applicants’ general mental ability online poses psychometric challenges due to the necessity of having brief but accurate tests.</description>
     </item>
     
     <item>
       <title>CSS Grid Scaffold</title>
-      <link>/blog/css-grid-scaffold/</link>
+      <link>https://www.nilsmyszkowski.com/blog/css-grid-scaffold/</link>
       <pubDate>Tue, 02 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/blog/css-grid-scaffold/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/css-grid-scaffold/</guid>
       <description>“Grid is the very first CSS module created specifically to solve the layout problems we&amp;rsquo;ve all been hacking our way around for as long as we&amp;rsquo;ve been making websites.”     — Chris House, A Complete Guide to CSS Grid Layout 1
  Overview     Since I began building websites in Y2K, I&amp;rsquo;ve lost count how many times the phrase &amp;ldquo;&amp;hellip;there&amp;rsquo;s got to be a better way to do this&amp;rdquo; has passed my lips.</description>
     </item>
     
     <item>
       <title>Built-in Contact Form</title>
-      <link>/blog/built-in-contact-form/</link>
+      <link>https://www.nilsmyszkowski.com/blog/built-in-contact-form/</link>
       <pubDate>Mon, 01 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/blog/built-in-contact-form/</guid>
+      <guid>https://www.nilsmyszkowski.com/blog/built-in-contact-form/</guid>
       <description>Formspree makes it easy to receive submissions from HTML forms on your static website.      Functional Form     This theme has a form-to-email feature built in, thanks to the simple Formspree integration. All you need to activate the form is a valid recipient email address saved in the front matter of the form (/content/forms/contact.md). Of course, the example shown below (your@email.here) must not be used.</description>
     </item>
     
     <item>
       <title>Judge Response Theory? A Call to Upgrade Our Psychometrical Account of Creativity Judgments</title>
-      <link>/publications/2019-judge-response-theory-a-call-to-upgrade-our-psychometrical-account-of-creativity-judgments/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-judge-response-theory-a-call-to-upgrade-our-psychometrical-account-of-creativity-judgments/</link>
       <pubDate>Wed, 01 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-judge-response-theory-a-call-to-upgrade-our-psychometrical-account-of-creativity-judgments/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-judge-response-theory-a-call-to-upgrade-our-psychometrical-account-of-creativity-judgments/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine judge response theory? a call to upgrade our psychometrical account of creativity judgments.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -492,40 +492,40 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Career Decision Ambiguity Tolerance and Career Decision-Making Difficulties in a French Sample: The Mediating Role of Career Decision Self-Efficacy</title>
-      <link>/publications/2019-career-decision-ambiguity-tolerance-career-decision-making-difficulties/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-career-decision-ambiguity-tolerance-career-decision-making-difficulties/</link>
       <pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-career-decision-ambiguity-tolerance-career-decision-making-difficulties/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-career-decision-ambiguity-tolerance-career-decision-making-difficulties/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we investigate how tolerance for ambiguity relates to career decision-making difficulties and how self-efficacy helps explain this relationship.
 Abstract   Career decisions often involve uncertainty, and individuals differ in how well they tolerate ambiguity. This study examines how ambiguity tolerance is associated with career decision-making difficulties in a French sample. Results support a mediating role for career decision self-efficacy, suggesting that confidence in one’s decision capabilities helps translate ambiguity tolerance into better decision outcomes.</description>
     </item>
     
     <item>
       <title>Are Reflective Models Appropriate for Very Short Scales? Proofs of Concept of Formative Models Using the Ten-Item Personality Inventory</title>
-      <link>/publications/2019-are-reflective-models-appropriate-very-short-scales/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-are-reflective-models-appropriate-very-short-scales/</link>
       <pubDate>Tue, 19 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-are-reflective-models-appropriate-very-short-scales/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-are-reflective-models-appropriate-very-short-scales/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we investigate the psychometric assumptions behind very short scales and compare reflective versus formative modeling perspectives using the Ten-Item Personality Inventory.
 Abstract   Very short scales are widely used when testing time is limited, but they raise strong modeling assumptions that are not always scrutinized. This article evaluates whether reflective latent-variable models are appropriate in such settings and presents formative-model proofs of concept with the Ten-Item Personality Inventory.</description>
     </item>
     
     <item>
       <title>Hi there !</title>
-      <link>/contact/</link>
+      <link>https://www.nilsmyszkowski.com/contact/</link>
       <pubDate>Mon, 25 Feb 2019 13:38:41 -0600</pubDate>
       
-      <guid>/contact/</guid>
+      <guid>https://www.nilsmyszkowski.com/contact/</guid>
       <description>** Contact page don&amp;rsquo;t contain a body, just the front matter above. See form.html in the layouts folder.
 Formspree requires a (free) account and new form to be set up. The link is made on the final published url in the field: Restrict to Domain. It is possible to register up to 2 emails free and you can select which one you want the forms to go to within Formspree in the Settings tab.</description>
     </item>
     
     <item>
       <title>Typography Styles &amp; Element Examples</title>
-      <link>/elements/</link>
+      <link>https://www.nilsmyszkowski.com/elements/</link>
       <pubDate>Mon, 18 Feb 2019 12:27:33 -0600</pubDate>
       
-      <guid>/elements/</guid>
+      <guid>https://www.nilsmyszkowski.com/elements/</guid>
       <description>Font Sizes   A A A A A A A A   6rem
 (96px) 5rem
 (80px) 3rem
@@ -539,10 +539,10 @@ Formspree requires a (free) account and new form to be set up. The link is made 
     
     <item>
       <title>The First Glance Is the Weakest: “Tasteful” Individuals Value Aesthetics and Make Stronger Aesthetic Judgments After Longer Visual Inspection</title>
-      <link>/publications/2019-the-first-glance-is-the-weakest-tasteful-individuals-value-aesthetics-and-make-stronger-ae/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-the-first-glance-is-the-weakest-tasteful-individuals-value-aesthetics-and-make-stronger-ae/</link>
       <pubDate>Thu, 03 Jan 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-the-first-glance-is-the-weakest-tasteful-individuals-value-aesthetics-and-make-stronger-ae/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-the-first-glance-is-the-weakest-tasteful-individuals-value-aesthetics-and-make-stronger-ae/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine the first glance is the weakest.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -551,20 +551,20 @@ Download the PDF here.</description>
     
     <item>
       <title>A Snapshot of g? Binary and Polytomous Item-Response Theory Investigations of the Last Series of the Standard Progressive Matrices (SPM-LS)</title>
-      <link>/publications/2018-intelligence/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2018-intelligence/</link>
       <pubDate>Wed, 12 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2018-intelligence/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2018-intelligence/</guid>
       <description>What it’s about In this paper, we propose the use of the last series of the last series of the Standard Progressive Matrices (SPM-LS) as a viable snapshot measure of g. We provide an extensive Item-Response Theory (IRT) analysis of the instrument, based on the binary (pass/fail) and nominal (response categories) data.
  Abstract Raven’s progressive matrices (Raven, 1941) are extremely popular measures of general mental ability. However, their length may not suit every researcher’s or practitioner’s needs.</description>
     </item>
     
     <item>
       <title>A Meta-Analysis of the Relationship Between Intelligence and Different Measures of Creative Potential</title>
-      <link>/publications/2018-a-meta-analysis-of-the-relationship-between-intelligence-and-different-measures-of-creativ/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2018-a-meta-analysis-of-the-relationship-between-intelligence-and-different-measures-of-creativ/</link>
       <pubDate>Thu, 01 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2018-a-meta-analysis-of-the-relationship-between-intelligence-and-different-measures-of-creativ/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2018-a-meta-analysis-of-the-relationship-between-intelligence-and-different-measures-of-creativ/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine a meta-analysis of the relationship between intelligence and different measures of creative potential.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -572,40 +572,40 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Measuring “Good Taste” with the Visual Aesthetic Sensitivity Test-Revised (VAST-R)</title>
-      <link>/publications/2017-measuring-good-taste-vast-r/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2017-measuring-good-taste-vast-r/</link>
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2017-measuring-good-taste-vast-r/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2017-measuring-good-taste-vast-r/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we assess how well the VAST-R measures individual differences in visual aesthetic sensitivity.
 Abstract   The Visual Aesthetic Sensitivity Test-Revised (VAST-R) is used to assess differences in aesthetic judgment quality. This article evaluates its psychometric behavior and discusses implications for interpreting “good taste” as an individual-differences construct. The paper addresses reliability, validity, and practical use in research contexts where visual aesthetic sensitivity is a focal variable.</description>
     </item>
     
     <item>
       <title>A Cross-Cultural Study of Task Specificity in Creativity</title>
-      <link>/publications/2017-cross-cultural-study-task-specificity-creativity/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2017-cross-cultural-study-task-specificity-creativity/</link>
       <pubDate>Wed, 16 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2017-cross-cultural-study-task-specificity-creativity/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2017-cross-cultural-study-task-specificity-creativity/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we test the extent to which creativity performance depends on the specific task used, and whether this pattern generalizes across cultures.
 Abstract   The article examines task specificity in creativity by comparing performance patterns across cultural groups. Rather than assuming a single, task-invariant creativity trait, it evaluates how strongly outcomes depend on the task format and demands. Findings support nuanced interpretations of creativity scores and emphasize the need for multi-task assessment designs in cross-cultural work.</description>
     </item>
     
     <item>
       <title>Is the Questionnaire of Cognitive and Affective Empathy Measuring Two or Five Dimensions? Evidence in a French Sample</title>
-      <link>/publications/2017-questionnaire-cognitive-affective-empathy-two-or-five-dimensions/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2017-questionnaire-cognitive-affective-empathy-two-or-five-dimensions/</link>
       <pubDate>Wed, 07 Jun 2017 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2017-questionnaire-cognitive-affective-empathy-two-or-five-dimensions/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2017-questionnaire-cognitive-affective-empathy-two-or-five-dimensions/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we compare competing dimensional structures of the Questionnaire of Cognitive and Affective Empathy using French data.
 Abstract   The dimensional structure of empathy questionnaires has direct consequences for score interpretation and research conclusions. This study evaluates whether the Questionnaire of Cognitive and Affective Empathy is better modeled with two broad dimensions or a more fine-grained five-dimension structure in a French sample.</description>
     </item>
     
     <item>
       <title>Monitoring Stress Among Internal Medicine Residents: An Experience-Driven, Practical and Short Measure</title>
-      <link>/publications/2017-monitoring-stress-among-internal-medicine-residents-an-experience-driven-practical-and-sho/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2017-monitoring-stress-among-internal-medicine-residents-an-experience-driven-practical-and-sho/</link>
       <pubDate>Wed, 19 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2017-monitoring-stress-among-internal-medicine-residents-an-experience-driven-practical-and-sho/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2017-monitoring-stress-among-internal-medicine-residents-an-experience-driven-practical-and-sho/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine monitoring stress among internal medicine residents.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -614,10 +614,10 @@ Download the PDF here.</description>
     
     <item>
       <title>How Does Creative Giftedness Differ from Academic Giftedness? A Multidimensional Model</title>
-      <link>/publications/2016-how-does-creative-giftedness-differ-from-academic-giftedness-a-multidimensional-model/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2016-how-does-creative-giftedness-differ-from-academic-giftedness-a-multidimensional-model/</link>
       <pubDate>Mon, 12 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2016-how-does-creative-giftedness-differ-from-academic-giftedness-a-multidimensional-model/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2016-how-does-creative-giftedness-differ-from-academic-giftedness-a-multidimensional-model/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine how does creative giftedness differ from academic giftedness? a multidimensional model.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -625,10 +625,10 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Work-Related Curiosity Positively Predicts Worker Innovation</title>
-      <link>/publications/2016-work-related-curiosity-positively-predicts-worker-innovation/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2016-work-related-curiosity-positively-predicts-worker-innovation/</link>
       <pubDate>Thu, 14 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2016-work-related-curiosity-positively-predicts-worker-innovation/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2016-work-related-curiosity-positively-predicts-worker-innovation/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine work-related curiosity positively predicts worker innovation.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -637,20 +637,20 @@ Download the PDF here.</description>
     
     <item>
       <title>Anger and Sadness as Adaptive Emotion Expression Strategies in Response to Negative Competence and Warmth Evaluations</title>
-      <link>/publications/2016-anger-sadness-adaptive-emotion-expression-strategies/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2016-anger-sadness-adaptive-emotion-expression-strategies/</link>
       <pubDate>Thu, 30 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2016-anger-sadness-adaptive-emotion-expression-strategies/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2016-anger-sadness-adaptive-emotion-expression-strategies/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study when anger or sadness expressions are more socially effective after negative interpersonal evaluations.
 Abstract   This research examines the social functionality of negative emotion expression following evaluations of competence or warmth. Across studies, the effectiveness of anger versus sadness depended on the type of negative evaluation received, supporting the idea of emotion-expression congruency in interpersonal contexts. The findings highlight how emotional responses can serve adaptive social functions rather than being uniformly detrimental.</description>
     </item>
     
     <item>
       <title>Psychometric Properties of the French Ten-Item Personality Inventory</title>
-      <link>/publications/2016-psychometric-properties-of-the-french-ten-item-personality-inventory/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2016-psychometric-properties-of-the-french-ten-item-personality-inventory/</link>
       <pubDate>Wed, 15 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2016-psychometric-properties-of-the-french-ten-item-personality-inventory/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2016-psychometric-properties-of-the-french-ten-item-personality-inventory/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine psychometric properties of the french ten-item personality inventory.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -658,10 +658,10 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Individual Differences in Aesthetic Ability: The Case for an Aesthetic Quotient</title>
-      <link>/publications/2016-individual-differences-in-aesthetic-ability-the-case-for-an-aesthetic-quotient/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2016-individual-differences-in-aesthetic-ability-the-case-for-an-aesthetic-quotient/</link>
       <pubDate>Sat, 14 May 2016 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2016-individual-differences-in-aesthetic-ability-the-case-for-an-aesthetic-quotient/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2016-individual-differences-in-aesthetic-ability-the-case-for-an-aesthetic-quotient/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine individual differences in aesthetic ability.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -670,10 +670,10 @@ Download the PDF here.</description>
     
     <item>
       <title>Managerial Creative Problem Solving and the Big Five Personality Traits</title>
-      <link>/publications/2015-managerial-creative-problem-solving-and-the-big-five-personality-traits/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2015-managerial-creative-problem-solving-and-the-big-five-personality-traits/</link>
       <pubDate>Mon, 08 Jun 2015 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2015-managerial-creative-problem-solving-and-the-big-five-personality-traits/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2015-managerial-creative-problem-solving-and-the-big-five-personality-traits/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine managerial creative problem solving and the big five personality traits.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -681,10 +681,10 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>How Subjective Processing Fluency Predicts Attitudes Toward Advertisements and Purchase Intention</title>
-      <link>/publications/2015-how-subjective-processing-fluency-predicts-attitudes-toward-advertisements-and-purchase-in/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2015-how-subjective-processing-fluency-predicts-attitudes-toward-advertisements-and-purchase-in/</link>
       <pubDate>Sun, 17 May 2015 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2015-how-subjective-processing-fluency-predicts-attitudes-toward-advertisements-and-purchase-in/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2015-how-subjective-processing-fluency-predicts-attitudes-toward-advertisements-and-purchase-in/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine how subjective processing fluency predicts attitudes toward advertisements and purchase intention.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -692,10 +692,10 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>Appraising the Duality of Self-Monitoring: Psychometric Qualities of the Revised Self-Monitoring Scale and the Concern for Appropriateness Scale in French</title>
-      <link>/publications/2014-appraising-the-duality-of-self-monitoring-psychometric-qualities-of-the-revised-self-monit/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2014-appraising-the-duality-of-self-monitoring-psychometric-qualities-of-the-revised-self-monit/</link>
       <pubDate>Tue, 01 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2014-appraising-the-duality-of-self-monitoring-psychometric-qualities-of-the-revised-self-monit/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2014-appraising-the-duality-of-self-monitoring-psychometric-qualities-of-the-revised-self-monit/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine appraising the duality of self-monitoring.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -704,10 +704,10 @@ Download the PDF here.</description>
     
     <item>
       <title>French Validation of the Overexcitability Questionnaire 2: Psychometric Properties in a High-Potential Sample</title>
-      <link>/publications/2014-french-validation-of-the-overexcitability-questionnaire-2-psychometric-properties-in-a-hig/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2014-french-validation-of-the-overexcitability-questionnaire-2-psychometric-properties-in-a-hig/</link>
       <pubDate>Tue, 27 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2014-french-validation-of-the-overexcitability-questionnaire-2-psychometric-properties-in-a-hig/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2014-french-validation-of-the-overexcitability-questionnaire-2-psychometric-properties-in-a-hig/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine french validation of the overexcitability questionnaire 2.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -716,20 +716,20 @@ Download the PDF here.</description>
     
     <item>
       <title>Learning to Judge Creativity: The Underlying Mechanisms in Creativity Training for Non-Expert Judges</title>
-      <link>/publications/2014-learning-to-judge-creativity-underlying-mechanisms/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2014-learning-to-judge-creativity-underlying-mechanisms/</link>
       <pubDate>Thu, 01 May 2014 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2014-learning-to-judge-creativity-underlying-mechanisms/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2014-learning-to-judge-creativity-underlying-mechanisms/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study the processes through which non-expert judges improve creativity evaluations after training.
 Abstract   Evaluating creativity reliably is a central challenge in creativity research and practice. This study examines training procedures for non-expert judges and analyzes the mechanisms associated with improved judgment quality. The results clarify how exposure and calibration processes can enhance evaluation consistency and validity. Implications are discussed for creativity assessment contexts that rely on human raters.</description>
     </item>
     
     <item>
       <title>Is Visual Aesthetic Sensitivity Independent from Intelligence, Personality, and Creativity?</title>
-      <link>/publications/2014-is-visual-aesthetic-sensitivity-independent-from-intelligence-personality-and-creativity/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2014-is-visual-aesthetic-sensitivity-independent-from-intelligence-personality-and-creativity/</link>
       <pubDate>Tue, 14 Jan 2014 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2014-is-visual-aesthetic-sensitivity-independent-from-intelligence-personality-and-creativity/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2014-is-visual-aesthetic-sensitivity-independent-from-intelligence-personality-and-creativity/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine is visual aesthetic sensitivity independent from intelligence, personality, and creativity?.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.</description>
@@ -737,10 +737,10 @@ How to access the paper   Go to the journal page for this article here.</descrip
     
     <item>
       <title>How Artists Create: Creative Process and Multivariate Factors</title>
-      <link>/publications/2013-how-artists-create-creative-process-and-multivariate-factors/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2013-how-artists-create-creative-process-and-multivariate-factors/</link>
       <pubDate>Sun, 24 Feb 2013 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2013-how-artists-create-creative-process-and-multivariate-factors/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2013-how-artists-create-creative-process-and-multivariate-factors/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine how artists create.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -749,10 +749,10 @@ Download the PDF here.</description>
     
     <item>
       <title>How Personality Traits Predict Design-Driven Consumer Choices</title>
-      <link>/publications/2012-how-personality-traits-predict-design-driven-consumer-choices/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2012-how-personality-traits-predict-design-driven-consumer-choices/</link>
       <pubDate>Fri, 30 Nov 2012 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2012-how-personality-traits-predict-design-driven-consumer-choices/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2012-how-personality-traits-predict-design-driven-consumer-choices/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine how personality traits predict design-driven consumer choices.
 Abstract   This paper examines the focal construct and reports empirical and/or psychometric evidence relevant to its interpretation. The findings contribute to the literature by clarifying measurement, theoretical implications, and practical applications in context.
 How to access the paper   Go to the journal page for this article here.
@@ -761,10 +761,10 @@ Download the PDF here.</description>
     
     <item>
       <title>Contributors</title>
-      <link>/contributors/</link>
+      <link>https://www.nilsmyszkowski.com/contributors/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/contributors/</guid>
+      <guid>https://www.nilsmyszkowski.com/contributors/</guid>
       <description>Thank you to all the folks who have contributed both technical and creative skills to this project:
    Desirée De Leon 🦒 (designed 5 of the custom color themes, made illustrations for the workshop, and provided general aesthetic feedback along the way)
    Garrick Aden-Buie 🧙‍♀️ (debugged headroom.js and lent his panelset.js code to the theme)
@@ -773,10 +773,10 @@ Download the PDF here.</description>
     
     <item>
       <title>Item Response Theory for Creativity Measurement</title>
-      <link>/book/</link>
+      <link>https://www.nilsmyszkowski.com/book/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/book/</guid>
+      <guid>https://www.nilsmyszkowski.com/book/</guid>
       <description>Published by Cambridge University Press in the Cambridge Elements in Creativity and Imagination series, this book presents a concise overview of item response theory for researchers interested in how creativity and related psychological attributes can be measured more rigorously.
 This book reflects one strand of my work as a psychometrician: the effort to make measurement models both conceptually clear and practically useful.
 The book discusses classical test theory and its limits, core ideas in item response theory, practical model-building strategy, and examples drawn from creativity research, including fluency scores, judgment data, and other measurement situations where standard scoring practices can be improved.</description>
@@ -784,10 +784,10 @@ The book discusses classical test theory and its limits, core ideas in item resp
     
     <item>
       <title>License</title>
-      <link>/license/</link>
+      <link>https://www.nilsmyszkowski.com/license/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/license/</guid>
+      <guid>https://www.nilsmyszkowski.com/license/</guid>
       <description>My blog posts are released under a Creative Commons Attribution-ShareAlike 4.0 International License.
   </description>
     </item>

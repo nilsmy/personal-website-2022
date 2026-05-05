@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Education on Nils Myszkowski, PhD</title>
-    <link>/categories/education/</link>
+    <link>https://www.nilsmyszkowski.com/categories/education/</link>
     <description>Recent content in Education on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="/categories/education/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/categories/education/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Predictive Validity of the Algebra Concept Inventory (ACI): The Importance of Algebraic Conceptual Understanding to College Math and STEM Outcomes</title>
-      <link>/publications/2026-predictive-validity-algebra-concept-inventory/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2026-predictive-validity-algebra-concept-inventory/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2026-predictive-validity-algebra-concept-inventory/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2026-predictive-validity-algebra-concept-inventory/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine whether algebraic conceptual understanding, as measured by the Algebra Concept Inventory (ACI), predicts college math performance and STEM-related outcomes.
 Abstract   Using ACI scores, this study investigates whether algebraic conceptual understanding predicts course grades, completion of math requirements for STEM majors, STEM versus non-STEM degree completion, and part of the observed differences in these outcomes by race/ethnicity and gender.</description>
     </item>
     
     <item>
       <title>AMCTestmakeR – Generate LaTeX Code for Auto-Multiple-Choice (AMC)</title>
-      <link>/r-packages/amc/</link>
+      <link>https://www.nilsmyszkowski.com/r-packages/amc/</link>
       <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/amc/</guid>
+      <guid>https://www.nilsmyszkowski.com/r-packages/amc/</guid>
       <description>AMCTestmakeR provides functions to be used with the free Optical Mark Recognition (OMR) software Auto Multiple Choice (https://www.auto-multiple-choice.net/).
 It&amp;rsquo;s main purpose is to facilitate working with R and AMC in parallel, but it can also be used to transform a spreadsheet into an AMC questionnaire easily.
 So far, the features are limited to generating AMC-LaTeX code questions for Multiple Choice Questionnaires (single and multiple answer). Hopefully, it&amp;rsquo;s how most people use Auto Multiple Choice.</description>
@@ -30,10 +30,10 @@ So far, the features are limited to generating AMC-LaTeX code questions for Mult
     
     <item>
       <title>nhstplot – Plot Null Hypothesis Significance Tests</title>
-      <link>/r-packages/nhstplot/</link>
+      <link>https://www.nilsmyszkowski.com/r-packages/nhstplot/</link>
       <pubDate>Tue, 14 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/r-packages/nhstplot/</guid>
+      <guid>https://www.nilsmyszkowski.com/r-packages/nhstplot/</guid>
       <description>nhstplot is a fairly simple package to use. This vignette is intended to explain the basics (plotting using the defaults), before showing how to use the options.
 The basics   After installing the library with install.packages(&amp;quot;nhstplot&amp;quot;) you need to load the library:
 library(nhstplot) &amp;lsquo;nhstplot&amp;rsquo; is composed of 4 functions, one for each major NHST test &amp;ldquo;family&amp;rdquo; :

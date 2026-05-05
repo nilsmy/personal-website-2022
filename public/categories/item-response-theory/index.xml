@@ -2,127 +2,127 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Item-Response Theory on Nils Myszkowski, PhD</title>
-    <link>/categories/item-response-theory/</link>
+    <link>https://www.nilsmyszkowski.com/categories/item-response-theory/</link>
     <description>Recent content in Item-Response Theory on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="/categories/item-response-theory/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/categories/item-response-theory/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Solving the Paradox Between the Generalized Partial Credit Model and PISA&#39;s Rating Instructions: A Generalized IRTree Approach to Within-Rating Multidimensionality</title>
-      <link>/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</link>
       <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine whether PISA creative-thinking ratings can reasonably be scaled with the generalized partial credit model when the scoring instructions require different attributes at different thresholds.
 Abstract   Using the PISA 2022 Creative Thinking data, this paper tests the assumption that a single latent dimension underlies the progression from no credit to partial and full credit. We show that the rating instructions instead imply within-rating multidimensionality, because appropriateness and originality or diversity are invoked differently across thresholds.</description>
     </item>
     
     <item>
       <title>One Score, Two Components: Disentangling Appropriateness and Originality in PISA Creative Thinking Judgments Using Generalized Item Response Tree Models</title>
-      <link>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</link>
       <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2025-one-score-two-components-pisa-creative-thinking-judgments/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we examine how a single creativity score in PISA can mask two separable dimensions of judged responses, and we propose generalized item response tree modeling to estimate appropriateness and originality components explicitly.
 Abstract   Creative-thinking judgments in large-scale assessments often combine multiple evaluative criteria into one score, which can blur interpretation and measurement precision. This article focuses on PISA creative-thinking judgments and introduces a generalized item response tree approach to separate appropriateness and originality into distinct latent components.</description>
     </item>
     
     <item>
       <title>Bayesian Estimation of Generalized Log-Linear Poisson Item Response Models for Fluency Scores Using brms and Stan</title>
-      <link>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</link>
       <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2025-bayesian-log-linear-poisson-irt-brms-stan/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we present a Bayesian estimation workflow for generalized log-linear Poisson item-response models applied to fluency scores in divergent-thinking assessment, with practical implementation using brms and Stan.
 Abstract   Divergent-thinking tests often rely on fluency scores (counts of ideas generated per prompt), and these counts can be modeled with Poisson item-response models. This paper revisits the Rasch Poisson Counts Model and its generalized two-parameter extension (2PPCM), and shows how both can be estimated in a Bayesian multilevel regression framework through brms (Stan backend).</description>
     </item>
     
     <item>
       <title>Modeling Sequential Dependencies in Progressive Matrices: An Auto-Regressive Item Response Theory (AR-IRT) Approach</title>
-      <link>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</link>
       <pubDate>Mon, 15 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-modeling-sequential-dependencies-progressive-matrices-ar-irt/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we propose auto-regressive item response theory models for progressive matrices, allowing each item response to depend not only on latent ability and item parameters, but also on prior responses in sequence.
 Abstract   Standard measurement models typically assume local independence among item responses conditional on latent traits. This article argues that, in sequential cognitive tasks such as progressive matrices, responses may show meaningful lagged dependencies that should be modeled directly.</description>
     </item>
     
     <item>
       <title>Personality Traits Leading Respondents to Refuse to Answer a Forced-Choice Personality Item: An Item Response Tree (IRTree) Model</title>
-      <link>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</link>
       <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2024-personality-traits-refuse-forced-choice-item-irtree/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study why respondents refuse to answer forced-choice personality items, and we model both refusal and refusal reasons within an item response tree framework.
 Abstract   The study examines individual differences in refusal behavior when respondents are given forced-choice personality items with an explicit option to decline choosing between statements. When refusing, respondents also indicate whether both statements fit equally well or neither fits adequately.</description>
     </item>
     
     <item>
       <title>Individual Differences in Within-Person Variability in Personality Positively Predict Economic Gains and Satisfaction in Negotiations</title>
-      <link>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</link>
       <pubDate>Thu, 17 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2022-03-17-individual-differences-in-within-person-variability-in-personality-positively-predict-economic-gains-and-satisfaction-in-negotiations/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study how within-person variability (the tendency of a person to vary in personality) predicts success in negotiations.
 Abstract   Prior research on the value of personality traits for predicting negotiation outcomes is rather inconclusive. Building on prior research and in light of recent personality and negotiation theories, we discuss why the traditional approach to personality traits has had limited success and propose an alternative approach to predicting negotiation outcomes from personality assessments.</description>
     </item>
     
     <item>
       <title>Exploring the Associations Between Personality and Response Speed Trajectories in Low-Stakes Intelligence Tests</title>
-      <link>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</link>
       <pubDate>Thu, 03 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2022-03-04-exploring-the-associations-between-personality-and-response-speed-trajectories-in-low-stakes-intelligence-tests/</guid>
       <description>What it&amp;rsquo;s about   In this paper, using Log-Normal Item-Response Theory models for response time data, we study how personality traits predict response speed trajectories in low-stakes reasoning tasks. We found that some traits are associated with increasing in speed vs. decreasing in speed, controlling for item effects.
 Abstract   Previous research suggests a negative relationship between test taking speed and performance in mental ability testing, inviting researchers to explore the origin of individual differences in test taking speed.</description>
     </item>
     
     <item>
       <title>Accounting for Variable Task Discrimination in Divergent Thinking Fluency Measurement – An Example of the Benefits of a 2-Parameter Poisson Counts Model and its Bifactor Extension Over the Rasch Poisson Counts Model</title>
-      <link>/publications/2021-2ppcm/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2021-2ppcm/</link>
       <pubDate>Sun, 12 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2021-2ppcm/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2021-2ppcm/</guid>
       <description>What it’s about In this paper, we introduce new psychometric models for count/fluency tasks (tasks in which individuals have to provide many instances). Notably, we extent the Rasch Poisson Counts Model (RPCM) to account for variable discrimination (2-Parameter Poisson Counts Model) and to account for local dependencies/nuisance factors (Bifactor 2-Parameter Poisson Counts Model).
  Abstract Fluency tasks are among the most common item formats for the assessment of certain cognitive abilities, such as verbal fluency or divergent thinking.</description>
     </item>
     
     <item>
       <title>A Mokken Scale Analysis of the Last Series of the Standard Progressive Matrices (SPM-LS)</title>
-      <link>/publications/2020-mokken/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2020-mokken/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2020-mokken/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2020-mokken/</guid>
       <description>What it’s about In this paper, I reanalyze a dataset for a special issue of Journal of Intelligence. The analysis uses the framework of Mokken Scale Analysis (MSA), which is a non-parametric approach to relations between item responses and attributes (i.e. Item-Response Theory).
  Abstract Raven’s Standard Progressive Matrices (Raven 1941) is a widely used 60-item long measure of general mental ability. It was recently suggested that, for situations where taking this test is too time consuming, a shorter version, comprised of only the last series of the Standard Progressive Matrices (Myszkowski and Storme 2018) could be used, while preserving satisfactory psychometric properties (Garcia-Garzon et al.</description>
     </item>
     
     <item>
       <title>A Forgotten Antecedent of Career Adaptability: A Study on the Predictive Role of Within-Person Variability in Personality</title>
-      <link>/publications/2020-within-person-adaptability/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2020-within-person-adaptability/</link>
       <pubDate>Wed, 04 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2020-within-person-adaptability/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2020-within-person-adaptability/</guid>
       <description>What it&amp;rsquo;s about   In this paper, we study the relation between within-person variability in personality (the extent to which one changes in personality across situations) and career adaptability.
 Abstract   Several studies have focused on stable personality traits as antecedents of career adaptability, but few have investigated more dynamic aspects of personality in relation to career adaptability. Recent theories on personality such as Whole Trait Theory (Fleeson, 2015) recognize that traits are often aroused in one situation but not in another (Allport, 1937), and that individuals are more or less flexible in responding to different situations.</description>
     </item>
     
     <item>
       <title>Same Test, Better Scores – Boosting the Reliability of Short Online Intelligence Recruitment Tests with Nested Logit Item Response Theory Models</title>
-      <link>/publications/2019-same_test/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2019-same_test/</link>
       <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2019-same_test/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2019-same_test/</guid>
       <description>What it’s about In this paper, we propose to generalize the use of Nested Logit Models and implement its use for online personnel selection procedures that use reasoning tests with multiple choices (e.g., matrix-type tests). We find that using such models results in gains of reliability, especially at low ability levels.
  Abstract Assessing job applicants’ general mental ability online poses psychometric challenges due to the necessity of having brief but accurate tests.</description>
     </item>
     
     <item>
       <title>A Snapshot of g? Binary and Polytomous Item-Response Theory Investigations of the Last Series of the Standard Progressive Matrices (SPM-LS)</title>
-      <link>/publications/2018-intelligence/</link>
+      <link>https://www.nilsmyszkowski.com/publications/2018-intelligence/</link>
       <pubDate>Wed, 12 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/publications/2018-intelligence/</guid>
+      <guid>https://www.nilsmyszkowski.com/publications/2018-intelligence/</guid>
       <description>What it’s about In this paper, we propose the use of the last series of the last series of the Standard Progressive Matrices (SPM-LS) as a viable snapshot measure of g. We provide an extensive Item-Response Theory (IRT) analysis of the instrument, based on the binary (pass/fail) and nominal (response categories) data.
  Abstract Raven’s progressive matrices (Raven, 1941) are extremely popular measures of general mental ability. However, their length may not suit every researcher’s or practitioner’s needs.</description>
     </item>

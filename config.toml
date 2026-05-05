@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://www.nilsmyszkowski.com/"
 theme = "hugo-apero"
 languageCode = "en"
 title = "Nils Myszkowski, PhD"
@@ -131,7 +131,7 @@ enableEmoji = true
   [[menu.header]]
     name = "CV"
     title = "Curriculum Vitae"
-    url = "/cv/CV_Nils_Myszkowski.pdf"
+    url = "/cv/cv_nils_myszkowski.pdf"
     weight = 4
   [[menu.header]]
     name = "Contact"

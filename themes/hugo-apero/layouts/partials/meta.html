@@ -29,6 +29,7 @@
   {{ else }}
     {{ $desc = site.Params.description  }}
   {{ end }}
+{{ $desc = $desc | markdownify | plainify | htmlUnescape | chomp }}
 <meta name="description" content="{{ $desc }}">
 
 <!--opengraph tags-->

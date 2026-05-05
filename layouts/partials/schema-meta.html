@@ -1,0 +1,37 @@
+{{ $desc := "" }}
+{{ if .Params.description }}
+  {{ $desc = .Params.description }}
+{{ else if .Params.subtitle }}
+  {{ $desc = .Params.subtitle }}
+{{ else if .Params.excerpt }}
+  {{ $desc = .Params.excerpt }}
+{{ else }}
+  {{ $desc = site.Params.description }}
+{{ end }}
+{{ $desc = $desc | markdownify | plainify | htmlUnescape | chomp }}
+
+<meta itemprop="name" content="{{ if .IsHome }}{{ .Title }}{{ else }}{{ .Page.Title }}{{ end }}">
+<meta itemprop="description" content="{{ $desc }}">
+<meta itemprop="url" content="{{ .Permalink }}">
+
+{{ with $.Params.images }}
+  {{ $image := index . 0 }}
+  {{ if findRE "^/" $image }}
+    <meta itemprop="image" content="{{ $image | absURL }}">
+  {{ else }}
+    <meta itemprop="image" content="{{ printf "%s%s" $.Permalink $image }}">
+  {{ end }}
+{{ else }}
+  {{ $images := .Resources.ByType "image" }}
+  {{ $leaf := $images.GetMatch "*feature*" }}
+  {{ $hex := $images.GetMatch "*hex*" }}
+  {{ $card := cond (ne $hex nil) $hex $leaf }}
+  {{ $section := .CurrentSection }}
+  {{ $branch := ($section.Resources.ByType "image").GetMatch "*sidebar*" }}
+  {{ $card = cond (ne $card nil) $card $branch }}
+  {{ if $card }}
+    <meta itemprop="image" content="{{ $card.Permalink }}">
+  {{ else }}
+    <meta itemprop="image" content="{{ site.Params.sharing_image | absURL }}">
+  {{ end }}
+{{ end }}
