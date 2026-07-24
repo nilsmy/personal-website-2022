@@ -6,22 +6,76 @@
     <description>Recent content in Categories on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Educational assessment</title>
-      <link>https://www.nilsmyszkowski.com/categories/educational-assessment/</link>
-      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+      <title>Financial literacy</title>
+      <link>https://www.nilsmyszkowski.com/categories/financial-literacy/</link>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 +0000</pubDate>
       
-      <guid>https://www.nilsmyszkowski.com/categories/educational-assessment/</guid>
+      <guid>https://www.nilsmyszkowski.com/categories/financial-literacy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Item-Response Theory</title>
       <link>https://www.nilsmyszkowski.com/categories/item-response-theory/</link>
-      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 +0000</pubDate>
       
       <guid>https://www.nilsmyszkowski.com/categories/item-response-theory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Psychometrics</title>
+      <link>https://www.nilsmyszkowski.com/categories/psychometrics/</link>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/categories/psychometrics/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Reliability</title>
+      <link>https://www.nilsmyszkowski.com/categories/reliability/</link>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/categories/reliability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Creativity</title>
+      <link>https://www.nilsmyszkowski.com/categories/creativity/</link>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/categories/creativity/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Critical thinking</title>
+      <link>https://www.nilsmyszkowski.com/categories/critical-thinking/</link>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/categories/critical-thinking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Meta-analysis</title>
+      <link>https://www.nilsmyszkowski.com/categories/meta-analysis/</link>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/categories/meta-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Educational assessment</title>
+      <link>https://www.nilsmyszkowski.com/categories/educational-assessment/</link>
+      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/categories/educational-assessment/</guid>
       <description></description>
     </item>
     
@@ -35,29 +89,11 @@
     </item>
     
     <item>
-      <title>Psychometrics</title>
-      <link>https://www.nilsmyszkowski.com/categories/psychometrics/</link>
-      <pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.nilsmyszkowski.com/categories/psychometrics/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Education</title>
       <link>https://www.nilsmyszkowski.com/categories/education/</link>
       <pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate>
       
       <guid>https://www.nilsmyszkowski.com/categories/education/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Creativity</title>
-      <link>https://www.nilsmyszkowski.com/categories/creativity/</link>
-      <pubDate>Tue, 20 May 2025 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.nilsmyszkowski.com/categories/creativity/</guid>
       <description></description>
     </item>
     
@@ -314,15 +350,6 @@
     </item>
     
     <item>
-      <title>Meta-analysis</title>
-      <link>https://www.nilsmyszkowski.com/categories/meta-analysis/</link>
-      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.nilsmyszkowski.com/categories/meta-analysis/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Scaling</title>
       <link>https://www.nilsmyszkowski.com/categories/scaling/</link>
       <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
@@ -373,15 +400,6 @@
       <pubDate>Thu, 24 Oct 2019 00:00:00 +0000</pubDate>
       
       <guid>https://www.nilsmyszkowski.com/categories/psychiatry/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Reliability</title>
-      <link>https://www.nilsmyszkowski.com/categories/reliability/</link>
-      <pubDate>Wed, 10 Jul 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.nilsmyszkowski.com/categories/reliability/</guid>
       <description></description>
     </item>
     

@@ -6,7 +6,17 @@
     <description>Recent content in Item-Response Theory on Nils Myszkowski, PhD</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/categories/item-response-theory/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 24 Jul 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.nilsmyszkowski.com/categories/item-response-theory/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Improving the Measurement of Financial Literacy by Modeling Non-Correct Responses</title>
+      <link>https://www.nilsmyszkowski.com/publications/2026-improving-measurement-financial-literacy-non-correct-responses/</link>
+      <pubDate>Fri, 24 Jul 2026 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.nilsmyszkowski.com/publications/2026-improving-measurement-financial-literacy-non-correct-responses/</guid>
+      <description>What it&amp;rsquo;s about   In this paper, we examine whether very short financial literacy tests can be improved by modeling not only whether responses are correct, but also how respondents answer when they are incorrect or uncertain.
+Abstract   Very brief financial literacy tests are often used in large surveys, but conventional right/wrong scoring can limit their reliability and validity. Using data from the Dutch LISS panel, this study compares standard binary item-response models with models that recover information from distractors and non-substantive response options such as &amp;ldquo;don&amp;rsquo;t know&amp;rdquo; and &amp;ldquo;would rather not say.</description>
+    </item>
+    
     <item>
       <title>Solving the Paradox Between the Generalized Partial Credit Model and PISA&#39;s Rating Instructions: A Generalized IRTree Approach to Within-Rating Multidimensionality</title>
       <link>https://www.nilsmyszkowski.com/publications/2026-solving-paradox-gpcm-pisa-rating-instructions/</link>
