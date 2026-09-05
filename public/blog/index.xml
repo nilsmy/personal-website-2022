@@ -39,19 +39,6 @@ Embedded fonts     Hugo Apéro includes 6 embedded fonts that work &amp;ldquo;ou
     </item>
     
     <item>
-      <title>An evergreen post</title>
-      <link>https://www.nilsmyszkowski.com/blog/evergreen/</link>
-      <pubDate>Wed, 20 Jan 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://www.nilsmyszkowski.com/blog/evergreen/</guid>
-      <description>Rendering mathematical equations     Examples from the mathjax demo. But they work with katex as well.
-Rmarkdown     In .Rmarkdown documents, you can use either
-$a \ne 0$ to get inline math: \(a \ne 0\). There is no conflict with using dollar symbols regularly, because knitr automatically escapes freestanding dollar symbols.
-And you can use
-$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$ to get a math paragraph:</description>
-    </item>
-    
-    <item>
       <title>Using panelsets</title>
       <link>https://www.nilsmyszkowski.com/blog/seedling/</link>
       <pubDate>Sat, 02 Jan 2021 00:00:00 +0000</pubDate>
