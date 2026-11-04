@@ -49,10 +49,10 @@
   </svg>
   <header><h1>Quizzes</h1></header>
   <section id="setup" class="card">
-    <h2>Quiz prêts à commencer</h2>
-    <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title">À travailler : <span id="suggestionName"></span></div><p>Compétence en cours d’apprentissage</p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir ce quiz</button></div>
+    <h2>Choisir une compétence</h2>
+    <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title">À travailler : <span id="suggestionName"></span></div><p>Compétence en cours d’apprentissage</p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
-    <label for="quizSelect">Quiz</label><select id="quizSelect"><option>Chargement des quiz…</option></select>
+    <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
     <label for="questionCount">Nombre de questions</label><select id="questionCount"><option>Chargement…</option></select>
     <p id="loadStatus"><small>Si ce message reste affiché, ouvre le fichier HTML téléchargé directement dans un navigateur : l’aperçu Google Drive peut bloquer le JavaScript.</small></p>
@@ -257,9 +257,9 @@ function renderSuggestion(){const q=suggestedQuiz();$('suggestion').classList.to
 function renderSelect(){
   const subject=$('subjectSelect').value,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject);
   $('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=`${q.id} — ${q.title}`;return o}));
-  if(!available.length){const o=document.createElement('option');o.textContent='Aucun quiz pour cette matière';o.value='';$('quizSelect').append(o)}
+  if(!available.length){const o=document.createElement('option');o.textContent='Aucune compétence pour cette matière';o.value='';$('quizSelect').append(o)}
   $('start').disabled=!available.length;
-  $('loadStatus').textContent=available.length?`${available.length} quiz disponibles en ${subject.toLowerCase()}.`:`Aucun quiz en ${subject.toLowerCase()} pour l’instant.`;
+  $('loadStatus').textContent=available.length?`${available.length} compétences disponibles en ${subject.toLowerCase()}.`:`Aucune compétence en ${subject.toLowerCase()} pour l’instant.`;
   renderQuestionCounts();
   renderQuizStatus();
 }
