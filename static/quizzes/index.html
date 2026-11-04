@@ -340,6 +340,11 @@ document.getElementById('sendReport').onclick = async () => {
   const button = document.getElementById('sendReport');
   const status = document.getElementById('copyStatus');
   if (!quiz || !responses.length) return;
+  const detectedForm = document.querySelector('form[name="education-quiz-results"]');
+  if (!detectedForm || detectedForm.hasAttribute('data-netlify')) {
+    status.textContent = 'Le formulaire Netlify n’est pas encore activé sur ce site. Télécharge le rapport JSON pour le conserver.';
+    return;
+  }
   button.disabled = true;
   status.textContent = 'Envoi du rapport…';
   try {
