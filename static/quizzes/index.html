@@ -54,6 +54,7 @@
     <h2>Choisir une compétence</h2>
     <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="suggestionLabel"></span> : <span id="suggestionName"></span></div><p id="suggestionNote"></p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
+    <div id="subjectSuggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="subjectSuggestionLabel"></span> : <span id="subjectSuggestionName"></span></div><p id="subjectSuggestionNote"></p></div><button id="chooseSubjectSuggestion" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir dans cette matière</button></div>
     <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
     <label for="statusSelect">Statut sur cet appareil</label><select id="statusSelect"><option value="pas-testee">Pas testée</option><option value="en-cours">En cours d’apprentissage</option><option value="acquise">Acquise</option></select>
@@ -103,6 +104,11 @@ const extraSpecs=[
   ['MA-Q04','Mathématiques','Masses : choisir et convertir les unités','Gramme, kilogramme et tonne'],
   ['MA-Q05','Mathématiques','Contenances : litre, décilitre et centilitre','CE2 : comparer et convertir',[10,20]],
   ['MA-Q06','Mathématiques','Euros et centimes','Constituer et comparer des montants'],
+  ['MA-Q08','Mathématiques','Lire l’heure sur une horloge','Heures, demies, quarts ; minutes au CE2'],
+  ['MA-Q09','Mathématiques','Calculer des durées','Heures et minutes dans une journée'],
+  ['MA-G03','Mathématiques','Reconnaître les figures planes','Carré, rectangle, triangle rectangle et losange'],
+  ['MA-D02','Mathématiques','Lire un diagramme en barres','Valeurs et échelles'],
+  ['MA-D03','Mathématiques','Calculer à partir d’un diagramme','Totaux et comparaisons'],
   ['FR-G01','Français','Sujet, verbe et compléments','Phrase simple'],
   ['FR-G02','Français','Types de phrases','Déclarative, interrogative et impérative'],
   ['FR-G03','Français','Formes de phrases','Négative et exclamative'],
@@ -527,6 +533,49 @@ function additionalMathQuestion(id,i){
   const choices=typeof correct==='number'?extraNumber(correct,wrong,i):extraChoice(correct,wrong,i);
   return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...choices,explanation};
 }
+const visualMathIds=new Set(['MA-Q08','MA-Q09','MA-G03','MA-D02','MA-D03']);
+function visualMathQuestion(id,i){
+  const ce2=i>=12,k=ce2?i-12:i,level=ce2?'CE2':'CE1';
+  let prompt,correct,wrong,explanation,skill,visual;
+  const clockTime=(hour,minute)=>`${hour} h ${String(minute).padStart(2,'0')}`;
+  if(id==='MA-Q08'){
+    const hour=1+(i*5)%12,minute=ce2?[5,10,20,25,35,40,50,55][k]:[0,30,15,45][i%4];
+    visual={kind:'clock',hour,minute};prompt='Quelle heure montre cette horloge ?';correct=clockTime(hour,minute);
+    wrong=[clockTime(hour%12+1,minute),clockTime((hour+10)%12+1,minute),clockTime(hour,(minute+15)%60)];
+    explanation=`La grande aiguille indique ${minute} minute${minute>1?'s':''} ; la petite aiguille indique l’heure ${hour}. Il est ${correct}.`;
+    skill=ce2?'Heures et minutes':'Heures, demies et quarts';
+  }else if(id==='MA-Q09'){
+    const startHour=8+i%6,startMinute=ce2?[5,10,20,25,35,40,50,55][k]:[0,15,30,45][i%4];
+    const duration=ce2?[25,35,50,75,95,110,125,140][k]:[30,45,60,90][i%4];
+    const endTotal=startHour*60+startMinute+duration,endHour=Math.floor(endTotal/60),endMinute=endTotal%60;
+    const durationLabel=n=>n>=60?`${Math.floor(n/60)} h${n%60?` ${String(n%60).padStart(2,'0')} min`:''}`:`${n} min`;
+    prompt=`De ${clockTime(startHour,startMinute)} à ${clockTime(endHour,endMinute)}, combien de temps s’écoule ?`;
+    correct=durationLabel(duration);wrong=[durationLabel(duration+15),durationLabel(duration-15),durationLabel(duration+60)];
+    explanation=`On compte de ${clockTime(startHour,startMinute)} à ${clockTime(endHour,endMinute)} : ${correct}.`;
+    skill=ce2?'Durées en heures et minutes':'Heures, demies et quarts';
+  }else if(id==='MA-G03'){
+    const shape=ce2?['losange','carre','rectangle','triangleRectangle','losange','triangle','rectangle','carre'][k]:['carre','rectangle','triangle','triangleRectangle'][i%4];
+    visual={kind:'shape',shape,variant:i};const kind=i%3;
+    if(kind===0){prompt='Quel est le nom le plus précis de cette figure ?';correct=({carre:'Un carré',rectangle:'Un rectangle',triangle:'Un triangle',triangleRectangle:'Un triangle rectangle',losange:'Un losange'})[shape];wrong=['Un carré','Un rectangle','Un triangle','Un triangle rectangle','Un losange'].filter(x=>x!==correct).slice(0,3);skill='Nommer une figure';explanation=`La figure représentée est ${correct.toLowerCase()}.`;}
+    else if(kind===1){prompt='Combien de côtés cette figure possède-t-elle ?';correct=shape.startsWith('triangle')?3:4;wrong=[2,5,6];skill='Nombre de côtés';explanation=`Cette figure possède ${correct} côtés.`;}
+    else {prompt='Combien d’angles droits cette figure possède-t-elle ?';correct=shape==='carre'||shape==='rectangle'?4:shape==='triangleRectangle'?1:0;wrong=[0,1,2,3,4].filter(x=>x!==correct).slice(0,3);skill='Angles droits';explanation=`Cette figure possède ${correct} angle${correct>1?'s':''} droit${correct>1?'s':''}.`;}
+  }else if(id==='MA-D02'||id==='MA-D03'){
+    const labels=['Lundi','Mardi','Mercredi','Jeudi'],step=ce2?(i%2?5:2):1,base=2+i%5;
+    const ordered=[base,base+2,base+4,base+6],shift=i%4,values=[...ordered.slice(shift),...ordered.slice(0,shift)].map(x=>x*step);
+    visual={kind:'bars',title:'Livres empruntés',labels,values,step};
+    if(id==='MA-D02'){
+      const day=i%4;prompt=`Selon le diagramme, combien de livres ont été empruntés ${labels[day].toLowerCase()} ?`;
+      correct=values[day];wrong=values.filter((_,j)=>j!==day);skill=ce2?'Lire une échelle':'Lire une barre';
+      explanation=`La barre de ${labels[day].toLowerCase()} atteint ${correct} sur l’échelle.`;
+    }else{
+      const first=i%4,second=(first+2)%4,total=i%2===0;
+      if(total){prompt=`Combien de livres ont été empruntés ${labels[first].toLowerCase()} et ${labels[second].toLowerCase()} ensemble ?`;correct=values[first]+values[second];wrong=[values[first],values[second],correct+step];explanation=`On additionne ${values[first]} et ${values[second]} : ${correct}.`;skill='Total de deux catégories';}
+      else {const high=values[first]>values[second]?first:second,low=high===first?second:first;prompt=`Combien de livres de plus ont été empruntés ${labels[high].toLowerCase()} que ${labels[low].toLowerCase()} ?`;correct=values[high]-values[low];wrong=[values[high]+values[low],correct+step,values[high]];explanation=`${values[high]} − ${values[low]} = ${correct}.`;skill='Écart entre deux catégories';}
+    }
+  }else throw Error(`Unité visuelle non implémentée : ${id}`);
+  const choices=typeof correct==='number'?extraNumber(correct,wrong,i):extraChoice(correct,wrong,i);
+  return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...choices,explanation,visual};
+}
 const qlmBanks={
   'QLM-C2-S02':[
     ['États','Dans quel état se trouve un glaçon ?','Solide','Liquide','Gaz','Plasma','La glace garde sa propre forme : c’est de l’eau solide.'],
@@ -807,7 +856,7 @@ function readingQuestions(id){
 function extraQuestions(id,count){
   if(id.startsWith('QLM-'))return qlmQuestions(id);
   if(id.startsWith('FR-L'))return readingQuestions(id);
-  const all=Array.from({length:20},(_,i)=>additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
+  const all=Array.from({length:20},(_,i)=>visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
   return count===10?[...all.slice(0,6),...all.slice(12,16)]:all;
 }
 
@@ -1110,6 +1159,8 @@ const allowedStatuses=['pas-testee','en-cours','acquise'];
 function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:(q.status||'pas-testee');}
 function suggestedQuiz(){return quizzes.find(q=>effectiveStatus(q)==='en-cours')||quizzes.find(q=>effectiveStatus(q)==='pas-testee')||null;}
 function renderSuggestion(){const q=suggestedQuiz();$('suggestion').classList.toggle('hidden',!q);if(!q)return;const inProgress=effectiveStatus(q)==='en-cours';$('suggestionLabel').textContent=inProgress?'À travailler':'À découvrir';$('suggestionNote').textContent=inProgress?'Compétence en cours d’apprentissage':'Suggestion parmi les compétences non encore testées';$('suggestionName').textContent=q.title;}
+function suggestedInSubject(){const subject=$('subjectSelect').value,available=quizzes.filter(q=>(q.subject||'Autres')===subject);return available.find(q=>effectiveStatus(q)==='en-cours')||available.find(q=>effectiveStatus(q)==='pas-testee')||null;}
+function renderSubjectSuggestion(){const q=suggestedInSubject();$('subjectSuggestion').classList.toggle('hidden',!q);if(!q)return;const inProgress=effectiveStatus(q)==='en-cours';$('subjectSuggestionLabel').textContent=inProgress?'À travailler dans cette matière':'À découvrir dans cette matière';$('subjectSuggestionNote').textContent=inProgress?'Compétence en cours d’apprentissage':'Compétence non encore testée sur cet appareil';$('subjectSuggestionName').textContent=q.title;}
 function renderSelect(){
   const subject=$('subjectSelect').value,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject);
   $('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=`${q.id} — ${q.title}`;return o}));
@@ -1118,6 +1169,7 @@ function renderSelect(){
   $('loadStatus').textContent=available.length?`${available.length} compétences disponibles en ${subject.toLowerCase()}.`:`Aucune compétence en ${subject.toLowerCase()} pour l’instant.`;
   renderQuestionCounts();
   renderQuizStatus();
+  renderSubjectSuggestion();
 }
 function renderQuizStatus(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)];
@@ -1158,13 +1210,44 @@ function drawFraction(figure){
   });
   host.append(svg);
 }
+function drawVisual(visual){
+  if(!visual)return;
+  const host=$('diagram'),ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+  const add=(name,attrs,label)=>{const el=document.createElementNS(ns,name);for(const [key,value] of Object.entries(attrs))el.setAttribute(key,String(value));if(label!==undefined)el.textContent=label;svg.append(el)};
+  if(visual.kind==='clock'){
+    svg.setAttribute('viewBox','0 0 720 300');svg.setAttribute('aria-label','Horloge à aiguilles');
+    const cx=360,cy=150,r=114;
+    add('circle',{cx,cy,r,fill:'#fff',stroke:'#333','stroke-width':4});
+    for(let n=1;n<=12;n++){
+      const a=(n*30-90)*Math.PI/180;
+      add('text',{x:cx+91*Math.cos(a),y:cy+91*Math.sin(a)+7,'text-anchor':'middle','font-size':20,'font-weight':'bold',fill:'#333'},String(n));
+    }
+    const hourAngle=((visual.hour%12+visual.minute/60)*30-90)*Math.PI/180;
+    const minuteAngle=(visual.minute*6-90)*Math.PI/180;
+    add('line',{x1:cx,y1:cy,x2:cx+59*Math.cos(hourAngle),y2:cy+59*Math.sin(hourAngle),stroke:'#333','stroke-width':8,'stroke-linecap':'round'});
+    add('line',{x1:cx,y1:cy,x2:cx+82*Math.cos(minuteAngle),y2:cy+82*Math.sin(minuteAngle),stroke:'#b58a23','stroke-width':5,'stroke-linecap':'round'});
+    add('circle',{cx,cy,r:6,fill:'#333'});
+  }else if(visual.kind==='shape'){
+    svg.setAttribute('viewBox','0 0 720 240');svg.setAttribute('aria-label','Figure géométrique');
+    const points={carre:'280,30 440,30 440,190 280,190',rectangle:'210,55 510,55 510,165 210,165',triangle:'360,25 120,195 600,195',triangleRectangle:'180,35 180,195 560,195',losange:'360,25 570,110 360,195 150,110'};
+    add('polygon',{points:points[visual.shape],fill:'#f8edcf',stroke:'#333','stroke-width':5,'stroke-linejoin':'round'});
+  }else if(visual.kind==='bars'){
+    svg.setAttribute('viewBox','0 0 720 310');svg.setAttribute('aria-label','Diagramme en barres : '+visual.labels.map((label,i)=>`${label}, ${visual.values[i]}`).join(' ; '));
+    const max=Math.ceil(Math.max(...visual.values)/visual.step)*visual.step,top=40,bottom=250,height=bottom-top;
+    add('text',{x:360,y:24,'text-anchor':'middle','font-size':20,'font-weight':'bold',fill:'#333'},visual.title);
+    for(let value=0;value<=max;value+=visual.step){const y=bottom-value/max*height;add('line',{x1:72,y1:y,x2:690,y2:y,stroke:'#dedede','stroke-width':1});add('text',{x:58,y:y+6,'text-anchor':'end','font-size':16,fill:'#444'},String(value));}
+    visual.values.forEach((value,i)=>{const x=105+i*145,y=bottom-value/max*height;add('rect',{x,y,width:76,height:bottom-y,fill:'#b58a23',stroke:'#333','stroke-width':2});add('text',{x:x+38,y:282,'text-anchor':'middle','font-size':17,fill:'#333'},visual.labels[i]);});
+    add('line',{x1:72,y1:bottom,x2:690,y2:bottom,stroke:'#333','stroke-width':2});
+  }else throw Error(`Diagramme inconnu : ${visual.kind}`);
+  svg.setAttribute('role','img');host.append(svg);
+}
 function render(){
   const q=quiz.questions[index]; answered=false;selectedChoice=undefined;
   $('position').textContent=`${quiz.id} · ${q.level||''} · Question ${index+1}/${quiz.questions.length}`;
   $('score').textContent=immediateFeedback?`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`:'';
   $('progress').max=quiz.questions.length;$('progress').value=index;
   $('passage').classList.toggle('hidden',!q.passage);$('passage').textContent=q.passage||'';
-  $('question').textContent=q.prompt;drawAxis(q.axis);drawFraction(q.figure);$('choices').replaceChildren();
+  $('question').textContent=q.prompt;drawAxis(q.axis);drawFraction(q.figure);drawVisual(q.visual);$('choices').replaceChildren();
   q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<strong>${'ABCD'[i]}</strong>`;b.append(document.createTextNode(choice));b.addEventListener('click',()=>select(i));$('choices').append(b)});
   $('unknown').disabled=false;$('unknown').classList.remove('selected');$('unknown').setAttribute('aria-pressed','false');$('confirm').disabled=true;$('confirm').classList.remove('hidden');$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('nextLabel').textContent=index===quiz.questions.length-1?'Voir le résultat':'Question suivante';
 }
@@ -1176,7 +1259,7 @@ function select(choice){
 function submit(){
   if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],correct=choice===q.answer;
   playSound('answer');
-  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
+  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,visual:q.visual||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
   [...$('choices').children].forEach((b,i)=>{b.disabled=true;if(immediateFeedback){b.classList.remove('selected');if(i===q.answer)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')}});$('unknown').disabled=true;
   if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
   $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
@@ -1212,8 +1295,9 @@ $('again').onclick=()=>show('setup');$('download').onclick=download;$('email').o
 $('saveFolder').onclick=saveToFolder;
 $('subjectSelect').onchange=renderSelect;
 $('quizSelect').onchange=()=>{renderQuestionCounts();renderQuizStatus()};
-$('statusSelect').onchange=()=>{const q=quizzes[Number($('quizSelect').value)],status=$('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}renderQuizStatus();renderSuggestion();};
+$('statusSelect').onchange=()=>{const q=quizzes[Number($('quizSelect').value)],status=$('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}renderQuizStatus();renderSuggestion();renderSubjectSuggestion();};
 $('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.indexOf(q));renderQuestionCounts();renderQuizStatus();};
+$('chooseSubjectSuggestion').onclick=()=>{const q=suggestedInSubject();if(!q)return;$('quizSelect').value=String(quizzes.indexOf(q));renderQuestionCounts();renderQuizStatus();};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('report').textContent);$('copyStatus').textContent='Rapport copié.'}catch{$('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
 $('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
 renderSubjects();
