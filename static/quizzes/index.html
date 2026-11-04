@@ -127,7 +127,12 @@ const mathUnits = [
   {id:'MA-N02',title:'Dénombrer et regrouper des collections',levels:'CE1 : unités, dizaines, centaines ; CE2 : milliers'},
   {id:'MA-N03',title:'Valeur de position et décompositions',levels:'CE1 : jusqu’à 1 000 ; CE2 : jusqu’à 10 000'},
   {id:'MA-N04',title:'Comparer, encadrer et ordonner',levels:'CE1 : jusqu’à 1 000 ; CE2 : jusqu’à 10 000'},
-  {id:'MA-N05',title:'Lire une droite graduée',levels:'CE1 : graduations de 1, 10 ou 100 ; CE2 : graduations de 1 000'}
+  {id:'MA-N05',title:'Lire une droite graduée',levels:'CE1 : graduations de 1, 10 ou 100 ; CE2 : graduations de 1 000'},
+  {id:'MA-N06',title:'Comprendre les rangs et les ordinaux',levels:'CE1 : ordinaux jusqu’à 100 ; réinvestissement CE2'},
+  {id:'MA-F01',title:'Reconnaître une fraction unitaire',levels:'CE1 : parts égales, dénominateurs 2, 3, 4, 5, 6, 8 et 10 ; CE2 : jusqu’à 12'},
+  {id:'MA-F02',title:'Représenter des fractions et leurs équivalences',levels:'CE1 : fractions inférieures ou égales à 1 ; CE2 : fractions équivalentes'},
+  {id:'MA-F03',title:'Numérateur et dénominateur',levels:'CE1–CE2 : lire et expliquer les deux nombres d’une fraction'},
+  {id:'MA-F04',title:'Comparer des fractions',levels:'CE1 : même dénominateur ou fractions unitaires ; CE2 : comparaisons étendues'}
 ].map(unit=>({...unit,subject:'Mathématiques',language:'fr-FR',status:'pas-testee',statusScope:'CE1 à vérifier ; questions CE2 pour situer le niveau.',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}));
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,frenchQuiz], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext;
@@ -169,6 +174,121 @@ function mathQuestions(id,count){
     const subskills={'MA-N02':['COL','REG','PAQ','ECH'],'MA-N03':['POS','DEC','ZERO','NONCAN'],'MA-N04':['COMP','COMP','INTER','ENC','ORD'],'MA-N05':['AXE']};
     return {level,skill,subskillId:`${id}-${subskills[id][id==='MA-N05'?0:kind]}`,prompt,choices,answer,explanation,...(axis?{axis}:{})};
   });
+}
+const ce1Denominators=[2,3,4,5,6,8,10];
+const ce2Denominators=[2,3,4,5,6,7,8,9,10,11,12];
+function nextMathQuestions(id,count){
+  const questions=Array.from({length:count},(_,i)=>{
+    const ce2=id!=='MA-N06'&&i%10>=6,level=ce2?'CE2':'CE1',shift=i%4;
+    let prompt,choices,answer,explanation,skill,subskillId,figure;
+    const pick=(right,wrong)=>({choices,answer}=four(right,wrong,shift));
+    const n=(ce2?ce2Denominators:ce1Denominators)[(i+Math.floor(i/10))%(ce2?ce2Denominators:ce1Denominators).length];
+    if(id==='MA-N06'){
+      const kind=i%4;
+      if(kind===0){
+        const pattern=['A','B','C','D'].slice(0,3+i%2),rank=17+(i*7)%83,right=pattern[(rank-1)%pattern.length];
+        prompt=`Le motif ${pattern.join(' – ')} se répète. Quelle lettre est en ${rank}e position ?`;
+        pick(right,['A','B','C','D'].filter(x=>x!==right));
+        explanation=`On compte à partir de la première lettre : la ${rank}e position correspond à « ${right} ».`;skill='Rang dans un motif';subskillId='MA-N06-MOTIF';
+      }else if(kind===1){
+        const total=12+(i*9)%80,fromRight=2+(i*3)%(total-2),right=total-fromRight+1;
+        prompt=`Une file compte ${total} personnes. Lina est ${fromRight}e en partant de la droite. Quel est son rang en partant de la gauche ?`;
+        pick(right,[right-1,right+1,fromRight,total-right,right+2]);
+        explanation=`Son rang depuis la gauche est ${total} − ${fromRight} + 1 = ${right}.`;skill='Changer le sens de parcours';subskillId='MA-N06-SENS';
+      }else if(kind===2){
+        const rank=8+(i*11)%89,right=rank-1;
+        prompt=`Noé est ${rank}e dans une file. Combien de personnes sont devant lui ?`;
+        pick(right,[rank,rank+1,right-1,right+1]);
+        explanation=`La ${rank}e personne a ${right} personnes devant elle.`;skill='Rang et nombre précédent';subskillId='MA-N06-AVANT';
+      }else{
+        const first=2+i%6,step=2+(Math.floor(i/4)%4),rank=4+(i*3)%7,right=first+(rank-1)*step;
+        prompt=`Dans la liste ${first} ; ${first+step} ; ${first+2*step} ; …, quel est le ${rank}e nombre ?`;
+        pick(right,[right-step,right+step,first+rank*step,right+1]);
+        explanation=`Le premier nombre est ${first}. On ajoute ${step} ${rank-1} fois : ${right}.`;skill='Rang dans une suite';subskillId='MA-N06-SUITE';
+      }
+    }else if(id==='MA-F01'){
+      const kind=i%3,offset=(i*3)%n;
+      figure={bars:[{parts:n,filled:1,offset}],sameWhole:true};
+      if(kind===0){
+        prompt='Quelle fraction du tout est coloriée ?';pick(`1/${n}`,[`${n}/1`,`1/${n+1}`,`1/${n-1}`]);
+        explanation=`Le tout est partagé en ${n} parts égales et une seule est coloriée : 1/${n}.`;skill='Lire une fraction unitaire';subskillId='MA-F01-LIRE';
+      }else if(kind===1){
+        prompt='En combien de parts égales le tout est-il partagé ?';pick(n,[n-1,n+1,n+2,n+3]);
+        explanation=`On compte ${n} parts égales ; une part vaut 1/${n} du tout.`;skill='Repérer le partage du tout';subskillId='MA-F01-PARTS';
+      }else{
+        prompt='Quelle phrase décrit exactement la partie coloriée ?';
+        pick(`Une part sur ${n} parts égales`,[`Une part sur ${n+1} parts égales`,`${n} parts sur une seule part`,`Une part sur ${n-1} parts égales`]);
+        explanation=`Une des ${n} parts égales est coloriée, soit 1/${n} du tout.`;skill='Relier figure et partage';subskillId='MA-F01-SENS';
+      }
+    }else if(id==='MA-F02'){
+      if(ce2&&i%2===0){
+        const base=3+(i%4),a=2+(i%(base-2)),offset=i%base;
+        figure={bars:[{parts:base,filled:a,offset}],sameWhole:true};
+        prompt=`Quelle fraction est égale à ${a}/${base} ?`;
+        pick(`${2*a}/${2*base}`,[`${a}/${2*base}`,`${2*a-1}/${2*base}`,`${2*a+1}/${2*base}`]);
+        explanation=`On partage chacune des ${base} parts en deux : ${a}/${base} = ${2*a}/${2*base}.`;skill='Équivalence de fractions';subskillId='MA-F02-EQUIV';
+      }else{
+        const denoms=ce2?[5,6,7,8,9,10,11,12]:[3,4,5,6,8,10],parts=denoms[(i+Math.floor(i/10))%denoms.length],filled=2+(i*3)%(parts-2);
+        figure={bars:[{parts,filled,offset:(i*2)%parts}],sameWhole:true};
+        if(i%3===1){
+          const remaining=parts-filled;prompt='Quelle fraction du tout reste non coloriée ?';
+          pick(`${remaining}/${parts}`,[`${filled}/${parts}`,`${remaining+1}/${parts}`,`${remaining}/${parts+1}`,`${parts}/${remaining}`]);
+          explanation=`Il reste ${remaining} parts non coloriées sur ${parts} parts égales : ${remaining}/${parts}.`;skill='Trouver la fraction complémentaire';subskillId='MA-F02-COMPL';
+        }else if(i%3===2){
+          prompt='Quelle phrase décrit la partie coloriée ?';
+          pick(`${filled} parts sur ${parts} parts égales`,[`${parts} parts sur ${filled} parts égales`,`${filled-1} parts sur ${parts} parts égales`,`${filled} parts sur ${parts+1} parts égales`]);
+          explanation=`${filled} parts sur ${parts} parts égales sont coloriées : ${filled}/${parts}.`;skill='Interpréter une fraction non unitaire';subskillId='MA-F02-SENS';
+        }else{
+          prompt='Quelle fraction du tout est coloriée ?';
+          pick(`${filled}/${parts}`,[`${parts}/${filled}`,`${filled-1}/${parts}`,`${filled}/${parts+1}`]);
+          explanation=`${filled} parts sur ${parts} parts égales sont coloriées : ${filled}/${parts}.`;skill='Lire une fraction non unitaire';subskillId='MA-F02-LIRE';
+        }
+      }
+    }else if(id==='MA-F03'){
+      const parts=Math.max(3,n),filled=1+(i*3)%(parts-1),kind=i%4;
+      figure={bars:[{parts,filled,offset:i%parts}],sameWhole:true};
+      if(kind===0){prompt=`Dans ${filled}/${parts}, quel est le numérateur ?`;pick(filled,[parts,filled+1,filled+2,filled+3]);explanation=`Le numérateur est le nombre de parts prises : ${filled}.`;skill='Identifier le numérateur';subskillId='MA-F03-NUM';}
+      else if(kind===1){prompt=`Dans ${filled}/${parts}, quel est le dénominateur ?`;pick(parts,[filled,parts-1,parts+1,parts+2]);explanation=`Le dénominateur indique le nombre de parts égales du tout : ${parts}.`;skill='Identifier le dénominateur';subskillId='MA-F03-DEN';}
+      else if(kind===2){prompt=`Que signifie le ${filled} dans ${filled}/${parts} ?`;pick('Le nombre de parts coloriées',['Le nombre total de parts égales','Le nombre de touts représentés','La taille d’une part']);explanation=`Le numérateur ${filled} compte les parts coloriées.`;skill='Interpréter le numérateur';subskillId='MA-F03-NUM';}
+      else {prompt=`Que signifie le ${parts} dans ${filled}/${parts} ?`;pick('Le nombre total de parts égales',['Le nombre de parts coloriées','Le nombre de touts représentés','La taille du tout en centimètres']);explanation=`Le dénominateur ${parts} compte les parts égales qui composent un tout.`;skill='Interpréter le dénominateur';subskillId='MA-F03-DEN';}
+    }else if(id==='MA-F04'){
+      let left,right,kind;
+      if(!ce2&&i%2===0){
+        const parts=[3,4,5,6,8,10][(i+Math.floor(i/10))%6],a=1+i%(parts-1),b=a===parts-1?a-1:a+1;
+        left={parts,filled:a,offset:i%parts};right={parts,filled:b,offset:(i+2)%parts};kind='Même dénominateur';subskillId='MA-F04-MEME-DEN';
+      }else if(!ce2){
+        const p=[2,3,4,5,6,8][i%6],q=p===8?10:p+1;
+        left={parts:p,filled:1,offset:i%p};right={parts:q,filled:1,offset:i%q};kind='Fractions unitaires';subskillId='MA-F04-UNIT';
+      }else if(i%4===2){
+        const p=3+i%4,q=p+1,a=2;
+        left={parts:p,filled:a,offset:i%p};right={parts:q,filled:a,offset:i%q};kind='Même numérateur';subskillId='MA-F04-MEME-NUM';
+      }else{
+        const p=3+i%4,a=1+i%(p-1),b=i%4===3?2*a:2*a+(i%2===0?1:-1);
+        left={parts:p,filled:a,offset:i%p};right={parts:2*p,filled:b,offset:i%(2*p)};kind='Dénominateurs multiples';subskillId='MA-F04-MULT';
+      }
+      if(i%3===1)[left,right]=[right,left];
+      figure={bars:[left,right],sameWhole:true};
+      const comparison=left.filled*right.parts-right.filled*left.parts;
+      const correct=comparison>0?'A est plus grande':comparison<0?'B est plus grande':'A et B sont égales';
+      prompt='Les bandes A et B représentent des touts de même taille. Quelle comparaison est correcte ?';
+      pick(correct,['A est plus grande','B est plus grande','A et B sont égales','On ne peut pas comparer'].filter(x=>x!==correct));
+      explanation=`A représente ${left.filled}/${left.parts} et B représente ${right.filled}/${right.parts}. ${correct}.`;skill=kind;
+    }else throw Error('Unité inconnue');
+    return {level,skill,subskillId,programmeSkills:[id],prompt,choices,answer,explanation,...(figure?{figure}:{})};
+  });
+  const seen=new Set();
+  for(const q of questions){
+    let signature=()=>JSON.stringify([q.prompt,q.figure,q.choices[q.answer]]);
+    if(q.figure){
+      const bars=q.figure.bars,possibilities=bars.reduce((product,bar)=>product*bar.parts,1),initialOffset=bars[0].offset;
+      for(let attempt=0;seen.has(signature())&&attempt<possibilities;attempt++){
+        bars[0].offset=(bars[0].offset+1)%bars[0].parts;
+        if(bars[0].offset===initialOffset&&bars[1])bars[1].offset=(bars[1].offset+1)%bars[1].parts;
+      }
+    }
+    seen.add(signature());
+  }
+  return questions;
 }
 function localDate(d=new Date()){const n=x=>String(x).padStart(2,'0');return `${d.getFullYear()}-${n(d.getMonth()+1)}-${n(d.getDate())}`;}
 function numberWords(n){
@@ -277,12 +397,28 @@ function drawAxis(axis){
   for(let j=0;j<8;j++){const x=55+j*86;add('line',{x1:x,y1:55,x2:x,y2:75,stroke:'#333','stroke-width':2});if(j===0||j===7)add('text',{x,y:103,'text-anchor':'middle','font-size':18,fill:'#333'},fmt(axis.start+j*axis.step));if(j===axis.marked){add('circle',{cx:x,cy:65,r:7,fill:'#b58a23'});add('text',{x,y:38,'text-anchor':'middle','font-size':22,'font-weight':'bold',fill:'#8a6517'},'A')}}
   host.append(svg);
 }
+function drawFraction(figure){
+  if(!figure)return;
+  const host=$('diagram'),ns='http://www.w3.org/2000/svg',bars=figure.bars;
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox',`0 0 720 ${bars.length===1?120:215}`);
+  svg.setAttribute('role','img');svg.setAttribute('aria-label',bars.map((bar,i)=>`${bars.length===1?'Bande':`Bande ${'AB'[i]}`} : ${bar.filled} parts coloriées sur ${bar.parts} parts égales`).join(' ; '));
+  const add=(name,attrs,label)=>{const el=document.createElementNS(ns,name);for(const [key,value] of Object.entries(attrs))el.setAttribute(key,String(value));if(label!==undefined)el.textContent=label;svg.append(el)};
+  bars.forEach((bar,i)=>{
+    const y=bars.length===1?25:25+i*95,x0=bars.length===1?45:70,width=bars.length===1?630:605,cell=width/bar.parts;
+    if(bars.length>1)add('text',{x:25,y:y+51,'font-size':25,'font-weight':'bold',fill:'#333'},'AB'[i]);
+    for(let j=0;j<bar.parts;j++){
+      const colored=(j-bar.offset+bar.parts)%bar.parts<bar.filled;
+      add('rect',{x:x0+j*cell,y,width:cell,height:70,fill:colored?'#b58a23':'#fff',stroke:'#333','stroke-width':2});
+    }
+  });
+  host.append(svg);
+}
 function render(){
   const q=quiz.questions[index]; answered=false;selectedChoice=undefined;
   $('position').textContent=`${quiz.id} · ${q.level||''} · Question ${index+1}/${quiz.questions.length}`;
   $('score').textContent=immediateFeedback?`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`:'';
   $('progress').max=quiz.questions.length;$('progress').value=index;
-  $('question').textContent=q.prompt;drawAxis(q.axis);$('choices').replaceChildren();
+  $('question').textContent=q.prompt;drawAxis(q.axis);drawFraction(q.figure);$('choices').replaceChildren();
   q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<strong>${'ABCD'[i]}</strong>`;b.append(document.createTextNode(choice));b.addEventListener('click',()=>select(i));$('choices').append(b)});
   $('unknown').disabled=false;$('unknown').classList.remove('selected');$('unknown').setAttribute('aria-pressed','false');$('confirm').disabled=true;$('confirm').classList.remove('hidden');$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('nextLabel').textContent=index===quiz.questions.length-1?'Voir le résultat':'Question suivante';
 }
@@ -294,7 +430,7 @@ function select(choice){
 function submit(){
   if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],correct=choice===q.answer;
   playSound('answer');
-  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,axis:q.axis||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
+  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,axis:q.axis||null,figure:q.figure||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
   [...$('choices').children].forEach((b,i)=>{b.disabled=true;if(immediateFeedback){b.classList.remove('selected');if(i===q.answer)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')}});$('unknown').disabled=true;
   if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
   $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
@@ -321,7 +457,7 @@ async function saveToFolder(){
     $('copyStatus').textContent=`Rapport enregistré : ${name}. Tu peux retrouver ce rapport dans le dossier choisi.`;
   }catch(err){$('copyStatus').textContent=err.name==='AbortError'?'Enregistrement annulé.':`Enregistrement impossible (${err.message}). Utilise « Télécharger le rapport JSON ».`;}
 }
-$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value);quiz=validate(selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:mathQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
+$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value);quiz=validate(selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
 $('unknown').onclick=()=>select(null);
 $('confirm').onclick=submit;
 $('next').onclick=()=>{index++;if(index<quiz.questions.length)render();else finish()};
