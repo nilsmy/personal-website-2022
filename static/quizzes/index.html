@@ -69,7 +69,16 @@
     <button id="next" class="primary footer hidden"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg><span id="nextLabel">Question suivante</span></button>
     <button id="cancel" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Annuler le quiz</button>
   </section>
-  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><div class="toolbar"><button id="saveFolder" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Recommencer</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport</summary><pre id="report"></pre></details></section>
+  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><div class="toolbar"><button id="sendReport" class="primary" type="button">Envoyer le rapport à Netlify</button><button id="saveFolder" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Recommencer</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport</summary><pre id="report"></pre></details></section>
+
+<form name="education-quiz-results" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="education-quiz-results">
+  <input type="text" name="bot-field">
+  <input type="text" name="quiz_id">
+  <input type="text" name="completed_at">
+  <input type="text" name="score">
+  <textarea name="report"></textarea>
+</form>
 </main><script>
 const builtIn = {
   id: 'MA-N01', subject: 'Mathématiques', title: 'Lire, écrire et nommer les entiers', language: 'fr-FR',
@@ -145,7 +154,7 @@ function mathQuestions(id,count){
     const pick=(right,wrong)=>({choices,answer}=four(right,wrong,shift));
     if(id==='MA-N02'){
       const h=2+(k*3)%7,t=1+(k*2)%8,u=1+(k*5)%8,m=ce2?1+(k*3)%8:0;
-      if(kind===0){const value=m*1000+h*100+t*10+u;prompt=`${ce2?`${unit(m,'millier')}, `:''}${unit(h,'centaine')}, ${unit(t,'dizaine')} et ${unit(u,'unité')} : combien d’objets ?`;pick(fmt(value),[fmt(value+90),fmt(value+9),fmt(value+100)]);explanation=`On regroupe ${ce2?`${m} × 1 000 + `:''}${h} × 100 + ${t} × 10 + ${u} = ${fmt(value)}.`;skill='Constituer une collection';}
+      if(kind===0){const value=m*1000+h*100+t*10+u;prompt=`Quel nombre obtient-on avec ${ce2?`${unit(m,'millier')}, `:''}${unit(h,'centaine')}, ${unit(t,'dizaine')} et ${unit(u,'unité')} ?`;pick(fmt(value),[fmt(value+90),fmt(value+9),fmt(value+100)]);explanation=`On regroupe ${ce2?`${m} × 1 000 + `:''}${h} × 100 + ${t} × 10 + ${u} = ${fmt(value)}.`;skill='Constituer une collection';}
       else if(kind===1){const bundles=ce2?10+(k%7):10+(k%6),unit=2+(k%7),value=bundles*(ce2?100:10)+unit;prompt=`${bundles} paquets de ${ce2?'100':'10'} objets et ${unit} objets isolés : combien d’objets ?`;pick(fmt(value),[fmt(value+10),fmt(value-10),fmt(value+(ce2?100:20))]);explanation=`${bundles} × ${ce2?'100':'10'} + ${unit} = ${fmt(value)}. On peut échanger dix paquets contre une unité supérieure.`;skill='Regrouper au-delà de dix';}
       else if(kind===2){const value=ce2?2300+(k%6)*100:230+(k%6)*10;prompt=`Avec ${fmt(value)} objets, combien de paquets de ${ce2?'100':'10'} peut-on faire sans reste ?`;const right=value/(ce2?100:10);pick(right,[right-1,right+1,right+10]);explanation=`${fmt(value)} ÷ ${ce2?'100':'10'} = ${right} paquets.`;skill='Dénombrer par paquets';}
       else {const base=ce2?1000:100,n=2+(k%7);prompt=`${n} paquets de ${fmt(base)} objets peuvent être échangés contre combien de paquets de ${fmt(base/10)} objets ?`;pick(n*10,[n,n+10,n*10+1]);explanation=`Un paquet de ${fmt(base)} vaut dix paquets de ${fmt(base/10)} : ${n} paquets en valent ${n*10}.`;skill='Échanger des unités de numération';}
@@ -325,4 +334,35 @@ $('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('report').
 $('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
 renderSubjects();
 
+
+// The public-site variant sends only after an explicit click. No child identity is embedded.
+document.getElementById('sendReport').onclick = async () => {
+  const button = document.getElementById('sendReport');
+  const status = document.getElementById('copyStatus');
+  if (!quiz || !responses.length) return;
+  button.disabled = true;
+  status.textContent = 'Envoi du rapport…';
+  try {
+    const data = JSON.parse(document.getElementById('report').textContent);
+    const fields = new URLSearchParams({
+      'form-name': 'education-quiz-results',
+      'bot-field': '',
+      'quiz_id': data.quizId,
+      'completed_at': data.completedAt,
+      'score': `${data.initialCorrect}/${data.total}`,
+      'report': JSON.stringify(data)
+    });
+    const response = await fetch(window.location.pathname, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: fields.toString()
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    status.textContent = 'Envoi accepté par Netlify. Tu peux aussi télécharger le rapport JSON.';
+    button.textContent = 'Rapport envoyé';
+  } catch (error) {
+    status.textContent = `Envoi impossible (${error.message}). Télécharge le rapport JSON pour le conserver.`;
+    button.disabled = false;
+  }
+};
 </script></body></html>
