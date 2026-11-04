@@ -1047,6 +1047,157 @@ function writtenQuestions(id,count){
   });
 }
 
+// Original English-language diagnostic items aligned with official 2023 NJ ELA grades 2–3.
+// These are teaching probes, not standardized or full performance assessments.
+const njStories={
+  kite:'Maya carried her new kite to the park. The wind was strong, but she let go of the string too soon. The kite landed in a tree. Maya wanted to climb after it. Her brother Leo pointed to a loose branch and asked her to wait. They found a park worker, who used a long pole to bring the kite down. Maya thanked Leo before they tried again.',
+  map:'Owen and Priya were making a map of their neighborhood. Owen drew the library beside the river, but Priya remembered that it stood across the street from the bakery. They walked to the corner to check. Priya was right. Owen erased the river from that part of the map and drew the bakery. Later, he noticed that Priya had forgotten the bridge. They added it together.',
+  shell:'At the beach, Nora found a striped shell and put it in her pocket. Her friend Eli said it might still be someone’s home. They watched the shell quietly. A tiny crab came out and began to crawl. Nora placed the shell beside a rock, away from the busy path. She was disappointed to leave it, but smiled when the crab disappeared under the rock.',
+  lantern:'Sam and Inez planned to read in their tent. Sam brought a lantern, but its batteries stopped working. Inez suggested using the flashlight in her bag. Sam thought its beam would be too narrow. They tried it anyway, pointing it at the white tent roof. The light spread across the tent, and they finished the chapter. Sam said Inez’s idea had been clever.',
+  ants:'Ants live in groups called colonies. Worker ants search for food and carry it back to the nest. When one finds food, it can leave a scent trail that other ants follow. Different species eat different things, including seeds, insects, and sweet liquids. A colony can have one queen or several queens, depending on the species.',
+  shadows:'A shadow forms when an object blocks light. In the morning, the Sun appears low in the sky, so a person’s shadow can be long. Around midday, the Sun appears higher and the shadow is often shorter. The shadow grows longer again later in the day. Cloud cover and the shape of the ground can make a shadow harder to observe.',
+  bridges:'A bridge lets people or vehicles cross an obstacle such as a river. Some bridges are supported by arches; others hang from thick cables. Engineers choose a design after considering the distance, the ground, and the weight the bridge must hold. A map can show where a bridge is, while a labeled diagram can show how its parts support the road.',
+  deserts:'A desert is a place that receives very little rain. Some deserts are hot, but others are cold. Plants and animals there have ways to survive with limited water. A cactus can store water in its stem. Some animals avoid the daytime heat by moving around at night. A photograph may show what a desert looks like, but a rainfall chart can help explain why it is classified as a desert.'
+};
+function njItem(passageId,skill,prompt,correct,wrong,explanation,level='Grade 2'){
+  const choices=[correct,...wrong];
+  if(choices.length!==4||new Set(choices).size!==4)throw Error('NJ item needs four distinct choices: '+prompt);
+  return {level,skill,subskillId:'NJ-'+skill.toUpperCase().replace(/[^A-Z0-9]+/g,'-'),passageId:passageId||undefined,passage:passageId?njStories[passageId]:undefined,prompt,choices,answer:0,explanation};
+}
+const NI=njItem;
+const njBanks={
+  'NJ-RL-EVENTS':[
+    NI('kite','Key detail','Where did Maya’s kite land?','In a tree',['On a roof','In the river','Under a bench'],'The story says the kite landed in a tree.'),
+    NI('kite','Sequence','What did Maya do just before the kite landed?','She let go of the string too soon.',['She thanked Leo.','She found a park worker.','She climbed a tree.'],'Letting go too soon came before the kite landed.'),
+    NI('kite','Cause','Why did Leo ask Maya to wait?','He noticed a loose branch.',['He wanted to fly the kite first.','He was looking for his bag.','The park was closing.'],'Leo pointed to a loose branch before asking her to wait.'),
+    NI('kite','Structure','What resolves the main problem?','A park worker brings the kite down.',['Maya buys another kite.','Leo takes the kite home.','The wind stops completely.'],'The kite is recovered before they try again.'),
+    NI('kite','Retelling','Which retelling preserves the order of the main events?','The kite got stuck; Leo suggested waiting; a worker recovered it.',['A worker recovered the kite; then it got stuck; Leo waited.','Leo climbed the tree; Maya found a worker; the kite flew away.','The kite got stuck; Maya went home; she returned the next day.'],'The first choice follows the events in the passage.'),
+    NI('map','Key detail','What place did Owen put in the wrong position?','The library',['The bridge','The bakery','The school'],'Owen first drew the library beside the river.', 'Grade 3'),
+    NI('map','Sequence','What did Owen and Priya do to settle their disagreement?','They walked to the corner and checked.',['They asked a teacher to draw the map.','They guessed without checking.','They erased the whole map.'],'They checked the actual location together.', 'Grade 3'),
+    NI('map','Cause','Why did Owen change his drawing?','He saw that Priya was right about the library.',['The bakery had closed.','The river had moved.','Priya wanted a different color.'],'Their walk showed that the library was across from the bakery.', 'Grade 3'),
+    NI('map','Structure','What happens after Owen fixes the library location?','They add a bridge Priya had missed.',['They move the library beside the river.','They stop making the map.','They buy a new map.'],'The final event is adding the bridge.', 'Grade 3'),
+    NI('map','Central idea','Which idea best fits this story?','Checking and combining their observations improves the map.',['A river is always beside a library.','Maps should never be corrected.','Only one person can make a useful map.'],'Both children find and correct different omissions.', 'Grade 3')
+  ],
+  'NJ-RL-CHARACTERS':[
+    NI('shell','Feeling','How does Nora feel about leaving the shell?','Disappointed, but glad the crab is safe.',['Angry that Eli found it first.','Afraid of all shells.','Proud that she kept the shell.'],'She is disappointed to leave it and smiles when the crab reaches shelter.'),
+    NI('shell','Motivation','Why does Eli ask Nora to watch the shell?','He suspects an animal may live inside it.',['He wants to count its stripes.','He wants to sell it.','He cannot find the path.'],'Eli says the shell might still be someone’s home.'),
+    NI('shell','Action and plot','How does Nora respond when she sees the crab?','She moves the shell away from the busy path.',['She puts the crab in her pocket.','She throws the shell into the sea.','She leaves it in the path.'],'Nora places it beside a rock away from the path.'),
+    NI('shell','Evidence','Which detail best supports that Nora cares about the crab?','She puts it beside a rock away from the path.',['She finds a striped shell.','She has a pocket.','She is at the beach.'],'Her action helps keep the crab out of the busy path.'),
+    NI('shell','Point of view','Which statement describes a difference between Nora and Eli at first?','Nora wants to keep the shell; Eli wonders if it is occupied.',['Both want to keep the crab in a jar.','Eli wants to climb a tree; Nora wants to read.','Nora knows the shell is empty; Eli knows it is broken.'],'Their first reactions to the shell differ.'),
+    NI('lantern','Motivation','Why does Inez suggest the flashlight?','The lantern batteries have stopped working.',['She wants to leave the tent.','She has lost the book.','She dislikes lanterns.'],'The lantern fails immediately before Inez suggests her flashlight.', 'Grade 3'),
+    NI('lantern','Belief versus result','What does Sam think before they try the flashlight?','Its beam will be too narrow.',['It will light the whole tent.','Its batteries are empty.','It will damage the book.'],'Sam states that he thinks the beam will be too narrow.', 'Grade 3'),
+    NI('lantern','Feeling','How does Sam’s view of Inez’s idea change?','He doubts it, then calls it clever.',['He likes it, then refuses to try it.','He never hears the idea.','He thinks it is clever, then throws it away.'],'Sam first doubts the idea but praises it after it works.', 'Grade 3'),
+    NI('lantern','Action and plot','Why does pointing the flashlight at the roof matter?','The light spreads across the tent.',['The lantern starts working again.','The roof becomes transparent.','They can see outside the tent.'],'The passage says the light spreads across the tent.', 'Grade 3'),
+    NI('lantern','Evidence','Which detail shows that the solution worked?','They finished the chapter.',['Sam brought a lantern.','Inez had a bag.','The batteries stopped working.'],'Finishing the chapter shows they could read after trying the flashlight.', 'Grade 3')
+  ],
+  'NJ-RI-IDEAS':[
+    NI('ants','Main topic','What is this passage mainly about?','How ant colonies live and find food',['How butterflies change shape','How to build a bridge','How to draw an ant'],'It describes colonies, workers, food and queens.'),
+    NI('ants','Key detail','What can an ant leave for other ants to follow?','A scent trail',['A painted sign','A feather trail','A paper map'],'The passage names a scent trail.'),
+    NI('ants','Connection','How can one worker ant help other ants find food?','It can leave a scent trail after finding food.',['It can build a road from stone.','It can fly above the nest.','It can draw a map.'],'The scent trail connects one ant’s discovery to the others.'),
+    NI('ants','Precision','According to the passage, do all ant species eat the same things?','No; their food varies by species.',['Yes; they all eat only seeds.','Yes; they all eat only insects.','The passage says ants never eat.'],'The passage says different species eat different things.'),
+    NI('ants','Evidence','Which sentence supports the idea that colonies can differ?','A colony can have one queen or several queens.',['Worker ants search for food.','Ants live in groups.','An ant can leave a scent trail.'],'The number of queens is given as a difference between colonies.'),
+    NI('shadows','Main idea','What is the passage mainly explaining?','How shadows form and change during a day',['Why the Moon has craters','How to grow a plant','Why bridges need cables'],'It explains blocked light and changes in shadow length.', 'Grade 3'),
+    NI('shadows','Sequence','When is a person’s shadow often shorter?','Around midday',['Only at midnight','Always in the morning','Only after sunset'],'The passage says the Sun appears higher around midday.', 'Grade 3'),
+    NI('shadows','Cause and effect','Why can a morning shadow be long?','The Sun appears low in the sky.',['The person is always taller in the morning.','The ground produces extra light.','Clouds make the Sun larger.'],'The passage links a low Sun position to a long shadow.', 'Grade 3'),
+    NI('shadows','Qualification','What can make a shadow harder to observe?','Cloud cover or the shape of the ground',['The name of the day','The person’s favorite color','The time on a clock alone'],'Both conditions are mentioned in the final sentence.', 'Grade 3'),
+    NI('shadows','Evidence','Which observation would best fit the passage?','A shadow is long in the morning and shorter near midday.',['A shadow stays the same length all day.','A shadow only exists at night.','A shadow grows only when a person grows.'],'The passage describes this change over the day.', 'Grade 3')
+  ],
+  'NJ-RI-SOURCES':[
+    NI('bridges','Text feature','Which feature would best show where a bridge is located?','A map',['A list of bridge materials','A drawing of a cable','A chapter title'],'The passage specifically says a map shows where a bridge is.'),
+    NI('bridges','Text feature','Which feature would best show how bridge parts support the road?','A labeled diagram',['A map of the city','A photograph of the river only','A list of place names'],'A labeled diagram can show how parts support the road.'),
+    NI('bridges','Author purpose','Why does the author mention arches and cables?','To give examples of different bridge designs',['To say all bridges are identical','To tell a story about a driver','To give directions to one bridge'],'Arches and cables are examples of different supports.'),
+    NI('bridges','Cause and choice','Which factor might affect an engineer’s design choice?','The distance to cross',['The bridge’s nickname','The month a map was printed','The color of a nearby book'],'The passage lists distance, ground and weight.'),
+    NI('bridges','Compare sources','One source has a map; another has a labeled diagram. What can you learn by using both?','Where a bridge is and how its parts work',['Only the name of the river','Only the age of the engineer','That all bridges have arches'],'The two features answer different questions.'),
+    NI('deserts','Main idea','Which statement corrects a common misconception in the passage?','Some deserts are cold.',['All deserts are hot.','Deserts receive heavy rain.','No animal lives in a desert.'],'The passage states that some deserts are cold.', 'Grade 3'),
+    NI('deserts','Text feature','Which feature would best help explain why a place is a desert?','A rainfall chart',['A photo of one animal','A drawing of a road','A list of city names'],'Desert classification depends on very little rain.', 'Grade 3'),
+    NI('deserts','Cause and effect','Why might some desert animals move around at night?','To avoid daytime heat',['To make the desert rain','To grow cactus stems','To change the ground'],'The passage links night movement to avoiding heat.', 'Grade 3'),
+    NI('deserts','Compare sources','A photograph shows sand and rocks. A rainfall chart shows very little rain. Which gives stronger evidence that the place is a desert?','The rainfall chart, because deserts receive little rain.',['The photograph, because every sandy place is a desert.','Neither; deserts are defined by bridges.','The photograph, because rocks cause deserts.'],'Rainfall is the defining information in the passage.', 'Grade 3'),
+    NI('deserts','Author evidence','Which detail supports the claim that living things adapt to limited water?','A cactus can store water in its stem.',['A bridge crosses a river.','The Sun appears higher at midday.','A map shows where a bridge is.'],'The cactus example directly supports survival with little water.', 'Grade 3')
+  ],
+  'NJ-L-WORDS':[
+    NI(null,'Vowel team','Which word has the long /a/ sound spelled ai?','rain',['ran','red','run'],'The letters ai spell the long /a/ sound in rain.'),
+    NI(null,'Two syllables','Which word has two syllables and a long vowel in the first?','robot',['rot','rob','rock'],'Ro-bot has two syllables; the first o has a long sound.'),
+    NI(null,'Prefix','What does unhappy mean?','Not happy',['Very happy','Happy again','A happy person'],'The prefix un- can mean not.'),
+    NI(null,'Irregular word','Which word completes this sentence: “I ___ a new book”?','bought',['bot','baut','bott'],'Bought is the conventional spelling of this irregular word.'),
+    NI(null,'Contraction','Which contraction means “they are”?','they’re',['their','there','theyr'],'They’re contracts they are.'),
+    NI(null,'Possessive','Which phrase means the bag belonging to one teacher?','the teacher’s bag',['the teachers bag','the teachers’ bag','the teacher bag’s'],'The apostrophe before s marks one teacher’s possession.', 'Grade 3'),
+    NI(null,'Suffix','Which word means “able to be washed”?','washable',['washless','rewash','washing'],'The suffix -able can mean able to be.', 'Grade 3'),
+    NI(null,'Multisyllable','Which choice correctly divides fantastic into syllables?','fan-tas-tic',['fant-astic','fa-nt-astic','fantas-tic'],'Fantastic has the three syllables fan, tas and tic.', 'Grade 3'),
+    NI(null,'Suffix spelling','Which spelling is correct for cry + ed?','cried',['cryed','cryd','criyed'],'The y changes to i before -ed in cried.', 'Grade 3'),
+    NI(null,'Plural possessive','Which phrase means the room used by several teachers?','the teachers’ room',['the teacher’s room','the teachers room’s','the teacher room'],'For a regular plural ending in s, the possessive apostrophe follows the s.', 'Grade 3')
+  ],
+  'NJ-L-SENTENCES':[
+    NI(null,'Sentence boundary','Which choice is two complete sentences?','The rain stopped. We went outside.',['The rain stopped we went outside.','Because the rain stopped.','The rain stopped, we went outside.'],'Each complete sentence has its own subject and verb.'),
+    NI(null,'Past tense','Yesterday, Maya ___ the kite.','flew',['fly','flies','flying'],'Flew is the past tense of fly.'),
+    NI(null,'Future tense','Tomorrow we ___ the map.','will finish',['finished','finishes','finishing'],'Will finish expresses a future action.'),
+    NI(null,'Contraction','Which sentence uses an apostrophe correctly?','I don’t know the answer.',['I dont know the answer.','I dont’ know the answer.','I do’nt know the answer.'],'Don’t contracts do not.'),
+    NI(null,'Precise adjective','Which phrase gives the most precise description?','the narrow wooden bridge',['the bridge','the thing','the nice place'],'Narrow and wooden specify width and material.'),
+    NI(null,'Verb agreement','Which sentence is correct?','The children are ready.',['The children is ready.','The children am ready.','The children be ready.'],'A plural subject takes are.', 'Grade 3'),
+    NI(null,'Pronoun reference','Which sentence makes it clear who found the book?','Maya found the book after Leo left.',['She found it after he left.','Maya told Nora she found it.','They found it when she left.'],'Naming Maya removes the ambiguity.', 'Grade 3'),
+    NI(null,'Compound sentence','Which sentence correctly joins two complete ideas?','It rained, but we stayed dry.',['It rained but, we stayed dry.','It rained, we stayed dry.','It rained but we stayed dry but.'],'A comma and but can join these two clauses.', 'Grade 3'),
+    NI(null,'Dialogue punctuation','Which sentence punctuates the spoken words correctly?','“Come here,” said Inez.',['“Come here”, said Inez.','Come here,” said Inez.','“Come here said Inez.”'],'The comma belongs inside the quotation marks before the speech tag.', 'Grade 3'),
+    NI(null,'Paragraph focus','Which detail best supports a paragraph about how ants find food?','A worker can leave a scent trail.',['The sky looks blue.','A bridge can have cables.','Some books have chapters.'],'A scent trail explains how ants lead others to food.', 'Grade 3')
+  ],
+  'NJ-L-VOCAB':[
+    NI(null,'Context','“The fragile shell cracked when it fell.” What does fragile mean?','Easy to break',['Very heavy','Brightly colored','Hard to see'],'Cracking when dropped is a clue that the shell breaks easily.'),
+    NI(null,'Prefix','If rewrite means “write again,” what does reread mean?','Read again',['Read aloud','Read badly','Stop reading'],'The prefix re- can mean again.'),
+    NI(null,'Compound','Which word means a house for birds?','birdhouse',['housebird','birdsong','birdseed'],'Bird + house names a structure for birds.'),
+    NI(null,'Nuance','Which verb describes throwing something with the greatest force?','hurl',['toss','place','hand'],'Hurl suggests a stronger throw than toss.'),
+    NI(null,'Dictionary','Where would you look to check the meaning of an unfamiliar word?','A dictionary entry',['A page number alone','A book cover only','A calendar'],'A dictionary entry gives definitions and often examples.'),
+    NI(null,'Context','“The trail was faint, so we had to look closely to see it.” Faint most nearly means:','Hard to see',['Very loud','Freshly painted','Very wide'],'The need to look closely shows that the trail is hard to see.', 'Grade 3'),
+    NI(null,'Affix','If possible means “able to happen,” impossible means:','Not able to happen',['Likely to happen','Happened before','Able to happen twice'],'The prefix im- can mean not.', 'Grade 3'),
+    NI(null,'Figurative','“She took a step toward solving the puzzle.” Here step means:','One action in a process',['A staircase','A shoe size','A jump over the puzzle'],'Step is used figuratively for progress toward a solution.', 'Grade 3'),
+    NI(null,'State of mind','Which word shows less certainty than knew?','suspected',['proved','confirmed','verified'],'Suspected indicates an idea without certainty.', 'Grade 3'),
+    NI(null,'Academic word','Which word best completes an explanation: “The shadow grew shorter ___ the Sun appeared higher”?','because',['although','unless','meanwhile'],'Because makes the causal relationship explicit.', 'Grade 3')
+  ],
+  'NJ-W-ORGANIZE':[
+    NI(null,'Opinion','Which opening clearly states an opinion?','I think our library should add more science books.',['The library opens on Tuesday.','A library has shelves.','Yesterday I visited a library.'],'The first sentence states a position that can be supported with reasons.'),
+    NI(null,'Reason','Which detail best supports adding more science books to a library?','Many readers have asked for them.',['The carpet is blue.','The door opens inward.','The clock is round.'],'Readers’ requests are relevant to the proposed change.'),
+    NI(null,'Explanation','Which sentence best introduces an explanation?','Ants use scent trails to help other ants find food.',['Ants are the best animals.','Once upon a time, an ant wore a hat.','I like the color of ants.'],'It introduces a factual topic that can be explained.'),
+    NI(null,'Narrative sequence','Which sentence could follow “Maya saw her kite in the tree”?','She asked Leo how to get it down.',['The kite was stuck before Maya went to the park.','A cactus stores water.','Bridges can cross rivers.'],'This sentence continues the same story and problem.'),
+    NI(null,'Conclusion','Which sentence gives an opinion paragraph a relevant ending?','For these reasons, more science books would help our readers.',['The bridge was made of wood.','Yesterday the wind was strong.','A crab hid under a rock.'],'It returns to the opinion and reasons.'),
+    NI(null,'Revision','Which change makes “The thing went there” more precise?','The crab crawled under the rock.',['It went.','The thing moved there.','There was a thing.'],'Specific nouns and verbs make the action clear.', 'Grade 3'),
+    NI(null,'Transition','Which word best shows cause in “The lantern failed; ___, they used a flashlight”?','therefore',['however','earlier','meanwhile'],'Therefore links the failed lantern to the response.', 'Grade 3'),
+    NI(null,'Research question','Which question could guide research about ants?','How do worker ants find food?',['Are ants always the best?','Can I write about anything?','What is my favorite color?'],'It can be answered with information from sources.', 'Grade 3'),
+    NI(null,'Two sources','Why compare two reliable sources about desert rainfall?','To check and combine their information',['To make every sentence longer','To avoid reading either source','To prove every desert is hot'],'Comparison can confirm and extend facts.', 'Grade 3'),
+    NI(null,'Paragraph structure','Which order is clearest for an explanation?','Introduce the topic, add supporting facts, then conclude.',['Conclude, change topic, then introduce.','List unrelated facts, then stop.','Start with a detail, skip the topic, then repeat it.'],'This sequence helps a reader follow the explanation.', 'Grade 3')
+  ]
+};
+const njSpecs=[
+  ['NJ-RL-EVENTS','Récits : événements et structure','RL.CR.2.1; RL.CI.2.2; RL.IT.2.3; RL.TS.2.4; RL.CR.3.1; RL.CI.3.2; RL.TS.3.4'],
+  ['NJ-RL-CHARACTERS','Récits : personnages, sentiments et motivations','RL.IT.2.3; RL.PP.2.5; RL.IT.3.3; RL.PP.3.5'],
+  ['NJ-RI-IDEAS','Documentaires : idée principale et causes','RI.CR.2.1; RI.CI.2.2; RI.IT.2.3; RI.CR.3.1; RI.CI.3.2; RI.IT.3.3'],
+  ['NJ-RI-SOURCES','Documentaires : images, preuves et sources','RI.TS.2.4; RI.PP.2.5; RI.MF.2.6; RI.AA.2.7; RI.CT.2.8; RI.TS.3.4; RI.PP.3.5; RI.MF.3.6; RI.AA.3.7; RI.CT.3.8'],
+  ['NJ-L-WORDS','Anglais : graphies et orthographe','L.RF.2.3; L.WF.2.2; L.RF.3.3; L.WF.3.2'],
+  ['NJ-L-SENTENCES','Anglais : phrases et grammaire','L.WF.2.3; L.WF.3.3'],
+  ['NJ-L-VOCAB','Anglais : vocabulaire et nuances','L.KL.2.1; L.VL.2.2; L.VI.2.3; L.KL.3.1; L.VL.3.2; L.VI.3.3'],
+  ['NJ-W-ORGANIZE','Écriture anglaise : organiser et réviser','W.AW.2.1; W.IW.2.2; W.NW.2.3; W.WP.2.4; W.WR.2.5; W.SE.2.6; W.AW.3.1; W.IW.3.2; W.NW.3.3; W.WP.3.4; W.WR.3.5; W.SE.3.6']
+];
+const njItemCodes={
+  'NJ-RL-EVENTS':{'Key detail':'RL.CR','Sequence':'RL.TS','Cause':'RL.IT','Structure':'RL.TS','Retelling':'RL.CI','Central idea':'RL.CI'},
+  'NJ-RL-CHARACTERS':{'Feeling':'RL.IT','Motivation':'RL.IT','Action and plot':'RL.IT','Evidence':'RL.CR','Point of view':'RL.PP','Belief versus result':'RL.IT'},
+  'NJ-RI-IDEAS':{'Main topic':'RI.CI','Key detail':'RI.CR','Connection':'RI.IT','Precision':'RI.CR','Evidence':'RI.CR','Main idea':'RI.CI','Sequence':'RI.IT','Cause and effect':'RI.IT','Qualification':'RI.CR'},
+  'NJ-RI-SOURCES':{'Text feature':'RI.TS','Author purpose':'RI.PP','Cause and choice':'RI.IT','Compare sources':'RI.CT','Main idea':'RI.CI','Cause and effect':'RI.IT','Author evidence':'RI.AA'},
+  'NJ-L-WORDS':{'Vowel team':'L.RF','Two syllables':'L.RF','Prefix':'L.RF','Irregular word':'L.WF','Contraction':'L.WF','Possessive':'L.WF','Suffix':'L.RF','Multisyllable':'L.RF','Suffix spelling':'L.WF','Plural possessive':'L.WF'},
+  'NJ-L-SENTENCES':{'Sentence boundary':'L.WF','Past tense':'L.WF','Future tense':'L.WF','Contraction':'L.WF','Precise adjective':'L.WF','Verb agreement':'L.WF','Pronoun reference':'L.WF','Compound sentence':'L.WF','Dialogue punctuation':'L.WF','Paragraph focus':'L.WF'},
+  'NJ-L-VOCAB':{'Context':'L.VL','Prefix':'L.VL','Compound':'L.VL','Nuance':'L.VI','Dictionary':'L.VL','Affix':'L.VL','Figurative':'L.VI','State of mind':'L.VI','Academic word':'L.KL'},
+  'NJ-W-ORGANIZE':{'Opinion':'W.AW','Reason':'W.AW','Explanation':'W.IW','Narrative sequence':'W.NW','Conclusion':'W.AW','Revision':'W.WP','Transition':'W.AW','Research question':'W.WR','Two sources':'W.WR','Paragraph structure':'W.IW'}
+};
+function njCode(id,item){
+  const prefix=njItemCodes[id][item.skill],grade=item.level==='Grade 3'?3:2;
+  if(!prefix)throw Error('Unmapped NJ skill: '+id+' '+item.skill);
+  const suffixBySection={RF:3,WF:id==='NJ-L-SENTENCES'?3:2,KL:1,VL:2,VI:3,AW:1,IW:2,NW:3,WP:4,WR:5,SE:6,CR:1,CI:2,IT:3,TS:4,PP:5,MF:6,AA:7,CT:8};
+  const suffix=suffixBySection[prefix.split('.').at(-1)];
+  if(!suffix)throw Error('Unmapped NJ section: '+prefix);
+  return `${prefix}.${grade}.${suffix}`;
+}
+const njElaUnits=njSpecs.map(([id,title,sourceCodes])=>({
+  id,subject:'Anglais (NJ)',title,language:'en-US',levels:'Grade 2 et grade 3',
+  status:'pas-testee',statusScope:'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',
+  source:'2023 NJSLS-ELA (NJDOE): '+sourceCodes,
+  questions:njBanks[id].map((item,i)=>({...item,subskillId:item.subskillId+'-'+(item.level==='Grade 3'?'G3':'G2'),answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:[njCode(id,item)]}))
+}));
+
 const builtIn = {
   id: 'MA-N01', subject: 'Mathématiques', title: 'Lire, écrire et nommer les entiers', language: 'fr-FR',
   source: 'Programme officiel français de mathématiques, cycle 2 (2024), CE1 et CE2',
@@ -1110,7 +1261,7 @@ const mathUnits = [
   {id:'MA-F04',title:'Comparer des fractions',levels:'CE1 : même dénominateur ou fractions unitaires ; CE2 : comparaisons étendues'}
 ].map(unit=>({...unit,subject:'Mathématiques',language:'fr-FR',status:'pas-testee',statusScope:'CE1 à vérifier ; questions CE2 pour situer le niveau.',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}));
 const $ = id => document.getElementById(id);
-let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext;
+let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
 const unit=(n,label)=>`${n} ${label}${n>1?'s':''}`;
 function four(correct,wrong,shift=0){
@@ -1337,8 +1488,8 @@ function validate(q){
   return q;
 }
 function renderSubjects(){
-  const previous=$('subjectSelect').value,subjects=['Mathématiques','Français',...new Set(quizzes.map(q=>q.subject||'Autres'))];
-  $('subjectSelect').replaceChildren(...[...new Set(subjects)].map(name=>{const o=document.createElement('option');o.value=name;o.textContent=({'Mathématiques':'📐 Mathématiques','Français':'🇫🇷 Français','Sciences':'🔬 Sciences','Géographie':'🌍 Géographie','Histoire':'🏛️ Histoire'})[name]||name;return o}));
+  const previous=$('subjectSelect').value,subjects=['Mathématiques','Français','Anglais (NJ)',...new Set(quizzes.map(q=>q.subject||'Autres'))];
+  $('subjectSelect').replaceChildren(...[...new Set(subjects)].map(name=>{const o=document.createElement('option');o.value=name;o.textContent=({'Mathématiques':'📐 Mathématiques','Français':'🇫🇷 Français','Anglais (NJ)':'🇺🇸 Anglais (NJ)','Sciences':'🔬 Sciences','Géographie':'🌍 Géographie','Histoire':'🏛️ Histoire'})[name]||name;return o}));
   if(subjects.includes(previous))$('subjectSelect').value=previous;
   renderSelect();
   renderSuggestion();
