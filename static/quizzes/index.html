@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quizzes</title>
+  <style>
+    :root{font-family:Arial,Helvetica,sans-serif;color:#444;background:#fff}
+    *{box-sizing:border-box}body{margin:0}main{max-width:1100px;margin:auto;padding:24px 28px 64px}
+    header{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:28px}
+    h1{font:normal clamp(2.3rem,5vw,3.8rem)/1.1 Georgia,'Times New Roman',serif;color:#b38a2a;margin:0}
+    h2{font-size:clamp(1.4rem,3vw,2rem);font-weight:500;color:#494949;margin:0 0 18px}
+    button,select,input{font:inherit}button{cursor:pointer}
+    .card{background:#f5f5f5;border:1px solid #c9c9c9;border-radius:14px;padding:clamp(22px,4vw,38px);margin-top:20px}
+    .card p{line-height:1.5}.eyebrow{color:#666;font-weight:600}
+    #question{font-size:clamp(1.45rem,3vw,2rem);line-height:1.35;margin:30px 0;color:#333}
+    #diagram{max-width:100%;overflow-x:auto;margin:-12px 0 24px}#diagram:empty{display:none}#diagram svg{display:block;max-width:100%;height:auto;background:#fff;border:1px solid #ddd;border-radius:8px}
+    .choices{display:grid;gap:12px}.choice{width:100%;text-align:left;border:1px solid #c9c9c9;background:#fff;border-radius:8px;padding:16px 18px;color:#444;font-size:1.12rem}
+    .choice:hover,.choice:focus-visible{border-color:#2876a6;outline:2px solid #2876a644}.choice[disabled]{cursor:default}
+    .choice.correct{border-color:#39834e;background:#e6f4e9}.choice.wrong{border-color:#b65151;background:#faeaea}.choice.selected{border-color:#2876a6;background:#e8f2fa}
+    .choice strong{display:inline-grid;place-items:center;background:#f0f0f0;border-radius:5px;width:34px;height:34px;margin-right:14px}
+    .toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.primary{border:0;border-radius:5px;background:#2876a6;color:#fff;padding:13px 22px;font-weight:700}.primary:hover:not(:disabled){background:#1d5e89}.primary:disabled{opacity:.48;cursor:default}
+    button.primary,button.secondary,label.secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px}
+    .icon{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .secondary{border:1px solid #b9b9b9;border-radius:5px;background:#fff;color:#444;padding:12px 18px}.secondary:hover:not(:disabled){border-color:#2876a6;color:#205f87}
+    .hidden{display:none!important}.feedback{padding:16px;border-radius:6px;background:#e8f2fa;margin-top:20px}
+    progress{width:100%;height:15px;accent-color:#2876a6}progress::-webkit-progress-bar{background:#fff;border-radius:10px}progress::-webkit-progress-value{background:#2876a6;border-radius:10px}
+    small{color:#777}#setup label{display:block;margin:18px 0 7px;font-weight:600}#setup label.toolbar{display:flex;align-items:center;gap:10px}#setup label[for=loadQuiz]{margin:0;font-weight:normal}
+    select,input[type=text]{width:100%;padding:12px;border:1px solid #b9b9b9;border-radius:5px;background:#fff;color:#444}
+    input[type=checkbox]{width:19px;height:19px;accent-color:#2876a6}.footer{margin-top:24px}.stats{display:flex;justify-content:space-between;gap:8px;font-size:1.1rem;margin-bottom:12px}
+    pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#fff;padding:14px;border-radius:5px}a{color:#2876a6}
+    .skill-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 4px}.status-badge{display:inline-block;border-radius:999px;padding:6px 11px;font-weight:700;font-size:.9rem}.status-acquise{background:#e2f2e6;color:#24633a}.status-en-cours{background:#fff0ce;color:#775314}.status-pas-testee{background:#e7e7e7;color:#555}.status-note{color:#666;font-size:.94rem}
+    .suggestion{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border:1px solid #d8c385;background:#fff9e9;border-radius:9px;padding:16px 18px;margin:4px 0 24px}.suggestion-title{font-weight:700;color:#5d4615}.suggestion p{margin:5px 0 0;color:#666}
+    :root{background:#090909}
+    @media(max-width:600px){main{padding:20px 16px 48px}header{margin-bottom:18px}.card{padding:20px}.toolbar button,.toolbar label.secondary{width:100%;text-align:center}}
+  </style>
+</head>
+<body><main>
+  <svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true">
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5 19 19M19 5 5 19"/></symbol>
+    <symbol id="i-save" viewBox="0 0 24 24"><path d="M4 3h14l3 3v15H3V3h1zm3 0v6h10V3M6 21v-9h12v9"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M5 10a8 8 0 0 1 14-3l1 5M4 12l1 5a8 8 0 0 0 14-3"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-.6.8-2 1.2-2 2.5M12 17h.01"/></symbol>
+    <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 21V9m-5 5 5-5 5 5M4 7V3h16v4"/></symbol>
+  </svg>
+  <header><h1>Quizzes</h1></header>
+  <section id="setup" class="card">
+    <h2>Quiz prêts à commencer</h2>
+    <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title">À travailler : <span id="suggestionName"></span></div><p>Compétence en cours d’apprentissage</p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir ce quiz</button></div>
+    <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
+    <label for="quizSelect">Quiz</label><select id="quizSelect"><option>Chargement des quiz…</option></select>
+    <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
+    <label for="questionCount">Nombre de questions</label><select id="questionCount"><option>Chargement…</option></select>
+    <p id="loadStatus"><small>Si ce message reste affiché, ouvre le fichier HTML téléchargé directement dans un navigateur : l’aperçu Google Drive peut bloquer le JavaScript.</small></p>
+    <label class="toolbar" for="immediate"><input id="immediate" type="checkbox" checked> Afficher la correction après chaque question</label>
+    <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
+    <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
+  </section>
+  <section id="play" class="card hidden" aria-live="polite">
+    <div class="stats"><span id="position" class="eyebrow"></span><span id="score"></span></div><progress id="progress" max="10" value="0"></progress>
+    <h2 id="question"></h2><div id="diagram"></div><div id="choices" class="choices"></div>
+    <button id="unknown" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Je ne sais pas</button>
+    <button id="confirm" class="primary footer" disabled><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Valider</button>
+    <div id="feedback" class="feedback hidden"></div>
+    <button id="next" class="primary footer hidden"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg><span id="nextLabel">Question suivante</span></button>
+    <button id="cancel" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Annuler le quiz</button>
+  </section>
+  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><div class="toolbar"><button id="saveFolder" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Recommencer</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport</summary><pre id="report"></pre></details></section>
+</main><script>
+const builtIn = {
+  id: 'MA-N01', subject: 'Mathématiques', title: 'Lire, écrire et nommer les entiers', language: 'fr-FR',
+  source: 'Programme officiel français de mathématiques, cycle 2 (2024), CE1 et CE2',
+  levels: 'CE1 jusqu’à 1 000 ; CE2 jusqu’à 10 000',
+  questions: [
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Trente-six » s’écrit :',choices:['63','306','36','30'],answer:2,explanation:'Trente vaut 30 et six vaut 6 : 36.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 407 ?',choices:['Quatre cent sept','Quatre cent soixante-dix','Quarante-sept','Quatre mille sept'],answer:0,explanation:'407 contient 4 centaines, aucune dizaine et 7 unités : quatre cent sept.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Six cent quatre-vingt-douze » s’écrit :',choices:['602','962','6902','692'],answer:3,explanation:'Six cents plus quatre-vingt-douze donnent 692.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 580 ?',choices:['Cinq cent huit','Cinquante-huit','Cinq cent quatre-vingts','Cinq mille quatre-vingts'],answer:2,explanation:'580 se lit cinq cent quatre-vingts ; vingt prend un s quand il termine le nombre.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Neuf cent un » s’écrit :',choices:['910','901','9001','91'],answer:1,explanation:'Neuf cents et une unité, sans dizaine : 901.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 1 000 ?',choices:['Cent','Dix cents','Mille','Dix mille'],answer:2,explanation:'1 000 se lit mille.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Sept cent soixante-dix-huit » s’écrit :',choices:['708','778','787','7708'],answer:1,explanation:'Sept cents plus soixante-dix-huit donnent 778.'},
+    {level:'CE2',skill:'Chiffres vers lettres',prompt:'Comment lit-on 2 045 ?',choices:['Deux mille quatre cent cinq','Deux mille quarante-cinq','Deux cent quarante-cinq','Vingt mille quarante-cinq'],answer:1,explanation:'2 045 contient deux milliers et quarante-cinq unités.'},
+    {level:'CE2',skill:'Lettres vers chiffres',prompt:'« Huit mille trois cent six » s’écrit :',choices:['8 360','836','8 306','8 036'],answer:2,explanation:'Huit milliers, trois centaines, zéro dizaine et six unités : 8 306.'},
+    {level:'CE2',skill:'Chiffres vers lettres',prompt:'Comment lit-on 10 000 ?',choices:['Mille','Dix mille','Cent mille','Dix cents'],answer:1,explanation:'10 000 se lit dix mille.'}
+  ]
+};
+const fullQuiz = {
+  id: 'MA-N01', subject: 'Mathématiques', title: 'Lire et nommer les entiers', language: 'fr-FR',
+  status:'pas-testee', statusScope:'', statusBasis:'',
+  source: 'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale MA-N01',
+  levels: 'CE1 jusqu’à 1 000 ; CE2 jusqu’à 10 000',
+  questions: [
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Quarante-deux » s’écrit :',choices:['24','402','42','40'],answer:2,explanation:'Quarante vaut 40 ; avec deux, cela fait 42.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 105 ?',choices:['Cent cinq','Cent cinquante','Mille cinq','Cent quinze'],answer:0,explanation:'105 se lit cent cinq : il n’y a pas de dizaine.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Soixante-treize » s’écrit :',choices:['63','703','73','76'],answer:2,explanation:'Soixante-treize correspond à 60 + 13, soit 73.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 280 ?',choices:['Deux cent huit','Deux cent quatre-vingts','Deux mille quatre-vingts','Vingt-huit'],answer:1,explanation:'280 se lit deux cent quatre-vingts.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Trois cent neuf » s’écrit :',choices:['390','39','3 009','309'],answer:3,explanation:'Trois cents, zéro dizaine et neuf unités : 309.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 617 ?',choices:['Six cent dix-sept','Six cent soixante-dix','Soixante et un sept','Six cent sept'],answer:0,explanation:'617 se lit six cent dix-sept.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Quatre-vingt-dix-huit » s’écrit :',choices:['88','908','98','89'],answer:2,explanation:'Quatre-vingt-dix-huit correspond à 80 + 18, soit 98.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 700 ?',choices:['Sept mille','Sept cents','Soixante-dix','Sept cent dix'],answer:1,explanation:'700 se lit sept cents ; cent prend un s quand il termine le nombre après un multiplicateur.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Huit cent quatre-vingt-un » s’écrit :',choices:['818','8 081','891','881'],answer:3,explanation:'Huit cents plus quatre-vingt-un donnent 881.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 906 ?',choices:['Neuf cent soixante','Neuf cent six','Quatre-vingt-seize','Neuf mille six'],answer:1,explanation:'906 se lit neuf cent six : aucune dizaine.'},
+    {level:'CE1',skill:'Lettres vers chiffres',prompt:'« Cent quatre-vingt-dix » s’écrit :',choices:['190','180','1 090','910'],answer:0,explanation:'Cent plus quatre-vingt-dix donnent 190.'},
+    {level:'CE1',skill:'Chiffres vers lettres',prompt:'Comment lit-on 1 000 ?',choices:['Cent','Dix mille','Mille','Cent mille'],answer:2,explanation:'1 000 se lit mille.'},
+    {level:'CE2',skill:'Lettres vers chiffres',prompt:'« Deux mille quarante-cinq » s’écrit :',choices:['2 405','2 045','245','2 450'],answer:1,explanation:'Deux milliers et quarante-cinq : 2 045.'},
+    {level:'CE2',skill:'Chiffres vers lettres',prompt:'Comment lit-on 3 200 ?',choices:['Trois mille deux cents','Trois cent deux','Trente-deux mille','Trois mille vingt'],answer:0,explanation:'3 200 se lit trois mille deux cents.'},
+    {level:'CE2',skill:'Lettres vers chiffres',prompt:'« Sept mille huit » s’écrit :',choices:['708','7 080','7 800','7 008'],answer:3,explanation:'Sept milliers et huit unités, sans centaines ni dizaines : 7 008.'},
+    {level:'CE2',skill:'Chiffres vers lettres',prompt:'Comment lit-on 4 071 ?',choices:['Quatre mille sept cent un','Quatre mille soixante et onze','Quatre mille dix-sept','Quatre cent soixante et onze'],answer:1,explanation:'4 071 se lit quatre mille soixante et onze.'},
+    {level:'CE2',skill:'Lettres vers chiffres',prompt:'« Neuf mille six cent quatre-vingts » s’écrit :',choices:['9 608','9 680','9 860','9 068'],answer:1,explanation:'Neuf milliers, six centaines et quatre-vingts : 9 680.'},
+    {level:'CE2',skill:'Chiffres vers lettres',prompt:'Comment lit-on 5 019 ?',choices:['Cinq mille dix-neuf','Cinq mille cent neuf','Cinq cent dix-neuf','Cinq mille quatre-vingt-dix'],answer:0,explanation:'5 019 se lit cinq mille dix-neuf.'},
+    {level:'CE2',skill:'Lettres vers chiffres',prompt:'« Huit mille trois cent quatre » s’écrit :',choices:['8 034','8 340','8 304','8 430'],answer:2,explanation:'Huit milliers, trois centaines, zéro dizaine et quatre unités : 8 304.'},
+    {level:'CE2',skill:'Chiffres vers lettres',prompt:'Comment lit-on 10 000 ?',choices:['Cent mille','Mille','Dix cents','Dix mille'],answer:3,explanation:'10 000 se lit dix mille.'}
+  ]
+};
+const frenchQuiz = {
+  id:'FR-G09-ER-PRESENT', subject:'Français', title:'Présent des verbes du premier groupe', language:'fr-FR',
+  status:'pas-testee', statusScope:'', statusBasis:'',
+  source:'Programme officiel de français du cycle 2 (2024), FR-G07 et FR-G09',
+  levels:'CE1–CE2 ; pronoms, groupes nominaux simples et complexes', questions:[]
+};
+const mathUnits = [
+  {id:'MA-N02',title:'Dénombrer et regrouper des collections',levels:'CE1 : unités, dizaines, centaines ; CE2 : milliers'},
+  {id:'MA-N03',title:'Valeur de position et décompositions',levels:'CE1 : jusqu’à 1 000 ; CE2 : jusqu’à 10 000'},
+  {id:'MA-N04',title:'Comparer, encadrer et ordonner',levels:'CE1 : jusqu’à 1 000 ; CE2 : jusqu’à 10 000'},
+  {id:'MA-N05',title:'Lire une droite graduée',levels:'CE1 : graduations de 1, 10 ou 100 ; CE2 : graduations de 1 000'}
+].map(unit=>({...unit,subject:'Mathématiques',language:'fr-FR',status:'pas-testee',statusScope:'CE1 à vérifier ; questions CE2 pour situer le niveau.',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}));
+const $ = id => document.getElementById(id);
+let quizzes=[fullQuiz,...mathUnits,frenchQuiz], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext;
+const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
+const unit=(n,label)=>`${n} ${label}${n>1?'s':''}`;
+function four(correct,wrong,shift=0){
+  const values=[correct,...wrong.filter(x=>x!==correct)].filter((x,i,a)=>a.indexOf(x)===i).slice(0,4);
+  if(values.length!==4)throw Error('Quatre réponses distinctes requises.');
+  const answer=shift%4;values.splice(0,1);values.splice(answer,0,correct);
+  return {choices:values.map(String),answer};
+}
+function mathQuestions(id,count){
+  return Array.from({length:count},(_,i)=>{
+    const ce2=i%10>=6,level=ce2?'CE2':'CE1',k=i,kind=i%(id==='MA-N04'?5:4),shift=i%4;
+    let prompt,choices,answer,explanation,skill,axis;
+    const pick=(right,wrong)=>({choices,answer}=four(right,wrong,shift));
+    if(id==='MA-N02'){
+      const h=2+(k*3)%7,t=1+(k*2)%8,u=1+(k*5)%8,m=ce2?1+(k*3)%8:0;
+      if(kind===0){const value=m*1000+h*100+t*10+u;prompt=`${ce2?`${unit(m,'millier')}, `:''}${unit(h,'centaine')}, ${unit(t,'dizaine')} et ${unit(u,'unité')} : combien d’objets ?`;pick(fmt(value),[fmt(value+90),fmt(value+9),fmt(value+100)]);explanation=`On regroupe ${ce2?`${m} × 1 000 + `:''}${h} × 100 + ${t} × 10 + ${u} = ${fmt(value)}.`;skill='Constituer une collection';}
+      else if(kind===1){const bundles=ce2?10+(k%7):10+(k%6),unit=2+(k%7),value=bundles*(ce2?100:10)+unit;prompt=`${bundles} paquets de ${ce2?'100':'10'} objets et ${unit} objets isolés : combien d’objets ?`;pick(fmt(value),[fmt(value+10),fmt(value-10),fmt(value+(ce2?100:20))]);explanation=`${bundles} × ${ce2?'100':'10'} + ${unit} = ${fmt(value)}. On peut échanger dix paquets contre une unité supérieure.`;skill='Regrouper au-delà de dix';}
+      else if(kind===2){const value=ce2?2300+(k%6)*100:230+(k%6)*10;prompt=`Avec ${fmt(value)} objets, combien de paquets de ${ce2?'100':'10'} peut-on faire sans reste ?`;const right=value/(ce2?100:10);pick(right,[right-1,right+1,right+10]);explanation=`${fmt(value)} ÷ ${ce2?'100':'10'} = ${right} paquets.`;skill='Dénombrer par paquets';}
+      else {const base=ce2?1000:100,n=2+(k%7);prompt=`${n} paquets de ${fmt(base)} objets peuvent être échangés contre combien de paquets de ${fmt(base/10)} objets ?`;pick(n*10,[n,n+10,n*10+1]);explanation=`Un paquet de ${fmt(base)} vaut dix paquets de ${fmt(base/10)} : ${n} paquets en valent ${n*10}.`;skill='Échanger des unités de numération';}
+    }else if(id==='MA-N03'){
+      const h=2+(k*3)%7,t=1+(k*5)%8,u=1+(k*7)%8,m=ce2?1+(k*2)%8:0,n=m*1000+h*100+t*10+u;
+      if(kind===0){const place=ce2&&k%2===0?1000:100,digit=place===1000?m:h,name=place===1000?'milliers':'centaines';prompt=`Dans ${fmt(n)}, que vaut le chiffre des ${name} ?`;pick(fmt(digit*place),[fmt(digit),fmt(digit*10),fmt(digit*(place===1000?100:1000))]);explanation=`Le chiffre des ${name} est ${digit} : il vaut ${fmt(digit*place)}.`;skill='Valeur de position';}
+      else if(kind===1){prompt=`Quel nombre représente ${ce2?`${m} × 1 000 + `:''}${h} × 100 + ${t} × 10 + ${u} ?`;pick(fmt(n),[fmt(n+90),fmt(n-9),fmt(n+100)]);explanation=`La décomposition donne ${fmt(n)}.`;skill='Décomposition additive et multiplicative';}
+      else if(kind===2){const value=ce2?m*1000+h*100+t*10:h*100+t*10;prompt=`Quel nombre correspond à ${ce2?`${unit(m,'millier')}, `:''}${unit(h,'centaine')}, ${unit(t,'dizaine')} et 0 unité ?`;pick(fmt(value),[fmt(value+u),fmt(value+100),fmt(value+10)]);explanation=`Zéro unité signifie que le chiffre des unités est 0 : ${fmt(value)}.`;skill='Passage du matériel au nombre';}
+      else {const value=ce2?m*1000+h*100+t*10+u:h*100+t*10+u;prompt=ce2?`Quel nombre représente ${unit(m-1,'millier')}, ${unit(h+10,'centaine')}, ${unit(t,'dizaine')} et ${unit(u,'unité')} ?`:`Quel nombre représente ${unit(h-1,'centaine')}, ${unit(t+10,'dizaine')} et ${unit(u,'unité')} ?`;pick(fmt(value),[fmt(value+100),fmt(value-100),fmt(value+10)]);explanation=`Dix ${ce2?'centaines valent un millier':'dizaines valent une centaine'} : cela donne ${fmt(value)}.`;skill='Décomposition non canonique';}
+    }else if(id==='MA-N04'){
+      const base=ce2?1000:100,a=base*(2+k%6)+10*(k%8)+k%9,b=kind===0?a+base:kind===1?a-10:kind===2?a+3:a+20;
+      if(kind===0||kind===1){prompt=`Quel signe complète ${fmt(a)} … ${fmt(b)} ?`;pick(a<b?'<':'>',[a<b?'>':'<','=','Aucun de ces signes']);explanation=`${fmt(a)} est ${a<b?'plus petit':'plus grand'} que ${fmt(b)}.`;skill='Comparer avec < et >';}
+      else if(kind===2){const low=a-1,high=a+1;prompt=`Quel nombre se trouve entre ${fmt(low)} et ${fmt(high)} ?`;pick(fmt(a),[fmt(a-2),fmt(a+2),fmt(a+10)]);explanation=`${fmt(low)} < ${fmt(a)} < ${fmt(high)}.`;skill='Intercaler';}
+      else if(kind===3){const tens=Math.floor(a/10)*10,number=tens+1+k%9;prompt=`Entre quelles dizaines consécutives se trouve ${fmt(number)} ?`;const right=`${fmt(tens)} et ${fmt(tens+10)}`;pick(right,[`${fmt(tens-10)} et ${fmt(tens)}`,`${fmt(tens+10)} et ${fmt(tens+20)}`,`${fmt(tens-100)} et ${fmt(tens)}`]);explanation=`${fmt(tens)} < ${fmt(number)} < ${fmt(tens+10)}.`;skill='Encadrer';}
+      else {const low=a-10,high=a+10;prompt=`Quelle liste est rangée du plus petit au plus grand ?`;pick(`${fmt(low)} ; ${fmt(a)} ; ${fmt(high)}`,[`${fmt(a)} ; ${fmt(low)} ; ${fmt(high)}`,`${fmt(high)} ; ${fmt(a)} ; ${fmt(low)}`,`${fmt(low)} ; ${fmt(high)} ; ${fmt(a)}`]);explanation=`${fmt(low)} < ${fmt(a)} < ${fmt(high)}.`;skill='Ordonner';}
+    }else if(id==='MA-N05'){
+      const step=ce2?1000:[1,10,100][k%3],start=step>=100?(1+k%2)*step:step*(2+k%6),marked=2+k%5,value=start+marked*step;
+      prompt='Quel nombre indique le point A sur cette droite graduée ?';axis={start,step,marked};pick(fmt(value),[fmt(value-step),fmt(value+step),fmt(value+step*2)]);explanation=`Chaque graduation ajoute ${fmt(step)}. En partant de ${fmt(start)}, le point A est à ${fmt(value)}.`;skill='Lire une droite graduée';
+    }else throw Error('Unité inconnue');
+    const subskills={'MA-N02':['COL','REG','PAQ','ECH'],'MA-N03':['POS','DEC','ZERO','NONCAN'],'MA-N04':['COMP','COMP','INTER','ENC','ORD'],'MA-N05':['AXE']};
+    return {level,skill,subskillId:`${id}-${subskills[id][id==='MA-N05'?0:kind]}`,prompt,choices,answer,explanation,...(axis?{axis}:{})};
+  });
+}
+function localDate(d=new Date()){const n=x=>String(x).padStart(2,'0');return `${d.getFullYear()}-${n(d.getMonth()+1)}-${n(d.getDate())}`;}
+function numberWords(n){
+  const small=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize'];
+  const under100=x=>{
+    if(x<=16)return small[x];if(x<20)return `dix-${small[x-10]}`;
+    if(x<70){const tens=['','','vingt','trente','quarante','cinquante','soixante'],t=Math.floor(x/10),u=x%10;return tens[t]+(u===0?'':u===1?` et un`:`-${small[u]}`);}
+    if(x<80)return x===71?'soixante et onze':`soixante-${under100(x-60)}`;
+    if(x===80)return 'quatre-vingts';return `quatre-vingt-${under100(x-80)}`;
+  };
+  const under1000=x=>{if(x<100)return under100(x);const h=Math.floor(x/100),r=x%100,prefix=h===1?'cent':`${small[h]} cent`;return r?`${prefix} ${under100(r)}`:h===1?'cent':`${prefix}s`;};
+  if(n<1000)return under1000(n);const thousands=Math.floor(n/1000),r=n%1000,prefix=thousands===1?'mille':`${small[thousands]} mille`;return r?`${prefix} ${under1000(r)}`:prefix;
+}
+function generatedQuestions(count){
+  if(count===10)return [...fullQuiz.questions.slice(0,6),...fullQuiz.questions.slice(12,16)];
+  const questions=fullQuiz.questions.slice();if(count===20)return questions;
+  const used=new Set([42,105,73,280,309,617,98,700,881,906,190,1000,2045,3200,7008,4071,9680,5019,8304,10000]);
+  let seed=20261103;const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296};
+  for(let i=0;i<count-20;i++){
+    const level=i%5<3?'CE1':'CE2',min=level==='CE1'?20:1001,max=level==='CE1'?999:9999;
+    let n;do{n=min+Math.floor(random()*(max-min+1))}while(used.has(n));used.add(n);
+    const candidates=[n-10,n+10,n-100,n+100,n-1,n+1,Math.floor(n/10),n*10].filter(x=>x>=20&&x<=10000&&x!==n);
+    const distractors=[...new Set(candidates)].slice(0,3);if(distractors.length!==3)throw Error('Impossible de construire les choix.');
+    const values=distractors.map(x=>x);const answer=(i+1)%4;values.splice(answer,0,n);
+    const toDigits=i%2===0,format=x=>new Intl.NumberFormat('fr-FR').format(x);
+    questions.push({level,skill:toDigits?'Lettres vers chiffres':'Chiffres vers lettres',prompt:toDigits?`« ${numberWords(n)} » s’écrit :`:`Comment lit-on ${format(n)} ?`,choices:values.map(x=>toDigits?format(x):numberWords(x).replace(/^./,c=>c.toUpperCase())),answer,explanation:`${format(n)} se lit « ${numberWords(n)} ».`});
+  }
+  return questions;
+}
+function frenchQuestions(count){
+  const lengths={10:[4,3,3],20:[6,6,8],50:[15,15,20],100:[30,30,40]};
+  const subjects=[
+    [{text:'Je',form:'e',note:'je',level:'CE1'},{text:'Tu',form:'es',note:'tu',level:'CE1'},{text:'Nous',form:'ons',note:'nous',level:'CE1'},{text:'Ils',form:'ent',note:'ils',level:'CE1'},{text:'Vous',form:'ez',note:'vous',level:'CE1'},{text:'Elle',form:'e',note:'elle',level:'CE1'},{text:'Elles',form:'ent',note:'elles',level:'CE1'},{text:'Il',form:'e',note:'il',level:'CE1'}],
+    [{text:'Le garçon',form:'e',note:'le garçon (il)',level:'CE1'},{text:'Les filles',form:'ent',note:'les filles (elles)',level:'CE1'},{text:'Ma sœur',form:'e',note:'ma sœur (elle)',level:'CE1'},{text:'Mes parents',form:'ent',note:'mes parents (ils)',level:'CE1'},{text:'Un élève',form:'e',note:'un élève (il)',level:'CE1'},{text:'Les enfants',form:'ent',note:'les enfants (ils)',level:'CE1'},{text:'La voisine',form:'e',note:'la voisine (elle)',level:'CE1'},{text:'Ces amis',form:'ent',note:'ces amis (ils)',level:'CE1'}],
+    [{text:'Le frère de mes amis',form:'e',note:'le frère (il), même si « amis » est au pluriel',level:'CE2'},{text:'Les amis de mon frère',form:'ent',note:'les amis (ils), même si « frère » est au singulier',level:'CE2'},{text:'La fille et son frère',form:'ent',note:'la fille et son frère (ils)',level:'CE2'},{text:'Le groupe des enfants',form:'e',note:'le groupe (il), même si « enfants » est au pluriel',level:'CE2'},{text:'Les parents de la petite fille',form:'ent',note:'les parents (ils)',level:'CE2'},{text:'La petite fille avec ses cousins',form:'e',note:'la petite fille (elle) ; « avec ses cousins » ne change pas le sujet',level:'CE2'},{text:'Ma sœur et ses amis',form:'ent',note:'ma sœur et ses amis (ils)',level:'CE2'},{text:'Un des joueurs',form:'e',note:'un (il), même si « joueurs » est au pluriel',level:'CE2'},{text:'Les élèves de cette classe',form:'ent',note:'les élèves (ils)',level:'CE2'},{text:'La mère de ces enfants',form:'e',note:'la mère (elle)',level:'CE2'}]
+  ];
+  const verbs=[
+    {stem:'aim',infinitive:'aimer',rest:'les étoiles.'},{stem:'march',infinitive:'marcher',rest:'dans le parc.'},
+    {stem:'chant',infinitive:'chanter',rest:'à la maison.'},{stem:'dans',infinitive:'danser',rest:'dans le salon.'},
+    {stem:'parl',infinitive:'parler',rest:'doucement.'},{stem:'travaill',infinitive:'travailler',rest:'aujourd’hui.'},
+    {stem:'dessin',infinitive:'dessiner',rest:'un arbre.'},{stem:'jou',infinitive:'jouer',rest:'dans le jardin.'}
+  ];
+  const codes=['FR-G09-PP','FR-G07-GN-S','FR-G07-GN-C'],labels=['Pronom personnel','Groupe nominal simple','Groupe nominal complexe'];
+  return subjects.flatMap((group,g)=>Array.from({length:lengths[count][g]},(_,i)=>{
+    const subject=group[i%group.length],verb=verbs[(i*3+Math.floor(i/group.length))%verbs.length];
+    const endings={e:['e','es','ons','ent'],es:['e','es','ez','ent'],ons:['e','ons','ez','ent'],ez:['es','ons','ez','ent'],ent:['e','es','ons','ent']}[subject.form];
+    const answer=(i+g)%4,others=endings.filter(x=>x!==subject.form),forms=others.map(x=>verb.stem+x);forms.splice(answer,0,verb.stem+subject.form);
+    const elision=subject.text==='Je'&&/^[aeiouyh]/i.test(verb.stem);
+    return {level:subject.level,skill:labels[g],subskillId:codes[g],programmeSkills:['FR-G07','FR-G09'],prompt:elision?`J’___ ${verb.rest}`:`${subject.text} ___ ${verb.rest}`,choices:forms,answer,explanation:`Le sujet est « ${subject.note} » : au présent, on écrit « ${verb.stem+subject.form} » (verbe ${verb.infinitive}).`};
+  }));
+}
+function tone(frequency,start,duration,volume=0.12){
+  if(!audioContext)return;const oscillator=audioContext.createOscillator(),gain=audioContext.createGain();
+  oscillator.type='sine';oscillator.frequency.value=frequency;gain.gain.setValueAtTime(0,start);gain.gain.linearRampToValueAtTime(volume,start+0.015);gain.gain.exponentialRampToValueAtTime(0.001,start+duration);
+  oscillator.connect(gain);gain.connect(audioContext.destination);oscillator.start(start);oscillator.stop(start+duration+0.01);
+}
+function playSound(kind){
+  if(!soundEnabled||!audioContext)return;
+  if(audioContext.state==='suspended')audioContext.resume().catch(()=>{});
+  const t=audioContext.currentTime+0.02;
+  if(kind==='answer')tone(660,t,0.12);
+  else {tone(523,t,0.18);tone(659,t+0.20,0.18);tone(784,t+0.40,0.36);}
+}
+function validate(q){
+  if(!q || typeof q.id!=='string' || typeof q.title!=='string' || !Array.isArray(q.questions) || !q.questions.length || q.questions.length>100) throw Error('Le quiz doit avoir un id, un titre et 1 à 100 questions.');
+  q.questions.forEach((item,i)=>{if(typeof item.prompt!=='string'||!Array.isArray(item.choices)||item.choices.length!==4||item.choices.some(c=>typeof c!=='string')||!Number.isInteger(item.answer)||item.answer<0||item.answer>3||typeof item.explanation!=='string')throw Error(`Question ${i+1} : énoncé, quatre choix, réponse 0–3 et explication requis.`)});
+  return q;
+}
+function renderSubjects(){
+  const previous=$('subjectSelect').value,subjects=['Mathématiques','Français',...new Set(quizzes.map(q=>q.subject||'Autres'))];
+  $('subjectSelect').replaceChildren(...[...new Set(subjects)].map(name=>{const o=document.createElement('option');o.value=name;o.textContent=({'Mathématiques':'📐 Mathématiques','Français':'🇫🇷 Français'})[name]||name;return o}));
+  if(subjects.includes(previous))$('subjectSelect').value=previous;
+  renderSelect();
+  renderSuggestion();
+}
+function suggestedQuiz(){return quizzes.find(q=>q.status==='en-cours')||null;}
+function renderSuggestion(){const q=suggestedQuiz();$('suggestion').classList.toggle('hidden',!q);if(q)$('suggestionName').textContent=q.title;}
+function renderSelect(){
+  const subject=$('subjectSelect').value,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject);
+  $('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=`${q.id} — ${q.title}`;return o}));
+  if(!available.length){const o=document.createElement('option');o.textContent='Aucun quiz pour cette matière';o.value='';$('quizSelect').append(o)}
+  $('start').disabled=!available.length;
+  $('loadStatus').textContent=available.length?`${available.length} quiz disponibles en ${subject.toLowerCase()}.`:`Aucun quiz en ${subject.toLowerCase()} pour l’instant.`;
+  renderQuestionCounts();
+  renderQuizStatus();
+}
+function renderQuizStatus(){
+  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)];
+  $('skillStatus').classList.toggle('hidden',!selected);if(!selected)return;
+  const status=selected.status||'pas-testee',labels={'acquise':'Acquise','en-cours':'En cours d’apprentissage','pas-testee':'Pas testée'};
+  $('statusBadge').className=`status-badge status-${status}`;$('statusBadge').textContent=labels[status]||labels['pas-testee'];
+  $('statusNote').textContent=selected.statusScope||'';
+}
+function renderQuestionCounts(){
+  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:selected?[selected.questions.length]:[];
+  $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
+  if(counts.includes(20))$('questionCount').value='20';
+  $('questionCount').disabled=counts.length<2;
+}
+function show(id){['setup','play','result'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
+function drawAxis(axis){
+  const host=$('diagram');host.replaceChildren();if(!axis)return;
+  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 720 130');svg.setAttribute('role','img');svg.setAttribute('aria-label',`Droite graduée de ${fmt(axis.start)} en ${fmt(axis.step)} ; point A sur une graduation.`);
+  const add=(name,attrs,label)=>{const el=document.createElementNS(ns,name);for(const [key,value] of Object.entries(attrs))el.setAttribute(key,String(value));if(label!==undefined)el.textContent=label;svg.append(el)};
+  add('line',{x1:45,y1:65,x2:675,y2:65,stroke:'#333','stroke-width':3});add('path',{d:'M 675 65 L 663 58 M 675 65 L 663 72',stroke:'#333','stroke-width':3,fill:'none'});
+  for(let j=0;j<8;j++){const x=55+j*86;add('line',{x1:x,y1:55,x2:x,y2:75,stroke:'#333','stroke-width':2});if(j===0||j===7)add('text',{x,y:103,'text-anchor':'middle','font-size':18,fill:'#333'},fmt(axis.start+j*axis.step));if(j===axis.marked){add('circle',{cx:x,cy:65,r:7,fill:'#b58a23'});add('text',{x,y:38,'text-anchor':'middle','font-size':22,'font-weight':'bold',fill:'#8a6517'},'A')}}
+  host.append(svg);
+}
+function render(){
+  const q=quiz.questions[index]; answered=false;selectedChoice=undefined;
+  $('position').textContent=`${quiz.id} · ${q.level||''} · Question ${index+1}/${quiz.questions.length}`;
+  $('score').textContent=immediateFeedback?`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`:'';
+  $('progress').max=quiz.questions.length;$('progress').value=index;
+  $('question').textContent=q.prompt;drawAxis(q.axis);$('choices').replaceChildren();
+  q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<strong>${'ABCD'[i]}</strong>`;b.append(document.createTextNode(choice));b.addEventListener('click',()=>select(i));$('choices').append(b)});
+  $('unknown').disabled=false;$('unknown').classList.remove('selected');$('unknown').setAttribute('aria-pressed','false');$('confirm').disabled=true;$('confirm').classList.remove('hidden');$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('nextLabel').textContent=index===quiz.questions.length-1?'Voir le résultat':'Question suivante';
+}
+function select(choice){
+  if(answered)return;selectedChoice=choice;
+  [...$('choices').children].forEach((b,i)=>{b.classList.toggle('selected',i===choice);b.setAttribute('aria-pressed',String(i===choice))});
+  $('unknown').classList.toggle('selected',choice===null);$('unknown').setAttribute('aria-pressed',String(choice===null));$('confirm').disabled=false;
+}
+function submit(){
+  if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],correct=choice===q.answer;
+  playSound('answer');
+  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,axis:q.axis||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
+  [...$('choices').children].forEach((b,i)=>{b.disabled=true;if(immediateFeedback){b.classList.remove('selected');if(i===q.answer)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')}});$('unknown').disabled=true;
+  if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
+  $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
+}
+function report(){const bySubskill={};for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,quizStatusAtStart:quiz.status||'pas-testee',quizStatusScope:quiz.statusScope||null,quizStatusBasis:quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,bySubskill,assistance:'non renseignée',interpretation:'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
+function finish(){playSound('finish');show('result');const data=report();$('summary').textContent=`${data.initialCorrect}/${data.total} réponses initiales correctes. ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;const labels={'FR-G09-PP':'Pronoms personnels','FR-G07-GN-S':'Groupes nominaux simples','FR-G07-GN-C':'Groupes nominaux complexes'};for(const r of responses)if(r.subskillId&&r.skill)labels[r.subskillId]=r.skill;$('breakdown').replaceChildren(...Object.entries(data.bySubskill).map(([id,s])=>{const p=document.createElement('p');p.textContent=`${labels[id]||id} : ${s.correct}/${s.total}`;return p}));$('report').textContent=JSON.stringify(data,null,2);}
+function reportFilename(){const safe=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]/g,'-').slice(0,40);const d=new Date(),n=x=>String(x).padStart(2,'0');return `${safe(quiz.id)}_${localDate(d)}_${n(d.getHours())}-${n(d.getMinutes())}-${n(d.getSeconds())}.json`;}
+function download(){const data=new Blob([$('report').textContent],{type:'application/json'}),link=document.createElement('a');link.href=URL.createObjectURL(data);link.download=reportFilename();link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000)}
+async function saveToFolder(){
+  if(typeof window.showDirectoryPicker!=='function'){$('copyStatus').textContent='Ce navigateur ne permet pas l’enregistrement direct. Télécharge le JSON, puis place-le dans le dossier de ton choix.';return;}
+  try{
+    const folder=await window.showDirectoryPicker({mode:'readwrite'});
+    const name=reportFilename(),file=await folder.getFileHandle(name,{create:true}),writer=await file.createWritable();
+    await writer.write($('report').textContent);await writer.close();
+    $('copyStatus').textContent=`Rapport enregistré : ${name}. Tu peux retrouver ce rapport dans le dossier choisi.`;
+  }catch(err){$('copyStatus').textContent=err.name==='AbortError'?'Enregistrement annulé.':`Enregistrement impossible (${err.message}). Utilise « Télécharger le rapport JSON ».`;}
+}
+$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value);quiz=validate(selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:mathQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
+$('unknown').onclick=()=>select(null);
+$('confirm').onclick=submit;
+$('next').onclick=()=>{index++;if(index<quiz.questions.length)render();else finish()};
+$('cancel').onclick=()=>{if(!window.confirm('Es-tu sûr de vouloir annuler ce quiz ? Les réponses de cette tentative ne seront pas enregistrées.'))return;quiz=undefined;responses=[];index=0;selectedChoice=undefined;show('setup')};
+$('again').onclick=()=>show('setup');$('download').onclick=download;
+$('saveFolder').onclick=saveToFolder;
+$('subjectSelect').onchange=renderSelect;
+$('quizSelect').onchange=()=>{renderQuestionCounts();renderQuizStatus()};
+$('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.indexOf(q));renderQuestionCounts();renderQuizStatus();};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('report').textContent);$('copyStatus').textContent='Rapport copié.'}catch{$('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
+$('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
+renderSubjects();
+
+</script></body></html>
