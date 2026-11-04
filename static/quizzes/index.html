@@ -997,7 +997,7 @@ function normalizeWrittenAnswer(value){
     .replace(/-/g,' ')
     .replace(/\s+/g,' ');
 }
-const numberWords=[
+const writtenNumberWords=[
   [36,'trente-six'],[71,'soixante et onze'],[80,'quatre-vingts'],
   [81,'quatre-vingt-un'],[200,'deux cents'],[201,'deux cent un'],
   [14,'quatorze'],[90,'quatre-vingt-dix'],[97,'quatre-vingt-dix-sept'],
@@ -1035,7 +1035,7 @@ function writtenQuestions(id,count){
   return indices.map(i=>{
     const level=i<12?'CE1':'CE2';
     if(id==='MA-N01'){
-      const [number,expected]=numberWords[i],skill=number<100?'Nombres inférieurs à 100':number<1000?'Centaines':'Milliers';
+      const [number,expected]=writtenNumberWords[i],skill=number<100?'Nombres inférieurs à 100':number<1000?'Centaines':'Milliers';
       return {format:'written',level,skill,subskillId:'MA-N01-ECRIT-'+skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-'),
         programmeSkills:['MA-N01'],prompt:'Écris ce nombre en toutes lettres : '+new Intl.NumberFormat('fr-FR').format(number),
         expected,accepted:[expected],explanation:'On écrit '+new Intl.NumberFormat('fr-FR').format(number)+' : « '+expected+' ». Vérifie les accords et les lettres finales.'};
