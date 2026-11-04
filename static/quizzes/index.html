@@ -363,8 +363,8 @@ document.getElementById('sendReport').onclick = async () => {
       body: fields.toString()
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    status.textContent = 'Envoi accepté par Netlify. Tu peux aussi télécharger le rapport JSON.';
-    button.textContent = 'Rapport envoyé';
+    status.textContent = 'Requête transmise à Netlify. Vérifie les soumissions vérifiées ou le spam ; tu peux aussi télécharger le rapport JSON.';
+    button.textContent = 'Requête transmise';
   } catch (error) {
     status.textContent = `Envoi impossible (${error.message}). Télécharge le rapport JSON pour le conserver.`;
     button.disabled = false;
