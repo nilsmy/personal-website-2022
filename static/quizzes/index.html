@@ -52,10 +52,11 @@
   <header><h1>Quizzes</h1></header>
   <section id="setup" class="card">
     <h2>Choisir une compétence</h2>
-    <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title">À travailler : <span id="suggestionName"></span></div><p>Compétence en cours d’apprentissage</p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
+    <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="suggestionLabel"></span> : <span id="suggestionName"></span></div><p id="suggestionNote"></p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
     <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
+    <label for="statusSelect">Statut sur cet appareil</label><select id="statusSelect"><option value="pas-testee">Pas testée</option><option value="en-cours">En cours d’apprentissage</option><option value="acquise">Acquise</option></select>
     <label for="questionCount">Nombre de questions</label><select id="questionCount"><option>Chargement…</option></select>
     <p id="loadStatus"><small>Si ce message reste affiché, ouvre le fichier HTML téléchargé directement dans un navigateur : l’aperçu Google Drive peut bloquer le JavaScript.</small></p>
     <label class="toolbar" for="immediate"><input id="immediate" type="checkbox" checked> Afficher la correction après chaque question</label>
@@ -92,6 +93,16 @@ const extraSpecs=[
   ['MA-P06','Mathématiques','Problèmes mêlant addition et multiplication','Deux ou trois étapes'],
   ['MA-P07','Mathématiques','Comparer par différence ou par multiplication','CE2 : de plus/de moins et fois plus/fois moins'],
   ['MA-P08','Mathématiques','Compter des combinaisons','CE2 : tableaux, arbres et produits cartésiens'],
+  ['MA-F05','Mathématiques','Calculer avec des fractions','Sommes, différences et complément à l’unité'],
+  ['MA-C02','Mathématiques','Comprendre la multiplication','Groupes égaux et commutativité'],
+  ['MA-C03','Mathématiques','Reconnaître les nombres pairs et impairs','Parité et multiples de 2'],
+  ['MA-C04','Mathématiques','Relier multiplication et division','Opérations inverses et partages'],
+  ['MA-C06','Mathématiques','Nommer les opérations et leurs résultats','Somme, différence, facteur, produit et multiple'],
+  ['MA-Q01','Mathématiques','Longueurs : choisir et convertir les unités','Kilomètre, mètre, centimètre ; décimètre et millimètre au CE2'],
+  ['MA-Q03','Mathématiques','Périmètre des figures','Contour, carré et rectangle au CE2',[10,20]],
+  ['MA-Q04','Mathématiques','Masses : choisir et convertir les unités','Gramme, kilogramme et tonne'],
+  ['MA-Q05','Mathématiques','Contenances : litre, décilitre et centilitre','CE2 : comparer et convertir',[10,20]],
+  ['MA-Q06','Mathématiques','Euros et centimes','Constituer et comparer des montants'],
   ['FR-G01','Français','Sujet, verbe et compléments','Phrase simple'],
   ['FR-G02','Français','Types de phrases','Déclarative, interrogative et impérative'],
   ['FR-G03','Français','Formes de phrases','Négative et exclamative'],
@@ -122,7 +133,7 @@ const extraSpecs=[
   ['QLM-C2-H06','Histoire','Chronologie et frises','Avant, après et succession',[10]],
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>({id,subject,title,focus,levels:id==='MA-P08'||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:'pas-testee',statusScope:'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}));
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>({id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:'pas-testee',statusScope:'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}));
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -148,7 +159,7 @@ function extraQuestion(id,i){
     const order=ce2?Math.floor((i-12)/3):Math.floor(i/3);
     if(i%3===0){const n=(ce2?[13,18,35]:[4,7,9,20])[order];prompt=`Quel est le double de ${n} ?`;correct=2*n;wrong=[n+2,2*n+2,2*n-2];explanation=`${n} + ${n} = ${correct}.`;skill='Double';}
     else if(i%3===1){const value=(ce2?[24,30,120]:[12,16,80,100])[order],n=value/2;prompt=`Quelle est la moitié de ${value} ?`;correct=n;wrong=[n+1,n-1,value];explanation=`Deux parts de ${n} font ${value}.`;skill='Moitié';}
-    else {const v=[25,50,75,100][i%4];prompt=`Combien font ${i%4+1} groupes de 25 ?`;correct=v;wrong=[v+25,Math.max(0,v-25),v+10];explanation=`${i%4+1} groupes de 25 donnent ${v}.`;skill='Multiples de 25';}
+    else {const v=[25,50,75,100][i%4];prompt=ce2?`Quel est le résultat de 25 × ${i%4+1} ?`:`Combien font ${i%4+1} groupes de 25 ?`;correct=v;wrong=[v+25,Math.max(0,v-25),v+10];explanation=`${i%4+1} groupes de 25 donnent ${v}.`;skill='Multiples de 25';}
   }else if(id==='MA-M04'){
     const step=ce2&&i%2===0?100:10,a=(ce2?20:3)*step+((i*7)%9)*step+3+(i%6),delta=(1+i%4)*step,subtract=i%3===0;
     prompt=`Combien font ${a} ${subtract?'−':'+'} ${delta} ?`;correct=a+(subtract?-delta:delta);
@@ -408,6 +419,82 @@ function extraFrenchQuestion(id,i){
   }else throw Error(`Unité non implémentée : ${id}`);
   return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...extraChoice(correct,wrong,i),explanation};
 }
+const additionalMathIds=new Set(['MA-F05','MA-C02','MA-C03','MA-C04','MA-C06','MA-Q01','MA-Q03','MA-Q04','MA-Q05','MA-Q06']);
+function additionalMathQuestion(id,i){
+  const ce2=i>=12,k=ce2?i-12:i,level=['MA-Q03','MA-Q05'].includes(id)||ce2?'CE2':'CE1';
+  let prompt,correct,wrong,explanation,skill;
+  if(id==='MA-F05'){
+    if(ce2){
+      const cases=[
+        ['1/2 + 1/4','3/4','1/4','2/6','1/6'],['3/4 − 1/2','1/4','3/4','1/2','2/6'],
+        ['1/3 + 1/6','1/2','2/9','1/6','2/3'],['5/6 − 1/3','1/2','1/6','2/3','1/3'],
+        ['1/4 + 3/8','5/8','4/12','1/2','7/8'],['7/8 − 1/4','5/8','6/8','3/8','1/2'],
+        ['2/5 + 1/10','1/2','3/15','3/10','7/10'],['9/10 − 1/5','7/10','8/10','1/2','6/10']
+      ];
+      const [expression,result,...decoys]=cases[k];prompt=`Combien font ${expression} ?`;correct=result;wrong=decoys;
+      explanation=`On exprime les fractions avec un dénominateur commun : ${expression} = ${result}.`;skill='Dénominateurs multiples';
+    }else{
+      const [d,a,b,subtract]=[
+        [3,2,1,true],[4,1,2,false],[5,2,1,false],[6,4,1,true],
+        [8,3,2,false],[10,7,2,true],[4,1,1,false],[5,4,2,true],
+        [6,1,4,false],[8,7,3,true],[10,2,6,false],[3,1,1,false]
+      ][i];
+      const n=subtract?a-b:a+b;prompt=`Combien font ${a}/${d} ${subtract?'−':'+'} ${b}/${d} ?`;correct=`${n}/${d}`;
+      wrong=[`${n+1}/${d}`,`${n+2}/${d}`,`${n+3}/${d}`];
+      explanation=`Les dénominateurs sont identiques : on ${subtract?'soustrait':'additionne'} les numérateurs, donc ${correct}.`;skill='Même dénominateur';
+    }
+  }else if(id==='MA-C02'){
+    const groups=2+(i*3)%8,each=3+(i*5)%7;
+    if(i%2===0){prompt=`${groups} boîtes contiennent chacune ${each} billes. Quelle multiplication représente le total ?`;correct=`${groups} × ${each}`;wrong=[`${groups} + ${each}`,`${groups} − ${each}`,`${groups} ÷ ${each}`];explanation=`${groups} groupes de ${each} billes se représentent par ${groups} × ${each}.`;skill='Groupes égaux';}
+    else {prompt=`Quelle autre multiplication donne le même produit que ${groups} × ${each} ?`;correct=`${each} × ${groups}`;wrong=[`${groups} + ${each}`,`${groups} × ${each+1}`,`${each} × ${groups+1}`];explanation=`On peut échanger l’ordre des facteurs : ${groups} × ${each} = ${each} × ${groups}.`;skill='Commutativité';}
+  }else if(id==='MA-C03'){
+    const n=10+(i*11)%(ce2?480:90),wantEven=i%2===0,target=wantEven?2*Math.floor(n/2):2*Math.floor(n/2)+1;
+    prompt=`Lequel de ces nombres est ${wantEven?'pair':'impair'} ?`;correct=target;wrong=wantEven?[target+1,target+3,target+5]:[target+1,target+3,target+5];
+    explanation=`${target} est ${wantEven?'pair : il se partage en deux groupes égaux':'impair : il reste une unité après un partage en deux groupes égaux'}.`;skill=wantEven?'Nombre pair':'Nombre impair';
+  }else if(id==='MA-C04'){
+    const a=2+i%9,b=2+Math.floor(i/9),total=a*b;
+    if(ce2){prompt=`Si ${a} × ${b} = ${total}, combien font ${total} ÷ ${a} ?`;correct=b;wrong=[a,b+1,total-a];explanation=`La division défait la multiplication : ${total} ÷ ${a} = ${b}.`;skill='Opérations inverses';}
+    else {prompt=`On partage ${total} cartes entre ${a} enfants, en parts égales. Combien chacun reçoit-il ?`;correct=b;wrong=[a,b+1,total-b];explanation=`${a} groupes de ${b} font ${total}, donc chaque part contient ${b} cartes.`;skill='Partage égal';}
+  }else if(id==='MA-C06'){
+    const a=4+(i*7)%25,b=2+(i*3)%9,mode=ce2?2+k%3:i%2;
+    if(mode===0){prompt=`Dans ${a} + ${b} = ${a+b}, comment appelle-t-on ${a+b} ?`;correct='La somme';wrong=['La différence','Le facteur','Le produit'];skill='Somme';}
+    else if(mode===1){prompt=`Dans ${a+b} − ${b} = ${a}, comment appelle-t-on ${a} ?`;correct='La différence';wrong=['La somme','Le facteur','Le produit'];skill='Différence';}
+    else if(mode===2){prompt=`Dans ${a} × ${b} = ${a*b}, comment appelle-t-on ${a*b} ?`;correct='Le produit';wrong=['La somme','La différence','Un facteur'];skill='Produit';}
+    else if(mode===3){prompt=`Dans ${a} × ${b} = ${a*b}, comment appelle-t-on ${b} ?`;correct='Un facteur';wrong=['Le produit','La somme','La différence'];skill='Facteur';}
+    else {prompt=`Dans ${a} × ${b} = ${a*b}, quel nombre est un multiple de ${a} ?`;correct=a*b;wrong=[a*b+1,a*b+2,a*b+3];skill='Multiple';}
+    explanation=mode===4?`${a*b} = ${a} × ${b} : ${a*b} est un multiple de ${a}.`:`Le mot attendu est « ${correct.toLowerCase()} ».`;
+  }else if(id==='MA-Q01'){
+    const n=2+(i*3)%8,mode=ce2?3+k%2:i%3;
+    if(mode===0){const trips=['de Paris à Lyon','de Rome à Naples','entre deux villes du New Jersey','entre deux villes françaises'];prompt=`Quelle unité convient le mieux pour exprimer la distance ${trips[Math.floor(i/3)]} ?`;correct='Le kilomètre';wrong=['Le millimètre','Le centimètre','Le décimètre'];skill='Choisir une unité';explanation='Une distance entre villes se mesure généralement en kilomètres.';}
+    else if(mode===1){prompt=`Combien de centimètres font ${n} mètres ?`;correct=n*100;wrong=[n*10,n*100+10,n*1000];skill='Mètres et centimètres';explanation=`1 m = 100 cm, donc ${n} m = ${n*100} cm.`;}
+    else if(mode===2){prompt=`Combien de mètres font ${n} kilomètres ?`;correct=n*1000;wrong=[n*100,n*10,n*1000+100];skill='Kilomètres et mètres';explanation=`1 km = 1 000 m, donc ${n} km = ${n*1000} m.`;}
+    else if(mode===3){prompt=`Combien de centimètres font ${n} décimètres ?`;correct=n*10;wrong=[n,n*100,n*10+1];skill='Décimètres et centimètres';explanation=`1 dm = 10 cm, donc ${n} dm = ${n*10} cm.`;}
+    else {prompt=`Combien de millimètres font ${n} centimètres ?`;correct=n*10;wrong=[n,n*100,n*10+1];skill='Centimètres et millimètres';explanation=`1 cm = 10 mm, donc ${n} cm = ${n*10} mm.`;}
+  }else if(id==='MA-Q03'){
+    const a=3+i,b=2+(i*3)%11;
+    if(i%3===0){prompt=`Un carré a des côtés de ${a} cm. Quel est son périmètre ?`;correct=4*a;wrong=[a*a,2*a,4*a+1];explanation=`Le contour a quatre côtés de ${a} cm : ${a} × 4 = ${correct} cm.`;skill='Carré';}
+    else {prompt=`Un rectangle mesure ${a} cm de long et ${b} cm de large. Quel est son périmètre ?`;correct=2*(a+b);wrong=[a*b,a+b,2*a+b];explanation=`On additionne ses quatre côtés : ${a} + ${b} + ${a} + ${b} = ${correct} cm.`;skill='Rectangle';}
+  }else if(id==='MA-Q04'){
+    const n=2+i,mode=ce2?3:i%3;
+    if(mode===0){const objects=['une pomme','un citron','un œuf','une petite tomate'];prompt=`Quelle unité convient le mieux pour mesurer la masse d’${objects[Math.floor(i/3)]} ?`;correct='Le gramme';wrong=['Le kilogramme','La tonne','Le kilomètre'];explanation='Un petit aliment se pèse commodément en grammes.';skill='Choisir une unité';}
+    else if(mode===1){prompt=`Combien de grammes font ${n} kilogrammes ?`;correct=n*1000;wrong=[n*100,n*10,n*1000+100];explanation=`1 kg = 1 000 g, donc ${n} kg = ${correct} g.`;skill='Kilogrammes et grammes';}
+    else if(mode===2){prompt=`Combien de kilogrammes font ${n*1000} grammes ?`;correct=n;wrong=[n+1,n*10,n*100];explanation=`${n*1000} g = ${n} kg, car 1 kg = 1 000 g.`;skill='Grammes et kilogrammes';}
+    else {prompt=`Combien de kilogrammes font ${n} tonnes ?`;correct=n*1000;wrong=[n*100,n*10,n*1000+100];explanation=`1 t = 1 000 kg, donc ${n} t = ${correct} kg.`;skill='Tonnes et kilogrammes';}
+  }else if(id==='MA-Q05'){
+    const n=2+i,mode=i%4;
+    if(mode===0){prompt=`Combien de décilitres font ${n} litres ?`;correct=n*10;wrong=[n,n*100,n*10+1];explanation=`1 L = 10 dL, donc ${n} L = ${correct} dL.`;skill='Litres et décilitres';}
+    else if(mode===1){prompt=`Combien de centilitres font ${n} litres ?`;correct=n*100;wrong=[n*10,n*100+10,n*1000];explanation=`1 L = 100 cL, donc ${n} L = ${correct} cL.`;skill='Litres et centilitres';}
+    else if(mode===2){prompt=`Combien de centilitres font ${n} décilitres ?`;correct=n*10;wrong=[n,n*100,n*10+1];explanation=`1 dL = 10 cL, donc ${n} dL = ${correct} cL.`;skill='Décilitres et centilitres';}
+    else {prompt=`Une bouteille contient ${n} L. Quelle écriture donne la même contenance ?`;correct=`${n*100} cL`;wrong=[`${n*10} cL`,`${n} cL`,`${n*1000} cL`];explanation=`Chaque litre contient 100 cL : ${n} L = ${n*100} cL.`;skill='Comparer des contenances';}
+  }else if(id==='MA-Q06'){
+    const euros=1+i,cents=[5,20,35,50,75,90][i%6],total=euros*100+cents,mode=i%3;
+    if(mode===0){prompt=`Combien de centimes font ${euros} € ?`;correct=euros*100;wrong=[euros*10,euros*100+10,euros*1000];explanation=`1 € = 100 centimes, donc ${euros} € = ${correct} centimes.`;skill='Euros en centimes';}
+    else if(mode===1){prompt=`${euros} € et ${cents} centimes font combien de centimes en tout ?`;correct=total;wrong=[euros*100-cents,euros*10+cents,total+100];explanation=`${euros} € = ${euros*100} centimes ; avec ${cents} centimes, cela fait ${total}.`;skill='Montant en centimes';}
+    else {const e2=1+(i%5);prompt=`Combien font ${euros} € + ${e2} € ?`;correct=euros+e2;wrong=[euros+e2+1,Math.abs(euros-e2),euros*e2];explanation=`${euros} + ${e2} = ${correct}, soit ${correct} €.`;skill='Addition de montants';}
+  }else throw Error(`Unité mathématique non implémentée : ${id}`);
+  const choices=typeof correct==='number'?extraNumber(correct,wrong,i):extraChoice(correct,wrong,i);
+  return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...choices,explanation};
+}
 const qlmBanks={
   'QLM-C2-S02':[
     ['États','Dans quel état se trouve un glaçon ?','Solide','Liquide','Gaz','Plasma','La glace garde sa propre forme : c’est de l’eau solide.'],
@@ -635,7 +722,7 @@ function readingQuestions(id){
 function extraQuestions(id,count){
   if(id.startsWith('QLM-'))return qlmQuestions(id);
   if(id.startsWith('FR-L'))return readingQuestions(id);
-  const all=Array.from({length:20},(_,i)=>extraQuestion(id,i));
+  const all=Array.from({length:20},(_,i)=>additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
   return count===10?[...all.slice(0,6),...all.slice(12,16)]:all;
 }
 
@@ -658,7 +745,7 @@ const builtIn = {
 };
 const fullQuiz = {
   id: 'MA-N01', subject: 'Mathématiques', title: 'Lire et nommer les entiers', language: 'fr-FR',
-  status:'pas-testee', statusScope:'', statusBasis:'',
+  status:'acquise', statusScope:'Lecture et dénomination des entiers ; écriture en toutes lettres à vérifier séparément.', statusBasis:'Jugement du parent, appuyé par le QCM du 1er novembre 2026.',
   source: 'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale MA-N01',
   levels: 'CE1 jusqu’à 1 000 ; CE2 jusqu’à 10 000',
   questions: [
@@ -686,7 +773,7 @@ const fullQuiz = {
 };
 const frenchQuiz = {
   id:'FR-G09-ER-PRESENT', subject:'Français', title:'Présent des verbes du premier groupe', language:'fr-FR',
-  status:'pas-testee', statusScope:'', statusBasis:'',
+  status:'en-cours', statusScope:'Accord au présent avec pronoms et groupes nominaux.', statusBasis:'Statut indiqué par le parent le 4 novembre 2026.',
   source:'Programme officiel de français du cycle 2 (2024), FR-G07 et FR-G09',
   levels:'CE1–CE2 ; pronoms, groupes nominaux simples et complexes', questions:[]
 };
@@ -931,8 +1018,13 @@ function renderSubjects(){
   renderSelect();
   renderSuggestion();
 }
-function suggestedQuiz(){return quizzes.find(q=>q.status==='en-cours')||null;}
-function renderSuggestion(){const q=suggestedQuiz();$('suggestion').classList.toggle('hidden',!q);if(q)$('suggestionName').textContent=q.title;}
+const statusKey='education-quiz-status-v1';
+let statusOverrides={};
+try{const stored=JSON.parse(localStorage.getItem(statusKey)||'{}');if(stored&&typeof stored==='object'&&!Array.isArray(stored))statusOverrides=stored;}catch{}
+const allowedStatuses=['pas-testee','en-cours','acquise'];
+function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:(q.status||'pas-testee');}
+function suggestedQuiz(){return quizzes.find(q=>effectiveStatus(q)==='en-cours')||quizzes.find(q=>effectiveStatus(q)==='pas-testee')||null;}
+function renderSuggestion(){const q=suggestedQuiz();$('suggestion').classList.toggle('hidden',!q);if(!q)return;const inProgress=effectiveStatus(q)==='en-cours';$('suggestionLabel').textContent=inProgress?'À travailler':'À découvrir';$('suggestionNote').textContent=inProgress?'Compétence en cours d’apprentissage':'Suggestion parmi les compétences non encore testées';$('suggestionName').textContent=q.title;}
 function renderSelect(){
   const subject=$('subjectSelect').value,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject);
   $('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=`${q.id} — ${q.title}`;return o}));
@@ -945,9 +1037,10 @@ function renderSelect(){
 function renderQuizStatus(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)];
   $('skillStatus').classList.toggle('hidden',!selected);if(!selected)return;
-  const status=selected.status||'pas-testee',labels={'acquise':'Acquise','en-cours':'En cours d’apprentissage','pas-testee':'Pas testée'};
+  const status=effectiveStatus(selected),labels={'acquise':'Acquise','en-cours':'En cours d’apprentissage','pas-testee':'Pas testée'};
   $('statusBadge').className=`status-badge status-${status}`;$('statusBadge').textContent=labels[status]||labels['pas-testee'];
-  $('statusNote').textContent=selected.statusScope||'';
+  $('statusSelect').value=status;
+  $('statusNote').textContent=Object.hasOwn(statusOverrides,selected.id)?'Statut choisi sur cet appareil.':selected.statusScope||'';
 }
 function renderQuestionCounts(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
@@ -1003,7 +1096,7 @@ function submit(){
   if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
   $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
 }
-function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,quizStatusAtStart:quiz.status||'pas-testee',quizStatusScope:quiz.statusScope||null,quizStatusBasis:quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
+function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,quizStatusAtStart:effectiveStatus(quiz),quizStatusScope:Object.hasOwn(statusOverrides,quiz.id)?null:quiz.statusScope||null,quizStatusBasis:Object.hasOwn(statusOverrides,quiz.id)?'Statut choisi sur cet appareil.':quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
 function finish(){playSound('finish');show('result');const data=report();$('summary').textContent=`${data.initialCorrect}/${data.total} réponses initiales correctes. ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;const labels={'FR-G09-PP':'Pronoms personnels','FR-G07-GN-S':'Groupes nominaux simples','FR-G07-GN-C':'Groupes nominaux complexes'};for(const r of responses)if(r.subskillId&&r.skill)labels[r.subskillId]=r.skill;$('breakdown').replaceChildren(...Object.entries(data.bySubskill).map(([id,s])=>{const p=document.createElement('p');p.textContent=`${labels[id]||id} : ${s.correct}/${s.total}`;return p}));$('report').textContent=JSON.stringify(data,null,2);}
 function reportFilename(){const safe=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]/g,'-').slice(0,40);const d=new Date(),n=x=>String(x).padStart(2,'0');return `${safe(quiz.id)}_${localDate(d)}_${n(d.getHours())}-${n(d.getMinutes())}-${n(d.getSeconds())}.json`;}
 function download(){const data=new Blob([$('report').textContent],{type:'application/json'}),link=document.createElement('a');link.href=URL.createObjectURL(data);link.download=reportFilename();link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000)}
@@ -1034,6 +1127,7 @@ $('again').onclick=()=>show('setup');$('download').onclick=download;$('email').o
 $('saveFolder').onclick=saveToFolder;
 $('subjectSelect').onchange=renderSelect;
 $('quizSelect').onchange=()=>{renderQuestionCounts();renderQuizStatus()};
+$('statusSelect').onchange=()=>{const q=quizzes[Number($('quizSelect').value)],status=$('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}renderQuizStatus();renderSuggestion();};
 $('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.indexOf(q));renderQuestionCounts();renderQuizStatus();};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('report').textContent);$('copyStatus').textContent='Rapport copié.'}catch{$('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
 $('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
