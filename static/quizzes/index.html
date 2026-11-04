@@ -31,6 +31,7 @@
     pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#fff;padding:14px;border-radius:5px}a{color:#2876a6}
     .skill-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 4px}.status-badge{display:inline-block;border-radius:999px;padding:6px 11px;font-weight:700;font-size:.9rem}.status-acquise{background:#e2f2e6;color:#24633a}.status-en-cours{background:#fff0ce;color:#775314}.status-pas-testee{background:#e7e7e7;color:#555}.status-note{color:#666;font-size:.94rem}
     .suggestion{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border:1px solid #d8c385;background:#fff9e9;border-radius:9px;padding:16px 18px;margin:4px 0 24px}.suggestion-title{font-weight:700;color:#5d4615}.suggestion p{margin:5px 0 0;color:#666}
+    #writtenAnswer label{display:block;font-weight:700;margin-bottom:8px}#writtenAnswer input{font-size:1.3rem;padding:16px}#writtenAnswer p{font-size:.92rem;color:#666;margin:8px 0 0}
     :root{background:#090909}
     @media(max-width:600px){main{padding:20px 16px 48px}header{margin-bottom:18px}.card{padding:20px}.toolbar button,.toolbar label.secondary{width:100%;text-align:center}}
   </style>
@@ -58,6 +59,7 @@
     <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
     <label for="statusSelect">Statut sur cet appareil</label><select id="statusSelect"><option value="pas-testee">Pas testée</option><option value="en-cours">En cours d’apprentissage</option><option value="acquise">Acquise</option></select>
+    <div id="formatControl" class="hidden"><label for="formatSelect">Format</label><select id="formatSelect"><option value="qcm">QCM</option><option value="written">Réponse écrite</option></select></div>
     <label for="questionCount">Nombre de questions</label><select id="questionCount"><option>Chargement…</option></select>
     <p id="loadStatus"><small>Si ce message reste affiché, ouvre le fichier HTML téléchargé directement dans un navigateur : l’aperçu Google Drive peut bloquer le JavaScript.</small></p>
     <label class="toolbar" for="immediate"><input id="immediate" type="checkbox" checked> Afficher la correction après chaque question</label>
@@ -67,6 +69,7 @@
   <section id="play" class="card hidden" aria-live="polite">
     <div class="stats"><span id="position" class="eyebrow"></span><span id="score"></span></div><progress id="progress" max="10" value="0"></progress>
     <div id="passage" class="hidden"></div><h2 id="question"></h2><div id="diagram"></div><div id="choices" class="choices"></div>
+    <div id="writtenAnswer" class="hidden"><label for="textAnswer">Ta réponse</label><input id="textAnswer" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" aria-describedby="writtenNote"><p id="writtenNote">Écris seulement le mot ou le nombre demandé, sans phrase complète.</p></div>
     <button id="unknown" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Je ne sais pas</button>
     <button id="confirm" class="primary footer" disabled><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Valider</button>
     <div id="feedback" class="feedback hidden"></div>
@@ -985,6 +988,65 @@ function advancedQuestion(id,i){
   return {level,skill,subskillId:id+'-'+key,programmeSkills:[id.split('-IRREG')[0]],prompt,...choices,explanation,...(visual?{visual}:{})};
 }
 
+// Short written answers for two existing programme competencies.
+const writtenIds=new Set(['MA-N01','FR-G09-ER-PRESENT']);
+function normalizeWrittenAnswer(value){
+  return String(value).normalize('NFC').trim().toLocaleLowerCase('fr-FR')
+    .replace(/[\u00a0\u202f]/g,' ')
+    .replace(/[\u2010-\u2015]/g,'-')
+    .replace(/-/g,' ')
+    .replace(/\s+/g,' ');
+}
+const numberWords=[
+  [36,'trente-six'],[71,'soixante et onze'],[80,'quatre-vingts'],
+  [81,'quatre-vingt-un'],[200,'deux cents'],[201,'deux cent un'],
+  [14,'quatorze'],[90,'quatre-vingt-dix'],[97,'quatre-vingt-dix-sept'],
+  [345,'trois cent quarante-cinq'],[999,'neuf cent quatre-vingt-dix-neuf'],[1000,'mille'],
+  [2301,'deux mille trois cent un'],[4080,'quatre mille quatre-vingts'],
+  [5614,'cinq mille six cent quatorze'],[7001,'sept mille un'],
+  [8700,'huit mille sept cents'],[9999,'neuf mille neuf cent quatre-vingt-dix-neuf'],
+  [1200,'mille deux cents'],[10000,'dix mille']
+];
+const writtenVerbs=[
+  ['Je ___ la fenêtre.','ferme','Pronoms personnels'],
+  ['Tu ___ une carte.','dessines','Pronoms personnels'],
+  ['Il ___ dans le jardin.','joue','Pronoms personnels'],
+  ['Nous ___ les oiseaux.','observons','Pronoms personnels'],
+  ['Vous ___ des graines.','plantez','Pronoms personnels'],
+  ['Elles ___ sous les arbres.','marchent','Pronoms personnels'],
+  ['J’___ les histoires de pirates.','aime','Pronoms personnels'],
+  ['Les enfants ___ un château de sable.','fabriquent','Groupes nominaux simples'],
+  ['La petite fille ___ son carnet.','cherche','Groupes nominaux simples'],
+  ['Le chien ___ dans le jardin.','joue','Groupes nominaux simples'],
+  ['Mon frère et ma sœur ___ une maquette.','préparent','Groupes nominaux simples'],
+  ['Le jardinier ___ des fleurs.','plante','Groupes nominaux simples'],
+  ['Les amis de mon frère ___ au parc.','jouent','Groupes nominaux complexes'],
+  ['Le chien de mes voisins ___ près du portail.','aboie','Groupes nominaux complexes'],
+  ['La fille aux cheveux bouclés ___ un roman.','termine','Groupes nominaux complexes'],
+  ['Les élèves de cette classe ___ un plan.','dessinent','Groupes nominaux complexes'],
+  ['J’___ une chanson en français.','écoute','Pronoms personnels'],
+  ['Nous ___ les résultats.','comparons','Pronoms personnels'],
+  ['Vous ___ le musée demain.','visitez','Pronoms personnels'],
+  ['Les oiseaux du jardin ___ tôt le matin.','chantent','Groupes nominaux complexes']
+];
+function writtenQuestions(id,count){
+  if(!writtenIds.has(id))throw Error('Réponse écrite indisponible pour '+id);
+  const indices=count===10?[0,1,2,3,4,5,12,13,14,15]:Array.from({length:20},(_,i)=>i);
+  return indices.map(i=>{
+    const level=i<12?'CE1':'CE2';
+    if(id==='MA-N01'){
+      const [number,expected]=numberWords[i],skill=number<100?'Nombres inférieurs à 100':number<1000?'Centaines':'Milliers';
+      return {format:'written',level,skill,subskillId:'MA-N01-ECRIT-'+skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-'),
+        programmeSkills:['MA-N01'],prompt:'Écris ce nombre en toutes lettres : '+new Intl.NumberFormat('fr-FR').format(number),
+        expected,accepted:[expected],explanation:'On écrit '+new Intl.NumberFormat('fr-FR').format(number)+' : « '+expected+' ». Vérifie les accords et les lettres finales.'};
+    }
+    const [sentence,expected,skill]=writtenVerbs[i];
+    return {format:'written',level,skill,subskillId:'FR-G09-ER-PRESENT-ECRIT-'+(skill==='Pronoms personnels'?'PP':skill==='Groupes nominaux simples'?'GN-S':'GN-C'),
+      programmeSkills:['FR-G09','FR-G07'],prompt:'Complète avec le verbe au présent : '+sentence,
+      expected,accepted:[expected],explanation:'On écrit « '+expected+' » : '+sentence.replace('___',expected)};
+  });
+}
+
 const builtIn = {
   id: 'MA-N01', subject: 'Mathématiques', title: 'Lire, écrire et nommer les entiers', language: 'fr-FR',
   source: 'Programme officiel français de mathématiques, cycle 2 (2024), CE1 et CE2',
@@ -1267,7 +1329,11 @@ function playSound(kind){
 }
 function validate(q){
   if(!q || typeof q.id!=='string' || typeof q.title!=='string' || !Array.isArray(q.questions) || !q.questions.length || q.questions.length>100) throw Error('Le quiz doit avoir un id, un titre et 1 à 100 questions.');
-  q.questions.forEach((item,i)=>{if(typeof item.prompt!=='string'||!Array.isArray(item.choices)||item.choices.length!==4||item.choices.some(c=>typeof c!=='string')||!Number.isInteger(item.answer)||item.answer<0||item.answer>3||typeof item.explanation!=='string')throw Error(`Question ${i+1} : énoncé, quatre choix, réponse 0–3 et explication requis.`)});
+  q.questions.forEach((item,i)=>{
+    if(typeof item.prompt!=='string'||typeof item.explanation!=='string')throw Error(`Question ${i+1} : énoncé et explication requis.`);
+    if(item.format==='written'){if(typeof item.expected!=='string'||!Array.isArray(item.accepted)||!item.accepted.includes(item.expected))throw Error(`Question ${i+1} : réponse écrite attendue et variantes requises.`)}
+    else if(!Array.isArray(item.choices)||item.choices.length!==4||item.choices.some(c=>typeof c!=='string')||!Number.isInteger(item.answer)||item.answer<0||item.answer>3)throw Error(`Question ${i+1} : quatre choix et réponse 0–3 requis.`);
+  });
   return q;
 }
 function renderSubjects(){
@@ -1292,7 +1358,7 @@ function renderSelect(){
   if(!available.length){const o=document.createElement('option');o.textContent='Aucune compétence pour cette matière';o.value='';$('quizSelect').append(o)}
   $('start').disabled=!available.length;
   $('loadStatus').textContent=available.length?`${available.length} compétences disponibles en ${subject.toLowerCase()}.`:`Aucune compétence en ${subject.toLowerCase()} pour l’instant.`;
-  renderQuestionCounts();
+  renderFormats();renderQuestionCounts();
   renderQuizStatus();
   renderSubjectSuggestion();
 }
@@ -1305,11 +1371,12 @@ function renderQuizStatus(){
   $('statusNote').textContent=Object.hasOwn(statusOverrides,selected.id)?'Statut choisi sur cet appareil.':selected.statusScope||'';
 }
 function renderQuestionCounts(){
-  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
+  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
   if(counts.includes(20))$('questionCount').value='20';
   $('questionCount').disabled=counts.length<2;
 }
+function renderFormats(){const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],available=!!selected&&writtenIds.has(selected.id);$('formatControl').classList.toggle('hidden',!available);$('formatSelect').value='qcm';}
 function show(id){['setup','play','result'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
 function drawAxis(axis){
   const host=$('diagram');host.replaceChildren();if(!axis)return;
@@ -1434,24 +1501,26 @@ function render(){
   $('progress').max=quiz.questions.length;$('progress').value=index;
   $('passage').classList.toggle('hidden',!q.passage);$('passage').textContent=q.passage||'';
   $('question').textContent=q.prompt;drawAxis(q.axis);drawFraction(q.figure);drawVisual(q.visual);$('choices').replaceChildren();
-  q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<strong>${'ABCD'[i]}</strong>`;b.append(document.createTextNode(choice));b.addEventListener('click',()=>select(i));$('choices').append(b)});
+  const written=q.format==='written';$('choices').classList.toggle('hidden',written);$('writtenAnswer').classList.toggle('hidden',!written);$('textAnswer').value='';$('textAnswer').disabled=false;
+  if(!written)q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<strong>${'ABCD'[i]}</strong>`;b.append(document.createTextNode(choice));b.addEventListener('click',()=>select(i));$('choices').append(b)});
   $('unknown').disabled=false;$('unknown').classList.remove('selected');$('unknown').setAttribute('aria-pressed','false');$('confirm').disabled=true;$('confirm').classList.remove('hidden');$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('nextLabel').textContent=index===quiz.questions.length-1?'Voir le résultat':'Question suivante';
 }
 function select(choice){
-  if(answered)return;selectedChoice=choice;
+  if(answered)return;selectedChoice=choice;if(quiz.questions[index].format==='written'&&choice===null)$('textAnswer').value='';
   [...$('choices').children].forEach((b,i)=>{b.classList.toggle('selected',i===choice);b.setAttribute('aria-pressed',String(i===choice))});
   $('unknown').classList.toggle('selected',choice===null);$('unknown').setAttribute('aria-pressed',String(choice===null));$('confirm').disabled=false;
 }
 function submit(){
-  if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],correct=choice===q.answer;
+  if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],written=q.format==='written',correct=written?choice!==null&&q.accepted.some(expected=>normalizeWrittenAnswer(choice)===normalizeWrittenAnswer(expected)):choice===q.answer;
   playSound('answer');
-  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,visual:q.visual||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
+  responses.push({number:index+1,format:written?'written':'qcm',level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,visual:q.visual||null,choices:written?null:q.choices,selectedIndex:written?null:choice,selected:choice===null?null:written?choice:q.choices[choice],correctIndex:written?null:q.answer,correctAnswer:written?q.expected:q.choices[q.answer],correct,unknown:choice===null,reviewNeeded:written&&!correct&&choice!==null,explanation:q.explanation,assistance:'non renseignée'});
+  if(written)$('textAnswer').disabled=true;
   [...$('choices').children].forEach((b,i)=>{b.disabled=true;if(immediateFeedback){b.classList.remove('selected');if(i===q.answer)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')}});$('unknown').disabled=true;
-  if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
+  if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':written?'Réponse à revoir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
   $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
 }
-function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,quizStatusAtStart:effectiveStatus(quiz),quizStatusScope:Object.hasOwn(statusOverrides,quiz.id)?null:quiz.statusScope||null,quizStatusBasis:Object.hasOwn(statusOverrides,quiz.id)?'Statut choisi sur cet appareil.':quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
-function finish(){playSound('finish');show('result');const data=report();$('summary').textContent=`${data.initialCorrect}/${data.total} réponses initiales correctes. ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;const labels={'FR-G09-PP':'Pronoms personnels','FR-G07-GN-S':'Groupes nominaux simples','FR-G07-GN-C':'Groupes nominaux complexes'};for(const r of responses)if(r.subskillId&&r.skill)labels[r.subskillId]=r.skill;$('breakdown').replaceChildren(...Object.entries(data.bySubskill).map(([id,s])=>{const p=document.createElement('p');p.textContent=`${labels[id]||id} : ${s.correct}/${s.total}`;return p}));$('report').textContent=JSON.stringify(data,null,2);}
+function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,responseFormat:quiz.responseFormat||'qcm',quizStatusAtStart:effectiveStatus(quiz),quizStatusScope:Object.hasOwn(statusOverrides,quiz.id)?null:quiz.statusScope||null,quizStatusBasis:Object.hasOwn(statusOverrides,quiz.id)?'Statut choisi sur cet appareil.':quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,writtenReviewNeeded:responses.filter(r=>r.reviewNeeded).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:quiz.responseFormat==='written'?'Réponses écrites initiales comparées aux formes attendues ; les écarts restent à examiner, sans conclusion de maîtrise générale.':'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
+function finish(){playSound('finish');show('result');const data=report();$('summary').textContent=`${data.initialCorrect}/${data.total} réponses initiales ${data.responseFormat==='written'?'exactes':'correctes'}. ${data.unknown} « je ne sais pas ». ${data.writtenReviewNeeded?`${data.writtenReviewNeeded} réponse(s) écrite(s) à revoir. `:''}Tu peux enregistrer le détail pour le suivi.`;const labels={'FR-G09-PP':'Pronoms personnels','FR-G07-GN-S':'Groupes nominaux simples','FR-G07-GN-C':'Groupes nominaux complexes'};for(const r of responses)if(r.subskillId&&r.skill)labels[r.subskillId]=r.skill;$('breakdown').replaceChildren(...Object.entries(data.bySubskill).map(([id,s])=>{const p=document.createElement('p');p.textContent=`${labels[id]||id} : ${s.correct}/${s.total}`;return p}));$('report').textContent=JSON.stringify(data,null,2);}
 function reportFilename(){const safe=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]/g,'-').slice(0,40);const d=new Date(),n=x=>String(x).padStart(2,'0');return `${safe(quiz.id)}_${localDate(d)}_${n(d.getHours())}-${n(d.getMinutes())}-${n(d.getSeconds())}.json`;}
 function download(){const data=new Blob([$('report').textContent],{type:'application/json'}),link=document.createElement('a');link.href=URL.createObjectURL(data);link.download=reportFilename();link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000)}
 function emailReport(){
@@ -1472,18 +1541,21 @@ async function saveToFolder(){
     $('copyStatus').textContent=`Rapport enregistré : ${name}. Tu peux retrouver ce rapport dans le dossier choisi.`;
   }catch(err){$('copyStatus').textContent=err.name==='AbortError'?'Enregistrement annulé.':`Enregistrement impossible (${err.message}). Utilise « Télécharger le rapport JSON ».`;}
 }
-$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value);quiz=validate(selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
+$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value),written=$('formatSelect').value==='written'&&writtenIds.has(selected.id);quiz=validate(written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
 $('unknown').onclick=()=>select(null);
+$('textAnswer').oninput=()=>{if(answered)return;const value=$('textAnswer').value;selectedChoice=value.trim()?value:undefined;$('unknown').classList.remove('selected');$('unknown').setAttribute('aria-pressed','false');$('confirm').disabled=!value.trim();};
+ $('textAnswer').onkeydown=e=>{if(e.key==='Enter'&&!$('confirm').disabled){e.preventDefault();submit()}};
 $('confirm').onclick=submit;
 $('next').onclick=()=>{index++;if(index<quiz.questions.length)render();else finish()};
 $('cancel').onclick=()=>{if(!window.confirm('Es-tu sûr de vouloir annuler ce quiz ? Les réponses de cette tentative ne seront pas enregistrées.'))return;quiz=undefined;responses=[];index=0;selectedChoice=undefined;show('setup')};
 $('again').onclick=()=>show('setup');$('download').onclick=download;$('email').onclick=emailReport;
 $('saveFolder').onclick=saveToFolder;
 $('subjectSelect').onchange=renderSelect;
-$('quizSelect').onchange=()=>{renderQuestionCounts();renderQuizStatus()};
+$('quizSelect').onchange=()=>{renderFormats();renderQuestionCounts();renderQuizStatus()};
+$('formatSelect').onchange=renderQuestionCounts;
 $('statusSelect').onchange=()=>{const q=quizzes[Number($('quizSelect').value)],status=$('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}renderQuizStatus();renderSuggestion();renderSubjectSuggestion();};
-$('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.indexOf(q));renderQuestionCounts();renderQuizStatus();};
-$('chooseSubjectSuggestion').onclick=()=>{const q=suggestedInSubject();if(!q)return;$('quizSelect').value=String(quizzes.indexOf(q));renderQuestionCounts();renderQuizStatus();};
+$('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
+$('chooseSubjectSuggestion').onclick=()=>{const q=suggestedInSubject();if(!q)return;$('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText($('report').textContent);$('copyStatus').textContent='Rapport copié.'}catch{$('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
 $('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
 renderSubjects();
