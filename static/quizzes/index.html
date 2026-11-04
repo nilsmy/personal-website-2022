@@ -109,6 +109,7 @@ const extraSpecs=[
   ['FR-G04','Français','Classes de mots','Déterminant, nom, adjectif, verbe et pronom ; adverbe au CE2'],
   ['FR-G05','Français','Ponctuation de la phrase','Point, point d’interrogation et point d’exclamation'],
   ['FR-G06','Français','Accords dans le groupe nominal','Déterminant, nom et adjectif'],
+  ['FR-G07','Français','Accord du sujet et du verbe','Personne, nombre et sujets nominaux'],
   ['FR-G08','Français','Infinitif, radical et terminaison','Verbes du premier groupe'],
   ['FR-G09-ETRE-AVOIR','Français','Présent d’être et d’avoir','Complément du quiz sur les verbes en -er'],
   ['FR-G10','Français','Imparfait des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
@@ -122,6 +123,9 @@ const extraSpecs=[
   ['FR-L07','Français','À qui renvoient les pronoms ?','Suivre les reprises dans un texte',[10]],
   ['FR-L08','Français','Faire des inférences','Relier les indices du texte',[10]],
   ['FR-L09','Français','Émotions et motivations des personnages','Comprendre pensées, intentions et réactions',[10]],
+  ['FR-L10','Français','Comprendre les mots en contexte','Inférer le sens d’un mot grâce à la phrase',[10]],
+  ['FR-L11','Français','Justifier avec le texte','Retrouver un indice et vérifier une réponse',[10]],
+  ['FR-L12','Français','Reconnaître et comprendre les types de textes','Récit, documentaire, consigne et notice',[10]],
   ['QLM-C2-S02','Sciences','États de l’eau','Solide, liquide et gaz ; changements d’état',[10]],
   ['QLM-C2-S04','Sciences','Vivant et cycles de vie','Animaux, végétaux et développement',[10]],
   ['QLM-C2-S05','Sciences','Besoins et régimes alimentaires','Animaux, végétaux et milieu',[10]],
@@ -256,6 +260,7 @@ const conjugationForms={
     pouvoir:['ai pu','as pu','a pu','avons pu','avez pu','ont pu'],voir:['ai vu','as vu','a vu','avons vu','avez vu','ont vu'],
     vouloir:['ai voulu','as voulu','a voulu','avons voulu','avez voulu','ont voulu'],prendre:['ai pris','as pris','a pris','avons pris','avez pris','ont pris']
   }
+
 };
 function erForms(stem,tense){
   const endings={present:['e','es','e','ons','ez','ent'],imparfait:['ais','ais','ait','ions','iez','aient'],futur:['erai','eras','era','erons','erez','eront']};
@@ -306,6 +311,33 @@ function extraFrenchQuestion(id,i){
     if(i%3===0){prompt=`Dans « ${sentence} », quel est le groupe sujet ?`;correct=subject;wrong=[subjectNoun,complement,`${subject} ${verb}`];explanation=`« ${subject} » indique qui fait l’action.`;skill='Groupe sujet';}
     else if(i%3===1){prompt=`Dans « ${sentence} », quel est le verbe ?`;correct=verb;wrong=[subjectNoun,otherNoun,complement.split(' ')[0]];explanation=`« ${verb} » est le verbe de la phrase.`;skill='Verbe';}
     else {prompt=`Dans « ${sentence} », quel groupe complète le verbe ?`;correct=complement;wrong=[subject,verb,`${subject} ${verb}`];explanation=`« ${complement} » apporte une information complémentaire ; on ne classe pas ici ce complément.`;skill='Complément sans classement';}
+  }else if(id==='FR-G07'){
+    const cases=[
+      ['Je','chante','chantes','chantez','chantent','dans la chorale'],
+      ['Tu','dessines','dessine','dessinons','dessinent','un bateau'],
+      ['Il','marche','marches','marchez','marchent','vers la gare'],
+      ['Elle','regarde','regardes','regardez','regardent','les étoiles'],
+      ['Nous','jouons','joue','jouez','jouent','dans le jardin'],
+      ['Vous','parlez','parle','parlons','parlent','doucement'],
+      ['Ils','préparent','prépare','prépares','préparez','le repas'],
+      ['Elles','rangent','range','ranges','rangez','leurs cahiers'],
+      ['Le facteur','apporte','apportent','apportes','apportez','une lettre'],
+      ['Les musiciens','répètent','répète','répètes','répétez','dans la salle'],
+      ['La tortue','avance','avancent','avances','avancez','lentement'],
+      ['Les oiseaux','chantent','chante','chantes','chantez','dans les arbres'],
+      ['Le chien de mes voisins','aboie','aboient','aboies','aboyez','près du portail'],
+      ['Les chiens de mon voisin','aboient','aboie','aboies','aboyez','près du portail'],
+      ['La fille et son frère','jouent','joue','joues','jouez','aux échecs'],
+      ['Le bouquet de fleurs','reste','restent','restes','restez','sur la table'],
+      ['Les fleurs du jardin','poussent','pousse','pousses','poussez','près du mur'],
+      ['Un livre sur les océans','repose','reposent','reposes','reposez','sur l’étagère'],
+      ['Les livres de ce rayon','racontent','raconte','racontes','racontez','des voyages'],
+      ['La lumière des étoiles','brille','brillent','brilles','brillez','dans la nuit']
+    ];
+    const [subject,form,...rest]=cases[i],complement=rest.at(-1),decoys=rest.slice(0,-1);
+    prompt=`Complète : « ${subject} ___ ${complement}. »`;correct=form;wrong=decoys;
+    explanation=`Le verbe s’accorde avec le noyau du sujet « ${subject} » : « ${form} ».`;
+    skill=i<12?'Pronoms et sujets simples':'Sujets nominaux complexes';
   }else if(id==='FR-G08'){
     const verbs=[['aimer','aim'],['chanter','chant'],['parler','parl'],['marcher','march'],['regarder','regard'],['dessiner','dessin'],['danser','dans'],['jouer','jou'],['travailler','travaill'],['chercher','cherch']];
     const [infinitive,stem]=verbs[Math.floor(i/2)],ending=['ons','ez','ent','es'][i%4],form=stem+ending;
@@ -709,6 +741,59 @@ const readingBanks={
       ['B','Motivation','Pourquoi son oncle propose-t-il de courir avec elle ?','Pour l’aider à se préparer.','Pour l’empêcher de s’inscrire.','Pour déplacer le parcours.','Pour gagner à sa place.','L’entraînement répond à l’hésitation de Nina.'],
       ['B','Évolution','Qu’est-ce qui aide Nina à décider de participer ?','Elle constate ses progrès à l’entraînement.','Elle reçoit la promesse de gagner.','Elle apprend que la course est annulée.','Elle découvre que personne d’autre ne court.','Elle remarque qu’elle peut courir plus longtemps qu’au début.'],
       ['B','Nuance','À la fin, que sait Nina à propos du résultat ?','Elle peut participer sans être certaine de gagner.','Elle est certaine de finir première.','Elle est certaine de finir dernière.','Le résultat est déjà publié.','Le texte dit qu’elle ne gagnera peut-être pas, mais qu’elle choisit de participer.']
+    ]
+  },
+  'FR-L10':{
+    stories:{
+      A:'Dans le vivarium, une mante religieuse reste immobile sur une branche. Sa couleur verte se confond avec celle des feuilles : ce camouflage la rend difficile à repérer. Un matin, elle abandonne son ancienne enveloppe extérieure. Cette exuvie reste accrochée à la branche, tandis que la mante, devenue plus grande, se déplace ailleurs. Avec ses pattes avant, elle saisit une mouche.',
+      B:'Au musée, Inès ouvre avec précaution une carte ancienne : le papier est fragile et pourrait se déchirer. Elle déploie la carte à plat sur une grande table. Certains tracés se sont estompés avec le temps ; leurs lignes sont maintenant pâles. Inès compare cette carte à une copie récente pour retrouver le trajet d’une rivière.'
+    },items:[
+      ['A','Contexte','Dans ce texte, que signifie « immobile » ?','Qui ne bouge pas.','Qui court très vite.','Qui vient de naître.','Qui dort toujours.','La mante reste sur la branche sans se déplacer.'],
+      ['A','Contexte','Que signifie ici « camouflage » ?','Une apparence qui rend difficile à voir.','Un bruit très fort.','Une nourriture pour insectes.','Une maison de verre.','Sa couleur verte se confond avec les feuilles.'],
+      ['A','Contexte','Que désigne « exuvie » dans ce passage ?','L’ancienne enveloppe extérieure abandonnée.','La branche verte.','La mouche attrapée.','Le vivarium entier.','Le texte dit qu’elle abandonne son enveloppe extérieure et que cette exuvie reste sur la branche.'],
+      ['A','Contexte','Dans « elle saisit une mouche », que fait la mante ?','Elle attrape la mouche.','Elle dessine la mouche.','Elle évite la mouche.','Elle libère la mouche.','Les pattes avant servent ici à prendre la mouche.'],
+      ['A','Indice','Quel indice aide le plus à comprendre « camouflage » ?','Sa couleur verte se confond avec celle des feuilles.','La mante devient plus grande.','La mouche se déplace.','Le vivarium est dans une salle.','La ressemblance avec les feuilles explique pourquoi la mante est difficile à repérer.'],
+      ['B','Contexte','Que signifie « fragile » pour ce papier ?','Il risque de se déchirer facilement.','Il est imperméable.','Il est plus lourd qu’une table.','Il est fait de métal.','Le texte associe « fragile » au risque de déchirure.'],
+      ['B','Contexte','Que fait Inès quand elle « déploie » la carte ?','Elle l’ouvre et l’étend.','Elle la découpe.','Elle la cache.','Elle la jette.','Elle ouvre la carte à plat sur la table.'],
+      ['B','Contexte','Que signifie « estompés » pour les tracés ?','Devenus moins visibles.','Devenus très épais.','Peints en rouge vif.','Effacés volontairement au couteau.','Le texte précise que les lignes sont maintenant pâles.'],
+      ['B','Indice','Quel passage aide à comprendre « estompés » ?','« leurs lignes sont maintenant pâles »','« Au musée »','« une grande table »','« une copie récente »','La pâleur des lignes indique qu’on les voit moins bien.'],
+      ['B','Stratégie','Si Inès hésite sur « tracé », quel élément du texte peut l’aider ?','Les lignes de la carte.','La date de visite du musée.','Le poids de la table.','Le prénom de la chercheuse.','Un tracé de carte est représenté par des lignes.']
+    ]
+  },
+  'FR-L11':{
+    stories:{
+      A:'À l’aube, Adam place des graines dans trois petits pots. Il colle les lettres A, B et C sur les étiquettes. Il laisse le pot A près de la fenêtre, le pot B dans une armoire et le pot C près de la fenêtre mais sans l’arroser. Après cinq jours, une tige apparaît dans le pot A. La terre du pot C est sèche. Adam note ses observations dans un carnet.',
+      B:'Noé prépare une promenade à vélo avec sa sœur. Avant de partir, il voit des nuages sombres et consulte la météo : la pluie est annoncée pour l’après-midi. Sa sœur voudrait quand même parcourir la longue piste. Noé propose plutôt une boucle courte près de la maison. Ils rentrent juste avant les premières gouttes et rangent leurs vélos sous l’abri.'
+    },items:[
+      ['A','Indice','Quel passage indique que le pot A peut recevoir de la lumière ?','« près de la fenêtre »','« les lettres A, B et C »','« dans une armoire »','« la terre du pot C est sèche »','Le texte situe le pot A près de la fenêtre.'],
+      ['A','Preuve explicite','Quel passage montre que le pot B n’est pas à la fenêtre ?','« le pot B dans une armoire »','« une tige apparaît »','« les étiquettes »','« à l’aube »','Le lieu du pot B est indiqué directement.'],
+      ['A','Preuve explicite','Quel passage explique pourquoi la terre du pot C est sèche ?','« mais sans l’arroser »','« près de la fenêtre »','« des graines »','« un carnet »','Le pot C n’a pas été arrosé.'],
+      ['A','Vérification','Adam dit : « Une tige est apparue dans tous les pots. » Que permet de vérifier le texte ?','Seule l’apparition d’une tige dans A est mentionnée.','Le pot B a deux tiges.','Tous les pots ont une tige.','Aucune tige n’apparaît.','Le texte parle d’une tige dans A et ne donne pas ce résultat pour B ou C.'],
+      ['A','Preuve explicite','Quel passage prouve qu’Adam conserve une trace de son observation ?','« Adam note ses observations dans un carnet »','« trois petits pots »','« la terre du pot C »','« près de la fenêtre »','Noter dans un carnet permet de garder une trace.'],
+      ['B','Preuve explicite','Quel passage indique que Noé a vérifié une prévision ?','« consulte la météo »','« une promenade à vélo »','« la longue piste »','« rangent leurs vélos »','Le texte précise qu’il consulte la météo.'],
+      ['B','Inférence justifiée','Quel indice soutient le mieux l’idée que Noé craint la pluie pendant la sortie ?','« la pluie est annoncée pour l’après-midi »','« avec sa sœur »','« leurs vélos »','« près de la maison »','L’annonce de pluie justifie sa prudence.'],
+      ['B','Preuve explicite','Quel passage montre que la sœur souhaite une sortie plus longue ?','« sa sœur voudrait quand même parcourir la longue piste »','« une boucle courte »','« les premières gouttes »','« sous l’abri »','Elle exprime le souhait de prendre la longue piste.'],
+      ['B','Vérification','Une personne affirme : « Ils sont rentrés après une forte averse. » Quelle phrase corrige cette interprétation ?','« Ils rentrent juste avant les premières gouttes »','« il voit des nuages sombres »','« sa sœur voudrait »','« Noé propose »','Le retour a lieu avant le début de la pluie.'],
+      ['B','Preuve explicite','Quel passage montre que les vélos sont protégés à la fin ?','« rangent leurs vélos sous l’abri »','« la longue piste »','« consulte la météo »','« une boucle courte »','Les vélos sont placés sous un abri.']
+    ]
+  },
+  'FR-L12':{
+    stories:{
+      A:'Au bord du sentier, Zoé aperçoit une petite clé. Elle la ramasse, cherche une porte à proximité, puis remarque une boîte fermée sous un banc. La clé ouvre la boîte. À l’intérieur, une étiquette porte le nom du jardinier. Zoé lui rapporte la boîte le lendemain.',
+      B:'Les couleuvres sont des serpents présents dans plusieurs régions de France. Elles n’ont pas de pattes et se déplacent en ondulant. Selon l’espèce, elles peuvent se nourrir de poissons, d’amphibiens ou de petits mammifères. Leur taille varie avec l’espèce et l’âge.',
+      C:'Pour fabriquer un cadran solaire simple : 1. Plante un bâton droit dans un endroit ensoleillé. 2. Marque au sol la position de son ombre à différentes heures. 3. Compare la position des marques. Demande l’aide d’un adulte pour planter le bâton.',
+      D:'Bibliothèque municipale — Horaires : mardi 14 h–18 h ; mercredi 10 h–18 h ; samedi 10 h–16 h. Les livres empruntés doivent être rapportés dans les trois semaines. Pour prolonger un prêt, adresse-toi à l’accueil avant la date de retour.'
+    },items:[
+      ['A','Type de texte','Quel type de texte est-ce surtout ?','Un récit','Une recette','Un horaire','Une définition de dictionnaire','Des personnages accomplissent des actions successives.'],
+      ['A','Chronologie','Que fait Zoé après avoir trouvé la clé ?','Elle cherche une porte à proximité.','Elle rapporte immédiatement la boîte.','Elle lit les horaires de la bibliothèque.','Elle plante un bâton.','Elle ramasse la clé puis cherche une porte.'],
+      ['B','Type de texte','Quel type de texte est-ce surtout ?','Un texte documentaire','Un récit à énigme','Une consigne de bricolage','Un dialogue théâtral','Le texte présente des informations générales sur les couleuvres.'],
+      ['B','Information','De quoi les couleuvres peuvent-elles se nourrir selon ce texte ?','De poissons, d’amphibiens ou de petits mammifères.','Uniquement de feuilles.','De pierres.','De livres.','Leur alimentation possible est indiquée dans le paragraphe.'],
+      ['B','But','Quel est le but principal du texte sur les couleuvres ?','Informer sur ces animaux.','Raconter la journée de Zoé.','Donner les horaires d’un lieu.','Faire planter un bâton.','Il donne des faits sur leurs déplacements, leur alimentation et leur taille.'],
+      ['C','Type de texte','Quel type de texte est-ce surtout ?','Une suite de consignes','Un récit de voyage','Une publicité','Un poème','Les verbes à l’impératif donnent les étapes à suivre.'],
+      ['C','Consigne','Que faut-il faire avant de marquer l’ombre ?','Planter le bâton dans un endroit ensoleillé.','Comparer les marques.','Ranger les livres.','Ouvrir une boîte.','La numérotation place la plantation du bâton avant le marquage.'],
+      ['C','Consigne','Quelle aide le texte demande-t-il ?','L’aide d’un adulte pour planter le bâton.','L’aide d’un bibliothécaire pour lire une carte.','L’aide d’un jardinier pour trouver une clé.','Aucune aide dans tous les cas.','La dernière phrase précise l’aide demandée.'],
+      ['D','Type de texte','À quoi sert surtout ce texte ?','À donner des informations pratiques sur une bibliothèque.','À raconter une aventure.','À expliquer l’alimentation des serpents.','À donner une recette.','Il présente des horaires et une règle de prêt.'],
+      ['D','Information','Quel jour la bibliothèque ouvre-t-elle à 10 h et ferme-t-elle à 18 h ?','Le mercredi','Le mardi','Le samedi','Le lundi','La ligne des horaires indique mercredi 10 h–18 h.']
     ]
   }
 };
