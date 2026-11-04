@@ -104,10 +104,14 @@ const extraSpecs=[
   ['MA-Q04','Mathématiques','Masses : choisir et convertir les unités','Gramme, kilogramme et tonne'],
   ['MA-Q05','Mathématiques','Contenances : litre, décilitre et centilitre','CE2 : comparer et convertir',[10,20]],
   ['MA-Q06','Mathématiques','Euros et centimes','Constituer et comparer des montants'],
+  ['MA-Q07','Mathématiques','Achats et monnaie rendue','Calculer le rendu de monnaie en euros et centimes'],
   ['MA-Q08','Mathématiques','Lire l’heure sur une horloge','Heures, demies, quarts ; minutes au CE2'],
   ['MA-Q09','Mathématiques','Calculer des durées','Heures et minutes dans une journée'],
+  ['MA-G01','Mathématiques','Reconnaître les solides','Cube, pavé, boule, cône, pyramide et cylindre'],
   ['MA-G03','Mathématiques','Reconnaître les figures planes','Carré, rectangle, triangle rectangle et losange'],
-  ['MA-D02','Mathématiques','Lire un diagramme en barres','Valeurs et échelles'],
+  ['MA-G04','Mathématiques','Vocabulaire des figures','Côté, sommet, angle, rayon, diamètre et diagonale'],
+  ['MA-G07','Mathématiques','Reconnaître un axe de symétrie','Axes vertical, horizontal et diagonal',[10,20]],
+  ['MA-D02','Mathématiques','Lire un graphique ou un tableau','Diagrammes en barres et tableaux à double entrée'],
   ['MA-D03','Mathématiques','Calculer à partir d’un diagramme','Totaux et comparaisons'],
   ['FR-G01','Français','Sujet, verbe et compléments','Phrase simple'],
   ['FR-G02','Français','Types de phrases','Déclarative, interrogative et impérative'],
@@ -118,11 +122,13 @@ const extraSpecs=[
   ['FR-G07','Français','Accord du sujet et du verbe','Personne, nombre et sujets nominaux'],
   ['FR-G08','Français','Infinitif, radical et terminaison','Verbes du premier groupe'],
   ['FR-G09-ETRE-AVOIR','Français','Présent d’être et d’avoir','Complément du quiz sur les verbes en -er'],
+  ['FR-G09-IRREG','Français','Présent des huit verbes irréguliers','Faire, aller, dire, venir, pouvoir, voir, vouloir, prendre',[10,20]],
   ['FR-G10','Français','Imparfait des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
   ['FR-G11','Français','Futur des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
   ['FR-G12','Français','Passé composé des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
   ['FR-V02','Français','Familles de mots et affixes','Radical, préfixes et suffixes'],
   ['FR-V03','Français','Catégories de mots','Termes génériques et spécifiques'],
+  ['FR-V04','Français','Registres de langue','Familier, courant et soutenu ; choix selon la situation'],
   ['FR-V05','Français','Sens propre et sens figuré','Comprendre les expressions en contexte'],
   ['FR-L05','Français','Sens général d’un récit','Dégager l’idée d’ensemble et proposer un titre',[10]],
   ['FR-L06','Français','Chronologie et causes d’un récit','Restituer l’ordre des événements',[10]],
@@ -143,7 +149,7 @@ const extraSpecs=[
   ['QLM-C2-H06','Histoire','Chronologie et frises','Avant, après et succession',[10]],
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>({id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:'pas-testee',statusScope:'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}));
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>({id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:'pas-testee',statusScope:'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}));
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -564,9 +570,19 @@ function visualMathQuestion(id,i){
     const ordered=[base,base+2,base+4,base+6],shift=i%4,values=[...ordered.slice(shift),...ordered.slice(0,shift)].map(x=>x*step);
     visual={kind:'bars',title:'Livres empruntés',labels,values,step};
     if(id==='MA-D02'){
-      const day=i%4;prompt=`Selon le diagramme, combien de livres ont été empruntés ${labels[day].toLowerCase()} ?`;
-      correct=values[day];wrong=values.filter((_,j)=>j!==day);skill=ce2?'Lire une échelle':'Lire une barre';
-      explanation=`La barre de ${labels[day].toLowerCase()} atteint ${correct} sur l’échelle.`;
+      if(i%2){
+        const rows=['Matin','Après-midi'],columns=['Lundi','Mardi','Mercredi'];
+        const cells=[[2+i%5,4+i%5,6+i%5],[3+i%5,5+i%5,7+i%5]].map(row=>row.map(x=>x*(ce2?2:1)));
+        const row=i%4===1?0:1,col=(Math.floor(i/2))%3;
+        visual={kind:'table',title:'Livres empruntés',rows,columns,cells};
+        prompt=`Selon le tableau, combien de livres ont été empruntés ${columns[col].toLowerCase()} ${rows[row].toLowerCase()} ?`;
+        correct=cells[row][col];wrong=cells.flat().filter(x=>x!==correct);skill='Lire un tableau à double entrée';
+        explanation=`On croise la colonne « ${columns[col]} » avec la ligne « ${rows[row]} » : ${correct} livres.`;
+      }else{
+        const day=i%4;prompt=`Selon le diagramme, combien de livres ont été empruntés ${labels[day].toLowerCase()} ?`;
+        correct=values[day];wrong=values.filter((_,j)=>j!==day);skill=ce2?'Lire une échelle':'Lire une barre';
+        explanation=`La barre de ${labels[day].toLowerCase()} atteint ${correct} sur l’échelle.`;
+      }
     }else{
       const first=i%4,second=(first+2)%4,total=i%2===0;
       if(total){prompt=`Combien de livres ont été empruntés ${labels[first].toLowerCase()} et ${labels[second].toLowerCase()} ensemble ?`;correct=values[first]+values[second];wrong=[values[first],values[second],correct+step];explanation=`On additionne ${values[first]} et ${values[second]} : ${correct}.`;skill='Total de deux catégories';}
@@ -856,8 +872,117 @@ function readingQuestions(id){
 function extraQuestions(id,count){
   if(id.startsWith('QLM-'))return qlmQuestions(id);
   if(id.startsWith('FR-L'))return readingQuestions(id);
-  const all=Array.from({length:20},(_,i)=>visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
+  const all=Array.from({length:20},(_,i)=>advancedIds.has(id)?advancedQuestion(id,i):visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
+  if(count===10&&id==='FR-G09-IRREG')return [0,1,2,3,4,5,6,7,12,19].map(i=>all[i]);
+  if(count===10&&id==='FR-V04')return [0,1,4,6,8,9,12,14,16,18].map(i=>all[i]);
   return count===10?[...all.slice(0,6),...all.slice(12,16)]:all;
+}
+
+// Additional CE1/CE2 units. All pictures are drawn by app.js and described in reports.
+const advancedIds=new Set(['MA-Q07','MA-G01','MA-G04','MA-G07','FR-G09-IRREG','FR-V04']);
+function advancedQuestion(id,i){
+  const ce2=i>=12,level=['MA-G07','FR-G09-IRREG'].includes(id)||ce2?'CE2':'CE1';
+  let prompt,correct,wrong,explanation,skill,visual;
+  if(id==='MA-Q07'){
+    const ce1Prices=[115,230,345,405,270,155,325,480,215,365,125,440];
+    const ce2Prices=[565,725,830,945,675,790,615,875];
+    const price=ce2?ce2Prices[i-12]:ce1Prices[i],paid=ce2?1000:500;
+    const euros=n=>Math.floor(n/100)+','+String(n%100).padStart(2,'0')+' €';
+    visual={kind:'money',price,paid};
+    prompt='Un objet coûte '+euros(price)+'. Tu paies avec '+euros(paid)+'. Combien doit-on te rendre ?';
+    correct=euros(paid-price);
+    wrong=[euros(paid-price+10),euros(paid-price-10),euros(paid-price+100)];
+    explanation=euros(paid)+' − '+euros(price)+' = '+correct+'.';
+    skill=ce2?'Rendre la monnaie avec 10 €':'Rendre la monnaie avec 5 €';
+  }else if(id==='MA-G01'){
+    const shapes=['cube','pave','boule','cone','pyramide','cylindre','cube','pave','pyramide','boule','cylindre','cone','cube','pave','pyramide','cylindre','cone','boule','pyramide','cube'];
+    const shape=shapes[i],names={cube:'Un cube',pave:'Un pavé droit',boule:'Une boule',cone:'Un cône',pyramide:'Une pyramide à base carrée',cylindre:'Un cylindre'};
+    visual={kind:'solid',shape};
+    if(i%3===1&&['cube','pave','pyramide'].includes(shape)){
+      prompt='Combien de sommets possède ce solide ?';correct=shape==='pyramide'?5:8;wrong=[4,6,12,8,5].filter(n=>n!==correct).slice(0,3);
+      explanation=shape==='pyramide'?'Cette pyramide à base carrée a quatre sommets sur sa base et un sommet en haut.':'Le cube et le pavé droit possèdent chacun huit sommets.';
+      skill='Compter les sommets';
+    }else if(i%3===2&&['cube','pave','pyramide'].includes(shape)){
+      prompt='Combien de faces possède ce solide ?';correct=shape==='pyramide'?5:6;wrong=[4,8,12,6,5].filter(n=>n!==correct).slice(0,3);
+      explanation=shape==='pyramide'?'Une base carrée et quatre faces triangulaires font cinq faces.':'Le cube et le pavé droit possèdent chacun six faces.';
+      skill='Compter les faces';
+    }else{
+      prompt='Quel est le nom de ce solide ?';correct=names[shape];
+      wrong=Object.values(names).filter(name=>name!==correct).slice(i%3,i%3+3);
+      if(wrong.length<3)wrong=Object.values(names).filter(name=>name!==correct).slice(0,3);
+      explanation='Ce solide est '+correct.toLowerCase()+'.';skill='Nommer un solide';
+    }
+  }else if(id==='MA-G04'){
+    const part=ce2?['rayon','diametre','diagonale','rayon','diametre','diagonale','rayon','diametre'][i-12]:['cote','sommet','angle','cote','sommet','angle','cote','sommet','angle','cote','sommet','angle'][i];
+    visual={kind:'geometryPart',part,variant:i};
+    prompt='Comment appelle-t-on la partie dorée de cette figure ?';
+    const labels={cote:'Un côté',sommet:'Un sommet',angle:'Un angle',rayon:'Un rayon',diametre:'Un diamètre',diagonale:'Une diagonale'};
+    correct=labels[part];wrong=Object.values(labels).filter(x=>x!==correct).slice(ce2?2:0,ce2?5:3);
+    if(wrong.length<3)wrong=Object.values(labels).filter(x=>x!==correct).slice(0,3);
+    const meanings={cote:'Un côté est un segment du contour de la figure.',sommet:'Un sommet est un point où deux côtés se rejoignent.',angle:'Un angle est formé par deux côtés qui se rencontrent.',rayon:'Un rayon va du centre du cercle à un point du cercle.',diametre:'Un diamètre relie deux points du cercle en passant par son centre.',diagonale:'Une diagonale relie deux sommets non voisins.'};
+    explanation=meanings[part];skill='Identifier '+labels[part].toLowerCase();
+  }else if(id==='MA-G07'){
+    const mode=i%4,bases=[
+      [[0,0],[0,1],[1,1],[1,3],[2,4]],
+      [[0,2],[1,0],[1,1],[2,1],[2,5]],
+      [[0,5],[0,4],[1,3],[2,2],[2,0]],
+      [[0,3],[1,5],[1,2],[2,1],[2,0]],
+      [[0,1],[0,2],[1,4],[2,0],[2,3]]
+    ],base=bases[Math.floor(i/4)];
+    const cells=mode===3?base:base.flatMap(([x,y])=>mode===0?[[x,y],[5-x,y]]:mode===1?[[x,y],[x,5-y]]:[[x,y],[y,x]]);
+    visual={kind:'symmetry',cells:[...new Map(cells.map(([x,y])=>[x+','+y,[x,y]])).values()]};
+    prompt='Quel axe de symétrie cette figure possède-t-elle ?';
+    const answers=['Un axe vertical','Un axe horizontal','Une diagonale','Aucun de ces axes'];
+    correct=answers[mode];wrong=answers.filter(x=>x!==correct);
+    explanation=mode===3?'Aucun des axes proposés ne partage cette figure en deux parties superposables.':'En pliant sur '+['l’axe vertical','l’axe horizontal','la diagonale'][mode]+', les cases colorées se superposent.';
+    skill=['Axe vertical','Axe horizontal','Axe diagonal','Absence d’axe'][mode];
+  }else if(id==='FR-G09-IRREG'){
+    const forms={
+      faire:['fais','fais','fait','faisons','faites','font'],
+      aller:['vais','vas','va','allons','allez','vont'],
+      dire:['dis','dis','dit','disons','dites','disent'],
+      venir:['viens','viens','vient','venons','venez','viennent'],
+      pouvoir:['peux','peux','peut','pouvons','pouvez','peuvent'],
+      voir:['vois','vois','voit','voyons','voyez','voient'],
+      vouloir:['veux','veux','veut','voulons','voulez','veulent'],
+      prendre:['prends','prends','prend','prenons','prenez','prennent']
+    };
+    const bank=[
+      ['faire',0,'Je','un dessin pour le livre.'],['aller',1,'Tu','à la bibliothèque.'],
+      ['dire',5,'Les enfants','bonjour à leur voisine.'],['venir',3,'Nous','chez nos grands-parents.'],
+      ['pouvoir',2,'Elle','ouvrir la fenêtre.'],['voir',4,'Vous','les étoiles ce soir.'],
+      ['vouloir',5,'Ils','finir cette partie.'],['prendre',2,'Mon frère','le train demain.'],
+      ['faire',3,'Nous','une expérience.'],['aller',5,'Mes cousins','au musée.'],
+      ['dire',2,'Le guide','le nom de la plante.'],['venir',1,'Tu','avec moi au parc.'],
+      ['pouvoir',4,'Vous','comparer les deux cartes.'],['voir',0,'Je','un oiseau sur la branche.'],
+      ['vouloir',2,'La chercheuse','vérifier son idée.'],['prendre',3,'Nous','nos carnets pour noter.'],
+      ['faire',5,'Les élèves','un plan du quartier.'],['venir',2,'Ma grand-mère','nous voir dimanche.'],
+      ['voir',5,'Les randonneurs','la montagne au loin.'],['prendre',4,'Vous','la route vers le village.']
+    ];
+    const [verb,person,subject,rest]=bank[i];
+    prompt=subject+' ___ '+rest;correct=forms[verb][person];
+    wrong=[...new Set(forms[verb])].filter(x=>x!==correct).slice(0,3);
+    explanation='Au présent, avec « '+subject+' », le verbe '+verb+' s’écrit « '+correct+' » : '+subject+' '+correct+' '+rest;
+    skill='Présent '+(verb==='aller'?"d’aller":'de '+verb);
+  }else if(id==='FR-V04'){
+    const words=[
+      {familier:'bagnole',courant:'voiture',soutenu:'automobile',autre:'bicyclette'},
+      {familier:'bouquin',courant:'livre',soutenu:'ouvrage',autre:'journal'},
+      {familier:'baraque',courant:'maison',soutenu:'demeure',autre:'cabane'},
+      {familier:'bouffer',courant:'manger',soutenu:'se restaurer',autre:'dormir'},
+      {familier:'flic',courant:'policier',soutenu:'fonctionnaire de police',autre:'pompier'}
+    ];
+    const set=words[Math.floor(i/4)],mode=i%4;
+    if(mode===0){prompt='Quel mot est familier ?';correct=set.familier;skill='Reconnaître le registre familier';}
+    else if(mode===1){prompt='Quel mot appartient au registre courant ?';correct=set.courant;skill='Reconnaître le registre courant';}
+    else if(mode===2){prompt='Quel mot ou expression est le plus soutenu parmi ces propositions ?';correct=set.soutenu;skill='Comparer les registres';}
+    else {prompt='Pour remplacer « '+set.familier+' » dans un texte au registre courant, que choisir ?';correct=set.courant;skill='Passer au registre courant';}
+    wrong=[set.familier,set.courant,set.soutenu,set.autre].filter(x=>x!==correct);
+    explanation='« '+set.familier+' » est familier ; « '+set.courant+' » est courant ; « '+set.soutenu+' » est plus soutenu dans ce groupe de mots.';
+  }else throw Error('Unité avancée inconnue : '+id);
+  const choices=typeof correct==='number'?extraNumber(correct,wrong,i):extraChoice(correct,wrong,i);
+  const key=skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-');
+  return {level,skill,subskillId:id+'-'+key,programmeSkills:[id.split('-IRREG')[0]],prompt,...choices,explanation,...(visual?{visual}:{})};
 }
 
 const builtIn = {
@@ -1238,6 +1363,67 @@ function drawVisual(visual){
     for(let value=0;value<=max;value+=visual.step){const y=bottom-value/max*height;add('line',{x1:72,y1:y,x2:690,y2:y,stroke:'#dedede','stroke-width':1});add('text',{x:58,y:y+6,'text-anchor':'end','font-size':16,fill:'#444'},String(value));}
     visual.values.forEach((value,i)=>{const x=105+i*145,y=bottom-value/max*height;add('rect',{x,y,width:76,height:bottom-y,fill:'#b58a23',stroke:'#333','stroke-width':2});add('text',{x:x+38,y:282,'text-anchor':'middle','font-size':17,fill:'#333'},visual.labels[i]);});
     add('line',{x1:72,y1:bottom,x2:690,y2:bottom,stroke:'#333','stroke-width':2});
+  }else if(visual.kind==='table'){
+    svg.setAttribute('viewBox','0 0 720 285');svg.setAttribute('aria-label','Tableau à double entrée : '+visual.rows.map((row,i)=>row+', '+visual.columns.map((col,j)=>col+' '+visual.cells[i][j]).join(', ')).join(' ; '));
+    add('text',{x:360,y:28,'text-anchor':'middle','font-size':22,'font-weight':'bold',fill:'#333'},visual.title);
+    const x0=75,y0=54,w=142,h=67;
+    visual.columns.forEach((col,j)=>{add('rect',{x:x0+(j+1)*w,y:y0,width:w,height:h,fill:'#eee',stroke:'#777'});add('text',{x:x0+(j+1.5)*w,y:y0+42,'text-anchor':'middle','font-size':20,fill:'#333'},col)});
+    visual.rows.forEach((row,i)=>{add('rect',{x:x0,y:y0+(i+1)*h,width:w,height:h,fill:'#eee',stroke:'#777'});add('text',{x:x0+w/2,y:y0+(i+1.62)*h,'text-anchor':'middle','font-size':18,fill:'#333'},row);visual.cells[i].forEach((value,j)=>{add('rect',{x:x0+(j+1)*w,y:y0+(i+1)*h,width:w,height:h,fill:'#fff',stroke:'#777'});add('text',{x:x0+(j+1.5)*w,y:y0+(i+1.63)*h,'text-anchor':'middle','font-size':22,fill:'#333'},String(value))})});
+  }else if(visual.kind==='money'){
+    svg.setAttribute('viewBox','0 0 720 225');svg.setAttribute('aria-label','Étiquette de prix et billet donné');
+    const euros=n=>Math.floor(n/100)+','+String(n%100).padStart(2,'0')+' €';
+    add('rect',{x:80,y:35,width:250,height:150,rx:15,fill:'#fff',stroke:'#333','stroke-width':3});
+    add('text',{x:205,y:87,'text-anchor':'middle','font-size':21,fill:'#333'},'Prix');
+    add('text',{x:205,y:137,'text-anchor':'middle','font-size':37,'font-weight':'bold',fill:'#333'},euros(visual.price));
+    add('rect',{x:385,y:35,width:250,height:150,rx:15,fill:'#dbe8dc',stroke:'#336348','stroke-width':4});
+    add('circle',{cx:510,cy:110,r:48,fill:'none',stroke:'#336348','stroke-width':2});
+    add('text',{x:510,y:96,'text-anchor':'middle','font-size':16,fill:'#336348'},'BILLET');
+    add('text',{x:510,y:130,'text-anchor':'middle','font-size':32,'font-weight':'bold',fill:'#336348'},euros(visual.paid));
+  }else if(visual.kind==='solid'){
+    svg.setAttribute('viewBox','0 0 720 260');svg.setAttribute('aria-label','Dessin d’un solide');
+    const ink={fill:'#f8edcf',stroke:'#333','stroke-width':4,'stroke-linejoin':'round'};
+    if(visual.shape==='cube'||visual.shape==='pave'){
+      const square=visual.shape==='cube',x=square?300:245,y=square?75:85,w=square?135:230,h=square?135:115,d=40;
+      add('polygon',{points:(x+','+y+' '+(x+d)+','+(y-d)+' '+(x+w+d)+','+(y-d)+' '+(x+w)+','+y),...ink});
+      add('polygon',{points:((x+w)+','+y+' '+(x+w+d)+','+(y-d)+' '+(x+w+d)+','+(y+h-d)+' '+(x+w)+','+(y+h)),...ink});
+      add('rect',{x,y,width:w,height:h,...ink});
+    }else if(visual.shape==='pyramide'){
+      add('polygon',{points:'215,190 500,190 445,222 275,222',...ink});
+      add('polygon',{points:'360,30 215,190 275,222',...ink});
+      add('polygon',{points:'360,30 275,222 445,222',...ink});
+      add('polygon',{points:'360,30 445,222 500,190',...ink});
+    }else if(visual.shape==='cylindre'){
+      add('path',{d:'M 280 72 L 280 190 A 80 23 0 0 0 440 190 L 440 72 Z',...ink});
+      add('ellipse',{cx:360,cy:72,rx:80,ry:23,...ink});
+    }else if(visual.shape==='cone'){
+      add('path',{d:'M 360 35 L 265 200 A 95 25 0 0 0 455 200 Z',...ink});
+      add('ellipse',{cx:360,cy:200,rx:95,ry:25,fill:'none',stroke:'#333','stroke-width':3});
+    }else if(visual.shape==='boule'){
+      add('circle',{cx:360,cy:130,r:95,...ink});
+      add('ellipse',{cx:360,cy:130,rx:95,ry:32,fill:'none',stroke:'#b58a23','stroke-width':2});
+    }
+  }else if(visual.kind==='geometryPart'){
+    svg.setAttribute('viewBox','0 0 720 240');svg.setAttribute('aria-label','Figure avec une partie dorée');
+    const gold='#b58a23';
+    if(visual.part==='rayon'||visual.part==='diametre'){
+      add('circle',{cx:360,cy:120,r:85,fill:'none',stroke:'#333','stroke-width':4});
+      add('circle',{cx:360,cy:120,r:5,fill:'#333'});
+      const angle=(visual.variant%4)*Math.PI/4,dx=85*Math.cos(angle),dy=85*Math.sin(angle);
+      if(visual.part==='rayon')add('line',{x1:360,y1:120,x2:360+dx,y2:120+dy,stroke:gold,'stroke-width':8});
+      else add('line',{x1:360-dx,y1:120-dy,x2:360+dx,y2:120+dy,stroke:gold,'stroke-width':8});
+    }else{
+      const shapes=[[[260,38],[460,38],[460,198],[260,198]],[[360,30],[500,198],[220,198]],[[360,25],[495,95],[445,205],[275,205],[225,95]],[[300,25],[420,25],[500,115],[420,205],[300,205],[220,115]]];
+      const points=visual.part==='diagonale'?shapes[0]:shapes[visual.variant%4],a=points[0],b=points[1],last=points[points.length-1];
+      add('polygon',{points:points.map(p=>p.join(',')).join(' '),fill:'#fff',stroke:'#333','stroke-width':4});
+      if(visual.part==='cote')add('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],stroke:gold,'stroke-width':8});
+      else if(visual.part==='sommet')add('circle',{cx:a[0],cy:a[1],r:11,fill:gold});
+      else if(visual.part==='angle'){const q1=[a[0]+(b[0]-a[0])*.2,a[1]+(b[1]-a[1])*.2],q2=[a[0]+(last[0]-a[0])*.2,a[1]+(last[1]-a[1])*.2];add('path',{d:'M '+q1.join(' ')+' L '+a.join(' ')+' L '+q2.join(' '),fill:'none',stroke:gold,'stroke-width':7});}
+      else add('line',{x1:points[0][0],y1:points[0][1],x2:points[2][0],y2:points[2][1],stroke:gold,'stroke-width':8});
+    }
+  }else if(visual.kind==='symmetry'){
+    svg.setAttribute('viewBox','0 0 720 260');svg.setAttribute('aria-label','Figure sur un quadrillage de six cases sur six');
+    const x0=246,y0=16,size=38,filled=new Set(visual.cells.map(([x,y])=>x+','+y));
+    for(let y=0;y<6;y++)for(let x=0;x<6;x++)add('rect',{x:x0+x*size,y:y0+y*size,width:size,height:size,fill:filled.has(x+','+y)?'#b58a23':'#fff',stroke:'#777','stroke-width':1});
   }else throw Error(`Diagramme inconnu : ${visual.kind}`);
   svg.setAttribute('role','img');host.append(svg);
 }
