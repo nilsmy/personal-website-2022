@@ -257,7 +257,7 @@ function nextMathQuestions(id,count){
         const parts=[3,4,5,6,8,10][(i+Math.floor(i/10))%6],a=1+i%(parts-1),b=a===parts-1?a-1:a+1;
         left={parts,filled:a,offset:i%parts};right={parts,filled:b,offset:(i+2)%parts};kind='Même dénominateur';subskillId='MA-F04-MEME-DEN';
       }else if(!ce2){
-        const p=[2,3,4,5,6,8][i%6],q=p===8?10:p+1;
+        const [p,q]=[[2,3],[3,4],[4,5],[5,6],[6,8],[8,10]][i%6];
         left={parts:p,filled:1,offset:i%p};right={parts:q,filled:1,offset:i%q};kind='Fractions unitaires';subskillId='MA-F04-UNIT';
       }else if(i%4===2){
         const p=3+i%4,q=p+1,a=2;
