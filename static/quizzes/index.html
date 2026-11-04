@@ -13,6 +13,7 @@
     .card{background:#f5f5f5;border:1px solid #c9c9c9;border-radius:14px;padding:clamp(22px,4vw,38px);margin-top:20px}
     .card p{line-height:1.5}.eyebrow{color:#666;font-weight:600}
     #question{font-size:clamp(1.45rem,3vw,2rem);line-height:1.35;margin:30px 0;color:#333}
+    #passage{white-space:pre-line;line-height:1.65;font-size:1.08rem;background:#fff;border-left:5px solid #b38a2a;padding:18px 22px;margin:25px 0;border-radius:4px}
     #diagram{max-width:100%;overflow-x:auto;margin:-12px 0 24px}#diagram:empty{display:none}#diagram svg{display:block;max-width:100%;height:auto;background:#fff;border:1px solid #ddd;border-radius:8px}
     .choices{display:grid;gap:12px}.choice{width:100%;text-align:left;border:1px solid #c9c9c9;background:#fff;border-radius:8px;padding:16px 18px;color:#444;font-size:1.12rem}
     .choice:hover,.choice:focus-visible{border-color:#2876a6;outline:2px solid #2876a644}.choice[disabled]{cursor:default}
@@ -63,7 +64,7 @@
   </section>
   <section id="play" class="card hidden" aria-live="polite">
     <div class="stats"><span id="position" class="eyebrow"></span><span id="score"></span></div><progress id="progress" max="10" value="0"></progress>
-    <h2 id="question"></h2><div id="diagram"></div><div id="choices" class="choices"></div>
+    <div id="passage" class="hidden"></div><h2 id="question"></h2><div id="diagram"></div><div id="choices" class="choices"></div>
     <button id="unknown" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Je ne sais pas</button>
     <button id="confirm" class="primary footer" disabled><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>Valider</button>
     <div id="feedback" class="feedback hidden"></div>
@@ -72,6 +73,572 @@
   </section>
   <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><div class="toolbar"><button id="email" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envoyer par e-mail</button><button id="saveFolder" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Recommencer</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport</summary><pre id="report"></pre></details></section>
 </main><script>
+// Additional bounded CE1/CE2 diagnostics. Codes refer to the local programme maps.
+const extraSpecs=[
+  ['MA-M01','Mathématiques','Tables d’addition','Faits additifs et terme manquant'],
+  ['MA-M02','Mathématiques','Tables de multiplication','Faits multiplicatifs et facteur manquant'],
+  ['MA-M03','Mathématiques','Doubles, moitiés et multiples de 25','Faits numériques à mémoriser'],
+  ['MA-M04','Mathématiques','Ajouter et soustraire dizaines et centaines','Calcul mental par la numération'],
+  ['MA-M05','Mathématiques','Multiplier par 10 ou 100','Valeur de position dans le calcul'],
+  ['MA-M06','Mathématiques','Calculer autour de 9, 19, 29 et 39','Compensation en calcul mental'],
+  ['MA-M07','Mathématiques','Soustraire un petit nombre avec passage de dizaine','Soustractions inférieures à 9'],
+  ['MA-M08','Mathématiques','Moitiés et doubles successifs','Moitié d’un pair ; multiplier par 4 ou 8'],
+  ['MA-M09','Mathématiques','Multiplier par décomposition','Distributivité : 11 à 19 au CE1, jusqu’à 99 au CE2'],
+  ['MA-M10','Mathématiques','Multiplier par un nombre entier de dizaines','Faits multiplicatifs et dizaines'],
+  ['MA-P02','Mathématiques','Problèmes additifs à une étape','Parties–tout, transformation et comparaison'],
+  ['MA-P03','Mathématiques','Problèmes additifs à deux étapes','Deux transformations ou comparaison intermédiaire'],
+  ['MA-P04','Mathématiques','Problèmes multiplicatifs à une étape','Groupes égaux et valeur du tout'],
+  ['MA-P05','Mathématiques','Partager équitablement','Nombre de parts ou valeur d’une part'],
+  ['MA-P06','Mathématiques','Problèmes mêlant addition et multiplication','Deux ou trois étapes'],
+  ['MA-P07','Mathématiques','Comparer par différence ou par multiplication','CE2 : de plus/de moins et fois plus/fois moins'],
+  ['MA-P08','Mathématiques','Compter des combinaisons','CE2 : tableaux, arbres et produits cartésiens'],
+  ['FR-G01','Français','Sujet, verbe et compléments','Phrase simple'],
+  ['FR-G02','Français','Types de phrases','Déclarative, interrogative et impérative'],
+  ['FR-G03','Français','Formes de phrases','Négative et exclamative'],
+  ['FR-G04','Français','Classes de mots','Déterminant, nom, adjectif, verbe et pronom ; adverbe au CE2'],
+  ['FR-G05','Français','Ponctuation de la phrase','Point, point d’interrogation et point d’exclamation'],
+  ['FR-G06','Français','Accords dans le groupe nominal','Déterminant, nom et adjectif'],
+  ['FR-G08','Français','Infinitif, radical et terminaison','Verbes du premier groupe'],
+  ['FR-G09-ETRE-AVOIR','Français','Présent de être et avoir','Complément du quiz sur les verbes en -er'],
+  ['FR-G10','Français','Imparfait des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
+  ['FR-G11','Français','Futur des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
+  ['FR-G12','Français','Passé composé des verbes étudiés','Être, avoir et premier groupe ; extension CE2'],
+  ['FR-V02','Français','Familles de mots et affixes','Radical, préfixes et suffixes'],
+  ['FR-V03','Français','Catégories de mots','Termes génériques et spécifiques'],
+  ['FR-V05','Français','Sens propre et sens figuré','Comprendre les expressions en contexte'],
+  ['FR-L05','Français','Sens général d’un récit','Dégager l’idée d’ensemble et proposer un titre',[10]],
+  ['FR-L06','Français','Chronologie et causes d’un récit','Restituer l’ordre des événements',[10]],
+  ['FR-L07','Français','À qui renvoient les pronoms ?','Suivre les reprises dans un texte',[10]],
+  ['FR-L08','Français','Faire des inférences','Relier les indices du texte',[10]],
+  ['FR-L09','Français','Émotions et motivations des personnages','Comprendre pensées, intentions et réactions',[10]],
+  ['QLM-C2-S02','Sciences','États de l’eau','Solide, liquide et gaz ; changements d’état',[10]],
+  ['QLM-C2-S04','Sciences','Vivant et cycles de vie','Animaux, végétaux et développement',[10]],
+  ['QLM-C2-S05','Sciences','Besoins et régimes alimentaires','Animaux, végétaux et milieu',[10]],
+  ['QLM-C2-S06','Sciences','Chaînes alimentaires','Producteurs et relations de prédation',[10]],
+  ['QLM-C2-H04','Sciences','Terre, Soleil et Lune','Repères astronomiques élémentaires',[10]],
+  ['QLM-C2-H03','Géographie','France, Europe et continents','Repères sur le planisphère et le globe',[10]],
+  ['QLM-C2-H10','Géographie','Paysages et milieux','Relief, climat et modes de vie',[10]],
+  ['QLM-C2-H05','Histoire','Calendriers et durées','Dates, années, siècles et saisons',[10]],
+  ['QLM-C2-H06','Histoire','Chronologie et frises','Avant, après et succession',[10]],
+  ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
+];
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>({id,subject,title,focus,levels:id==='MA-P08'||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:'pas-testee',statusScope:'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}));
+function extraChoice(right,wrong,i){
+  const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
+  if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
+  const answer=i%4;unique.splice(0,1);unique.splice(answer,0,String(right));
+  return {choices:unique,answer};
+}
+function extraNumber(right,wrong,i){
+  const candidates=[...wrong,right+1,right-1,right+2,right-2,right+10,right-10].filter(x=>Number.isInteger(x)&&x>=0&&x!==right);
+  return extraChoice(right,candidates,i);
+}
+function extraQuestion(id,i){
+  const ce2=i>=12,level=ce2?'CE2':'CE1',k=ce2?i-12:i;
+  let prompt,correct,wrong,explanation,skill;
+  if(id==='MA-M01'){
+    const a=2+(i*7)%9,b=2+(i*5+Math.floor(i/18))%9;
+    if(i%2){prompt=`${a} + □ = ${a+b}. Quel nombre manque ?`;correct=b;wrong=[a,b+1,b-1];explanation=`${a+b} − ${a} = ${b}.`;skill='Terme manquant';}
+    else {prompt=`Combien font ${a} + ${b} ?`;correct=a+b;wrong=[a+b+1,a+b-1,a+b+2];explanation=`${a} + ${b} = ${correct}.`;skill='Fait additif';}
+  }else if(id==='MA-M02'){
+    const a=2+(i*3+Math.floor(i/18))%9,b=2+(i*7)%9;
+    if(i%2){prompt=`${a} × □ = ${a*b}. Quel facteur manque ?`;correct=b;wrong=[a,b+1,b-1];explanation=`${a} × ${b} = ${a*b}.`;skill='Facteur manquant';}
+    else {prompt=`Combien font ${a} × ${b} ?`;correct=a*b;wrong=[a*(b+1),a*b+a,a*b-1];explanation=`${a} × ${b} = ${correct}.`;skill='Fait multiplicatif';}
+  }else if(id==='MA-M03'){
+    const order=ce2?Math.floor((i-12)/3):Math.floor(i/3);
+    if(i%3===0){const n=(ce2?[13,18,35]:[4,7,9,20])[order];prompt=`Quel est le double de ${n} ?`;correct=2*n;wrong=[n+2,2*n+2,2*n-2];explanation=`${n} + ${n} = ${correct}.`;skill='Double';}
+    else if(i%3===1){const value=(ce2?[24,30,120]:[12,16,80,100])[order],n=value/2;prompt=`Quelle est la moitié de ${value} ?`;correct=n;wrong=[n+1,n-1,value];explanation=`Deux parts de ${n} font ${value}.`;skill='Moitié';}
+    else {const v=[25,50,75,100][i%4];prompt=`Combien font ${i%4+1} groupes de 25 ?`;correct=v;wrong=[v+25,Math.max(0,v-25),v+10];explanation=`${i%4+1} groupes de 25 donnent ${v}.`;skill='Multiples de 25';}
+  }else if(id==='MA-M04'){
+    const step=ce2&&i%2===0?100:10,a=(ce2?20:3)*step+((i*7)%9)*step+3+(i%6),delta=(1+i%4)*step,subtract=i%3===0;
+    prompt=`Combien font ${a} ${subtract?'−':'+'} ${delta} ?`;correct=a+(subtract?-delta:delta);
+    wrong=[correct+step,correct-step,correct+(subtract?delta:-delta)];explanation=`On ${subtract?'retire':'ajoute'} ${delta/step} ${step===100?'centaines':'dizaines'} : ${correct}.`;skill='Numération et calcul';
+  }else if(id==='MA-M05'){
+    const n=3+(i*7)%(ce2?87:86),factor=ce2&&i%2===0?100:10;
+    prompt=`Combien font ${n} × ${factor} ?`;correct=n*factor;wrong=[n*(factor/10),n*factor+factor,n*factor+10];
+    explanation=`${n} × ${factor} = ${correct} ; chaque chiffre change de valeur de position.`;skill=factor===100?'Multiplier par 100':'Multiplier par 10';
+  }else if(id==='MA-M06'){
+    const subtract=i%3===0,delta=ce2?(subtract?[9,19,29,39][k%4]:[8,9,18,19,28,29,38,39][k%8]):[9,19,29][k%3],a=52+(i*11)%148;
+    prompt=`Calcule mentalement ${a} ${subtract?'−':'+'} ${delta}.`;correct=a+(subtract?-delta:delta);
+    wrong=[correct+1,correct-1,correct+10];explanation=`${subtract?'On soustrait':'On ajoute'} ${delta+1}, puis on ${subtract?'ajoute':'retire'} 1 : ${correct}.`;skill='Compensation';
+  }else if(id==='MA-M07'){
+    const ones=i%5,sub=ones+1+(i%3),tens=2+(i*3)%8,a=tens*10+ones;
+    prompt=`Combien font ${a} − ${sub} ?`;correct=a-sub;wrong=[correct+1,correct-1,a+sub];
+    explanation=`On passe à ${tens*10}, puis on retire encore ${sub-ones} : ${correct}.`;skill='Passage de dizaine';
+  }else if(id==='MA-M08'){
+    const n=ce2?22+(k*5)%24:4+(i*5)%18;
+    if(!ce2||i%2){prompt=`Quelle est la moitié de ${2*n} ?`;correct=n;wrong=[n-1,n+1,2*n];explanation=`${n} + ${n} = ${2*n} : la moitié vaut ${n}.`;skill='Moitié d’un nombre pair';}
+    else {const factor=i%4===0?4:8;prompt=`Combien font ${n} × ${factor} ?`;correct=n*factor;wrong=[n*2,n*factor+n,n*factor-2*n];explanation=`On double ${n} ${factor===4?'deux':'trois'} fois : ${correct}.`;skill='Doubles successifs';}
+  }else if(id==='MA-M09'){
+    const a=ce2?21+(k*9)%69:11+(k*3)%9,b=2+(i*5)%8,tens=Math.floor(a/10)*10,units=a%10;
+    prompt=`Combien font ${a} × ${b} ?`;correct=a*b;wrong=[tens*b+units,tens*b+units*(b-1),correct+b];
+    explanation=`(${tens} + ${units}) × ${b} = ${tens*b} + ${units*b} = ${correct}.`;skill='Décomposition multiplicative';
+  }else if(id==='MA-M10'){
+    const a=2+(i*3)%8,tens=ce2?2+(k*5)%8:1+Math.floor(i/8);
+    prompt=`Combien font ${a} × ${tens*10} ?`;correct=a*tens*10;wrong=[a*tens,a*tens*10+10,a*(tens+1)*10];
+    explanation=`${a} × ${tens*10} = (${a} × ${tens}) dizaines = ${correct}.`;skill='Multiplier des dizaines';
+  }else return extraProblemOrFrench(id,i);
+  return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...extraNumber(correct,wrong,i),explanation};
+}
+function extraProblemOrFrench(id,i){
+  if(id.startsWith('FR-'))return extraFrenchQuestion(id,i);
+  const ce2=i>=12,level=ce2?'CE2':'CE1',k=ce2?i-12:i;
+  let prompt,correct,wrong,explanation,skill;
+  if(id==='MA-P02'){
+    const a=ce2?120+(k*37)%430:18+(i*13)%82,b=ce2?45+(k*19)%120:6+(i*7)%25;
+    if(i%3===0){prompt=`Dans une boîte, il y a ${a} billes rouges et ${b} billes bleues. Combien y a-t-il de billes en tout ?`;correct=a+b;wrong=[a-b,a+b+10,a];explanation=`On réunit les deux parties : ${a} + ${b} = ${correct}.`;skill='Parties et tout';}
+    else if(i%3===1){prompt=`Une bibliothèque possède ${a+b} livres. Elle en prête ${b}. Combien de livres reste-t-il ?`;correct=a;wrong=[a+b,a-b,b];explanation=`On retire les ${b} livres prêtés : ${a+b} − ${b} = ${a}.`;skill='Transformation';}
+    else {prompt=`Lina a ${a} cartes. Noé en a ${b} de plus. Combien de cartes Noé a-t-il ?`;correct=a+b;wrong=[a-b,b,a+b+1];explanation=`« ${b} de plus » signifie ajouter ${b} à ${a} : ${correct}.`;skill='Comparaison additive';}
+  }else if(id==='MA-P03'){
+    const a=ce2?120+(k*23)%250:24+(i*11)%70,b=ce2?45+(k*13)%90:8+(i*7)%28,c=3+(i*5)%Math.min(25,a+b-1);
+    if(i%2){prompt=`Une librairie a ${a} livres. Elle en reçoit ${b}, puis en vend ${c}. Combien lui en reste-t-il ?`;correct=a+b-c;wrong=[a+b+c,a+b,a-c];explanation=`Après la livraison : ${a+b}. Après la vente : ${a+b} − ${c} = ${correct}.`;skill='Ajouter puis retirer';}
+    else {prompt=`Au parc, il y a ${a} visiteurs. ${c} partent, puis ${b} arrivent. Combien y a-t-il de visiteurs à la fin ?`;correct=a-c+b;wrong=[a+c+b,a-c,a+b];explanation=`Après le départ : ${a-c}. Après l’arrivée : ${a-c} + ${b} = ${correct}.`;skill='Retirer puis ajouter';}
+  }else if(id==='MA-P04'){
+    const groups=3+(i*3)%9,each=ce2?16+(k*5)%25:4+(i*5)%12;
+    prompt=`Il y a ${groups} boîtes contenant chacune ${each} crayons. Combien y a-t-il de crayons en tout ?`;
+    correct=groups*each;wrong=[groups+each,groups*(each+1),groups*(each-1)];
+    explanation=`${groups} groupes de ${each} donnent ${groups} × ${each} = ${correct}.`;skill='Groupes égaux';
+  }else if(id==='MA-P05'){
+    const groups=3+(i*3)%9,each=ce2?16+(k*5)%20:4+(i*5)%12,total=groups*each;
+    if(i%2){prompt=`On range ${total} crayons dans des boîtes de ${each} crayons. Combien de boîtes faut-il ?`;correct=groups;wrong=[each,groups+1,total-each];explanation=`${groups} boîtes de ${each} font ${total} : ${total} ÷ ${each} = ${groups}.`;skill='Nombre de parts';}
+    else {prompt=`On partage également ${total} crayons entre ${groups} enfants. Combien chaque enfant reçoit-il de crayons ?`;correct=each;wrong=[groups,each+1,total-groups];explanation=`${total} ÷ ${groups} = ${each} crayons par enfant.`;skill='Valeur d’une part';}
+  }else if(id==='MA-P06'){
+    const groups=3+(i*3)%8,each=4+(i*5)%(ce2?18:10),change=2+(i*7)%12,base=groups*each,subtract=i%2===1;
+    prompt=`Un atelier prépare ${groups} lots de ${each} cartes, puis ${subtract?'utilise':'ajoute'} ${change} cartes ${subtract?'pour une affiche':'séparément'}. Combien de cartes ${subtract?'reste-t-il':'y a-t-il en tout'} ?`;
+    correct=base+(subtract?-change:change);wrong=[base,groups+each+change,base+(subtract?change:-change)];
+    explanation=`Les lots contiennent ${groups} × ${each} = ${base} cartes ; ${subtract?'on retire':'on ajoute'} ${change}, soit ${correct}.`;skill='Multiplier puis ajouter ou retirer';
+  }else if(id==='MA-P07'){
+    const a=5+(i*7)%24,b=2+(i*3)%6,multiply=ce2&&i%2===0,less=!multiply&&i%3===1;
+    prompt=multiply?`Lina a ${a} timbres. Noé en a ${b} fois plus. Combien de timbres Noé a-t-il ?`:less?`Lina a ${a+b} timbres. Noé en a ${b} de moins. Combien Noé en a-t-il ?`:`Lina a ${a} timbres. Noé en a ${b} de plus. Combien Noé en a-t-il ?`;
+    correct=multiply?a*b:less?a:a+b;wrong=[multiply?a+b:a*b,multiply?a*(b+1):a-b,correct+1];
+    explanation=multiply?`« ${b} fois plus » signifie ici ${a} × ${b} = ${correct}.`:less?`« ${b} de moins » signifie ${a+b} − ${b} = ${a}.`:`« ${b} de plus » signifie ${a} + ${b} = ${correct}.`;
+    skill=multiply?'Comparaison multiplicative':'Comparaison additive';
+  }else if(id==='MA-P08'){
+    const top=2+(i*3)%7,bottom=2+(i*5)%6;
+    prompt=`Pour créer une tenue, on peut choisir l’un des ${top} tee-shirts et l’un des ${bottom} pantalons. Combien de tenues différentes peut-on former ?`;
+    correct=top*bottom;wrong=[top+bottom,top*bottom-top,top*bottom+bottom];
+    explanation=`Chacun des ${top} tee-shirts peut être associé à ${bottom} pantalons : ${top} × ${bottom} = ${correct}.`;skill='Combinaisons de deux choix';
+  }else throw Error(`Unité non implémentée : ${id}`);
+  return {level:id==='MA-P08'?'CE2':level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...extraNumber(correct,wrong,i),explanation};
+}
+const conjugationForms={
+  present:{
+    etre:['suis','es','est','sommes','êtes','sont'],avoir:['ai','as','a','avons','avez','ont']
+  },
+  imparfait:{
+    etre:['étais','étais','était','étions','étiez','étaient'],avoir:['avais','avais','avait','avions','aviez','avaient'],
+    faire:['faisais','faisais','faisait','faisions','faisiez','faisaient'],aller:['allais','allais','allait','allions','alliez','allaient'],
+    dire:['disais','disais','disait','disions','disiez','disaient'],venir:['venais','venais','venait','venions','veniez','venaient'],
+    pouvoir:['pouvais','pouvais','pouvait','pouvions','pouviez','pouvaient'],voir:['voyais','voyais','voyait','voyions','voyiez','voyaient'],
+    vouloir:['voulais','voulais','voulait','voulions','vouliez','voulaient'],prendre:['prenais','prenais','prenait','prenions','preniez','prenaient']
+  },
+  futur:{
+    etre:['serai','seras','sera','serons','serez','seront'],avoir:['aurai','auras','aura','aurons','aurez','auront'],
+    faire:['ferai','feras','fera','ferons','ferez','feront'],aller:['irai','iras','ira','irons','irez','iront'],
+    dire:['dirai','diras','dira','dirons','direz','diront'],venir:['viendrai','viendras','viendra','viendrons','viendrez','viendront'],
+    pouvoir:['pourrai','pourras','pourra','pourrons','pourrez','pourront'],voir:['verrai','verras','verra','verrons','verrez','verront'],
+    vouloir:['voudrai','voudras','voudra','voudrons','voudrez','voudront'],prendre:['prendrai','prendras','prendra','prendrons','prendrez','prendront']
+  },
+  passe:{
+    etre:['ai été','as été','a été','avons été','avez été','ont été'],avoir:['ai eu','as eu','a eu','avons eu','avez eu','ont eu'],
+    faire:['ai fait','as fait','a fait','avons fait','avez fait','ont fait'],dire:['ai dit','as dit','a dit','avons dit','avez dit','ont dit'],
+    pouvoir:['ai pu','as pu','a pu','avons pu','avez pu','ont pu'],voir:['ai vu','as vu','a vu','avons vu','avez vu','ont vu'],
+    vouloir:['ai voulu','as voulu','a voulu','avons voulu','avez voulu','ont voulu'],prendre:['ai pris','as pris','a pris','avons pris','avez pris','ont pris']
+  }
+};
+function erForms(stem,tense){
+  const endings={present:['e','es','e','ons','ez','ent'],imparfait:['ais','ais','ait','ions','iez','aient'],futur:['erai','eras','era','erons','erez','eront']};
+  return tense==='passe'?['ai','as','a','avons','avez','ont'].map(aux=>`${aux} ${stem}é`):endings[tense].map(end=>stem+end);
+}
+function extraConjugation(id,i){
+  const level=i>=12?'CE2':'CE1',person=i%6,subjects=['Je','Tu','Il','Nous','Vous','Ils'];
+  const tense=id==='FR-G09-ETRE-AVOIR'?'present':id==='FR-G10'?'imparfait':id==='FR-G11'?'futur':'passe';
+  const regular=[['chanter','chant','dans la chorale'],['jouer','jou','dans le jardin'],['marcher','march','vers la gare'],['dessiner','dessin','un arbre']];
+  const irregular=[['faire','un dessin'],['aller','au marché'],['dire','la vérité'],['venir','à la fête'],['pouvoir','ouvrir la porte'],['voir','une étoile'],['vouloir','un livre'],['prendre','le train']];
+  const regularCase=i<12,verb=regularCase?(id==='FR-G09-ETRE-AVOIR'?(i%2?'avoir':'etre'):(i%4===0?'etre':i%4===1?'avoir':regular[Math.floor(i/4)%regular.length][0])):irregular[i-12][0];
+  if(id==='FR-G09-ETRE-AVOIR'&&i>=12){
+    const chosen=i%2?'avoir':'etre';return extraConjugationPresentAux(i,chosen);
+  }
+  const regularData=regular.find(x=>x[0]===verb),forms=regularData?erForms(regularData[1],tense):tense==='passe'&&(verb==='aller'||verb==='venir')?(verb==='aller'?['suis allé','es allé','est allé','sommes allés','êtes allés','sont allés']:['suis venu','es venu','est venu','sommes venus','êtes venus','sont venus']):conjugationForms[tense][verb];
+  let subject=subjects[person],correct=forms?.[person],rest=regularData?regularData[2]:({etre:'près de la fenêtre',avoir:'un crayon',faire:'un dessin',aller:'au marché',dire:'la vérité',venir:'à la fête',pouvoir:'ouvrir la porte',voir:'une étoile',vouloir:'un livre',prendre:'le train'})[verb];
+  if(id==='FR-G09-ETRE-AVOIR'&&i>=6)rest=verb==='etre'?'dans la cuisine':'un livre';
+  if(!correct)throw Error(`Forme manquante : ${id}, ${verb}, ${person}`);
+  if(tense==='passe'&&(verb==='aller'||verb==='venir')){
+    subject='Il';correct=verb==='aller'?'est allé':'est venu';
+  }
+  if(subject==='Je'&&/^[aeiouéèêàâîïôùû]/i.test(correct))subject='J’';
+  const starter=tense==='imparfait'?'Autrefois, ':tense==='futur'?'Demain, ':tense==='passe'?'Hier, ':'';
+  const shown=starter?subject[0].toLowerCase()+subject.slice(1):subject,prompt=`${starter}${shown}${shown.endsWith('’')?'':' '}___ ${rest}.`;
+  const wrong=(tense==='passe'&&(verb==='aller'||verb==='venir'))?
+    (verb==='aller'?['a allé','est allée','sont allés']:['a venu','est venue','sont venus']):[...new Set(forms.filter(f=>f!==correct))].slice(0,3);
+  const explanation=`Le verbe « ${verb} » au ${tense==='passe'?'passé composé':tense} avec « ${subject} » s’écrit « ${correct} ».`;
+  return {level,skill:`${tense} de ${verb}`,subskillId:`${id}-${regularData?'ER':verb.toUpperCase()}`,programmeSkills:[id==='FR-G09-ETRE-AVOIR'?'FR-G09':id],prompt,...extraChoice(correct,wrong,i),explanation};
+}
+function extraConjugationPresentAux(i,verb){
+  const person=i%6,subject=['Je','Tu','Il','Nous','Vous','Ils'][person],forms=conjugationForms.present[verb],correct=forms[person],shown=subject==='Je'&&/^[aeiou]/i.test(correct)?'J’':subject;
+  const rest=verb==='etre'?(i>=18?'au jardin':'sur la place'):(i>=18?'une idée':'deux crayons');
+  return {level:'CE2',skill:`Présent de ${verb}`,subskillId:`FR-G09-ETRE-AVOIR-${verb.toUpperCase()}`,programmeSkills:['FR-G09'],prompt:`${shown}${shown.endsWith('’')?'':' '}___ ${rest}.`,...extraChoice(correct,forms.filter(x=>x!==correct),i),explanation:`Au présent, « ${shown} » avec « ${verb} » donne « ${correct} ».`};
+}
+function extraFrenchQuestion(id,i){
+  if(['FR-G09-ETRE-AVOIR','FR-G10','FR-G11','FR-G12'].includes(id))return extraConjugation(id,i);
+  const level=i>=12?'CE2':'CE1';
+  let prompt,correct,wrong,explanation,skill;
+  const sentences=[
+    ['Le chat','dort','sur le canapé','chat','canapé'],['Les enfants','jouent','dans le jardin','enfants','jardin'],
+    ['La boulangère','prépare','du pain','boulangère','pain'],['Un avion','survole','la ville','avion','ville'],
+    ['Les abeilles','butinent','les fleurs','abeilles','fleurs'],['Le train','arrive','à la gare','train','gare'],
+    ['Ma sœur','dessine','un arbre','sœur','arbre'],['Les voisins','rangent','leurs vélos','voisins','vélos'],
+    ['Le facteur','apporte','une lettre','facteur','lettre'],['Les poissons','nagent','dans la rivière','poissons','rivière']
+  ];
+  if(id==='FR-G01'){
+    const [subject,verb,complement,subjectNoun,otherNoun]=sentences[i%sentences.length],sentence=`${subject} ${verb} ${complement}.`;
+    if(i%3===0){prompt=`Dans « ${sentence} », quel est le groupe sujet ?`;correct=subject;wrong=[subjectNoun,complement,`${subject} ${verb}`];explanation=`« ${subject} » indique qui fait l’action.`;skill='Groupe sujet';}
+    else if(i%3===1){prompt=`Dans « ${sentence} », quel est le verbe ?`;correct=verb;wrong=[subjectNoun,otherNoun,complement.split(' ')[0]];explanation=`« ${verb} » est le verbe de la phrase.`;skill='Verbe';}
+    else {prompt=`Dans « ${sentence} », quel groupe complète le verbe ?`;correct=complement;wrong=[subject,verb,`${subject} ${verb}`];explanation=`« ${complement} » apporte une information complémentaire ; on ne classe pas ici ce complément.`;skill='Complément sans classement';}
+  }else if(id==='FR-G08'){
+    const verbs=[['aimer','aim'],['chanter','chant'],['parler','parl'],['marcher','march'],['regarder','regard'],['dessiner','dessin'],['danser','dans'],['jouer','jou'],['travailler','travaill'],['chercher','cherch']];
+    const [infinitive,stem]=verbs[Math.floor(i/2)],ending=['ons','ez','ent','es'][i%4],form=stem+ending;
+    if(i%3===0){prompt=`Quel est l’infinitif de « ${form} » ?`;correct=infinitive;wrong=[form,stem+'é',stem];explanation=`« ${form} » est une forme conjuguée de « ${infinitive} ».`;skill='Infinitif';}
+    else if(i%3===1){prompt=`Dans « ${form} », quel est le radical ?`;correct=stem;wrong=[form,ending,stem.slice(0,-1)];explanation=`On retrouve « ${stem} » dans les formes du verbe « ${infinitive} ».`;skill='Radical';}
+    else {prompt=`Dans « ${form} », quelle est la terminaison ?`;correct=ending;wrong=['ons','ez','ent','es'].filter(x=>x!==ending);explanation=`Dans « ${form} », le radical est « ${stem} » et la terminaison est « ${ending} ».`;skill='Terminaison';}
+  }else if(id==='FR-G02'){
+    const subjects=['Le facteur','La tortue','Les enfants','Cette fusée','Le chat','Les joueurs','La bibliothécaire','Les oiseaux'];
+    const s=subjects[i%subjects.length],kind=i%3,commands=['Regarde le ciel !','Ferme la fenêtre !','Écoute cette histoire !','Range tes crayons !','Ouvre le livre !','Observe cette image !','Prends ton manteau !'];
+    const sentence=kind===0?`${s} arrive bientôt.`:kind===1?`${s} arrive bientôt ?`:commands[Math.floor(i/3)];
+    prompt=`Quel est le type de la phrase « ${sentence} » ?`;
+    correct=['Déclarative','Interrogative','Impérative'][kind];wrong=['Déclarative','Interrogative','Impérative','Exclamative'].filter(x=>x!==correct);
+    explanation=kind===0?'Elle donne une information : elle est déclarative.':kind===1?'Elle pose une question : elle est interrogative.':'Elle donne un ordre ou un conseil : elle est impérative.';skill='Type de phrase';
+  }else if(id==='FR-G03'){
+    const pairs=[['Le chat dort.','Le chat ne dort pas.'],['Les enfants jouent.','Les enfants ne jouent pas.'],['La pluie tombe.','La pluie ne tombe pas.'],['Nous regardons le ciel.','Nous ne regardons pas le ciel.'],['Elle parle doucement.','Elle ne parle pas doucement.'],['Tu dessines une maison.','Tu ne dessines pas une maison.'],['Le train arrive.','Le train n’arrive pas.'],['Ils cherchent la clé.','Ils ne cherchent pas la clé.'],['Je ferme la porte.','Je ne ferme pas la porte.'],['Vous écoutez la radio.','Vous n’écoutez pas la radio.']];
+    const [affirmative,negative]=pairs[Math.floor(i/2)];
+    if(i%2===0){prompt=`Quelle phrase est la forme négative de « ${affirmative} » ?`;correct=negative;wrong=[affirmative,negative.replace(' ne ',' ').replace(' n’',' '),negative.replace(' ne ',' ne pas ').replace(' n’',' ne pas ')];explanation=`La négation écrite encadre le verbe avec « ne » ou « n’ » et « pas » : ${negative}`;skill='Forme négative';}
+    else {const base=['Il fait froid.','Cette fleur est belle.','La surprise est grande.','Le paysage est magnifique.','Le château est immense.','Cette course est rapide.','Le gâteau est délicieux.','La mer est agitée.','Ce tableau est coloré.','La nouvelle est étonnante.'][Math.floor(i/2)],excl=base.replace(/\.$/,' !');prompt=`Quelle phrase exprime une exclamation à partir de « ${base} » ?`;correct=excl;wrong=[base,base.replace(/\.$/,' ?'),base.replace(/\.$/,' ,')];explanation=`Le point d’exclamation marque ici la forme exclamative : ${excl}`;skill='Forme exclamative';}
+  }else if(id==='FR-G04'){
+    const items=[
+      ['Le','Le jardin est calme.','Déterminant'],['jardin','Le jardin est calme.','Nom commun'],['calme','Le jardin est calme.','Adjectif'],['est','Le jardin est calme.','Verbe'],
+      ['Elle','Elle regarde un oiseau.','Pronom personnel sujet'],['un','Elle regarde un oiseau.','Déterminant'],['oiseau','Elle regarde un oiseau.','Nom commun'],['regarde','Elle regarde un oiseau.','Verbe'],
+      ['petite','La petite tortue avance.','Adjectif'],['tortue','La petite tortue avance.','Nom commun'],['La','La petite tortue avance.','Déterminant'],['avance','La petite tortue avance.','Verbe'],
+      ['doucement','Le chat avance doucement.','Adverbe'],['vite','La fusée monte vite.','Adverbe'],['souvent','Ils viennent souvent.','Adverbe'],['hier','Nous avons joué hier.','Adverbe'],
+      ['Claire','Claire lit un livre.','Nom propre'],['Ils','Ils rangent leurs livres.','Pronom personnel sujet'],['bleus','Les oiseaux bleus chantent.','Adjectif'],['leurs','Ils rangent leurs livres.','Déterminant']
+    ];
+    const [word,sentence,category]=items[i];prompt=`Dans « ${sentence} », quelle est la classe du mot « ${word} » ?`;
+    correct=category;wrong=['Déterminant','Nom commun','Nom propre','Adjectif','Verbe','Pronom personnel sujet','Adverbe'].filter(x=>x!==category).slice((i%3),i%3+3);
+    explanation=`Dans cette phrase, « ${word} » est un ${category.toLowerCase()}.`;skill=category;
+  }else if(id==='FR-G05'){
+    const starts=[
+      ['Le train entre en gare','.'],['Où est passé le chat','?'],['Quelle belle surprise','!'],['Les oiseaux chantent','.'],
+      ['Pourquoi la lune brille-t-elle','?'],['Comme cette histoire est drôle','!'],['La tortue avance lentement','.'],['Quand arrive le prochain bus','?'],
+      ['Quelle chance nous avons','!'],['Le facteur apporte une lettre','.'],
+      ['La bibliothèque ouvre à neuf heures','.'],['Combien de pages reste-t-il à lire','?'],['Comme le ciel est lumineux','!'],['Les enfants préparent un dessin','.'],
+      ['Qui a pris le dernier biscuit','?'],['Quel grand arbre','!'],['Un bateau traverse la rivière','.'],['Où vont les oiseaux en hiver','?'],
+      ['Comme cette chanson est belle','!'],['Le soleil éclaire la pièce','.']
+    ];
+    const [start,mark]=starts[i];prompt=`Quel signe termine correctement « ${start} » ?`;
+    correct=mark;wrong=['.','?','!',','].filter(x=>x!==mark);explanation=mark==='?'?'La phrase pose une question : point d’interrogation.':mark==='!'?'La phrase exprime une exclamation : point d’exclamation.':'La phrase donne une information : point.';skill='Ponctuation finale';
+  }else if(id==='FR-G06'){
+    if(i<12){
+      const families=[
+        [['Le petit chat','petit'],['La petite chatte','petite'],['Les petits chats','petits'],['Les petites chattes','petites']],
+        [['Le grand chien','grand'],['La grande chienne','grande'],['Les grands chiens','grands'],['Les grandes chiennes','grandes']],
+        [['Le joli garçon','joli'],['La jolie fille','jolie'],['Les jolis garçons','jolis'],['Les jolies filles','jolies']]
+      ];
+      const forms=families[Math.floor(i/4)],allForms=forms.map(x=>x[1]),[full,form]=forms[i%4],noun=full.split(' ').at(-1),determiner=full.split(' ')[0];
+      prompt=`Complète le groupe nominal : « ${determiner} ___ ${noun} ».`;correct=form;wrong=allForms.filter(x=>x!==form);
+      explanation=`L’adjectif s’accorde avec « ${noun} » : ${full}.`;skill='Accord régulier du groupe nominal';
+    }else{
+      const irregular=[
+        ['un cheval','des chevaux',['des chevals','des cheval','des chevaus']],['un journal','des journaux',['des journals','des journal','des journau']],
+        ['un animal','des animaux',['des animals','des animal','des animaus']],['un bateau','des bateaux',['des bateaus','des bateau','des batteaux']],
+        ['un château','des châteaux',['des châteaus','des château','des chateaux']],['un jeu','des jeux',['des jeus','des jeu','des jeaux']],
+        ['un cheveu','des cheveux',['des cheveus','des cheveu','des cheveaux']],['un travail','des travaux',['des travails','des travail','des travaus']]
+      ];
+      const [singular,plural,decoys]=irregular[(i-12)%irregular.length];prompt=`Quel est le pluriel de « ${singular} » ?`;correct=plural;wrong=decoys;explanation=`Le pluriel correct est « ${plural} ».`;skill='Pluriel en -x ou -aux';
+    }
+  }else if(id==='FR-V02'){
+    const families=[
+      ['faire','refaire'],['voir','revoir'],['lire','relire'],['possible','impossible'],['visible','invisible'],
+      ['heureux','malheureux'],['laver','lavage'],['fleur','fleuriste'],['dent','dentiste'],['chant','chanteur'],
+      ['jardin','jardinier'],['peindre','peinture'],['rapide','rapidement'],['porter','porteur'],['terre','terrestre'],
+      ['lumière','lumineux'],['neige','enneigé'],['montagne','montagnard'],['livre','livret'],['soleil','ensoleillé']
+    ];
+    const [base,related]=families[i];prompt=`Quel mot appartient à la famille de « ${base} » ?`;correct=related;
+    wrong=[families[(i+3)%20][1],families[(i+7)%20][1],families[(i+11)%20][1]];
+    explanation=`« ${base} » et « ${related} » ont un radical commun et un lien de sens.`;skill='Famille de mots';
+  }else if(id==='FR-V03'){
+    const categories=[
+      ['pomme','Fruit',['Outil','Véhicule','Vêtement']],['carotte','Légume',['Fruit','Instrument','Animal']],
+      ['chien','Animal',['Plante','Roche','Objet technique']],['tulipe','Fleur',['Oiseau','Métal','Ville']],
+      ['chêne','Arbre',['Fleur','Insecte','Outil']],['marteau','Outil',['Instrument de musique','Véhicule','Légume']],
+      ['violon','Instrument de musique',['Outil de jardin','Fruit','Vêtement']],['camion','Véhicule',['Animal','Bâtiment','Fleur']],
+      ['abeille','Insecte',['Oiseau','Poisson','Mammifère']],['saumon','Poisson',['Insecte','Oiseau','Plante']],
+      ['Paris','Ville',['Pays','Continent','Océan']],['Italie','Pays',['Ville','Fleuve','Continent']],
+      ['la Seine','Fleuve',['Montagne','Océan','Ville']],['le Pacifique','Océan',['Fleuve','Continent','Pays']],
+      ['triangle','Polygone',['Solide','Angle','Cercle']],['cube','Solide',['Polygone','Segment','Angle']],
+      ['mètre','Unité de longueur',['Unité de masse','Unité de durée','Unité de monnaie']],
+      ['kilogramme','Unité de masse',['Unité de longueur','Unité de durée','Unité de contenance']],
+      ['dentiste','Métier',['Animal','Végétal','Pays']],['roman','Type de livre',['Unité de temps','Véhicule','Instrument']]
+    ];
+    const [example,category,decoys]=categories[i];prompt=`Dans quelle catégorie classe-t-on « ${example} » ?`;correct=category;wrong=decoys;
+    explanation=`« ${example} » est un exemple de la catégorie « ${category.toLowerCase()} ».`;skill='Terme générique';
+  }else if(id==='FR-V05'){
+    const meanings=[
+      ['Il a la tête dans les nuages.','Il est distrait.',['Il vole dans le ciel.','Il observe la météo.','Il porte un chapeau.']],
+      ['Cette nouvelle lui a donné des ailes.','Elle lui a donné de l’élan.',['Elle a fabriqué des ailes.','Elle l’a fait tomber.','Elle lui a donné un oiseau.']],
+      ['Le temps file.','Le temps passe vite.',['Une horloge a un fil.','Le temps recule.','Une personne court.']],
+      ['Elle a un cœur de pierre.','Elle paraît insensible.',['Son cœur est une roche.','Elle est très rapide.','Elle construit un mur.']],
+      ['Nous sommes au pied de la montagne.','Nous sommes en bas de la montagne.',['Nous sommes au sommet.','La montagne a un pied humain.','Nous sommes dans une grotte.']],
+      ['Il a dévoré ce livre.','Il l’a lu avec passion.',['Il a mangé les pages.','Il l’a caché.','Il l’a oublié.']],
+      ['Une pluie de questions a suivi.','Beaucoup de questions ont été posées.',['Il a plu dans la salle.','Toutes les questions sont tombées au sol.','Personne n’a parlé.']],
+      ['Les feuilles dansent au vent.','Elles bougent sous l’effet du vent.',['Elles apprennent une danse.','Elles restent immobiles.','Elles chantent.']],
+      ['Cette idée a germé peu à peu.','Elle s’est développée progressivement.',['Une graine a poussé dans un cahier.','Elle a disparu aussitôt.','Elle a été effacée.']],
+      ['Il voit rouge.','Il est très en colère.',['Il ne distingue que cette couleur.','Il est endormi.','Il a froid.']],
+      ['Le soleil nous sourit aujourd’hui.','Le temps est ensoleillé.',['Le soleil a un visage.','Il pleut fort.','La nuit commence.']],
+      ['La ville s’éveille.','La ville reprend son activité.',['Les immeubles ouvrent les yeux.','La ville se déplace.','Tous les habitants dorment.']],
+      ['Elle a une mémoire d’éléphant.','Elle retient très bien les choses.',['Elle est un éléphant.','Elle oublie tout.','Elle collectionne les animaux.']],
+      ['Il est tombé dans le panneau.','Il a cru à un piège.',['Il est tombé sur une affiche.','Il a construit un panneau.','Il a gagné une course.']],
+      ['Ce problème lui donne du fil à retordre.','Ce problème est difficile pour lui.',['Il doit coudre un vêtement.','Il n’a plus de fil.','Le problème est terminé.']],
+      ['La nuit est tombée.','Il fait maintenant nuit.',['La nuit s’est blessée.','Le soleil se lève.','Une lampe est tombée.']],
+      ['Il a mis la main à la pâte.','Il a participé au travail.',['Il cuisine forcément du pain.','Il a caché ses mains.','Il a refusé de participer.']],
+      ['Elle brûle d’impatience.','Elle a très hâte.',['Elle est en feu.','Elle a sommeil.','Elle est calme et patiente.']],
+      ['Le village est blotti dans la vallée.','Le village se trouve serré au creux de la vallée.',['Le village dort dans un lit.','Le village est au sommet.','Le village se déplace.']],
+      ['Il a jeté un œil au dessin.','Il l’a regardé rapidement.',['Il a lancé son œil.','Il l’a entièrement effacé.','Il a fermé les yeux.']]
+    ];
+    const [sentence,meaning,decoys]=meanings[i];prompt=`Dans « ${sentence} », que signifie l’expression au sens figuré ?`;correct=meaning;wrong=decoys;
+    explanation=`Ici, l’expression signifie : « ${meaning} »`;skill='Sens figuré en contexte';
+  }else throw Error(`Unité non implémentée : ${id}`);
+  return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...extraChoice(correct,wrong,i),explanation};
+}
+const qlmBanks={
+  'QLM-C2-S02':[
+    ['États','Dans quel état se trouve un glaçon ?','Solide','Liquide','Gaz','Plasma','La glace garde sa propre forme : c’est de l’eau solide.'],
+    ['États','Dans quel état se trouve l’eau que l’on verse dans un verre ?','Liquide','Solide','Gaz','Vapeur','L’eau versée s’écoule et prend la forme du récipient : elle est liquide.'],
+    ['États','La vapeur d’eau est de l’eau dans quel état ?','Gazeux','Solide','Liquide','Gelé','La vapeur d’eau est un gaz ; la buée visible est formée de très petites gouttes liquides.'],
+    ['Fusion','Un glaçon devient de l’eau liquide. Comment nomme-t-on ce changement ?','Fusion','Solidification','Condensation','Congélation','La fusion est le passage du solide au liquide.'],
+    ['Solidification','De l’eau liquide devient de la glace. Quel changement a eu lieu ?','Solidification','Fusion','Évaporation','Dissolution','La solidification est le passage du liquide au solide.'],
+    ['Évaporation','Une flaque disparaît lentement par temps sec. Une partie de l’eau est passée où ?','Dans l’air sous forme de vapeur d’eau','Dans le sol sous forme de glace','Dans la lumière du Soleil','Dans les nuages sous forme de neige','Une partie de l’eau liquide s’évapore et devient de la vapeur d’eau dans l’air.'],
+    ['Condensation','De la buée apparaît sur une vitre froide. Que sont les petites gouttes visibles ?','De l’eau liquide','De la glace','De l’air solide','De la vapeur d’eau visible','La vapeur d’eau de l’air se condense en minuscules gouttes d’eau liquide.'],
+    ['Propriétés','Si l’on verse la même eau d’un verre dans un bol, que change-t-elle ?','Sa forme','Sa masse automatiquement','Sa nature chimique','Son état toujours','Un liquide prend la forme de la partie du récipient qu’il occupe.'],
+    ['États','Quel couple montre deux états différents de la même substance ?','Glace et eau liquide','Sable et verre','Sel et sucre','Bois et papier','La glace et l’eau liquide sont deux états de l’eau.'],
+    ['Changements','Dans un congélateur, l’eau liquide peut devenir de la glace. Que lui arrive-t-il ?','Elle se solidifie','Elle s’évapore','Elle fond','Elle devient de l’air','Le refroidissement peut faire passer l’eau liquide à l’état solide.']
+  ],
+  'QLM-C2-S04':[
+    ['Classer','Lequel est un être vivant ?','Un chêne','Un caillou','Une cuillère','Un nuage','Un chêne grandit et se reproduit : c’est un végétal vivant.'],
+    ['Classer','Lequel est un minéral ?','Un caillou','Une abeille','Un champignon','Une fougère','Un caillou n’est ni un animal ni un végétal.'],
+    ['Classer','Dans quelle grande catégorie classe-t-on une fourmi ?','Animal','Végétal','Minéral','Objet fabriqué','Une fourmi est un animal.'],
+    ['Classer','Dans quelle grande catégorie classe-t-on un rosier ?','Végétal','Animal','Minéral','Objet technique','Un rosier est une plante.'],
+    ['Cycle animal','Quel ordre décrit le développement d’une poule ?','Œuf → poussin → poule adulte','Poussin → œuf → poule adulte','Poule adulte → poussin → œuf','Œuf → poule adulte → poussin','Le poussin sort de l’œuf et grandit jusqu’à l’âge adulte.'],
+    ['Cycle végétal','Quel ordre convient pour le développement d’un haricot ?','Graine → plantule → plante adulte','Plantule → graine → plante adulte','Plante adulte → graine → plantule','Graine → plante adulte → plantule','La graine peut germer et donner une plantule, puis une plante adulte.'],
+    ['Croissance','Que peut-on observer quand un jeune arbre grandit ?','Sa taille augmente','Il devient un minéral','Il cesse d’être vivant','Il se transforme en nuage','La croissance est un changement de taille et de développement.'],
+    ['Reproduction','Que peut produire une plante à fleurs après sa floraison ?','Des graines','Des cailloux','Des plumes','Du métal','Beaucoup de plantes à fleurs produisent des graines qui peuvent donner de nouvelles plantes.'],
+    ['Cycle animal','Un papillon passe par plusieurs stades. Lequel est un de ses stades de développement ?','Chenille','Alevin','Têtard','Poussin','La chenille est un stade du développement du papillon.'],
+    ['Classer','Lequel est un objet fabriqué par des humains plutôt qu’un être vivant ?','Une bicyclette','Une mousse végétale','Un escargot','Une algue','Une bicyclette est fabriquée ; les autres propositions sont des êtres vivants.']
+  ],
+  'QLM-C2-S05':[
+    ['Régime alimentaire','Un animal qui se nourrit surtout de végétaux est appelé :','Herbivore','Carnivore','Minéral','Prédateur obligatoire','Un herbivore se nourrit de végétaux ou de parties de végétaux.'],
+    ['Régime alimentaire','Un animal qui se nourrit surtout d’autres animaux est appelé :','Carnivore','Herbivore','Végétal','Producteur','Un carnivore se nourrit d’animaux.'],
+    ['Régime alimentaire','Un animal qui mange des végétaux et des animaux est :','Omnivore','Uniquement herbivore','Uniquement carnivore','Minéral','Un omnivore peut consommer des aliments d’origine végétale et animale.'],
+    ['Besoins des plantes','De quoi une plante verte a-t-elle besoin pour grandir ?','D’eau et de lumière','Seulement de cailloux','De viande','D’obscurité permanente','Une plante verte a notamment besoin d’eau et de lumière.'],
+    ['Besoins des plantes','Quelle partie d’une plante absorbe généralement l’eau du sol ?','Les racines','Les fleurs','Les fruits','Les pétales','Les racines prélèvent l’eau dans le sol.'],
+    ['Besoins des animaux','Pourquoi les animaux doivent-ils se nourrir ?','Pour obtenir matière et énergie nécessaires à leur vie','Pour devenir des plantes','Pour fabriquer de la lumière','Pour supprimer leur besoin d’eau','La nourriture apporte aux animaux de la matière et de l’énergie.'],
+    ['Régime alimentaire','Le lapin mange de l’herbe et d’autres végétaux. Quel régime illustre-t-il ?','Herbivore','Carnivore','Minéral','Aucun régime','Le lapin est un exemple d’animal herbivore.'],
+    ['Régime alimentaire','Un renard peut manger des petits animaux et des fruits. Quel mot convient ?','Omnivore','Seulement herbivore','Seulement carnivore','Producteur végétal','Le renard peut consommer des aliments d’origine animale et végétale.'],
+    ['Milieu','Dans un milieu très sec, quelle ressource peut manquer aux plantes ?','L’eau','La gravité','La lumière du jour partout','Le sol dans tous les cas','L’eau disponible influence la croissance des plantes.'],
+    ['Besoins des plantes','Une plante privée longtemps de lumière peut avoir des difficultés à :','Fabriquer sa matière organique','Devenir un caillou','Changer immédiatement d’espèce','Produire de l’air solide','La lumière permet à la plante verte de fabriquer de la matière.']
+  ],
+  'QLM-C2-S06':[
+    ['Chaîne alimentaire','Dans herbe → lapin → renard, qui mange l’herbe ?','Le lapin','Le renard','L’herbe','Aucun des deux animaux','La flèche va de l’être mangé vers celui qui le mange.'],
+    ['Chaîne alimentaire','Dans herbe → lapin → renard, qui peut manger le lapin ?','Le renard','L’herbe','Le lapin lui-même','Le Soleil','Le renard est le prédateur du lapin dans cette chaîne.'],
+    ['Producteur','Quel être vivant commence souvent une chaîne alimentaire terrestre ?','Une plante verte','Un renard','Un caillou','Une voiture','Une plante verte produit sa matière grâce notamment à la lumière.'],
+    ['Flèche','Dans une chaîne alimentaire, la flèche « herbe → sauterelle » signifie :','La sauterelle mange l’herbe','L’herbe mange la sauterelle','Les deux mangent la même chose','La sauterelle devient de l’herbe','La flèche indique le transfert de nourriture de l’herbe vers la sauterelle.'],
+    ['Prédateur','Dans algues → petit poisson → grand poisson, quel est le prédateur du petit poisson ?','Le grand poisson','Les algues','Le petit poisson lui-même','La lumière','Dans cette chaîne, le grand poisson mange le petit.'],
+    ['Proie','Dans graines → souris → chouette, quelle est la proie de la chouette ?','La souris','Les graines','La chouette','Le sol','Une proie est mangée par un prédateur : ici, la souris est mangée par la chouette.'],
+    ['Ordre','Quel ordre peut représenter une chaîne alimentaire ?','Feuilles → chenille → oiseau','Oiseau → feuilles → chenille','Chenille → oiseau → feuilles','Caillou → feuilles → oiseau','La chenille mange des feuilles et l’oiseau peut manger la chenille.'],
+    ['Milieu','Si les plantes disparaissent d’un milieu, quel effet direct peut toucher les herbivores ?','Ils perdent une source de nourriture','Ils deviennent des plantes','Ils n’ont plus besoin d’eau','Ils se transforment en minéraux','Les herbivores dépendent des végétaux pour se nourrir.'],
+    ['Relations','Dans herbe → sauterelle → grenouille, quel être mange la sauterelle ?','La grenouille','L’herbe','La sauterelle elle-même','Le caillou','La grenouille peut manger la sauterelle dans cette chaîne.'],
+    ['Réseau','Pourquoi un animal peut-il apparaître dans plusieurs chaînes alimentaires ?','Il peut avoir plusieurs aliments ou prédateurs','Il change d’espèce à chaque repas','Une chaîne ne contient jamais de plante','Chaque animal ne mange qu’une seule fois','Les relations alimentaires d’un milieu forment souvent un réseau.']
+  ],
+  'QLM-C2-H04':[
+    ['Astres','Le Soleil est :','Une étoile','Une planète','Un satellite naturel','Une comète','Le Soleil est l’étoile autour de laquelle tourne la Terre.'],
+    ['Astres','La Terre est :','Une planète','Une étoile','Une lune','Une galaxie','La Terre est une planète du système solaire.'],
+    ['Astres','La Lune est le satellite naturel de :','La Terre','Mars','Le Soleil','Jupiter','La Lune tourne autour de la Terre.'],
+    ['Jour et nuit','Quel mouvement de la Terre explique l’alternance du jour et de la nuit ?','Sa rotation sur elle-même','Son arrêt complet','Le déplacement des nuages','Le mouvement des continents','La Terre tourne sur elle-même : un lieu est successivement éclairé puis dans l’ombre.'],
+    ['Année','Environ combien de temps la Terre met-elle pour faire un tour autour du Soleil ?','Un an','Un jour','Une semaine','Un mois','La révolution de la Terre autour du Soleil dure environ une année.'],
+    ['Lumière','Pourquoi voit-on la Lune depuis la Terre ?','Elle réfléchit la lumière du Soleil','Elle produit sa propre lumière comme une étoile','Elle est faite de feu','Elle reçoit la lumière des villes uniquement','La Lune n’est pas une étoile : elle réfléchit la lumière solaire.'],
+    ['Jour et nuit','Quand un lieu sur Terre est tourné vers le Soleil, il y fait généralement :','Jour','Nuit','Toujours hiver','Toujours été','La face tournée vers le Soleil reçoit sa lumière.'],
+    ['Système solaire','Parmi ces objets, lequel appartient au système solaire ?','La Terre','La galaxie d’Andromède','L’étoile Sirius','La galaxie du Triangle','La Terre est une planète du système solaire.'],
+    ['Astres','Quel astre est au centre du système solaire ?','Le Soleil','La Terre','La Lune','Mars','Les planètes du système solaire tournent autour du Soleil.'],
+    ['Mouvement','La Lune tourne principalement autour de :','La Terre','La France','Une montagne','Un nuage','La Lune est un satellite naturel de la Terre.']
+  ],
+  'QLM-C2-H03':[
+    ['Continent','Sur quel continent se trouve la France métropolitaine ?','En Europe','En Asie','En Afrique','En Océanie','La France métropolitaine se trouve en Europe.'],
+    ['Continent','Sur quel continent se trouve l’Italie ?','En Europe','En Amérique du Sud','En Afrique','En Asie','L’Italie est un pays d’Europe.'],
+    ['Continent','Sur quel continent se trouve le New Jersey ?','En Amérique du Nord','En Europe','En Océanie','En Afrique','Le New Jersey est un État des États-Unis, en Amérique du Nord.'],
+    ['Océan','Quel océan sépare l’Europe des côtes orientales de l’Amérique ?','L’océan Atlantique','L’océan Pacifique','L’océan Indien','L’océan Arctique','L’Atlantique se trouve entre ces parties de l’Europe et de l’Amérique.'],
+    ['Mer','Quelle mer borde le sud de la France métropolitaine ?','La mer Méditerranée','La mer Rouge','La mer du Nord','La mer Baltique','La Méditerranée borde notamment le littoral sud-est de la France.'],
+    ['Représentation','Quel objet représente la Terre sous la forme d’une sphère ?','Un globe terrestre','Un planisphère','Une frise chronologique','Un calendrier','Un globe conserve la forme sphérique de la Terre.'],
+    ['Représentation','Qu’est-ce qu’un planisphère ?','Une carte plane du monde','Une maquette du système solaire','Une ligne du temps','Un relief en trois dimensions','Un planisphère représente l’ensemble du monde sur une surface plane.'],
+    ['Repère','Quel continent se trouve immédiatement au sud de l’Europe, de l’autre côté de la Méditerranée ?','L’Afrique','L’Océanie','L’Antarctique','L’Amérique du Sud','L’Afrique est au sud de l’Europe, séparée par la Méditerranée.'],
+    ['Repère','Quel pays a Rome pour capitale ?','L’Italie','La France','L’Espagne','Le Portugal','Rome est la capitale de l’Italie.'],
+    ['Repère','Quel pays a Paris pour capitale ?','La France','L’Italie','La Grèce','Le Japon','Paris est la capitale de la France.']
+  ],
+  'QLM-C2-H10':[
+    ['Relief','Comment appelle-t-on un terrain très élevé avec des pentes marquées ?','Une montagne','Une plaine','Un océan','Un delta','Une montagne est un relief élevé.'],
+    ['Relief','Qu’est-ce qu’une vallée ?','Une zone plus basse entre des reliefs','Le sommet d’une montagne','Une île en mer','Un nuage très bas','Une vallée est une dépression allongée entre des reliefs.'],
+    ['Littoral','Comment appelle-t-on la zone où la terre rencontre la mer ?','Le littoral','Le désert','La haute montagne','La source','Le littoral est la zone de contact entre la terre et la mer.'],
+    ['Cours d’eau','Quel élément traverse souvent une vallée ?','Une rivière','Un volcan','Une étoile','Un glacier partout','Une rivière peut couler au fond d’une vallée.'],
+    ['Climat','Un désert est défini principalement par :','De très faibles précipitations','Une chaleur permanente','La présence de dunes partout','L’absence de tout être vivant','Un désert reçoit très peu de précipitations ; il existe aussi des déserts froids.'],
+    ['Habitat','Dans un paysage urbain, quel élément est généralement fréquent ?','Des bâtiments et des rues','Uniquement des glaciers','Seulement des champs cultivés','Aucune construction','Une ville comprend de nombreux bâtiments et voies de circulation.'],
+    ['Agriculture','Quel paysage peut comporter de grandes parcelles cultivées ?','Une plaine agricole','Le centre d’un océan','Le sommet d’un glacier','La surface de la Lune','Les plaines peuvent être utilisées pour l’agriculture.'],
+    ['Milieu','Pourquoi les maisons de régions très enneigées ont-elles parfois un toit pentu ?','Pour faciliter la chute de la neige','Pour attirer les vagues','Pour créer du vent','Pour empêcher toute lumière','La pente aide la neige à glisser au lieu de s’accumuler.'],
+    ['Milieu','Pourquoi des habitants s’installent-ils souvent près d’un cours d’eau ?','Pour accéder à l’eau et à des voies de circulation','Parce que l’eau supprime toutes les crues','Parce qu’aucune plante ne pousse ailleurs','Parce que les rivières ne changent jamais','L’eau et les déplacements ont souvent joué un rôle dans le choix des sites habités.'],
+    ['Relief','Quel mot désigne une grande étendue de terrain relativement plat ?','Une plaine','Un sommet','Une falaise','Un canyon','Une plaine présente un relief peu marqué.']
+  ],
+  'QLM-C2-H05':[
+    ['Calendrier','Combien de jours compte une semaine ?','7','5','10','12','La semaine comporte sept jours.'],
+    ['Calendrier','Combien de mois compte une année ?','12','10','7','24','Une année civile comporte douze mois.'],
+    ['Durée','Combien d’années compte un siècle ?','100','10','12','1 000','Un siècle correspond à cent années.'],
+    ['Calendrier','Quel mois vient juste après novembre ?','Décembre','Octobre','Janvier','Septembre','Décembre est le douzième mois, après novembre.'],
+    ['Dates','Quelle date vient en premier ?','3 avril 2025','3 avril 2026','3 avril 2027','3 avril 2028','À jour et mois identiques, l’année 2025 est la plus ancienne.'],
+    ['Durée','Combien d’heures compte une journée complète ?','24','12','60','7','Une journée complète dure 24 heures.'],
+    ['Durée','Combien de minutes compte une heure ?','60','100','24','30','Une heure dure 60 minutes.'],
+    ['Saisons','Dans l’hémisphère Nord, quelle saison vient après l’hiver ?','Le printemps','L’automne','L’hiver suivant','L’été immédiatement','Dans le cycle des saisons de l’hémisphère Nord, le printemps suit l’hiver.'],
+    ['Calendrier','Combien de jours compte une année bissextile ?','366','365','360','364','Une année bissextile a un 29 février et compte 366 jours.'],
+    ['Dates','Si nous sommes le 31 décembre, quel mois commence le lendemain ?','Janvier','Novembre','Février','Octobre','Le 1er janvier suit le 31 décembre et ouvre une nouvelle année.']
+  ],
+  'QLM-C2-H06':[
+    ['Avant/après','Quel événement a eu lieu en premier ?','Un événement daté de 1900','Un événement daté de 1950','Un événement daté de 2000','Un événement daté de 2020','1900 est antérieur aux trois autres années.'],
+    ['Avant/après','Quel événement est le plus récent ?','Un événement daté de 2020','Un événement daté de 1800','Un événement daté de 1900','Un événement daté de 2000','2020 est l’année la plus récente de la liste.'],
+    ['Succession','Une graine germe, puis la plante fleurit. Qu’arrive-t-il d’abord ?','La graine germe','La plante fleurit','Les deux étapes sont forcément simultanées','La fleur devient une graine avant toute germination','La germination précède ici la floraison.'],
+    ['Succession','On construit une maison, puis on y emménage. Quel événement vient après la construction ?','L’emménagement','La construction elle-même','La préparation du terrain avant de construire','La naissance du constructeur','La phrase donne l’ordre construction, puis emménagement.'],
+    ['Frise','Sur une frise où le temps avance vers la droite, où place-t-on 1950 par rapport à 1900 ?','À droite de 1900','À gauche de 1900','Au même endroit','Impossible avec ces dates','1950 est après 1900 : on le place à droite si le temps avance vers la droite.'],
+    ['Durée','Combien d’années séparent 2000 de 2010 ?','10','5','20','100','2010 − 2000 = 10 années.'],
+    ['Simultanéité','Deux événements se produisent au même moment. Ils sont :','Simultanés','Successifs','Toujours séparés d’un siècle','Dans un ordre obligatoire','« Simultané » signifie « au même moment ».'],
+    ['Avant/après','Une photo de 1930 et une photo de 1970 montrent la même rue. Laquelle est la plus ancienne ?','La photo de 1930','La photo de 1970','Elles ont forcément le même âge','On ne peut jamais dater une photo','1930 précède 1970.'],
+    ['Frise','Dans quel ordre place-t-on ces années, de la plus ancienne à la plus récente ?','1800, 1900, 2000','2000, 1900, 1800','1900, 1800, 2000','1800, 2000, 1900','L’ordre chronologique croissant est 1800, puis 1900, puis 2000.'],
+    ['Succession','Sur une frise, un événement A précède B, et B précède C. Quel événement est le dernier ?','C','A','B','Les trois sont simultanés','Si A vient avant B et B avant C, C est le dernier.']
+  ],
+  'QLM-CE2-H08':[
+    ['Périodes','Quelle période précède l’Antiquité dans le découpage scolaire habituel ?','La Préhistoire','Le Moyen Âge','Les Temps modernes','L’époque contemporaine','La Préhistoire précède l’Antiquité dans ce découpage conventionnel.'],
+    ['Périodes','Quelle période vient après l’Antiquité ?','Le Moyen Âge','La Préhistoire','Les Temps modernes','L’époque contemporaine','Le Moyen Âge suit l’Antiquité dans le découpage scolaire.'],
+    ['Périodes','Quelle période vient après le Moyen Âge ?','Les Temps modernes','La Préhistoire','L’Antiquité','L’époque contemporaine','Les Temps modernes suivent le Moyen Âge.'],
+    ['Périodes','Quelle période suit les Temps modernes ?','L’époque contemporaine','L’Antiquité','La Préhistoire','Le Moyen Âge','L’époque contemporaine suit les Temps modernes.'],
+    ['Écriture','Quel repère marque traditionnellement le passage de la Préhistoire à l’histoire ?','L’apparition de l’écriture','L’invention de l’avion','La Révolution française','La construction du métro','L’apparition de l’écriture est un repère conventionnel ; elle n’a pas eu lieu partout à la même date.'],
+    ['Antiquité','L’Empire romain appartient principalement à quelle période ?','L’Antiquité','La Préhistoire','Les Temps modernes','L’époque contemporaine','L’Empire romain est un grand repère de l’Antiquité.'],
+    ['Événement','Quel événement majeur a commencé en France en 1789 ?','La Révolution française','La Première Guerre mondiale','La Seconde Guerre mondiale','La construction de la tour Eiffel','1789 est l’année du début de la Révolution française.'],
+    ['Événement','Quelle guerre a commencé en 1914 ?','La Première Guerre mondiale','La Seconde Guerre mondiale','La guerre de Cent Ans','La guerre de Troie','La Première Guerre mondiale a commencé en 1914.'],
+    ['Événement','Quelle guerre s’est terminée en Europe en 1945 ?','La Seconde Guerre mondiale','La Première Guerre mondiale','La guerre de Cent Ans','La guerre de Troie','La Seconde Guerre mondiale s’est terminée en Europe en mai 1945.'],
+    ['Date','En quelle année Christophe Colomb a-t-il atteint des îles des Amériques lors de son premier voyage ?','1492','1789','1914','1945','En 1492, son expédition atteint des îles des Caraïbes ; des peuples y vivaient déjà.']
+  ]
+};
+function qlmQuestions(id){
+  const bank=qlmBanks[id];if(!bank||bank.length!==10)throw Error(`Banque Questionner le monde incomplète : ${id}`);
+  return bank.map(([skill,prompt,correct,w1,w2,w3,explanation],i)=>({
+    level:id==='QLM-CE2-H08'?'CE2':'Cycle 2',skill,
+    subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,
+    programmeSkills:[id],prompt,...extraChoice(correct,[w1,w2,w3],i),explanation
+  }));
+}
+const readingBanks={
+  'FR-L05':{
+    stories:{
+      A:'Au début des vacances, Nora entre dans la bibliothèque avec son grand-père. Elle cherche un livre sur les dinosaures, mais celui qu’elle voulait est déjà emprunté. La bibliothécaire lui montre alors un album sur les fossiles. Nora le feuillette, découvre des traces de pas anciennes et décide de l’emporter. Le soir, elle raconte à son grand-père comment les scientifiques étudient ces traces.',
+      B:'Un matin, Hugo et sa tante partent en bateau pour rejoindre une petite île. Le ciel est clair au départ. À mi-chemin, le vent se lève et les vagues grossissent. La tante consulte la météo sur la radio du bateau, puis choisit de retourner au port. Sur le quai, Hugo est déçu de ne pas avoir vu l’île, mais il comprend pourquoi ils ont fait demi-tour.'
+    },items:[
+      ['A','Idée générale','De quoi parle surtout ce récit ?','Nora découvre un autre livre intéressant à la bibliothèque.','Nora construit un dinosaure.','Nora perd son grand-père dans la bibliothèque.','La bibliothécaire ferme définitivement la bibliothèque.','Le récit suit la recherche puis la découverte d’un livre par Nora.'],
+      ['A','Titre','Quel titre convient le mieux à toute l’histoire ?','Une découverte à la bibliothèque','Le bateau de Hugo','Une course de dinosaures','La fermeture du musée','Ce titre couvre la recherche et la découverte de Nora.'],
+      ['A','Situation','Pourquoi Nora change-t-elle de choix de livre ?','Le livre désiré est déjà emprunté.','Elle ne sait pas lire.','Son grand-père refuse tout livre.','La bibliothèque n’a aucun livre.','Le texte dit que le livre recherché est emprunté.'],
+      ['A','Résultat','Que décide Nora à la fin de sa visite ?','Emprunter l’album sur les fossiles.','Quitter la bibliothèque sans livre.','Acheter un bateau.','Écrire un livre sur les oiseaux.','Elle feuillette l’album, puis décide de l’emporter.'],
+      ['A','Résumé','Quel résumé garde les événements essentiels ?','Nora cherche un livre, en découvre un autre sur les fossiles et le raconte ensuite.','Nora va au port puis regarde la météo.','Nora étudie des fossiles pendant plusieurs années.','Nora retrouve le livre qu’elle cherchait dès son arrivée.','Ce résumé conserve le début, le changement et la fin du récit.'],
+      ['B','Idée générale','De quoi parle surtout ce récit ?','Une sortie en bateau interrompue par le mauvais temps.','La construction d’un nouveau port.','La découverte d’une île déserte.','Une panne de radio à la maison.','Le vent et les vagues conduisent la tante à revenir au port.'],
+      ['B','Titre','Quel titre convient le mieux ?','Le voyage écourté','Une journée entière sur l’île','Le concours de bateaux','Le ciel sans nuages','Le trajet s’arrête avant l’arrivée sur l’île.'],
+      ['B','Cause','Pourquoi la tante retourne-t-elle au port ?','Le vent et les vagues rendent la suite du trajet imprudente.','Hugo a oublié ses chaussures.','Ils ont déjà visité l’île.','La radio joue de la musique trop fort.','Le changement de météo provoque la décision de faire demi-tour.'],
+      ['B','Résultat','Où Hugo se trouve-t-il à la fin ?','Sur le quai du port.','Sur l’île.','Au milieu de la mer.','Dans une bibliothèque.','Le texte situe Hugo sur le quai après leur retour.'],
+      ['B','Résumé','Quel résumé est fidèle au récit ?','Hugo part vers une île, mais sa tante revient au port à cause de la météo.','Hugo arrive sur l’île malgré la tempête.','Hugo renonce au bateau avant de partir.','La tante décide de naviguer plus loin quand le vent se lève.','Ce résumé garde le projet, le problème et la décision.']
+    ]
+  },
+  'FR-L06':{
+    stories:{
+      A:'Samedi, Émile plante trois graines dans un pot de terre. Il arrose la terre et place le pot près de la fenêtre. Quelques jours plus tard, une petite tige apparaît. Émile tourne alors le pot pour que la plante reçoive de la lumière de tous les côtés. Deux semaines après, il voit les premières feuilles et prend une photo pour son carnet.',
+      B:'Le matin de leur visite au musée, le train de Léa et de son père est supprimé. Ils vérifient les horaires et prennent un bus. Arrivés au musée, ils commencent par la salle des fossiles, puis passent à celle des météorites. Au moment de repartir, Léa remarque qu’elle a laissé son carnet dans la première salle. Ils y retournent, le retrouvent près d’une vitrine et rentrent en bus.'
+    },items:[
+      ['A','Ordre','Que fait Émile en premier ?','Il plante les graines.','Il photographie les feuilles.','Il tourne le pot.','Il voit une tige.','La plantation ouvre le récit.'],
+      ['A','Ordre','Que se passe-t-il après l’arrosage et avant la photo ?','Une petite tige apparaît.','Émile achète le pot.','Les graines disparaissent.','Émile ferme la fenêtre.','La tige apparaît quelques jours après la plantation et avant la photo.'],
+      ['A','Cause','Pourquoi Émile place-t-il le pot près de la fenêtre ?','Pour que la plante reçoive de la lumière.','Pour cacher les graines.','Pour empêcher toute croissance.','Pour prendre le bus.','Le texte relie ensuite le pot à la lumière reçue.'],
+      ['A','Fin','Que photographie Émile à la fin ?','Les premières feuilles.','Les graines encore dans le sachet.','Le bus.','Une météorite.','Les feuilles apparaissent avant qu’il prenne la photo.'],
+      ['A','Chronologie','Quel ordre est correct ?','Graines plantées → tige → feuilles → photo','Photo → graines plantées → tige → feuilles','Tige → photo → graines plantées → feuilles','Feuilles → graines plantées → photo → tige','Le texte suit le développement de la plante puis la photo.'],
+      ['B','Cause','Pourquoi Léa et son père prennent-ils le bus à l’aller ?','Leur train est supprimé.','Ils ont perdu leur carnet.','Le musée est fermé.','Ils ne veulent pas voir les fossiles.','Le train supprimé conduit au changement de transport.'],
+      ['B','Ordre','Quelle salle visitent-ils d’abord ?','La salle des fossiles.','La salle des météorites.','La salle des peintures.','La salle des bateaux.','Le texte dit qu’ils commencent par les fossiles.'],
+      ['B','Ordre','Que font-ils juste après la salle des fossiles ?','Ils visitent la salle des météorites.','Ils rentrent chez eux.','Ils achètent un carnet.','Ils retournent au bus.','La salle des météorites suit celle des fossiles.'],
+      ['B','Cause','Pourquoi retournent-ils dans la première salle ?','Pour chercher le carnet de Léa.','Pour vérifier un horaire de train.','Pour voir une autre météorite.','Pour retrouver leur bus.','Léa se souvient d’avoir laissé son carnet dans la première salle.'],
+      ['B','Fin','Quel événement arrive en dernier ?','Ils rentrent en bus.','Le train est supprimé.','Ils entrent dans la salle des fossiles.','Léa oublie son carnet.','Le retour en bus clôt le récit.']
+    ]
+  },
+  'FR-L07':{
+    stories:{
+      A:'Mila retrouve son frère Paul près du pont. Elle porte une petite boîte bleue et la lui montre. Paul l’ouvre avec précaution : à l’intérieur, il découvre une pierre brillante. Mila explique avoir trouvé la pierre au bord de la rivière. Ils décident de demander à leur grand-père s’il reconnaît cette pierre.',
+      B:'La chercheuse Inès présente une carte à son collègue Karim. Elle y a marqué les endroits où elle a observé des oiseaux. Karim la regarde, puis il propose de comparer ces lieux avec une ancienne carte. Inès va la chercher dans une armoire. Quand elle revient, ils placent les deux cartes côte à côte.'
+    },items:[
+      ['A','Pronom sujet','Au début, qui est désigné par « Elle » ?','Mila','Paul','Le grand-père','La pierre','Mila est la personne nommée juste avant « Elle ».'],
+      ['A','Pronom objet','Dans « la lui montre », que désigne « la » ?','La petite boîte bleue','La rivière','La pierre brillante','La grand-mère','Mila porte une boîte et la montre à Paul.'],
+      ['A','Pronom objet','Dans « la lui montre », qui est désigné par « lui » ?','Paul','Mila','Le grand-père','La boîte','Mila montre la boîte à son frère Paul.'],
+      ['A','Pronom sujet','Dans « il découvre une pierre », qui est « il » ?','Paul','Mila','Le grand-père','Le pont','Paul ouvre la boîte et découvre son contenu.'],
+      ['A','Pronom pluriel','À la fin, qui est désigné par « Ils » ?','Mila et Paul','Paul et le grand-père','Mila et la pierre','Le pont et la rivière','Mila et Paul décident ensemble de demander au grand-père.'],
+      ['B','Pronom sujet','Dans « Elle y a marqué », qui est « Elle » ?','Inès','Karim','La carte','Une ancienne chercheuse','Inès est la chercheuse qui présente la carte.'],
+      ['B','Pronom lieu','Dans « Elle y a marqué », que désigne « y » ?','Sur la carte','Dans l’armoire','Sur les oiseaux','Chez Karim','Inès a marqué les lieux sur la carte.'],
+      ['B','Pronom objet','Dans « Karim la regarde », que désigne « la » ?','La carte présentée par Inès','L’armoire','Une plume','Inès elle-même','Karim regarde la carte dont on vient de parler.'],
+      ['B','Pronom sujet','Dans « il propose », qui est « il » ?','Karim','Inès','Un oiseau','Le grand-père','Le sujet de la phrase précédente est Karim.'],
+      ['B','Pronom pluriel','À la fin, qui est désigné par « ils » ?','Inès et Karim','Les oiseaux','Les deux cartes','Les armoires','Inès revient avec la carte ; les deux collègues les placent côte à côte.']
+    ]
+  },
+  'FR-L08':{
+    stories:{
+      A:'Maya entre dans la maison avec son manteau trempé. Elle ferme son parapluie et pose ses bottes près de la porte. Son père lui tend une serviette. Sur le chemin du retour, elle a vu plusieurs personnes courir sous les auvents des magasins. Maya regarde par la fenêtre et voit des gouttes glisser sur la vitre.',
+      B:'Au musée, toutes les lampes s’éteignent soudain. La salle devient sombre et les visiteurs s’arrêtent. Une gardienne allume une lampe de poche, demande à chacun de rester près de la sortie et parle dans sa radio. Quelques minutes plus tard, les lumières reviennent. Les visiteurs reprennent alors leur visite.'
+    },items:[
+      ['A','Indice météo','Quel temps fait-il probablement dehors ?','Il pleut.','Il neige fortement.','Le ciel est forcément sans nuages.','Il fait très chaud et sec.','Le manteau trempé, le parapluie et les gouttes sont des indices de pluie.'],
+      ['A','Inférence','Pourquoi le père tend-il une serviette à Maya ?','Pour qu’elle se sèche.','Pour emballer un cadeau.','Pour nettoyer une fenêtre cassée.','Pour essuyer une peinture.','Maya arrive trempée : la serviette peut l’aider à se sécher.'],
+      ['A','Indice','Quel détail du texte soutient le mieux l’idée qu’il pleut ?','Des gouttes glissent sur la vitre.','Maya regarde par la fenêtre.','Son père est dans la maison.','Il y a des magasins sur le trajet.','Les gouttes sur la vitre sont une preuve directe de la pluie.'],
+      ['A','Inférence','Pourquoi des personnes courent-elles sous les auvents ?','Pour s’abriter de la pluie.','Pour faire une compétition prévue.','Pour chercher un fossile.','Pour monter dans un bateau.','Le contexte de pluie rend l’abri sous les auvents probable.'],
+      ['A','Inférence','Que peut-on déduire des bottes posées près de la porte ?','Maya vient probablement de marcher dehors.','Elle part dormir.','Elle va peindre ses bottes.','Les bottes sont neuves et jamais portées.','Elle entre trempée et enlève ses bottes à l’arrivée.'],
+      ['B','Inférence','Quel problème s’est probablement produit au musée ?','Une coupure de courant temporaire.','Une inondation de toutes les salles.','Une tempête de neige à l’intérieur.','La fermeture définitive du musée.','Toutes les lampes s’éteignent puis reviennent quelques minutes plus tard.'],
+      ['B','Cause probable','Pourquoi la gardienne utilise-t-elle une lampe de poche ?','Pour voir et guider les visiteurs dans la pénombre.','Pour éclairer des tableaux dans une salle déjà lumineuse.','Pour chercher son repas.','Pour changer de musée.','La salle est devenue sombre lorsque les lampes se sont éteintes.'],
+      ['B','Indice','Quel détail indique que la gardienne cherche de l’aide ou des informations ?','Elle parle dans sa radio.','Les visiteurs regardent les vitrines.','Les lumières reviennent plus tard.','La salle contient des objets.','Sa radio lui permet de communiquer avec d’autres personnes.'],
+      ['B','Inférence','Pourquoi les visiteurs s’arrêtent-ils au début ?','La salle devient soudain sombre.','Ils ont terminé toute la visite.','Ils veulent acheter des billets.','Ils admirent une carte au soleil.','L’arrêt suit immédiatement l’extinction des lampes.'],
+      ['B','Fin','Que suggère la reprise de la visite ?','Le problème d’éclairage est résolu pour le moment.','Le musée reste sans lumière.','Les visiteurs sont tous partis.','La gardienne a éteint sa radio pour toujours.','Les lumières reviennent avant que les visiteurs reprennent la visite.']
+    ]
+  },
+  'FR-L09':{
+    stories:{
+      A:'Tom apporte à l’atelier un dessin qu’il veut offrir à sa grand-mère. Quand il ouvre son cartable, le dessin n’y est plus. Il fouille plusieurs fois et devient silencieux. Son amie Salomé remarque une feuille sous la table et la lui tend : c’est le dessin. Tom sourit, remercie Salomé et glisse la feuille dans une grande enveloppe pour qu’elle ne se froisse pas.',
+      B:'Nina aimerait participer à une course de quartier, mais elle hésite à s’inscrire : elle redoute de finir dernière. Son oncle lui propose de s’entraîner avec lui autour du parc. Pendant plusieurs semaines, Nina remarque qu’elle peut courir plus longtemps qu’au début. Le jour de l’inscription, elle sait qu’elle ne gagnera peut-être pas, mais elle choisit quand même de participer.'
+    },items:[
+      ['A','But','Pourquoi Tom a-t-il apporté son dessin ?','Pour l’offrir à sa grand-mère.','Pour le vendre au musée.','Pour le jeter à la poubelle.','Pour le donner à son professeur de sport.','Le texte précise le cadeau prévu pour sa grand-mère.'],
+      ['A','Émotion','Quand le dessin manque, que ressent probablement Tom ?','De l’inquiétude.','Du soulagement.','De l’ennui parce qu’il n’aime pas dessiner.','De la fierté d’avoir gagné une course.','Il fouille plusieurs fois et devient silencieux : il semble inquiet.'],
+      ['A','Intention','Pourquoi Salomé tend-elle la feuille à Tom ?','Elle veut lui rendre le dessin trouvé.','Elle veut lui cacher le dessin.','Elle veut lui donner une carte de bus.','Elle veut changer le sujet de conversation.','Elle remarque la feuille sous la table et la lui remet.'],
+      ['A','Émotion','Que suggère le sourire de Tom après avoir retrouvé le dessin ?','Il est soulagé et content.','Il est plus inquiet qu’avant.','Il a oublié sa grand-mère.','Il veut abandonner le dessin.','La découverte du dessin résout le problème qui l’inquiétait.'],
+      ['A','Motivation','Pourquoi Tom utilise-t-il une grande enveloppe ?','Pour protéger le dessin des plis.','Pour l’envoyer à un inconnu.','Pour le découper en morceaux.','Pour cacher les crayons de Salomé.','Le texte donne la raison : éviter que la feuille se froisse.'],
+      ['B','But','Que veut faire Nina au début du récit ?','Participer à une course de quartier.','Organiser un musée.','Acheter un bateau.','Dessiner un parc.','Nina aimerait participer à la course.'],
+      ['B','Crainte','Pourquoi Nina hésite-t-elle à s’inscrire ?','Elle craint de finir dernière.','Elle n’aime pas son oncle.','Elle ne sait pas où se trouve le parc.','Elle a déjà gagné la course.','Le texte explique explicitement sa peur de finir dernière.'],
+      ['B','Motivation','Pourquoi son oncle propose-t-il de courir avec elle ?','Pour l’aider à se préparer.','Pour l’empêcher de s’inscrire.','Pour déplacer le parcours.','Pour gagner à sa place.','L’entraînement répond à l’hésitation de Nina.'],
+      ['B','Évolution','Qu’est-ce qui aide Nina à décider de participer ?','Elle constate ses progrès à l’entraînement.','Elle reçoit la promesse de gagner.','Elle apprend que la course est annulée.','Elle découvre que personne d’autre ne court.','Elle remarque qu’elle peut courir plus longtemps qu’au début.'],
+      ['B','Nuance','À la fin, que sait Nina à propos du résultat ?','Elle peut participer sans être certaine de gagner.','Elle est certaine de finir première.','Elle est certaine de finir dernière.','Le résultat est déjà publié.','Le texte dit qu’elle ne gagnera peut-être pas, mais qu’elle choisit de participer.']
+    ]
+  }
+};
+function readingQuestions(id){
+  const bank=readingBanks[id];if(!bank||bank.items.length!==10)throw Error(`Banque de lecture incomplète : ${id}`);
+  return bank.items.map(([story,skill,prompt,correct,w1,w2,w3,explanation],i)=>({
+    level:i<5?'CE1':'CE2',skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,
+    programmeSkills:[id],passageId:`${id}-${story}`,passage:bank.stories[story],prompt,...extraChoice(correct,[w1,w2,w3],i),explanation
+  }));
+}
+function extraQuestions(id,count){
+  if(id.startsWith('QLM-'))return qlmQuestions(id);
+  if(id.startsWith('FR-L'))return readingQuestions(id);
+  const all=Array.from({length:20},(_,i)=>extraQuestion(id,i));
+  return count===10?[...all.slice(0,6),...all.slice(12,16)]:all;
+}
+
 const builtIn = {
   id: 'MA-N01', subject: 'Mathématiques', title: 'Lire, écrire et nommer les entiers', language: 'fr-FR',
   source: 'Programme officiel français de mathématiques, cycle 2 (2024), CE1 et CE2',
@@ -135,7 +702,7 @@ const mathUnits = [
   {id:'MA-F04',title:'Comparer des fractions',levels:'CE1 : même dénominateur ou fractions unitaires ; CE2 : comparaisons étendues'}
 ].map(unit=>({...unit,subject:'Mathématiques',language:'fr-FR',status:'pas-testee',statusScope:'CE1 à vérifier ; questions CE2 pour situer le niveau.',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}));
 const $ = id => document.getElementById(id);
-let quizzes=[fullQuiz,...mathUnits,frenchQuiz], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext;
+let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
 const unit=(n,label)=>`${n} ${label}${n>1?'s':''}`;
 function four(correct,wrong,shift=0){
@@ -359,7 +926,7 @@ function validate(q){
 }
 function renderSubjects(){
   const previous=$('subjectSelect').value,subjects=['Mathématiques','Français',...new Set(quizzes.map(q=>q.subject||'Autres'))];
-  $('subjectSelect').replaceChildren(...[...new Set(subjects)].map(name=>{const o=document.createElement('option');o.value=name;o.textContent=({'Mathématiques':'📐 Mathématiques','Français':'🇫🇷 Français'})[name]||name;return o}));
+  $('subjectSelect').replaceChildren(...[...new Set(subjects)].map(name=>{const o=document.createElement('option');o.value=name;o.textContent=({'Mathématiques':'📐 Mathématiques','Français':'🇫🇷 Français','Sciences':'🔬 Sciences','Géographie':'🌍 Géographie','Histoire':'🏛️ Histoire'})[name]||name;return o}));
   if(subjects.includes(previous))$('subjectSelect').value=previous;
   renderSelect();
   renderSuggestion();
@@ -383,7 +950,7 @@ function renderQuizStatus(){
   $('statusNote').textContent=selected.statusScope||'';
 }
 function renderQuestionCounts(){
-  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:selected?[selected.questions.length]:[];
+  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
   if(counts.includes(20))$('questionCount').value='20';
   $('questionCount').disabled=counts.length<2;
@@ -418,6 +985,7 @@ function render(){
   $('position').textContent=`${quiz.id} · ${q.level||''} · Question ${index+1}/${quiz.questions.length}`;
   $('score').textContent=immediateFeedback?`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`:'';
   $('progress').max=quiz.questions.length;$('progress').value=index;
+  $('passage').classList.toggle('hidden',!q.passage);$('passage').textContent=q.passage||'';
   $('question').textContent=q.prompt;drawAxis(q.axis);drawFraction(q.figure);$('choices').replaceChildren();
   q.choices.forEach((choice,i)=>{const b=document.createElement('button');b.className='choice';b.type='button';b.setAttribute('aria-pressed','false');b.innerHTML=`<strong>${'ABCD'[i]}</strong>`;b.append(document.createTextNode(choice));b.addEventListener('click',()=>select(i));$('choices').append(b)});
   $('unknown').disabled=false;$('unknown').classList.remove('selected');$('unknown').setAttribute('aria-pressed','false');$('confirm').disabled=true;$('confirm').classList.remove('hidden');$('feedback').classList.add('hidden');$('next').classList.add('hidden');$('nextLabel').textContent=index===quiz.questions.length-1?'Voir le résultat':'Question suivante';
@@ -430,12 +998,12 @@ function select(choice){
 function submit(){
   if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],correct=choice===q.answer;
   playSound('answer');
-  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,axis:q.axis||null,figure:q.figure||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
+  responses.push({number:index+1,level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,choices:q.choices,selectedIndex:choice,selected:choice===null?null:q.choices[choice],correctIndex:q.answer,correctAnswer:q.choices[q.answer],correct,unknown:choice===null,explanation:q.explanation,assistance:'non renseignée'});
   [...$('choices').children].forEach((b,i)=>{b.disabled=true;if(immediateFeedback){b.classList.remove('selected');if(i===q.answer)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')}});$('unknown').disabled=true;
   if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
   $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
 }
-function report(){const bySubskill={};for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,quizStatusAtStart:quiz.status||'pas-testee',quizStatusScope:quiz.statusScope||null,quizStatusBasis:quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,bySubskill,assistance:'non renseignée',interpretation:'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
+function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,quizStatusAtStart:quiz.status||'pas-testee',quizStatusScope:quiz.statusScope||null,quizStatusBasis:quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
 function finish(){playSound('finish');show('result');const data=report();$('summary').textContent=`${data.initialCorrect}/${data.total} réponses initiales correctes. ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;const labels={'FR-G09-PP':'Pronoms personnels','FR-G07-GN-S':'Groupes nominaux simples','FR-G07-GN-C':'Groupes nominaux complexes'};for(const r of responses)if(r.subskillId&&r.skill)labels[r.subskillId]=r.skill;$('breakdown').replaceChildren(...Object.entries(data.bySubskill).map(([id,s])=>{const p=document.createElement('p');p.textContent=`${labels[id]||id} : ${s.correct}/${s.total}`;return p}));$('report').textContent=JSON.stringify(data,null,2);}
 function reportFilename(){const safe=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]/g,'-').slice(0,40);const d=new Date(),n=x=>String(x).padStart(2,'0');return `${safe(quiz.id)}_${localDate(d)}_${n(d.getHours())}-${n(d.getMinutes())}-${n(d.getSeconds())}.json`;}
 function download(){const data=new Blob([$('report').textContent],{type:'application/json'}),link=document.createElement('a');link.href=URL.createObjectURL(data);link.download=reportFilename();link.click();setTimeout(()=>URL.revokeObjectURL(link.href),1000)}
@@ -457,7 +1025,7 @@ async function saveToFolder(){
     $('copyStatus').textContent=`Rapport enregistré : ${name}. Tu peux retrouver ce rapport dans le dossier choisi.`;
   }catch(err){$('copyStatus').textContent=err.name==='AbortError'?'Enregistrement annulé.':`Enregistrement impossible (${err.message}). Utilise « Télécharger le rapport JSON ».`;}
 }
-$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value);quiz=validate(selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
+$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value);quiz=validate(selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');render()};
 $('unknown').onclick=()=>select(null);
 $('confirm').onclick=submit;
 $('next').onclick=()=>{index++;if(index<quiz.questions.length)render();else finish()};
