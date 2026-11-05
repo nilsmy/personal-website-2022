@@ -239,9 +239,9 @@ function extraProblemOrFrench(id,i){
     explanation=`Les lots contiennent ${groups} × ${each} = ${base} cartes ; ${subtract?'on retire':'on ajoute'} ${change}, soit ${correct}.`;skill='Multiplier puis ajouter ou retirer';
   }else if(id==='MA-P07'){
     const a=5+(i*7)%24,b=2+(i*3)%6,multiply=ce2&&i%2===0,less=!multiply&&i%3===1;
-    prompt=multiply?`Lina a ${a} timbres. Noé en a ${b} fois plus. Combien de timbres Noé a-t-il ?`:less?`Lina a ${a+b} timbres. Noé en a ${b} de moins. Combien Noé en a-t-il ?`:`Lina a ${a} timbres. Noé en a ${b} de plus. Combien Noé en a-t-il ?`;
+    prompt=multiply?`Lina a ${a} timbres. Noé en a ${b} fois autant. Combien de timbres Noé a-t-il ?`:less?`Lina a ${a+b} timbres. Noé en a ${b} de moins. Combien de timbres Noé a-t-il ?`:`Lina a ${a} timbres. Noé en a ${b} de plus. Combien de timbres Noé a-t-il ?`;
     correct=multiply?a*b:less?a:a+b;wrong=[multiply?a+b:a*b,multiply?a*(b+1):a-b,correct+1];
-    explanation=multiply?`« ${b} fois plus » signifie ici ${a} × ${b} = ${correct}.`:less?`« ${b} de moins » signifie ${a+b} − ${b} = ${a}.`:`« ${b} de plus » signifie ${a} + ${b} = ${correct}.`;
+    explanation=multiply?`« ${b} fois autant » signifie ${a} × ${b} = ${correct}.`:less?`« ${b} de moins » signifie ${a+b} − ${b} = ${a}.`:`« ${b} de plus » signifie ${a} + ${b} = ${correct}.`;
     skill=multiply?'Comparaison multiplicative':'Comparaison additive';
   }else if(id==='MA-P08'){
     const top=2+(i*3)%7,bottom=2+(i*5)%6;
@@ -362,8 +362,9 @@ function extraFrenchQuestion(id,i){
   }else if(id==='FR-G02'){
     const subjects=['Le facteur','La tortue','Les enfants','Cette fusée','Le chat','Les joueurs','La bibliothécaire','Les oiseaux'];
     const s=subjects[i%subjects.length],kind=i%3,commands=['Regarde le ciel !','Ferme la fenêtre !','Écoute cette histoire !','Range tes crayons !','Ouvre le livre !','Observe cette image !','Prends ton manteau !'];
-    const sentence=kind===0?`${s} arrive bientôt.`:kind===1?`${s} arrive bientôt ?`:commands[Math.floor(i/3)];
-    prompt=`Quel est le type de la phrase « ${sentence} » ?`;
+    const verb=s.startsWith('Les ')?'arrivent':'arrive';
+    const sentence=kind===0?`${s} ${verb} bientôt.`:kind===1?`Est-ce que ${s.toLowerCase()} ${verb} bientôt ?`:commands[Math.floor(i/3)];
+    prompt=`Lis la phrase « ${sentence} » puis indique son type.`;
     correct=['Déclarative','Interrogative','Impérative'][kind];wrong=['Déclarative','Interrogative','Impérative','Exclamative'].filter(x=>x!==correct);
     explanation=kind===0?'Elle donne une information : elle est déclarative.':kind===1?'Elle pose une question : elle est interrogative.':'Elle donne un ordre ou un conseil : elle est impérative.';skill='Type de phrase';
   }else if(id==='FR-G03'){
@@ -537,7 +538,7 @@ function additionalMathQuestion(id,i){
     const euros=1+i,cents=[5,20,35,50,75,90][i%6],total=euros*100+cents,mode=i%3;
     if(mode===0){prompt=`Combien de centimes font ${euros} € ?`;correct=euros*100;wrong=[euros*10,euros*100+10,euros*1000];explanation=`1 € = 100 centimes, donc ${euros} € = ${correct} centimes.`;skill='Euros en centimes';}
     else if(mode===1){prompt=`${euros} € et ${cents} centimes font combien de centimes en tout ?`;correct=total;wrong=[euros*100-cents,euros*10+cents,total+100];explanation=`${euros} € = ${euros*100} centimes ; avec ${cents} centimes, cela fait ${total}.`;skill='Montant en centimes';}
-    else {const e2=1+(i%5);prompt=`Combien font ${euros} € + ${e2} € ?`;correct=euros+e2;wrong=[euros+e2+1,Math.abs(euros-e2),euros*e2];explanation=`${euros} + ${e2} = ${correct}, soit ${correct} €.`;skill='Addition de montants';}
+    else {const e2=1+(i%5);prompt=`Quel est le total de ${euros} € + ${e2} € ?`;correct=`${euros+e2} €`;wrong=[`${euros+e2+1} €`,`${Math.abs(euros-e2)} €`,`${euros*e2} €`];explanation=`${euros} + ${e2} = ${euros+e2}, soit ${correct}.`;skill='Addition de montants';}
   }else throw Error(`Unité mathématique non implémentée : ${id}`);
   const choices=typeof correct==='number'?extraNumber(correct,wrong,i):extraChoice(correct,wrong,i);
   return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...choices,explanation};
@@ -654,7 +655,7 @@ const qlmBanks={
     ['Jour et nuit','Quand un lieu sur Terre est tourné vers le Soleil, il y fait généralement :','Jour','Nuit','Toujours hiver','Toujours été','La face tournée vers le Soleil reçoit sa lumière.'],
     ['Système solaire','Parmi ces objets, lequel appartient au système solaire ?','La Terre','La galaxie d’Andromède','L’étoile Sirius','La galaxie du Triangle','La Terre est une planète du système solaire.'],
     ['Astres','Quel astre est au centre du système solaire ?','Le Soleil','La Terre','La Lune','Mars','Les planètes du système solaire tournent autour du Soleil.'],
-    ['Mouvement','La Lune tourne principalement autour de :','La Terre','La France','Une montagne','Un nuage','La Lune est un satellite naturel de la Terre.']
+    ['Mouvement','Autour de quel astre la Lune tourne-t-elle ?','La Terre','La France','Une montagne','Un nuage','La Lune est un satellite naturel de la Terre.']
   ],
   'QLM-C2-H03':[
     ['Continent','Sur quel continent se trouve la France métropolitaine ?','En Europe','En Asie','En Afrique','En Océanie','La France métropolitaine se trouve en Europe.'],
@@ -771,7 +772,7 @@ const readingBanks={
       ['A','Pronom sujet','Dans « il découvre une pierre », qui est « il » ?','Paul','Mila','Le grand-père','Le pont','Paul ouvre la boîte et découvre son contenu.'],
       ['A','Pronom pluriel','À la fin, qui est désigné par « Ils » ?','Mila et Paul','Paul et le grand-père','Mila et la pierre','Le pont et la rivière','Mila et Paul décident ensemble de demander au grand-père.'],
       ['B','Pronom sujet','Dans « Elle y a marqué », qui est « Elle » ?','Inès','Karim','La carte','Une ancienne chercheuse','Inès est la chercheuse qui présente la carte.'],
-      ['B','Pronom lieu','Dans « Elle y a marqué », que désigne « y » ?','Sur la carte','Dans l’armoire','Sur les oiseaux','Chez Karim','Inès a marqué les lieux sur la carte.'],
+      ['B','Pronom lieu','Dans « Elle y a marqué », à quel endroit renvoie « y » ?','Sur la carte','Dans l’armoire','Sur les oiseaux','Chez Karim','Inès a marqué les lieux sur la carte.'],
       ['B','Pronom objet','Dans « Karim la regarde », que désigne « la » ?','La carte présentée par Inès','L’armoire','Une plume','Inès elle-même','Karim regarde la carte dont on vient de parler.'],
       ['B','Pronom sujet','Dans « il propose », qui est « il » ?','Karim','Inès','Un oiseau','Le grand-père','Le sujet de la phrase précédente est Karim.'],
       ['B','Pronom pluriel','À la fin, qui est désigné par « ils » ?','Inès et Karim','Les oiseaux','Les deux cartes','Les armoires','Inès revient avec la carte ; les deux collègues les placent côte à côte.']
@@ -837,7 +838,7 @@ const readingBanks={
       ['A','Preuve explicite','Quel passage montre que le pot B n’est pas à la fenêtre ?','« le pot B dans une armoire »','« une tige apparaît »','« les étiquettes »','« à l’aube »','Le lieu du pot B est indiqué directement.'],
       ['A','Preuve explicite','Quel passage explique pourquoi la terre du pot C est sèche ?','« mais sans l’arroser »','« près de la fenêtre »','« des graines »','« un carnet »','Le pot C n’a pas été arrosé.'],
       ['A','Vérification','Adam dit : « Une tige est apparue dans tous les pots. » Que permet de vérifier le texte ?','Seule l’apparition d’une tige dans A est mentionnée.','Le pot B a deux tiges.','Tous les pots ont une tige.','Aucune tige n’apparaît.','Le texte parle d’une tige dans A et ne donne pas ce résultat pour B ou C.'],
-      ['A','Preuve explicite','Quel passage prouve qu’Adam conserve une trace de son observation ?','« Adam note ses observations dans un carnet »','« trois petits pots »','« la terre du pot C »','« près de la fenêtre »','Noter dans un carnet permet de garder une trace.'],
+      ['A','Preuve explicite','Quel passage montre qu’Adam conserve une trace de son observation ?','« Adam note ses observations dans un carnet »','« trois petits pots »','« la terre du pot C »','« près de la fenêtre »','Noter dans un carnet permet de garder une trace.'],
       ['B','Preuve explicite','Quel passage indique que Noé a vérifié une prévision ?','« consulte la météo »','« une promenade à vélo »','« la longue piste »','« rangent leurs vélos »','Le texte précise qu’il consulte la météo.'],
       ['B','Inférence justifiée','Quel indice soutient le mieux l’idée que Noé craint la pluie pendant la sortie ?','« la pluie est annoncée pour l’après-midi »','« avec sa sœur »','« leurs vélos »','« près de la maison »','L’annonce de pluie justifie sa prudence.'],
       ['B','Preuve explicite','Quel passage montre que la sœur souhaite une sortie plus longue ?','« sa sœur voudrait quand même parcourir la longue piste »','« une boucle courte »','« les premières gouttes »','« sous l’abri »','Elle exprime le souhait de prendre la longue piste.'],
