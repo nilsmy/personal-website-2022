@@ -1511,7 +1511,9 @@ const statusKey='education-quiz-status-v1';
 let statusOverrides={};
 try{const stored=JSON.parse(localStorage.getItem(statusKey)||'{}');if(stored&&typeof stored==='object'&&!Array.isArray(stored))statusOverrides=stored;}catch{}
 const allowedStatuses=['pas-testee','testee','en-cours','acquise'];
+const statusLabels={'acquise':'Acquise','en-cours':'En cours d’apprentissage','testee':'Testée','pas-testee':'Pas testée'};
 function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:['acquise','en-cours'].includes(q.status)?q.status:completedMath.has(q.id)?'testee':(q.status||'pas-testee');}
+function quizOptionText(q){return `${q.id} — ${q.title} · ${statusLabels[effectiveStatus(q)]||statusLabels['pas-testee']}`;}
 const completedKey='education-quiz-completed-v1';
 let completedMath=new Set(['MA-N01','MA-N02','MA-N03','MA-N04']); // REVIEWED_QUIZ_IDS; completion is not mastery.
 try{for(const id of JSON.parse(localStorage.getItem(completedKey)||'[]'))if(typeof id==='string')completedMath.add(id)}catch{}
@@ -1522,7 +1524,7 @@ function suggestedInSubject(){const subject=$('subjectSelect').value,available=q
 function renderSubjectSuggestion(){const q=suggestedInSubject();$('subjectSuggestion').classList.toggle('hidden',!q);if(!q)return;const inProgress=effectiveStatus(q)==='en-cours';$('subjectSuggestionLabel').textContent=inProgress?'À travailler dans cette matière':'À découvrir dans cette matière';$('subjectSuggestionNote').textContent=inProgress?'Compétence en cours d’apprentissage':'Compétence non encore testée sur cet appareil';$('subjectSuggestionName').textContent=q.title;}
 function renderSelect(){
   const subject=$('subjectSelect').value,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject);
-  $('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=`${q.id} — ${q.title}`;return o}));
+  $('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=quizOptionText(q);return o}));
   if(!available.length){const o=document.createElement('option');o.textContent='Aucune compétence pour cette matière';o.value='';$('quizSelect').append(o)}
   $('start').disabled=!available.length;
   $('loadStatus').textContent=available.length?`${available.length} compétences disponibles en ${subject.toLowerCase()}.`:`Aucune compétence en ${subject.toLowerCase()} pour l’instant.`;
@@ -1533,8 +1535,8 @@ function renderSelect(){
 function renderQuizStatus(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)];
   $('skillStatus').classList.toggle('hidden',!selected);if(!selected)return;
-  const status=effectiveStatus(selected),labels={'acquise':'Acquise','en-cours':'En cours d’apprentissage','testee':'Testée','pas-testee':'Pas testée'};
-  $('statusBadge').className=`status-badge status-${status}`;$('statusBadge').textContent=labels[status]||labels['pas-testee'];
+  const status=effectiveStatus(selected),option=[...$('quizSelect').options].find(o=>Number(o.value)===quizzes.indexOf(selected));if(option)option.textContent=quizOptionText(selected);
+  $('statusBadge').className=`status-badge status-${status}`;$('statusBadge').textContent=statusLabels[status]||statusLabels['pas-testee'];
   $('statusSelect').value=status;
   $('statusNote').textContent=Object.hasOwn(statusOverrides,selected.id)?'Statut choisi sur cet appareil.':status==='testee'?'Passation enregistrée ; maîtrise à décider.':selected.statusScope||'';
 }
