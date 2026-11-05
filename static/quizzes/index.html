@@ -1265,7 +1265,7 @@ const mathUnits = [
   {id:'MA-F02',title:'Représenter des fractions et leurs équivalences',levels:'CE1 : fractions inférieures ou égales à 1 ; CE2 : fractions équivalentes'},
   {id:'MA-F03',title:'Numérateur et dénominateur',levels:'CE1–CE2 : lire et expliquer les deux nombres d’une fraction'},
   {id:'MA-F04',title:'Comparer des fractions',levels:'CE1 : même dénominateur ou fractions unitaires ; CE2 : comparaisons étendues'}
-].map(unit=>({...unit,subject:'Mathématiques',language:'fr-FR',status:'pas-testee',statusScope:'CE1 à vérifier ; questions CE2 pour situer le niveau.',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}));
+].map(unit=>{const acquired=['MA-N02','MA-N03','MA-N04'].includes(unit.id);return {...unit,subject:'Mathématiques',language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon le jugement du parent, appuyé par le diagnostic du 4 novembre 2026.':'CE1 à vérifier ; questions CE2 pour situer le niveau.',statusBasis:acquired?'Décision explicite du parent après observation et revue des réponses.':'',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}});
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...audioUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext, audioPlayCount=0;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
