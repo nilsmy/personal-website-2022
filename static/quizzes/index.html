@@ -1353,7 +1353,7 @@ function nextMathQuestions(id,count){
       const kind=i%4;
       if(kind===0){
         const pattern=['A','B','C','D'].slice(0,3+i%2),rank=17+(i*7)%83,right=pattern[(rank-1)%pattern.length];
-        prompt=`Le motif ${pattern.join(' – ')} se répète. Quelle lettre est en ${rank}e position ?`;
+        prompt=`Dans la suite ${pattern.join(' – ')} – ${pattern.join(' – ')} – …, quelle lettre apparaît en ${rank}e position ?`;
         pick(right,['A','B','C','D'].filter(x=>x!==right));
         explanation=`On compte à partir de la première lettre : la ${rank}e position correspond à « ${right} ».`;skill='Rang dans un motif';subskillId='MA-N06-MOTIF';
       }else if(kind===1){
@@ -1542,7 +1542,7 @@ const statusLabels={'acquise':'Acquise','en-cours':'En cours d’apprentissage',
 function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:['acquise','en-cours'].includes(q.status)?q.status:completedMath.has(q.id)?'testee':(q.status||'pas-testee');}
 function quizOptionText(q){return `${q.id} — ${q.title} · ${statusLabels[effectiveStatus(q)]||statusLabels['pas-testee']}`;}
 const completedKey='education-quiz-completed-v1';
-let completedMath=new Set(['MA-F01','MA-F02','MA-F03','MA-F04','MA-M01','MA-M02','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05']); // REVIEWED_QUIZ_IDS; completion is not mastery.
+let completedMath=new Set(['MA-F01','MA-F02','MA-F03','MA-F04','MA-M01','MA-M02','MA-M03','MA-M04','MA-M05','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05']); // REVIEWED_QUIZ_IDS; completion is not mastery.
 try{for(const id of JSON.parse(localStorage.getItem(completedKey)||'[]'))if(typeof id==='string')completedMath.add(id)}catch{}
 function nextMathSuggestion(){return mathUnits.find(q=>!completedMath.has(q.id)&&effectiveStatus(q)!=='acquise')||null;}
 function suggestedQuiz(){return nextMathSuggestion()||quizzes.find(q=>effectiveStatus(q)==='en-cours')||quizzes.find(q=>effectiveStatus(q)==='pas-testee')||null;}
