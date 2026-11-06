@@ -33,9 +33,10 @@
     .review-details{margin:22px 0}.review-details summary{cursor:pointer;font-weight:700;color:#205f87}.review-list{display:grid;gap:14px;margin-top:14px}.review-item{background:#fff;border:1px solid #d4d4d4;border-left:5px solid #b65151;border-radius:7px;padding:15px 18px}.review-item p{margin:6px 0}.review-question{font-weight:700}.review-selected{color:#8a3434}.review-correct{color:#24633a}.review-explanation{color:#666}
     .skill-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 4px}.status-badge{display:inline-block;border-radius:999px;padding:6px 11px;font-weight:700;font-size:.9rem}.status-acquise{background:#e2f2e6;color:#24633a}.status-en-cours{background:#fff0ce;color:#775314}.status-testee{background:#e8f2fa;color:#205f87}.status-pas-testee{background:#e7e7e7;color:#555}.status-note{color:#666;font-size:.94rem}
     .suggestion{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;border:1px solid #d8c385;background:#fff9e9;border-radius:9px;padding:16px 18px;margin:4px 0 24px}.suggestion-title{font-weight:700;color:#5d4615}.suggestion p{margin:5px 0 0;color:#666}
+    .lesson-offer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:#eef6fb;border:1px solid #a9cce2;border-radius:9px;padding:15px 18px;margin:18px 0}.lesson-offer p{margin:3px 0;color:#555}.lesson-shell{max-width:760px;margin:0 auto}.lesson-intro{font-size:1.12rem}.fraction-example{display:grid;grid-template-columns:minmax(180px,1fr) minmax(220px,1.2fr);gap:28px;align-items:center;background:#fff;border:1px solid #d4d4d4;border-radius:10px;padding:24px;margin:24px 0}.fraction-large{display:flex;justify-content:center;align-items:center;gap:22px}.stacked-fraction{display:inline-grid;grid-template-rows:1fr 3px 1fr;text-align:center;font-size:3.2rem;line-height:1;padding:0 8px;color:#333}.fraction-line{background:#333}.fraction-labels p{margin:8px 0}.fraction-labels strong{color:#205f87}.fraction-bar{display:grid;grid-template-columns:repeat(4,1fr);height:82px;margin:22px 0 10px;border:3px solid #444;border-radius:5px;overflow:hidden}.fraction-bar span{border-right:2px solid #444;background:#d6a93b}.fraction-bar span:last-child{border-right:0;background:#fff}.lesson-rule{background:#fff9e9;border-left:5px solid #b38a2a;padding:15px 18px;border-radius:4px}.lesson-check{font-weight:700;color:#24633a}
     #writtenAnswer label{display:block;font-weight:700;margin-bottom:8px}#writtenAnswer input{font-size:1.3rem;padding:16px}#writtenAnswer p{font-size:.92rem;color:#666;margin:8px 0 0}
     :root{background:#090909}
-    @media(max-width:600px){main{padding:20px 16px 48px}header{margin-bottom:18px}.card{padding:20px}.toolbar button,.toolbar label.secondary{width:100%;text-align:center}}
+    @media(max-width:600px){main{padding:20px 16px 48px}header{margin-bottom:18px}.card{padding:20px}.toolbar button,.toolbar label.secondary{width:100%;text-align:center}.fraction-example{grid-template-columns:1fr;padding:18px}.lesson-offer button{width:100%}}
   </style>
 </head>
 <body><main>
@@ -60,6 +61,7 @@
     <div id="subjectSuggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="subjectSuggestionLabel"></span> : <span id="subjectSuggestionName"></span></div><p id="subjectSuggestionNote"></p></div><button id="chooseSubjectSuggestion" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir dans cette matière</button></div>
     <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
+    <div id="lessonOffer" class="lesson-offer hidden"><div><strong>Petite leçon disponible</strong><p id="lessonOfferText"></p></div><button id="openLesson" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Lire la leçon</button></div>
     <label for="statusSelect">Statut sur cet appareil</label><select id="statusSelect"><option value="pas-testee">Pas testée</option><option value="testee">Testée</option><option value="en-cours">En cours d’apprentissage</option><option value="acquise">Acquise</option></select>
     <div id="formatControl" class="hidden"><label for="formatSelect">Format</label><select id="formatSelect"><option value="qcm">QCM</option><option value="written">Réponse écrite</option></select></div>
     <label for="questionCount">Nombre de questions</label><select id="questionCount"><option>Chargement…</option></select>
@@ -67,6 +69,12 @@
     <label class="toolbar" for="immediate"><input id="immediate" type="checkbox" checked> Afficher la correction après chaque question</label>
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
+  </section>
+  <section id="lesson" class="card hidden">
+    <div class="lesson-shell">
+      <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
+      <div class="toolbar footer"><button id="lessonStart" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer le quiz</button><button id="lessonBack" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Retour au menu</button></div>
+    </div>
   </section>
   <section id="play" class="card hidden" aria-live="polite">
     <div class="stats"><span id="position" class="eyebrow"></span><span id="score"></span></div><progress id="progress" max="10" value="0"></progress>
@@ -1275,6 +1283,22 @@ const mathUnits = [
 ].map(unit=>{const acquired=['MA-N02','MA-N03','MA-N04','MA-N05','MA-F01','MA-F02','MA-F04'].includes(unit.id);return {...unit,subject:'Mathématiques',language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon le jugement du parent, appuyé par le diagnostic et la revue des réponses.':'CE1 à vérifier ; questions CE2 pour situer le niveau.',statusBasis:acquired?'Décision explicite du parent après observation et revue des réponses.':'',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}});
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...audioUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext, audioPlayCount=0;
+const lessons={
+  'MA-F03':{
+    title:'Numérateur et dénominateur',
+    offer:'Découvrir les deux mots avant de répondre aux questions.',
+    html:`<p class="lesson-intro">Une fraction indique combien de parts égales on prend dans un tout.</p>
+      <div class="fraction-example">
+        <div class="fraction-large" aria-label="trois quarts"><span class="stacked-fraction"><span>3</span><span class="fraction-line"></span><span>4</span></span><span>se lit<br><strong>trois quarts</strong></span></div>
+        <div class="fraction-labels"><p><strong>3 est le numérateur.</strong><br>Il indique le nombre de parts prises ou coloriées.</p><p><strong>4 est le dénominateur.</strong><br>Il indique en combien de parts égales le tout est partagé.</p></div>
+      </div>
+      <div class="fraction-bar" role="img" aria-label="Une barre partagée en quatre parts égales, dont trois sont coloriées"><span></span><span></span><span></span><span></span></div>
+      <p>Ici, le tout est partagé en <strong>4 parts égales</strong> et <strong>3 parts sont coloriées</strong>. La fraction coloriée est donc 3/4.</p>
+      <p class="lesson-rule"><strong>Pour te repérer :</strong> le numérateur est au-dessus de la barre de fraction ; le dénominateur est en dessous.</p>
+      <p class="lesson-check">Dans 5/8, le numérateur est 5 et le dénominateur est 8.</p>`
+  }
+};
+let lessonViewedFor=null;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
 const unit=(n,label)=>`${n} ${label}${n>1?'s':''}`;
 function four(correct,wrong,shift=0){
@@ -1539,6 +1563,7 @@ function renderQuizStatus(){
   $('statusBadge').className=`status-badge status-${status}`;$('statusBadge').textContent=statusLabels[status]||statusLabels['pas-testee'];
   $('statusSelect').value=status;
   $('statusNote').textContent=Object.hasOwn(statusOverrides,selected.id)?'Statut choisi sur cet appareil.':status==='testee'?'Passation enregistrée ; maîtrise à décider.':selected.statusScope||'';
+  const lesson=lessons[selected.id];$('lessonOffer').classList.toggle('hidden',!lesson);if(lesson)$('lessonOfferText').textContent=lesson.offer;
 }
 function renderQuestionCounts(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
@@ -1547,7 +1572,11 @@ function renderQuestionCounts(){
   $('questionCount').disabled=counts.length<2;
 }
 function renderFormats(){const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],available=!!selected&&writtenIds.has(selected.id);$('formatControl').classList.toggle('hidden',!available);$('formatSelect').value='qcm';}
-function show(id){['setup','play','result'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
+function show(id){['setup','lesson','play','result'].forEach(x=>$(x).classList.toggle('hidden',x!==id));}
+function openLesson(){
+  const selected=quizzes[Number($('quizSelect').value)],lesson=selected&&lessons[selected.id];if(!lesson)return;
+  lessonViewedFor=selected.id;$('lessonEyebrow').textContent=`${selected.id} · Petite leçon`;$('lessonTitle').textContent=lesson.title;$('lessonContent').innerHTML=lesson.html;show('lesson');
+}
 function prepareAudioStory(){
   audioPlayCount=0;
   $('audioPanel').classList.remove('hidden');$('audioIntro').classList.remove('hidden');
@@ -1702,7 +1731,7 @@ function submit(){
   if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':written?'Réponse à revoir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
   $('confirm').classList.add('hidden');$('next').classList.remove('hidden');$('progress').value=index+1;
 }
-function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}const dictation=quiz.responseFormat==='dictation';return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,responseFormat:dictation?'audio-dictation':quiz.audioFile?'audio-qcm':quiz.responseFormat||'qcm',...(quiz.audioFile?{delivery:'recorded_audio',audioPlayCount,transcript:quiz.transcript,audioAssetId:quiz.id}:{}),quizStatusAtStart:effectiveStatus(quiz),quizStatusScope:Object.hasOwn(statusOverrides,quiz.id)?null:quiz.statusScope||null,quizStatusBasis:Object.hasOwn(statusOverrides,quiz.id)?'Statut choisi sur cet appareil.':quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,writtenReviewNeeded:responses.filter(r=>r.reviewNeeded).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:dictation?'Phrase entendue sur enregistrement puis saisie ; la réponse initiale est conservée pour analyser précisément les écarts orthographiques.':quiz.audioFile?'Récit entendu sur enregistrement ; nombre de lectures audio conservé, sans conclusion de maîtrise générale.':quiz.responseFormat==='written'?'Réponses écrites initiales comparées aux formes attendues ; les écarts restent à examiner, sans conclusion de maîtrise générale.':'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
+function report(){const bySubskill={},passages={};for(const q of quiz.questions)if(q.passageId&&q.passage)passages[q.passageId]=q.passage;for(const r of responses){if(r.subskillId){bySubskill[r.subskillId]??={correct:0,total:0,unknown:0};bySubskill[r.subskillId].total++;if(r.correct)bySubskill[r.subskillId].correct++;if(r.unknown)bySubskill[r.subskillId].unknown++;}}const dictation=quiz.responseFormat==='dictation';return {schema:'education-quiz-v1',quizId:quiz.id,quizTitle:quiz.title,subject:quiz.subject||'Autres',language:quiz.language||'fr-FR',source:quiz.source||null,levels:quiz.levels||null,responseFormat:dictation?'audio-dictation':quiz.audioFile?'audio-qcm':quiz.responseFormat||'qcm',lessonViewed:lessonViewedFor===quiz.id,...(quiz.audioFile?{delivery:'recorded_audio',audioPlayCount,transcript:quiz.transcript,audioAssetId:quiz.id}:{}),quizStatusAtStart:effectiveStatus(quiz),quizStatusScope:Object.hasOwn(statusOverrides,quiz.id)?null:quiz.statusScope||null,quizStatusBasis:Object.hasOwn(statusOverrides,quiz.id)?'Statut choisi sur cet appareil.':quiz.statusBasis||null,dateLocal:localDate(),timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone||null,immediateFeedback,soundEnabled,startedAt,completedAt:new Date().toISOString(),initialCorrect:responses.filter(r=>r.correct).length,total:responses.length,unknown:responses.filter(r=>r.unknown).length,writtenReviewNeeded:responses.filter(r=>r.reviewNeeded).length,bySubskill,...(Object.keys(passages).length?{passages}:{}),assistance:'non renseignée',interpretation:dictation?'Phrase entendue sur enregistrement puis saisie ; la réponse initiale est conservée pour analyser précisément les écarts orthographiques.':quiz.audioFile?'Récit entendu sur enregistrement ; nombre de lectures audio conservé, sans conclusion de maîtrise générale.':quiz.responseFormat==='written'?'Réponses écrites initiales comparées aux formes attendues ; les écarts restent à examiner, sans conclusion de maîtrise générale.':'QCM d’apprentissage ; réponses initiales observées, sans conclusion de maîtrise générale.',responses};}
 function renderReview(data){
   const missed=data.responses.filter(r=>!r.correct);$('reviewDetails').classList.toggle('hidden',!missed.length);$('reviewDetails').open=false;$('reviewSummary').textContent=`Revoir ${missed.length} ${missed.length===1?'réponse à corriger':'réponses à corriger'}`;
   $('reviewList').replaceChildren(...missed.map(r=>{const card=document.createElement('article');card.className='review-item';const add=(className,text)=>{const p=document.createElement('p');p.className=className;p.textContent=text;card.append(p)};add('review-question',`Question ${r.number} : ${r.prompt}`);add('review-selected',`Réponse donnée : ${r.unknown?'Je ne sais pas':r.selected}`);add('review-correct',`Bonne réponse : ${r.correctAnswer}`);if(r.explanation)add('review-explanation',r.explanation);return card}));
@@ -1743,6 +1772,9 @@ $('again').onclick=()=>{$('audioPlayer').pause();show('setup')};$('download').on
 $('saveFolder').onclick=saveToFolder;
 $('subjectSelect').onchange=renderSelect;
 $('quizSelect').onchange=()=>{renderFormats();renderQuestionCounts();renderQuizStatus()};
+$('openLesson').onclick=openLesson;
+$('lessonBack').onclick=()=>show('setup');
+$('lessonStart').onclick=()=>$('start').click();
 $('formatSelect').onchange=renderQuestionCounts;
 $('statusSelect').onchange=()=>{const q=quizzes[Number($('quizSelect').value)],status=$('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}renderQuizStatus();renderSuggestion();renderSubjectSuggestion();};
 $('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;$('subjectSelect').value=q.subject||'Autres';renderSelect();$('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
