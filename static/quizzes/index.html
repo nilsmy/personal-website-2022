@@ -93,26 +93,26 @@
 const extraSpecs=[
   ['MA-M01','Mathématiques','Tables d’addition','Faits additifs et terme manquant'],
   ['MA-M02','Mathématiques','Tables de multiplication','Faits multiplicatifs et facteur manquant'],
-  ['MA-M03','Mathématiques','Doubles, moitiés et multiples de 25','Faits numériques à mémoriser'],
-  ['MA-M04','Mathématiques','Ajouter et soustraire dizaines et centaines','Calcul mental par la numération'],
-  ['MA-M05','Mathématiques','Multiplier par 10 ou 100','Valeur de position dans le calcul'],
-  ['MA-M06','Mathématiques','Calculer autour de 9, 19, 29 et 39','Compensation en calcul mental'],
-  ['MA-M07','Mathématiques','Soustraire un petit nombre avec passage de dizaine','Soustractions inférieures à 9'],
-  ['MA-M08','Mathématiques','Moitiés et doubles successifs','Moitié d’un pair ; multiplier par 4 ou 8'],
-  ['MA-M09','Mathématiques','Multiplier par décomposition','Distributivité : 11 à 19 au CE1, jusqu’à 99 au CE2'],
-  ['MA-M10','Mathématiques','Multiplier par un nombre entier de dizaines','Faits multiplicatifs et dizaines'],
-  ['MA-P02','Mathématiques','Problèmes additifs à une étape','Parties–tout, transformation et comparaison'],
-  ['MA-P03','Mathématiques','Problèmes additifs à deux étapes','Deux transformations ou comparaison intermédiaire'],
-  ['MA-P04','Mathématiques','Problèmes multiplicatifs à une étape','Groupes égaux et valeur du tout'],
-  ['MA-P05','Mathématiques','Partager équitablement','Nombre de parts ou valeur d’une part'],
-  ['MA-P06','Mathématiques','Problèmes mêlant addition et multiplication','Deux ou trois étapes'],
-  ['MA-P07','Mathématiques','Comparer par différence ou par multiplication','CE2 : de plus/de moins et fois plus/fois moins'],
-  ['MA-P08','Mathématiques','Compter des combinaisons','CE2 : tableaux, arbres et produits cartésiens'],
-  ['MA-F05','Mathématiques','Calculer avec des fractions','Sommes, différences et complément à l’unité'],
-  ['MA-C02','Mathématiques','Comprendre la multiplication','Groupes égaux et commutativité'],
-  ['MA-C03','Mathématiques','Reconnaître les nombres pairs et impairs','Parité et multiples de 2'],
-  ['MA-C04','Mathématiques','Relier multiplication et division','Opérations inverses et partages'],
-  ['MA-C06','Mathématiques','Nommer les opérations et leurs résultats','Somme, différence, facteur, produit et multiple'],
+  ['MA-M03','Mathématiques','Doubles, moitiés et multiples de 25','Faits numériques à mémoriser',[10,20,50,100]],
+  ['MA-M04','Mathématiques','Ajouter et soustraire dizaines et centaines','Calcul mental par la numération',[10,20,50,100]],
+  ['MA-M05','Mathématiques','Multiplier par 10 ou 100','Valeur de position dans le calcul',[10,20,50,100]],
+  ['MA-M06','Mathématiques','Calculer autour de 9, 19, 29 et 39','Compensation en calcul mental',[10,20,50,100]],
+  ['MA-M07','Mathématiques','Soustraire un petit nombre avec passage de dizaine','Soustractions inférieures à 9',[10,20,50,100]],
+  ['MA-M08','Mathématiques','Moitiés et doubles successifs','Moitié d’un pair ; multiplier par 4 ou 8',[10,20,50,100]],
+  ['MA-M09','Mathématiques','Multiplier par décomposition','Distributivité : 11 à 19 au CE1, jusqu’à 99 au CE2',[10,20,50,100]],
+  ['MA-M10','Mathématiques','Multiplier par un nombre entier de dizaines','Faits multiplicatifs et dizaines',[10,20,50,100]],
+  ['MA-P02','Mathématiques','Problèmes additifs à une étape','Parties–tout, transformation et comparaison',[10,20,50,100]],
+  ['MA-P03','Mathématiques','Problèmes additifs à deux étapes','Deux transformations ou comparaison intermédiaire',[10,20,50,100]],
+  ['MA-P04','Mathématiques','Problèmes multiplicatifs à une étape','Groupes égaux et valeur du tout',[10,20,50,100]],
+  ['MA-P05','Mathématiques','Partager équitablement','Nombre de parts ou valeur d’une part',[10,20,50,100]],
+  ['MA-P06','Mathématiques','Problèmes mêlant addition et multiplication','Deux ou trois étapes',[10,20,50,100]],
+  ['MA-P07','Mathématiques','Comparer par différence ou par multiplication','CE2 : de plus/de moins et fois plus/fois moins',[10,20,50,100]],
+  ['MA-P08','Mathématiques','Compter des combinaisons','CE2 : tableaux, arbres et produits cartésiens',[10,20,50,100]],
+  ['MA-F05','Mathématiques','Calculer avec des fractions','Sommes, différences et complément à l’unité',[10,20,50,100]],
+  ['MA-C02','Mathématiques','Comprendre la multiplication','Groupes égaux et commutativité',[10,20,50,100]],
+  ['MA-C03','Mathématiques','Reconnaître les nombres pairs et impairs','Parité et multiples de 2',[10,20,50,100]],
+  ['MA-C04','Mathématiques','Relier multiplication et division','Opérations inverses et partages',[10,20,50,100]],
+  ['MA-C06','Mathématiques','Nommer les opérations et leurs résultats','Somme, différence, facteur, produit et multiple',[10,20,50,100]],
   ['MA-Q01','Mathématiques','Longueurs : choisir et convertir les unités','Kilomètre, mètre, centimètre ; décimètre et millimètre au CE2'],
   ['MA-Q03','Mathématiques','Périmètre des figures','Contour, carré et rectangle au CE2',[10,20]],
   ['MA-Q04','Mathématiques','Masses : choisir et convertir les unités','Gramme, kilogramme et tonne'],
@@ -163,7 +163,8 @@ const extraSpecs=[
   ['QLM-C2-H06','Histoire','Chronologie et frises','Avant, après et succession',[10]],
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>({id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:'pas-testee',statusScope:'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}));
+const acquiredExtraUnits=['MA-M01','MA-M02'];
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id);return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -175,7 +176,7 @@ function extraNumber(right,wrong,i){
   return extraChoice(right,candidates,i);
 }
 function extraQuestion(id,i){
-  const ce2=i>=12,level=ce2?'CE2':'CE1',k=ce2?i-12:i;
+  const position=i%20,ce2=position>=12,level=ce2?'CE2':'CE1',k=ce2?position-12:position;
   let prompt,correct,wrong,explanation,skill;
   if(id==='MA-M01'){
     const a=2+(i*7)%9,b=2+(i*5+Math.floor(i/18))%9;
@@ -186,12 +187,12 @@ function extraQuestion(id,i){
     if(i%2){prompt=`${a} × □ = ${a*b}. Quel facteur manque ?`;correct=b;wrong=[a,b+1,b-1];explanation=`${a} × ${b} = ${a*b}.`;skill='Facteur manquant';}
     else {prompt=`Combien font ${a} × ${b} ?`;correct=a*b;wrong=[a*(b+1),a*b+a,a*b-1];explanation=`${a} × ${b} = ${correct}.`;skill='Fait multiplicatif';}
   }else if(id==='MA-M03'){
-    const order=ce2?Math.floor((i-12)/3):Math.floor(i/3);
-    if(i%3===0){const n=(ce2?[13,18,35]:[4,7,9,20])[order];prompt=`Quel est le double de ${n} ?`;correct=2*n;wrong=[n+2,2*n+2,2*n-2];explanation=`${n} + ${n} = ${correct}.`;skill='Double';}
-    else if(i%3===1){const value=(ce2?[24,30,120]:[12,16,80,100])[order],n=value/2;prompt=`Quelle est la moitié de ${value} ?`;correct=n;wrong=[n+1,n-1,value];explanation=`Deux parts de ${n} font ${value}.`;skill='Moitié';}
-    else {const v=[25,50,75,100][i%4];prompt=ce2?`Quel est le résultat de 25 × ${i%4+1} ?`:`Combien font ${i%4+1} groupes de 25 ?`;correct=v;wrong=[v+25,Math.max(0,v-25),v+10];explanation=`${i%4+1} groupes de 25 donnent ${v}.`;skill='Multiples de 25';}
+    const order=ce2?Math.floor((position-12)/3):Math.floor(position/3);
+    if(position%3===0){const n=(ce2?[13,18,35]:[4,7,9,20])[order];prompt=`Quel est le double de ${n} ?`;correct=2*n;wrong=[n+2,2*n+2,2*n-2];explanation=`${n} + ${n} = ${correct}.`;skill='Double';}
+    else if(position%3===1){const value=(ce2?[24,30,120]:[12,16,80,100])[order],n=value/2;prompt=`Quelle est la moitié de ${value} ?`;correct=n;wrong=[n+1,n-1,value];explanation=`Deux parts de ${n} font ${value}.`;skill='Moitié';}
+    else {const v=[25,50,75,100][position%4];prompt=ce2?`Quel est le résultat de 25 × ${position%4+1} ?`:`Combien font ${position%4+1} groupes de 25 ?`;correct=v;wrong=[v+25,Math.max(0,v-25),v+10];explanation=`${position%4+1} groupes de 25 donnent ${v}.`;skill='Multiples de 25';}
   }else if(id==='MA-M04'){
-    const step=ce2&&i%2===0?100:10,a=(ce2?20:3)*step+((i*7)%9)*step+3+(i%6),delta=(1+i%4)*step,subtract=i%3===0;
+    const step=ce2&&i%2===0?100:10,a=(ce2?20:5)*step+((i*7)%9)*step+3+(i%6),delta=(1+i%4)*step,subtract=i%3===0;
     prompt=`Combien font ${a} ${subtract?'−':'+'} ${delta} ?`;correct=a+(subtract?-delta:delta);
     wrong=[correct+step,correct-step,correct+(subtract?delta:-delta)];explanation=`On ${subtract?'retire':'ajoute'} ${delta/step} ${step===100?'centaines':'dizaines'} : ${correct}.`;skill='Numération et calcul';
   }else if(id==='MA-M05'){
@@ -215,7 +216,7 @@ function extraQuestion(id,i){
     prompt=`Combien font ${a} × ${b} ?`;correct=a*b;wrong=[tens*b+units,tens*b+units*(b-1),correct+b];
     explanation=`(${tens} + ${units}) × ${b} = ${tens*b} + ${units*b} = ${correct}.`;skill='Décomposition multiplicative';
   }else if(id==='MA-M10'){
-    const a=2+(i*3)%8,tens=ce2?2+(k*5)%8:1+Math.floor(i/8);
+    const a=2+(i*3)%8,tens=ce2?2+(k*5)%8:1+Math.floor(position/8);
     prompt=`Combien font ${a} × ${tens*10} ?`;correct=a*tens*10;wrong=[a*tens,a*tens*10+10,a*(tens+1)*10];
     explanation=`${a} × ${tens*10} = (${a} × ${tens}) dizaines = ${correct}.`;skill='Multiplier des dizaines';
   }else return extraProblemOrFrench(id,i);
@@ -223,7 +224,7 @@ function extraQuestion(id,i){
 }
 function extraProblemOrFrench(id,i){
   if(id.startsWith('FR-'))return extraFrenchQuestion(id,i);
-  const ce2=i>=12,level=ce2?'CE2':'CE1',k=ce2?i-12:i;
+  const position=i%20,ce2=position>=12,level=ce2?'CE2':'CE1',k=ce2?position-12:position;
   let prompt,correct,wrong,explanation,skill;
   if(id==='MA-P02'){
     const a=ce2?120+(k*37)%430:18+(i*13)%82,b=ce2?45+(k*19)%120:6+(i*7)%25;
@@ -480,7 +481,7 @@ function extraFrenchQuestion(id,i){
 }
 const additionalMathIds=new Set(['MA-F05','MA-C02','MA-C03','MA-C04','MA-C06','MA-Q01','MA-Q03','MA-Q04','MA-Q05','MA-Q06']);
 function additionalMathQuestion(id,i){
-  const ce2=i>=12,k=ce2?i-12:i,level=['MA-Q03','MA-Q05'].includes(id)||ce2?'CE2':'CE1';
+  const position=i%20,ce2=position>=12,k=ce2?position-12:position,level=['MA-Q03','MA-Q05'].includes(id)||ce2?'CE2':'CE1';
   let prompt,correct,wrong,explanation,skill;
   if(id==='MA-F05'){
     if(ce2){
@@ -497,13 +498,15 @@ function additionalMathQuestion(id,i){
         [3,2,1,true],[4,1,2,false],[5,2,1,false],[6,4,1,true],
         [8,3,2,false],[10,7,2,true],[4,1,1,false],[5,4,2,true],
         [6,1,4,false],[8,7,3,true],[10,2,6,false],[3,1,1,false]
-      ][i];
+      ][position];
       const n=subtract?a-b:a+b;prompt=`Combien font ${a}/${d} ${subtract?'−':'+'} ${b}/${d} ?`;correct=`${n}/${d}`;
       wrong=[`${n+1}/${d}`,`${n+2}/${d}`,`${n+3}/${d}`];
       explanation=`Les dénominateurs sont identiques : on ${subtract?'soustrait':'additionne'} les numérateurs, donc ${correct}.`;skill='Même dénominateur';
     }
   }else if(id==='MA-C02'){
-    const groups=2+(i*3)%8,each=3+(i*5)%7;
+    const groups=2+(i*3)%8;
+    let each=3+(i*5)%7;
+    if(each===groups) each=each===9?8:each+1;
     if(i%2===0){prompt=`${groups} boîtes contiennent chacune ${each} billes. Quelle multiplication représente le total ?`;correct=`${groups} × ${each}`;wrong=[`${groups} + ${each}`,`${groups} − ${each}`,`${groups} ÷ ${each}`];explanation=`${groups} groupes de ${each} billes se représentent par ${groups} × ${each}.`;skill='Groupes égaux';}
     else {prompt=`Quelle autre multiplication donne le même produit que ${groups} × ${each} ?`;correct=`${each} × ${groups}`;wrong=[`${groups} + ${each}`,`${groups} × ${each+1}`,`${each} × ${groups+1}`];explanation=`On peut échanger l’ordre des facteurs : ${groups} × ${each} = ${each} × ${groups}.`;skill='Commutativité';}
   }else if(id==='MA-C03'){
@@ -511,11 +514,11 @@ function additionalMathQuestion(id,i){
     prompt=`Lequel de ces nombres est ${wantEven?'pair':'impair'} ?`;correct=target;wrong=wantEven?[target+1,target+3,target+5]:[target+1,target+3,target+5];
     explanation=`${target} est ${wantEven?'pair : il se partage en deux groupes égaux':'impair : il reste une unité après un partage en deux groupes égaux'}.`;skill=wantEven?'Nombre pair':'Nombre impair';
   }else if(id==='MA-C04'){
-    const a=2+i%9,b=2+Math.floor(i/9),total=a*b;
+    const a=2+i%9,b=2+Math.floor(position/9),total=a*b;
     if(ce2){prompt=`Si ${a} × ${b} = ${total}, combien font ${total} ÷ ${a} ?`;correct=b;wrong=[a,b+1,total-a];explanation=`La division défait la multiplication : ${total} ÷ ${a} = ${b}.`;skill='Opérations inverses';}
     else {prompt=`On partage ${total} cartes entre ${a} enfants, en parts égales. Combien chacun reçoit-il ?`;correct=b;wrong=[a,b+1,total-b];explanation=`${a} groupes de ${b} font ${total}, donc chaque part contient ${b} cartes.`;skill='Partage égal';}
   }else if(id==='MA-C06'){
-    const a=4+(i*7)%25,b=2+(i*3)%9,mode=ce2?2+k%3:i%2;
+    const a=4+(i*7)%25,b=2+(i*3)%9,mode=ce2?2+k%3:position%2;
     if(mode===0){prompt=`Dans ${a} + ${b} = ${a+b}, comment appelle-t-on ${a+b} ?`;correct='La somme';wrong=['La différence','Le facteur','Le produit'];skill='Somme';}
     else if(mode===1){prompt=`Dans ${a+b} − ${b} = ${a}, comment appelle-t-on ${a} ?`;correct='La différence';wrong=['La somme','Le facteur','Le produit'];skill='Différence';}
     else if(mode===2){prompt=`Dans ${a} × ${b} = ${a*b}, comment appelle-t-on ${a*b} ?`;correct='Le produit';wrong=['La somme','La différence','Un facteur'];skill='Produit';}
@@ -887,7 +890,7 @@ function readingQuestions(id){
 function extraQuestions(id,count){
   if(id.startsWith('QLM-'))return qlmQuestions(id);
   if(id.startsWith('FR-L'))return readingQuestions(id);
-  const all=Array.from({length:20},(_,i)=>advancedIds.has(id)?advancedQuestion(id,i):visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
+  const all=Array.from({length:count>20?count:20},(_,i)=>advancedIds.has(id)?advancedQuestion(id,i):visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
   if(count===10&&id==='FR-G09-IRREG')return [0,1,2,3,4,5,6,7,12,19].map(i=>all[i]);
   if(count===10&&id==='FR-V04')return [0,1,4,6,8,9,12,14,16,18].map(i=>all[i]);
   return count===10?[...all.slice(0,6),...all.slice(12,16)]:all;
@@ -1539,7 +1542,7 @@ const statusLabels={'acquise':'Acquise','en-cours':'En cours d’apprentissage',
 function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:['acquise','en-cours'].includes(q.status)?q.status:completedMath.has(q.id)?'testee':(q.status||'pas-testee');}
 function quizOptionText(q){return `${q.id} — ${q.title} · ${statusLabels[effectiveStatus(q)]||statusLabels['pas-testee']}`;}
 const completedKey='education-quiz-completed-v1';
-let completedMath=new Set(['MA-F01','MA-F02','MA-F03','MA-F04','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05']); // REVIEWED_QUIZ_IDS; completion is not mastery.
+let completedMath=new Set(['MA-F01','MA-F02','MA-F03','MA-F04','MA-M01','MA-M02','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05']); // REVIEWED_QUIZ_IDS; completion is not mastery.
 try{for(const id of JSON.parse(localStorage.getItem(completedKey)||'[]'))if(typeof id==='string')completedMath.add(id)}catch{}
 function nextMathSuggestion(){return mathUnits.find(q=>!completedMath.has(q.id)&&effectiveStatus(q)!=='acquise')||null;}
 function suggestedQuiz(){return nextMathSuggestion()||quizzes.find(q=>effectiveStatus(q)==='en-cours')||quizzes.find(q=>effectiveStatus(q)==='pas-testee')||null;}
