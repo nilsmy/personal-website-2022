@@ -1272,7 +1272,7 @@ const mathUnits = [
   {id:'MA-F02',title:'Représenter des fractions et leurs équivalences',levels:'CE1 : fractions inférieures ou égales à 1 ; CE2 : fractions équivalentes'},
   {id:'MA-F03',title:'Numérateur et dénominateur',levels:'CE1–CE2 : lire et expliquer les deux nombres d’une fraction'},
   {id:'MA-F04',title:'Comparer des fractions',levels:'CE1 : même dénominateur ou fractions unitaires ; CE2 : comparaisons étendues'}
-].map(unit=>{const acquired=['MA-N02','MA-N03','MA-N04','MA-N05','MA-F01','MA-F02'].includes(unit.id);return {...unit,subject:'Mathématiques',language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon le jugement du parent, appuyé par un diagnostic entièrement réussi.':'CE1 à vérifier ; questions CE2 pour situer le niveau.',statusBasis:acquired?'Décision explicite du parent après observation et revue des réponses.':'',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}});
+].map(unit=>{const acquired=['MA-N02','MA-N03','MA-N04','MA-N05','MA-F01','MA-F02','MA-F04'].includes(unit.id);return {...unit,subject:'Mathématiques',language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon le jugement du parent, appuyé par le diagnostic et la revue des réponses.':'CE1 à vérifier ; questions CE2 pour situer le niveau.',statusBasis:acquired?'Décision explicite du parent après observation et revue des réponses.':'',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}});
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...audioUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext, audioPlayCount=0;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
@@ -1515,7 +1515,7 @@ const statusLabels={'acquise':'Acquise','en-cours':'En cours d’apprentissage',
 function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:['acquise','en-cours'].includes(q.status)?q.status:completedMath.has(q.id)?'testee':(q.status||'pas-testee');}
 function quizOptionText(q){return `${q.id} — ${q.title} · ${statusLabels[effectiveStatus(q)]||statusLabels['pas-testee']}`;}
 const completedKey='education-quiz-completed-v1';
-let completedMath=new Set(['MA-F01','MA-F02','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05']); // REVIEWED_QUIZ_IDS; completion is not mastery.
+let completedMath=new Set(['MA-F01','MA-F02','MA-F04','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05']); // REVIEWED_QUIZ_IDS; completion is not mastery.
 try{for(const id of JSON.parse(localStorage.getItem(completedKey)||'[]'))if(typeof id==='string')completedMath.add(id)}catch{}
 function nextMathSuggestion(){return mathUnits.find(q=>!completedMath.has(q.id)&&effectiveStatus(q)!=='acquise')||null;}
 function suggestedQuiz(){return nextMathSuggestion()||quizzes.find(q=>effectiveStatus(q)==='en-cours')||quizzes.find(q=>effectiveStatus(q)==='pas-testee')||null;}
