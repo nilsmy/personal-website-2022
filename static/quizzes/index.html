@@ -192,7 +192,7 @@ function extraQuestion(id,i){
     else if(position%3===1){const value=(ce2?[24,30,120]:[12,16,80,100])[order],n=value/2;prompt=`Quelle est la moitié de ${value} ?`;correct=n;wrong=[n+1,n-1,value];explanation=`Deux parts de ${n} font ${value}.`;skill='Moitié';}
     else {const v=[25,50,75,100][position%4];prompt=ce2?`Quel est le résultat de 25 × ${position%4+1} ?`:`Combien font ${position%4+1} groupes de 25 ?`;correct=v;wrong=[v+25,Math.max(0,v-25),v+10];explanation=`${position%4+1} groupes de 25 donnent ${v}.`;skill='Multiples de 25';}
   }else if(id==='MA-M04'){
-    const step=ce2&&i%2===0?100:10,a=(ce2?20:3)*step+((i*7)%9)*step+3+(i%6),delta=(1+i%4)*step,subtract=i%3===0;
+    const step=ce2&&i%2===0?100:10,a=(ce2?20:5)*step+((i*7)%9)*step+3+(i%6),delta=(1+i%4)*step,subtract=i%3===0;
     prompt=`Combien font ${a} ${subtract?'−':'+'} ${delta} ?`;correct=a+(subtract?-delta:delta);
     wrong=[correct+step,correct-step,correct+(subtract?delta:-delta)];explanation=`On ${subtract?'retire':'ajoute'} ${delta/step} ${step===100?'centaines':'dizaines'} : ${correct}.`;skill='Numération et calcul';
   }else if(id==='MA-M05'){
@@ -504,7 +504,9 @@ function additionalMathQuestion(id,i){
       explanation=`Les dénominateurs sont identiques : on ${subtract?'soustrait':'additionne'} les numérateurs, donc ${correct}.`;skill='Même dénominateur';
     }
   }else if(id==='MA-C02'){
-    const groups=2+(i*3)%8,each=3+(i*5)%7;
+    const groups=2+(i*3)%8;
+    let each=3+(i*5)%7;
+    if(each===groups) each=each===9?8:each+1;
     if(i%2===0){prompt=`${groups} boîtes contiennent chacune ${each} billes. Quelle multiplication représente le total ?`;correct=`${groups} × ${each}`;wrong=[`${groups} + ${each}`,`${groups} − ${each}`,`${groups} ÷ ${each}`];explanation=`${groups} groupes de ${each} billes se représentent par ${groups} × ${each}.`;skill='Groupes égaux';}
     else {prompt=`Quelle autre multiplication donne le même produit que ${groups} × ${each} ?`;correct=`${each} × ${groups}`;wrong=[`${groups} + ${each}`,`${groups} × ${each+1}`,`${each} × ${groups+1}`];explanation=`On peut échanger l’ordre des facteurs : ${groups} × ${each} = ${each} × ${groups}.`;skill='Commutativité';}
   }else if(id==='MA-C03'){
