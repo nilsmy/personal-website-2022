@@ -1667,6 +1667,7 @@ function renderQuestionCounts(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   if(selected?.id==="MA-N06")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-F05")counts.splice(0,counts.length,10,20,50,100);
+  if(selected?.id==="MA-Q07")counts.splice(0,counts.length,10,20,50,100);
   const runs=readFormatRuns();
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.disabled=!!runs[formatRunKey(selected?.id,count)];o.textContent=o.disabled?`${count} (déjà passée)`:String(count);return o}));
   const firstAvailable=counts.find(count=>!runs[formatRunKey(selected?.id,count)]);
@@ -1938,7 +1939,19 @@ function fixedFractionQuestions(count){
     return {itemId:`MA-F05-v1-${String(i+1).padStart(3,'0')}`,level:kind<2?'CE1':'CE2',skill,subskillId,programmeSkills:['MA-F05'],prompt,...extraChoice(correct,wrong,i),explanation,generationParameters:{...parameters,bankVersion:1},difficultyBand:kind<2?'CE1':'CE2'};
   });
 }
+function fixedMoneyQuestions(count){
+  const offsets={10:0,20:10,50:30,100:80};
+  if(!Object.hasOwn(offsets,count))throw Error('Format indisponible pour MA-Q07.');
+  const euros=n=>`${Math.floor(n/100)},${String(n%100).padStart(2,'0')} €`;
+  return Array.from({length:count},(_,j)=>{
+    const i=offsets[count]+j,price=105+Math.floor(i/3)*5,paid=[500,1000,2000][i%3],change=paid-price;
+    const correct=euros(change),wrong=[euros(change-10),euros(change+10),euros(change+100)];
+    const level=paid===500?'CE1':'CE2';
+    return {itemId:`MA-Q07-v1-${String(i+1).padStart(3,'0')}`,level,skill:'Rendre la monnaie',subskillId:paid===500?'MA-Q07-5-EUROS':paid===1000?'MA-Q07-10-EUROS':'MA-Q07-20-EUROS',programmeSkills:['MA-Q07'],prompt:`Un objet coûte ${euros(price)}. Tu paies avec ${euros(paid)}. Combien doit-on te rendre ?`,...extraChoice(correct,wrong,i),explanation:`${euros(paid)} − ${euros(price)} = ${correct}.`,visual:{kind:'money',price,paid},generationParameters:{priceCents:price,paidCents:paid,bankVersion:1},difficultyBand:level};
+  });
+}
 function buildQuizForRun(selected,count,written){
+  if(!written&&selected.id==="MA-Q07"&&[10,20,50,100].includes(count))return {...selected,questions:fixedMoneyQuestions(count)};
   if(!written&&selected.id==="MA-F05"&&[10,20,50,100].includes(count))return {...selected,questions:fixedFractionQuestions(count)};
   if(!written&&selected.id==="MA-N06"&&[10,20,50,100].includes(count))return {...selected,questions:fixedOrdinalQuestions(count)};
   const base=written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected)?{...selected,questions:targetedEnglishQuestions(selected,count)}:selected;
