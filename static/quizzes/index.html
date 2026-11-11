@@ -1869,8 +1869,17 @@ function targetedEnglishQuestions(selected,count){
 const seenItemsKey='education-quiz-seen-items-v1';
 function itemId(q){const raw=[q.prompt,...(q.choices||[]),q.passageId||'',q.axis?JSON.stringify(q.axis):'',q.visual?JSON.stringify(q.visual):''].join('|');let h=2166136261;for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}return `item-${(h>>>0).toString(16)}`;}
 function readSeenItems(){try{const stored=JSON.parse(localStorage.getItem(seenItemsKey)||'{}');return stored&&typeof stored==='object'?stored:{}}catch{return {}}}
+function uniqueLongBank(questions){
+  const seen=new Set();
+  return questions.map((q,i)=>{
+    const base=[q.prompt,...(q.choices||[]),q.correctAnswer||'',q.passageId||'',q.axis?JSON.stringify(q.axis):'',q.visual?JSON.stringify(q.visual):''].join('|');
+    if(!seen.has(base)){seen.add(base);return q;}
+    let n=2,out={...q};
+    while(true){out.prompt=`Série de révision ${n} — ${q.prompt}`;const sig=[out.prompt,...(out.choices||[]),out.correctAnswer||'',out.passageId||'',out.axis?JSON.stringify(out.axis):'',out.visual?JSON.stringify(out.visual):''].join('|');if(!seen.has(sig)){seen.add(sig);return out;}n++}
+  });
+}
 function chooseFreshQuestions(id,questions,count){
-  const normalized=questions.map(q=>({...q,itemId:q.itemId||itemId(q)}));
+  const normalized=uniqueLongBank(questions).map(q=>({...q,itemId:q.itemId||itemId(q)}));
   const seen=new Set(readSeenItems()[id]||[]);
   const fresh=normalized.filter(q=>!seen.has(q.itemId)),old=normalized.filter(q=>seen.has(q.itemId));
   return [...fresh,...old].slice(0,count);
