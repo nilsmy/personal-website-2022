@@ -163,7 +163,7 @@ const extraSpecs=[
   ['QLM-C2-H06','Histoire','Chronologie et frises','Avant, après et succession',[10]],
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
-const acquiredExtraUnits=['MA-M01','MA-M02'];
+const acquiredExtraUnits=['MA-M01','MA-M02','FR-G01','FR-G07','FR-G09-ETRE-AVOIR','FR-G11'];
 const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrenchGrammar=subject==='Français'&&id.startsWith('FR-G');return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:longFrenchGrammar?[10,20,50,100]:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
@@ -1272,7 +1272,7 @@ const fullQuiz = {
 };
 const frenchQuiz = {
   id:'FR-G09-ER-PRESENT', subject:'Français', title:'Présent des verbes du premier groupe', language:'fr-FR',
-  status:'en-cours', statusScope:'Accord au présent avec pronoms et groupes nominaux.', statusBasis:'Statut indiqué par le parent le 4 novembre 2026.',
+  status:'acquise', statusScope:'Accord au présent avec pronoms et groupes nominaux.', statusBasis:'Décision explicite du parent le 10 novembre 2026 après diagnostics à 47/50 et 19/20.',
   source:'Programme officiel de français du cycle 2 (2024), FR-G07 et FR-G09',
   levels:'CE1–CE2 ; pronoms, groupes nominaux simples et complexes', questions:[]
 };
