@@ -1666,6 +1666,7 @@ function renderQuizStatus(){
 function renderQuestionCounts(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   if(selected?.id==="MA-N06")counts.splice(0,counts.length,10,20,50,100);
+  if(selected?.id==="MA-F05")counts.splice(0,counts.length,10,20,50,100);
   const runs=readFormatRuns();
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.disabled=!!runs[formatRunKey(selected?.id,count)];o.textContent=o.disabled?`${count} (déjà passée)`:String(count);return o}));
   const firstAvailable=counts.find(count=>!runs[formatRunKey(selected?.id,count)]);
@@ -1919,7 +1920,26 @@ function fixedOrdinalQuestions(count){
     return {itemId:`MA-N06-v1-${String(i+1).padStart(3,'0')}`,level:'CE1',skill,subskillId,programmeSkills:['MA-N06'],prompt,...choices,explanation,generationParameters:{...parameters,bankVersion:1},difficultyBand:'CE1'};
   });
 }
+function fixedFractionQuestions(count){
+  const offsets={10:0,20:10,50:30,100:80},same=[],mixed=[],complements=[];
+  if(!Object.hasOwn(offsets,count))throw Error('Format indisponible pour MA-F05.');
+  for(const d of [3,4,5,6,8,10,12])for(let a=1;a<d;a++){
+    complements.push({d,a,mode:0},{d,a,mode:1});
+    for(let b=1;a+b<d;b++)same.push({d,a,b});
+  }
+  for(const d of [4,6,8,10,12])for(let e=2;e<d;e++)if(d%e===0){const k=d/e;for(let a=1;a<e;a++)for(let b=1;a*k+b<d;b++)mixed.push({d,e,k,a,b});}
+  if(same.length<45||mixed.length<45||complements.length<45)throw Error('Banque de fractions incomplète.');
+  return Array.from({length:count},(_,j)=>{
+    const i=offsets[count]+j,kind=i%4,k=Math.floor(i/4);let d,n,prompt,explanation,skill,subskillId,parameters;
+    if(kind===0){const c=same[k];d=c.d;const subtract=k%2===1,first=subtract?c.a+c.b:c.a,op=subtract?'−':'+';n=subtract?c.a:c.a+c.b;prompt=`Combien font ${first}/${d} ${op} ${c.b}/${d} ?`;explanation=`Les dénominateurs sont égaux : ${first} ${op} ${c.b} = ${n}, donc ${n}/${d}.`;skill=subtract?'Soustraction de fractions de même dénominateur':'Addition de fractions de même dénominateur';subskillId=subtract?'MA-F05-SOUSTRACTION':'MA-F05-ADDITION';parameters={d,first,b:c.b,operation:op};}
+    else if(kind===1){const c=complements[k];d=c.d;n=d-c.a;prompt=c.mode===0?`Quelle fraction complète ${c.a}/${d} + ___ = 1 ?`:`Combien font 1 − ${c.a}/${d} ?`;explanation=`1 = ${d}/${d}, donc ${d}/${d} − ${c.a}/${d} = ${n}/${d}.`;skill='Complément à l’unité';subskillId='MA-F05-COMPLEMENT';parameters={d,a:c.a,operation:'complement'};}
+    else {const c=mixed[k];d=c.d;const subtract=kind===3,first=subtract?c.a*c.k+c.b:c.a;n=subtract?c.a*c.k:c.a*c.k+c.b;prompt=subtract?`Combien font ${first}/${d} − ${c.b}/${d} ?`:`Combien font ${c.a}/${c.e} + ${c.b}/${d} ?`;if(subtract){prompt=`Combien font ${first}/${d} − ${c.a}/${c.e} ?`;n=c.b;}explanation=`${c.a}/${c.e} = ${c.a*c.k}/${d} ; le résultat est ${n}/${d}.`;skill=subtract?'Soustraction avec dénominateurs multiples':'Addition avec dénominateurs multiples';subskillId=subtract?'MA-F05-MULTIPLE-SOUSTRACTION':'MA-F05-MULTIPLE-ADDITION';parameters={d,e:c.e,a:c.a,b:c.b,operation:subtract?'multiple-soustraction':'multiple-addition'};}
+    const correct=`${n}/${d}`,wrong=Array.from({length:d+3},(_,x)=>`${x}/${d}`).filter(x=>x!==correct).slice(0,3);
+    return {itemId:`MA-F05-v1-${String(i+1).padStart(3,'0')}`,level:kind<2?'CE1':'CE2',skill,subskillId,programmeSkills:['MA-F05'],prompt,...extraChoice(correct,wrong,i),explanation,generationParameters:{...parameters,bankVersion:1},difficultyBand:kind<2?'CE1':'CE2'};
+  });
+}
 function buildQuizForRun(selected,count,written){
+  if(!written&&selected.id==="MA-F05"&&[10,20,50,100].includes(count))return {...selected,questions:fixedFractionQuestions(count)};
   if(!written&&selected.id==="MA-N06"&&[10,20,50,100].includes(count))return {...selected,questions:fixedOrdinalQuestions(count)};
   const base=written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected)?{...selected,questions:targetedEnglishQuestions(selected,count)}:selected;
   return {...base,questions:chooseFreshQuestions(selected.id,base.questions,count)};
