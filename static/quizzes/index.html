@@ -164,7 +164,7 @@ const extraSpecs=[
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
 const acquiredExtraUnits=['MA-M01','MA-M02','FR-G01','FR-G07','FR-G09-ETRE-AVOIR','FR-G11'];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrenchGrammar=subject==='Français'&&id.startsWith('FR-G');return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:longFrenchGrammar?[10,20,50,100]:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrenchGrammar=subject==='Français'&&id.startsWith('FR-G'),longMath=subject==='Mathématiques';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:longMath||longFrenchGrammar?[10,20,50,100]:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -529,7 +529,7 @@ function additionalMathQuestion(id,i){
     explanation=mode===4?`${a*b} = ${a} × ${b} : ${a*b} est un multiple de ${a}.`:`Le mot attendu est « ${correct.toLowerCase()} ».`;
   }else if(id==='MA-Q01'){
     const n=2+(i*3)%8,mode=ce2?3+k%2:i%3;
-    if(mode===0){const trips=['de Paris à Lyon','de Rome à Naples','entre deux villes du New Jersey','entre deux villes françaises'];prompt=`Quelle unité convient le mieux pour exprimer la distance ${trips[Math.floor(i/3)]} ?`;correct='Le kilomètre';wrong=['Le millimètre','Le centimètre','Le décimètre'];skill='Choisir une unité';explanation='Une distance entre villes se mesure généralement en kilomètres.';}
+    if(mode===0){const trips=['de Paris à Lyon','de Rome à Naples','entre deux villes du New Jersey','entre deux villes françaises'];prompt=`Quelle unité convient le mieux pour exprimer la distance ${trips[Math.floor(position/3)%trips.length]} ?`;correct='Le kilomètre';wrong=['Le millimètre','Le centimètre','Le décimètre'];skill='Choisir une unité';explanation='Une distance entre villes se mesure généralement en kilomètres.';}
     else if(mode===1){prompt=`Combien de centimètres font ${n} mètres ?`;correct=n*100;wrong=[n*10,n*100+10,n*1000];skill='Mètres et centimètres';explanation=`1 m = 100 cm, donc ${n} m = ${n*100} cm.`;}
     else if(mode===2){prompt=`Combien de mètres font ${n} kilomètres ?`;correct=n*1000;wrong=[n*100,n*10,n*1000+100];skill='Kilomètres et mètres';explanation=`1 km = 1 000 m, donc ${n} km = ${n*1000} m.`;}
     else if(mode===3){prompt=`Combien de centimètres font ${n} décimètres ?`;correct=n*10;wrong=[n,n*100,n*10+1];skill='Décimètres et centimètres';explanation=`1 dm = 10 cm, donc ${n} dm = ${n*10} cm.`;}
@@ -540,7 +540,7 @@ function additionalMathQuestion(id,i){
     else {prompt=`Un rectangle mesure ${a} cm de long et ${b} cm de large. Quel est son périmètre ?`;correct=2*(a+b);wrong=[a*b,a+b,2*a+b];explanation=`On additionne ses quatre côtés : ${a} + ${b} + ${a} + ${b} = ${correct} cm.`;skill='Rectangle';}
   }else if(id==='MA-Q04'){
     const n=2+i,mode=ce2?3:i%3;
-    if(mode===0){const objects=['une pomme','un citron','un œuf','une petite tomate'];prompt=`Quelle unité convient le mieux pour mesurer la masse d’${objects[Math.floor(i/3)]} ?`;correct='Le gramme';wrong=['Le kilogramme','La tonne','Le kilomètre'];explanation='Un petit aliment se pèse commodément en grammes.';skill='Choisir une unité';}
+    if(mode===0){const objects=['une pomme','un citron','un œuf','une petite tomate'];prompt=`Quelle unité convient le mieux pour mesurer la masse d’${objects[Math.floor(position/3)%objects.length]} ?`;correct='Le gramme';wrong=['Le kilogramme','La tonne','Le kilomètre'];explanation='Un petit aliment se pèse commodément en grammes.';skill='Choisir une unité';}
     else if(mode===1){prompt=`Combien de grammes font ${n} kilogrammes ?`;correct=n*1000;wrong=[n*100,n*10,n*1000+100];explanation=`1 kg = 1 000 g, donc ${n} kg = ${correct} g.`;skill='Kilogrammes et grammes';}
     else if(mode===2){prompt=`Combien de kilogrammes font ${n*1000} grammes ?`;correct=n;wrong=[n+1,n*10,n*100];explanation=`${n*1000} g = ${n} kg, car 1 kg = 1 000 g.`;skill='Grammes et kilogrammes';}
     else {prompt=`Combien de kilogrammes font ${n} tonnes ?`;correct=n*1000;wrong=[n*100,n*10,n*1000+100];explanation=`1 t = 1 000 kg, donc ${n} t = ${correct} kg.`;skill='Tonnes et kilogrammes';}
@@ -561,18 +561,18 @@ function additionalMathQuestion(id,i){
 }
 const visualMathIds=new Set(['MA-Q08','MA-Q09','MA-G03','MA-D02','MA-D03']);
 function visualMathQuestion(id,i){
-  const ce2=i>=12,k=ce2?i-12:i,level=ce2?'CE2':'CE1';
+  const position=i%20,ce2=position>=12,k=ce2?position-12:position,level=ce2?'CE2':'CE1';
   let prompt,correct,wrong,explanation,skill,visual;
   const clockTime=(hour,minute)=>`${hour} h ${String(minute).padStart(2,'0')}`;
   if(id==='MA-Q08'){
-    const hour=1+(i*5)%12,minute=ce2?[5,10,20,25,35,40,50,55][k]:[0,30,15,45][i%4];
+    const hour=1+(position*5)%12,minute=ce2?[5,10,20,25,35,40,50,55][k]:[0,30,15,45][position%4];
     visual={kind:'clock',hour,minute};prompt='Quelle heure montre cette horloge ?';correct=clockTime(hour,minute);
     wrong=[clockTime(hour%12+1,minute),clockTime((hour+10)%12+1,minute),clockTime(hour,(minute+15)%60)];
     explanation=`La grande aiguille indique ${minute} minute${minute>1?'s':''} ; la petite aiguille indique l’heure ${hour}. Il est ${correct}.`;
     skill=ce2?'Heures et minutes':'Heures, demies et quarts';
   }else if(id==='MA-Q09'){
-    const startHour=8+i%6,startMinute=ce2?[5,10,20,25,35,40,50,55][k]:[0,15,30,45][i%4];
-    const duration=ce2?[25,35,50,75,95,110,125,140][k]:[30,45,60,90][i%4];
+    const startHour=8+position%6,startMinute=ce2?[5,10,20,25,35,40,50,55][k]:[0,15,30,45][position%4];
+    const duration=ce2?[25,35,50,75,95,110,125,140][k]:[30,45,60,90][position%4];
     const endTotal=startHour*60+startMinute+duration,endHour=Math.floor(endTotal/60),endMinute=endTotal%60;
     const durationLabel=n=>n>=60?`${Math.floor(n/60)} h${n%60?` ${String(n%60).padStart(2,'0')} min`:''}`:`${n} min`;
     prompt=`De ${clockTime(startHour,startMinute)} à ${clockTime(endHour,endMinute)}, combien de temps s’écoule ?`;
@@ -581,30 +581,30 @@ function visualMathQuestion(id,i){
     skill=ce2?'Durées en heures et minutes':'Heures, demies et quarts';
   }else if(id==='MA-G03'){
     const shape=ce2?['losange','carre','rectangle','triangleRectangle','losange','triangle','rectangle','carre'][k]:['carre','rectangle','triangle','triangleRectangle'][i%4];
-    visual={kind:'shape',shape,variant:i};const kind=i%3;
+    visual={kind:'shape',shape,variant:position};const kind=position%3;
     if(kind===0){prompt='Quel est le nom le plus précis de cette figure ?';correct=({carre:'Un carré',rectangle:'Un rectangle',triangle:'Un triangle',triangleRectangle:'Un triangle rectangle',losange:'Un losange'})[shape];wrong=['Un carré','Un rectangle','Un triangle','Un triangle rectangle','Un losange'].filter(x=>x!==correct).slice(0,3);skill='Nommer une figure';explanation=`La figure représentée est ${correct.toLowerCase()}.`;}
     else if(kind===1){prompt='Combien de côtés cette figure possède-t-elle ?';correct=shape.startsWith('triangle')?3:4;wrong=[2,5,6];skill='Nombre de côtés';explanation=`Cette figure possède ${correct} côtés.`;}
     else {prompt='Combien d’angles droits cette figure possède-t-elle ?';correct=shape==='carre'||shape==='rectangle'?4:shape==='triangleRectangle'?1:0;wrong=[0,1,2,3,4].filter(x=>x!==correct).slice(0,3);skill='Angles droits';explanation=`Cette figure possède ${correct} angle${correct>1?'s':''} droit${correct>1?'s':''}.`;}
   }else if(id==='MA-D02'||id==='MA-D03'){
-    const labels=['Lundi','Mardi','Mercredi','Jeudi'],step=ce2?(i%2?5:2):1,base=2+i%5;
-    const ordered=[base,base+2,base+4,base+6],shift=i%4,values=[...ordered.slice(shift),...ordered.slice(0,shift)].map(x=>x*step);
+    const labels=['Lundi','Mardi','Mercredi','Jeudi'],step=ce2?(position%2?5:2):1,base=2+position%5;
+    const ordered=[base,base+2,base+4,base+6],shift=position%4,values=[...ordered.slice(shift),...ordered.slice(0,shift)].map(x=>x*step);
     visual={kind:'bars',title:'Livres empruntés',labels,values,step};
     if(id==='MA-D02'){
-      if(i%2){
+      if(position%2){
         const rows=['Matin','Après-midi'],columns=['Lundi','Mardi','Mercredi'];
         const cells=[[2+i%5,4+i%5,6+i%5],[3+i%5,5+i%5,7+i%5]].map(row=>row.map(x=>x*(ce2?2:1)));
-        const row=i%4===1?0:1,col=(Math.floor(i/2))%3;
+        const row=position%4===1?0:1,col=(Math.floor(position/2))%3;
         visual={kind:'table',title:'Livres empruntés',rows,columns,cells};
         prompt=`Selon le tableau, combien de livres ont été empruntés ${columns[col].toLowerCase()} ${rows[row].toLowerCase()} ?`;
         correct=cells[row][col];wrong=cells.flat().filter(x=>x!==correct);skill='Lire un tableau à double entrée';
         explanation=`On croise la colonne « ${columns[col]} » avec la ligne « ${rows[row]} » : ${correct} livres.`;
       }else{
-        const day=i%4;prompt=`Selon le diagramme, combien de livres ont été empruntés ${labels[day].toLowerCase()} ?`;
+        const day=position%4;prompt=`Selon le diagramme, combien de livres ont été empruntés ${labels[day].toLowerCase()} ?`;
         correct=values[day];wrong=values.filter((_,j)=>j!==day);skill=ce2?'Lire une échelle':'Lire une barre';
         explanation=`La barre de ${labels[day].toLowerCase()} atteint ${correct} sur l’échelle.`;
       }
     }else{
-      const first=i%4,second=(first+2)%4,total=i%2===0;
+      const first=position%4,second=(first+2)%4,total=position%2===0;
       if(total){prompt=`Combien de livres ont été empruntés ${labels[first].toLowerCase()} et ${labels[second].toLowerCase()} ensemble ?`;correct=values[first]+values[second];wrong=[values[first],values[second],correct+step];explanation=`On additionne ${values[first]} et ${values[second]} : ${correct}.`;skill='Total de deux catégories';}
       else {const high=values[first]>values[second]?first:second,low=high===first?second:first;prompt=`Combien de livres de plus ont été empruntés ${labels[high].toLowerCase()} que ${labels[low].toLowerCase()} ?`;correct=values[high]-values[low];wrong=[values[high]+values[low],correct+step,values[high]];explanation=`${values[high]} − ${values[low]} = ${correct}.`;skill='Écart entre deux catégories';}
     }
