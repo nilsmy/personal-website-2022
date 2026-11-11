@@ -899,9 +899,10 @@ function extraQuestions(id,count){
   if(id.startsWith('QLM-'))return qlmQuestions(id);
   if(id.startsWith('FR-L'))return readingQuestions(id);
   const all=Array.from({length:count>20?count:20},(_,i)=>advancedIds.has(id)?advancedQuestion(id,i):visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
-  if(count===10&&id==='FR-G09-IRREG')return [0,1,2,3,4,5,6,7,12,19].map(i=>all[i]);
-  if(count===10&&id==='FR-V04')return [0,1,4,6,8,9,12,14,16,18].map(i=>all[i]);
-  return count===10?[...all.slice(0,6),...all.slice(12,16)]:all;
+  const annotated=all.map((q,i)=>({...q,generationParameters:{generatorIndex:i,cycle:Math.floor(i/20),level:q.level||null,source:'procedural-template'},difficultyBand:q.level==='CE2'?'CE2':'CE1'}));
+  if(count===10&&id==='FR-G09-IRREG')return [0,1,2,3,4,5,6,7,12,19].map(i=>annotated[i]);
+  if(count===10&&id==='FR-V04')return [0,1,4,6,8,9,12,14,16,18].map(i=>annotated[i]);
+  return count===10?[...annotated.slice(0,6),...annotated.slice(12,16)]:annotated;
 }
 
 // Additional CE1/CE2 units. All pictures are drawn by app.js and described in reports.
@@ -1825,7 +1826,7 @@ function select(choice){
 function submit(){
   if(answered||selectedChoice===undefined)return;answered=true;const choice=selectedChoice,q=quiz.questions[index],written=q.format==='written',dictation=quiz.responseFormat==='dictation',correct=written?choice!==null&&q.accepted.some(expected=>(dictation?normalizeDictationAnswer:normalizeWrittenAnswer)(choice)===(dictation?normalizeDictationAnswer:normalizeWrittenAnswer)(expected)):choice===q.answer;
   playSound('answer');
-  responses.push({number:index+1,itemId:q.itemId||itemId(q),format:written?'written':'qcm',level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,visual:q.visual||null,choices:written?null:q.choices,selectedIndex:written?null:choice,selected:choice===null?null:written?choice:q.choices[choice],correctIndex:written?null:q.answer,correctAnswer:written?q.expected:q.choices[q.answer],correct,unknown:choice===null,reviewNeeded:written&&!correct&&choice!==null,explanation:q.explanation,assistance:'non renseignée'});
+  responses.push({number:index+1,itemId:q.itemId||itemId(q),difficultyBand:q.difficultyBand||difficultyBand(q),generationParameters:q.generationParameters||null,format:written?'written':'qcm',level:q.level||null,skill:q.skill||null,subskillId:q.subskillId||null,programmeSkills:q.programmeSkills||null,prompt:q.prompt,passageId:q.passageId||null,axis:q.axis||null,figure:q.figure||null,visual:q.visual||null,choices:written?null:q.choices,selectedIndex:written?null:choice,selected:choice===null?null:written?choice:q.choices[choice],correctIndex:written?null:q.answer,correctAnswer:written?q.expected:q.choices[q.answer],correct,unknown:choice===null,reviewNeeded:written&&!correct&&choice!==null,explanation:q.explanation,assistance:'non renseignée'});
   if(written)$('textAnswer').disabled=true;
   [...$('choices').children].forEach((b,i)=>{b.disabled=true;if(immediateFeedback){b.classList.remove('selected');if(i===q.answer)b.classList.add('correct');else if(i===choice)b.classList.add('wrong')}});$('unknown').disabled=true;
   if(immediateFeedback){$('feedback').textContent=(correct?'Bravo ! ':choice===null?'À retenir : ':written?'Réponse à revoir : ':'Regardons la règle : ')+q.explanation;$('feedback').classList.remove('hidden');$('score').textContent=`${responses.filter(r=>r.correct).length}/${responses.length} juste(s)`;}
@@ -1874,6 +1875,7 @@ const formatRunsKey='education-quiz-format-runs-v1';
 function formatRunKey(id,count){return `${id}::${count}`;}
 function readFormatRuns(){try{const stored=JSON.parse(localStorage.getItem(formatRunsKey)||'{}');return stored&&typeof stored==='object'?stored:{}}catch{return {}}}
 function itemId(q){const raw=[q.prompt,...(q.choices||[]),q.passageId||'',q.axis?JSON.stringify(q.axis):'',q.visual?JSON.stringify(q.visual):''].join('|');let h=2166136261;for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}return `item-${(h>>>0).toString(16)}`;}
+function difficultyBand(q){if(q.difficultyBand)return q.difficultyBand;const text=`${q.level||''} ${q.skill||''} ${q.prompt||''}`;if(/CE2|Grade 3|complex|irrégulier|irregular|decomposition|décomposition|deux étapes|two-step/i.test(text))return 'avancée';if(/CE1|Grade 2/i.test(text))return 'base';return 'non classée';}
 function readSeenItems(){try{const stored=JSON.parse(localStorage.getItem(seenItemsKey)||'{}');return stored&&typeof stored==='object'?stored:{}}catch{return {}}}
 function uniqueLongBank(questions){
   const seen=new Set();
@@ -1885,7 +1887,7 @@ function uniqueLongBank(questions){
   });
 }
 function chooseFreshQuestions(id,questions,count){
-  const normalized=uniqueLongBank(questions).map(q=>({...q,itemId:q.itemId||itemId(q)}));
+  const normalized=uniqueLongBank(questions).map((q,i)=>({...q,itemId:q.itemId||itemId(q),difficultyBand:difficultyBand(q),generationParameters:q.generationParameters||{selectionIndex:i,level:q.level||null,source:'quiz-bank'}}));
   const seen=new Set(readSeenItems()[id]||[]);
   const fresh=normalized.filter(q=>!seen.has(q.itemId)),old=normalized.filter(q=>seen.has(q.itemId));
   return [...fresh,...old].slice(0,count);
