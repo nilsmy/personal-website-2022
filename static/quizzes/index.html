@@ -1665,6 +1665,7 @@ function renderQuizStatus(){
 }
 function renderQuestionCounts(){
   const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
+  if(selected?.id==="MA-N06")counts.splice(0,counts.length,10,20,50,100);
   const runs=readFormatRuns();
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.disabled=!!runs[formatRunKey(selected?.id,count)];o.textContent=o.disabled?`${count} (déjà passée)`:String(count);return o}));
   const firstAvailable=counts.find(count=>!runs[formatRunKey(selected?.id,count)]);
@@ -1892,7 +1893,34 @@ function chooseFreshQuestions(id,questions,count){
   const fresh=normalized.filter(q=>!seen.has(q.itemId)),old=normalized.filter(q=>seen.has(q.itemId));
   return [...fresh,...old].slice(0,count);
 }
+function fixedOrdinalQuestions(count){
+  const offsets={10:0,20:10,50:30,100:80};
+  if(!Object.hasOwn(offsets,count))throw Error('Format indisponible pour MA-N06.');
+  return Array.from({length:count},(_,j)=>{
+    const i=offsets[count]+j,kind=i%4,rank=5+Math.floor(i/4);
+    let prompt,right,wrong,explanation,skill,subskillId,parameters;
+    if(kind===0){
+      const pattern=['A','B','C'];right=pattern[(rank-1)%3];
+      prompt=`Dans la suite A – B – C – A – B – C – …, quelle lettre apparaît en ${rank}e position ?`;
+      wrong=pattern.concat('D').filter(x=>x!==right);explanation=`Le motif se répète tous les trois rangs : en comptant à partir de A, la ${rank}e lettre est ${right}.`;skill='Rang dans un motif';subskillId='MA-N06-MOTIF';parameters={rank,pattern};
+    }else if(kind===1){
+      const total=rank+10,fromRight=4;right=total-fromRight+1;
+      prompt=`Une file compte ${total} personnes. Lina est ${fromRight}e en partant de la droite. Quel est son rang en partant de la gauche ?`;
+      wrong=[right-1,right+1,right+2];explanation=`${total} − ${fromRight} + 1 = ${right} : Lina est ${right}e en partant de la gauche.`;skill='Changer le sens de parcours';subskillId='MA-N06-SENS';parameters={total,fromRight};
+    }else if(kind===2){
+      right=rank-1;prompt=`Noé est ${rank}e dans une file. Combien de personnes sont devant lui ?`;
+      wrong=[rank,rank+1,rank-2];explanation=`Il y a ${rank-1} personnes avant la ${rank}e.`;skill='Rang et nombre précédent';subskillId='MA-N06-AVANT';parameters={rank};
+    }else{
+      const first=2,step=2;right=first+(rank-1)*step;
+      prompt=`Dans la liste 2 ; 4 ; 6 ; …, quel est le ${rank}e nombre ?`;
+      wrong=[right-step,right+step,right+1];explanation=`On part de 2 et on ajoute 2, ${rank-1} fois : on obtient ${right}.`;skill='Rang dans une suite';subskillId='MA-N06-SUITE';parameters={first,step,rank};
+    }
+    const choices=typeof right==='number'?extraNumber(right,wrong,i):extraChoice(right,wrong,i);
+    return {itemId:`MA-N06-v1-${String(i+1).padStart(3,'0')}`,level:'CE1',skill,subskillId,programmeSkills:['MA-N06'],prompt,...choices,explanation,generationParameters:{...parameters,bankVersion:1},difficultyBand:'CE1'};
+  });
+}
 function buildQuizForRun(selected,count,written){
+  if(!written&&selected.id==="MA-N06"&&[10,20,50,100].includes(count))return {...selected,questions:fixedOrdinalQuestions(count)};
   const base=written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected)?{...selected,questions:targetedEnglishQuestions(selected,count)}:selected;
   return {...base,questions:chooseFreshQuestions(selected.id,base.questions,count)};
 }
