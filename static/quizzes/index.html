@@ -1237,9 +1237,41 @@ const njGrade2LanguageSpecs=[
   ['NJ2-L-ADJECTIVES-PUNCTUATION','Adjectifs et ponctuation',['NJ-L-SENTENCES'],['Precise adjective']],
   ['NJ2-L-SPELLING-MORPHOLOGY','Orthographe et morphologie de base',['NJ-L-WORDS'],['Vowel team','Two syllables','Prefix','Irregular word']]
 ];
+function grade2GeneratedItems(id){
+  const mk=(skill,prompt,correct,wrong,explanation)=>({level:'Grade 2',skill,subskillId:id+'-'+skill.toUpperCase().replace(/[^A-Z0-9]+/g,'-'),choices:[correct,...wrong],answer:0,prompt,explanation,programmeSkills:['L.WF.2.3']});
+  if(id==='NJ2-L-SENTENCE-BOUNDARIES'){
+    const ok=['The fox ran home.','Mia packed her bag.','The rain stopped.','We opened the book.','A bird landed nearby.','Leo found the key.','The soup smells good.','The class planted seeds.','Our bus arrived.','The baby laughed.'];
+    return ok.concat(ok.map(s=>s.replace('.',' and we waited.'))).map((s,i)=>mk('Sentence boundary',`Which choice is a complete sentence?`,s,['Because the rain stopped.','Running through the park.','When the bell rang.'].filter(x=>x!==s).slice(0,3),'A complete sentence expresses a complete thought.'));
+  }
+  if(id==='NJ2-L-TENSES'){
+    const rows=[['Yesterday, Maya ___ home.','walked','walks','will walk','walking'],['Tomorrow, we ___ the map.','will finish','finished','finish','finishing'],['Today, Sam ___ his shoes.','ties','tied','will tie','tying'],['Last night, the owl ___.','called','calls','will call','calling'],['Next week, I ___ a letter.','will write','wrote','write','writing']];
+    return Array.from({length:20},(_,i)=>{const r=rows[i%rows.length];return mk('Verb tense',r[0],r[1],r.slice(2),r[1].startsWith('will')?'“Will” marks the future.':r[1].endsWith('ed')?'The past form tells what happened before.':'The present form tells what happens now.');});
+  }
+  if(id==='NJ2-L-VERBS'){
+    const rows=[['Yesterday I ___ the ball.','threw',['throw','throws','throwing']],['She ___ the bell each morning.','rings',['rang','ring','ringing']],['They ___ home last night.','went',['go','goes','going']],['He ___ a funny story.','told',['tell','tells','telling']],['We ___ the answer now.','know',['knew','knows','knowing']]];
+    return Array.from({length:20},(_,i)=>{const r=rows[i%rows.length];return mk('Regular and irregular verbs',r[0],r[1],r[2],'The selected form fits the sentence and its time word.');});
+  }
+  if(id==='NJ2-L-SUBJECT-VERB'){
+    const rows=[['The dog ___ fast.','runs','run','running','are running'],['The dogs ___ fast.','run','runs','running','is running'],['My friend ___ ready.','is','are','am','be'],['My friends ___ ready.','are','is','am','be'],['The children ___ outside.','play','plays','playing','is play']];
+    return Array.from({length:20},(_,i)=>{const r=rows[i%rows.length];return mk('Subject-verb agreement',r[0],r[1],r.slice(2), 'The verb agrees with the subject in number.');});
+  }
+  if(id==='NJ2-L-CONTRACTIONS-POSSESSIVES'){
+    const rows=[['Which means “do not”?','don’t','dont','do’nt','doesn’t'],['Which means “they are”?','they’re','their','there','theyre'],['The bag belongs to one teacher.','the teacher’s bag','the teachers’ bag','the teacher bag','the teachers bag’s'],['The room belongs to several teachers.','the teachers’ room','the teacher’s room','the teachers room','the teacher room’s'],['Which means “I am”?','I’m','Im','I’ am','I'],['Which means “cannot”?','can’t','cant','can’ t','couldn’t']];
+    return Array.from({length:20},(_,i)=>{const r=rows[i%rows.length];return mk('Contractions and possessives',r[0],r[1],r.slice(2),'The apostrophe marks missing letters in contractions or possession.');});
+  }
+  if(id==='NJ2-L-ADJECTIVES-PUNCTUATION'){
+    const rows=[['Choose the most precise phrase.','the narrow bridge','the thing','the nice place','the bridge'],['Which sentence ends correctly?','The kite flew away.','The kite flew away','the kite flew away.','The kite flew away,'],['Choose the best adjective.','a bright lantern','a lantern thing','a lantern went','a lantern'],['Which needs a capital letter?','Monday','monday','MONday','monDAY'],['Choose the clearest phrase.','three small blue shells','shells thing','the shells went','blue thing']];
+    return Array.from({length:20},(_,i)=>{const r=rows[i%rows.length];return mk('Adjectives and punctuation',r[0],r[1],r.slice(2),'The answer gives precise description or uses the expected sentence convention.');});
+  }
+  if(id==='NJ2-L-SPELLING-MORPHOLOGY'){
+    const rows=[['Which word has the long /a/ sound spelled ai?','rain','ran','ren','run'],['What does unhappy mean?','not happy','very happy','happy again','a person'],['Which spelling is correct?','bought','bot','baut','bott'],['Which word means write again?','rewrite','writer','writing','wrongwrite'],['Which word has two syllables?','robot','rob','rat','rock'],['Which word means able to wash?','washable','washless','rewash','washing']];
+    return Array.from({length:20},(_,i)=>{const r=rows[i%rows.length];return mk('Spelling and morphology',r[0],r[1],r.slice(2),'The spelling pattern or affix gives the clue to the correct answer.');});
+  }
+  return [];
+}
 const njGrade2LanguageUnits=njGrade2LanguageSpecs.map(([id,title,sourceIds,skills])=>{
   const sourceItems=sourceIds.flatMap(sourceId=>njBanks[sourceId]).filter(item=>item.level==='Grade 2'&&skills.includes(item.skill));
-  const items=(sourceItems.length?sourceItems:njBanks[sourceIds[0]].filter(item=>item.level==='Grade 2')).map((item,i)=>({...item,subskillId:id+'-'+item.skill.toUpperCase().replace(/[^A-Z0-9]+/g,'-'),answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:['L.WF.2.3']}));
+  const items=(grade2GeneratedItems(id).length?grade2GeneratedItems(id):(sourceItems.length?sourceItems:njBanks[sourceIds[0]].filter(item=>item.level==='Grade 2'))).map((item,i)=>({...item,subskillId:id+'-'+item.skill.toUpperCase().replace(/[^A-Z0-9]+/g,'-'),answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:['L.WF.2.3']}));
   return {id,subject:'Anglais',title,language:'en-US',levels:'Grade 2',counts:[10,20,50,100],status:'pas-testee',statusScope:'Diagnostic grade 2 par QCM ; la production écrite ou orale demande une tâche complémentaire.',source:'2023 NJSLS-ELA (NJDOE), grade 2 : L.WF.2.2–2.3',questions:items};
 });
 
