@@ -164,7 +164,7 @@ const extraSpecs=[
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
 const acquiredExtraUnits=['MA-M01','MA-M02','FR-G01','FR-G07','FR-G09-ETRE-AVOIR','FR-G11'];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrenchGrammar=subject==='Français'&&id.startsWith('FR-G'),longMath=subject==='Mathématiques';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:longMath||longFrenchGrammar?[10,20,50,100]:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:longMath||longFrench?[10,20,50,100]:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -434,7 +434,7 @@ function extraFrenchQuestion(id,i){
       ['jardin','jardinier'],['peindre','peinture'],['rapide','rapidement'],['porter','porteur'],['terre','terrestre'],
       ['lumière','lumineux'],['neige','enneigé'],['montagne','montagnard'],['livre','livret'],['soleil','ensoleillé']
     ];
-    const [base,related]=families[i];prompt=`Quel mot appartient à la famille de « ${base} » ?`;correct=related;
+    const [base,related]=families[i%families.length];prompt=`Quel mot appartient à la famille de « ${base} » ?`;correct=related;
     wrong=[families[(i+3)%20][1],families[(i+7)%20][1],families[(i+11)%20][1]];
     explanation=`« ${base} » et « ${related} » ont un radical commun et un lien de sens.`;skill='Famille de mots';
   }else if(id==='FR-V03'){
@@ -451,7 +451,7 @@ function extraFrenchQuestion(id,i){
       ['kilogramme','Unité de masse',['Unité de longueur','Unité de durée','Unité de contenance']],
       ['dentiste','Métier',['Animal','Végétal','Pays']],['roman','Type de livre',['Unité de temps','Véhicule','Instrument']]
     ];
-    const [example,category,decoys]=categories[i];prompt=`Dans quelle catégorie classe-t-on « ${example} » ?`;correct=category;wrong=decoys;
+    const [example,category,decoys]=categories[i%categories.length];prompt=`Dans quelle catégorie classe-t-on « ${example} » ?`;correct=category;wrong=decoys;
     explanation=`« ${example} » est un exemple de la catégorie « ${category.toLowerCase()} ».`;skill='Terme générique';
   }else if(id==='FR-V05'){
     const meanings=[
@@ -476,7 +476,7 @@ function extraFrenchQuestion(id,i){
       ['Le village est blotti dans la vallée.','Le village se trouve serré au creux de la vallée.',['Le village dort dans un lit.','Le village est au sommet.','Le village se déplace.']],
       ['Il a jeté un œil au dessin.','Il l’a regardé rapidement.',['Il a lancé son œil.','Il l’a entièrement effacé.','Il a fermé les yeux.']]
     ];
-    const [sentence,meaning,decoys]=meanings[i];prompt=`Dans « ${sentence} », que signifie l’expression au sens figuré ?`;correct=meaning;wrong=decoys;
+    const [sentence,meaning,decoys]=meanings[i%meanings.length];prompt=`Dans « ${sentence} », que signifie l’expression au sens figuré ?`;correct=meaning;wrong=decoys;
     explanation=`Ici, l’expression signifie : « ${meaning} »`;skill='Sens figuré en contexte';
   }else throw Error(`Unité non implémentée : ${id}`);
   return {level,skill,subskillId:`${id}-${skill.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^A-Z0-9]+/g,'-')}`,programmeSkills:[id],prompt,...extraChoice(correct,wrong,i),explanation};
@@ -986,6 +986,7 @@ function advancedQuestion(id,i){
     explanation='Au présent, avec « '+subject+' », le verbe '+verb+' s’écrit « '+correct+' » : '+subject+' '+correct+' '+rest;
     skill='Présent '+(verb==='aller'?"d’aller":'de '+verb);
   }else if(id==='FR-V04'){
+    const position=i%20;
     const words=[
       {familier:'bagnole',courant:'voiture',soutenu:'automobile',autre:'bicyclette'},
       {familier:'bouquin',courant:'livre',soutenu:'ouvrage',autre:'journal'},
@@ -993,7 +994,7 @@ function advancedQuestion(id,i){
       {familier:'bouffer',courant:'manger',soutenu:'se restaurer',autre:'dormir'},
       {familier:'flic',courant:'policier',soutenu:'fonctionnaire de police',autre:'pompier'}
     ];
-    const set=words[Math.floor(i/4)],mode=i%4;
+    const set=words[Math.floor(position/4)],mode=position%4;
     if(mode===0){prompt='Quel mot est familier ?';correct=set.familier;skill='Reconnaître le registre familier';}
     else if(mode===1){prompt='Quel mot appartient au registre courant ?';correct=set.courant;skill='Reconnaître le registre courant';}
     else if(mode===2){prompt='Quel mot ou expression est le plus soutenu parmi ces propositions ?';correct=set.soutenu;skill='Comparer les registres';}
