@@ -1218,9 +1218,10 @@ function njCode(id,item){
 }
 const njElaUnits=njSpecs.map(([id,title,sourceCodes])=>({
   id,subject:'Anglais',title,language:'en-US',levels:'Grade 2 et grade 3',
+  counts:[10,20,50,100],
   status:'pas-testee',statusScope:'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',
   source:'2023 NJSLS-ELA (NJDOE): '+sourceCodes,
-  questions:njBanks[id].map((item,i)=>({...item,subskillId:item.subskillId+'-'+(item.level==='Grade 3'?'G3':'G2'),answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:[njCode(id,item)]}))
+  questions:njBanks[id].filter(item=>item.level==='Grade 2').map((item,i)=>({...item,subskillId:item.subskillId+'-G2',answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:[njCode(id,item)]}))
 }));
 
 // Generated from audio/stories.json; edit that source, then run prepare_update.py.
@@ -1573,7 +1574,7 @@ function renderQuizStatus(){
   const lesson=lessons[selected.id];$('lessonOffer').classList.toggle('hidden',!lesson);if(lesson)$('lessonOfferText').textContent=lesson.offer;
 }
 function renderQuestionCounts(){
-  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
+  const selected=$('start').disabled?null:quizzes[Number($('quizSelect').value)],counts=$('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
   if(counts.includes(20))$('questionCount').value='20';
   $('questionCount').disabled=counts.length<2;
@@ -1764,7 +1765,7 @@ async function saveToFolder(){
     $('copyStatus').textContent=`Rapport enregistré : ${name}. Tu peux retrouver ce rapport dans le dossier choisi.`;
   }catch(err){$('copyStatus').textContent=err.name==='AbortError'?'Enregistrement annulé.':`Enregistrement impossible (${err.message}). Utilise « Télécharger le rapport JSON ».`;}
 }
-$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value),written=$('formatSelect').value==='written'&&writtenIds.has(selected.id);quiz=validate(written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');$('audioPanel').classList.toggle('hidden',!quiz.audioFile);if(quiz.audioFile)prepareAudioStory();else render()};
+$('start').onclick=()=>{const selected=quizzes[Number($('quizSelect').value)],count=Number($('questionCount').value),written=$('formatSelect').value==='written'&&writtenIds.has(selected.id);quiz=validate(written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:njElaUnits.includes(selected)?{...selected,questions:Array.from({length:count},(_,i)=>selected.questions[i%selected.questions.length])}:selected);index=0;responses=[];immediateFeedback=$('immediate').checked;soundEnabled=$('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){audioContext ||= new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');$('audioPanel').classList.toggle('hidden',!quiz.audioFile);if(quiz.audioFile)prepareAudioStory();else render()};
 $('audioPlayer').onplay=()=>{audioPlayCount++};
 $('audioPlayer').onended=()=>{$('audioContinue').disabled=false;$('audioStatus').textContent='Histoire terminée. Tu peux la réécouter ou passer aux questions.'};
 $('audioPlayer').onerror=()=>{$('audioStatus').textContent='Audio indisponible sur cet appareil. Annule ce quiz et utilise un autre navigateur ou le fichier HTML portable.'};
