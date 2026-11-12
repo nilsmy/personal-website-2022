@@ -1668,6 +1668,7 @@ function renderQuestionCounts(){
   if(selected?.id==="MA-N06")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-F05")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-Q07")counts.splice(0,counts.length,10,20,50,100);
+  if(selected?.id==="MA-Q08")counts.splice(0,counts.length,10,20,50,100);
   const runs=readFormatRuns();
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.disabled=!!runs[formatRunKey(selected?.id,count)];o.textContent=o.disabled?`${count} (déjà passée)`:String(count);return o}));
   const firstAvailable=counts.find(count=>!runs[formatRunKey(selected?.id,count)]);
@@ -1725,6 +1726,7 @@ function drawVisual(visual){
     svg.setAttribute('viewBox','0 0 720 300');svg.setAttribute('aria-label','Horloge à aiguilles');
     const cx=360,cy=150,r=114;
     add('circle',{cx,cy,r,fill:'#fff',stroke:'#333','stroke-width':4});
+    for(let tick=0;tick<60;tick++){const a=(tick*6-90)*Math.PI/180,inner=tick%5===0?102:107;add('line',{x1:cx+inner*Math.cos(a),y1:cy+inner*Math.sin(a),x2:cx+112*Math.cos(a),y2:cy+112*Math.sin(a),stroke:'#555','stroke-width':tick%5===0?2:1});}
     for(let n=1;n<=12;n++){
       const a=(n*30-90)*Math.PI/180;
       add('text',{x:cx+91*Math.cos(a),y:cy+91*Math.sin(a)+7,'text-anchor':'middle','font-size':20,'font-weight':'bold',fill:'#333'},String(n));
@@ -1950,7 +1952,18 @@ function fixedMoneyQuestions(count){
     return {itemId:`MA-Q07-v1-${String(i+1).padStart(3,'0')}`,level,skill:'Rendre la monnaie',subskillId:paid===500?'MA-Q07-5-EUROS':paid===1000?'MA-Q07-10-EUROS':'MA-Q07-20-EUROS',programmeSkills:['MA-Q07'],prompt:`Un objet coûte ${euros(price)}. Tu paies avec ${euros(paid)}. Combien doit-on te rendre ?`,...extraChoice(correct,wrong,i),explanation:`${euros(paid)} − ${euros(price)} = ${correct}.`,visual:{kind:'money',price,paid},generationParameters:{priceCents:price,paidCents:paid,bankVersion:1},difficultyBand:level};
   });
 }
+function fixedClockQuestions(count){
+  const offsets={10:0,20:10,50:30,100:80},minutes=[0,15,30,45,5,10,20,25,35,40,50,55,1,22,38];
+  if(!Object.hasOwn(offsets,count))throw Error('Format indisponible pour MA-Q08.');
+  const time=(h,m)=>`${h} h ${String(m).padStart(2,'0')}`;
+  return Array.from({length:count},(_,j)=>{
+    const i=offsets[count]+j,hour=1+Math.floor(i/minutes.length),minute=minutes[i%minutes.length],correct=time(hour,minute),level=minute%15===0?'CE1':'CE2';
+    const wrong=[time(hour%12+1,minute),time((hour+10)%12+1,minute),time(hour,(minute+5)%60)];
+    return {itemId:`MA-Q08-v1-${String(i+1).padStart(3,'0')}`,level,skill:level==='CE1'?'Heures, demies et quarts':'Heures et minutes',subskillId:level==='CE1'?'MA-Q08-QUARTS':'MA-Q08-MINUTES',programmeSkills:['MA-Q08'],prompt:'Quelle heure montre cette horloge ? Choisis une heure entre 1 h et 12 h.',...extraChoice(correct,wrong,i),explanation:`La petite aiguille indique l’heure ${hour} et la grande aiguille indique ${minute} minute${minute>1?'s':''} : il est ${correct}.`,visual:{kind:'clock',hour,minute},generationParameters:{hour,minute,bankVersion:1},difficultyBand:level};
+  });
+}
 function buildQuizForRun(selected,count,written){
+  if(!written&&selected.id==="MA-Q08"&&[10,20,50,100].includes(count))return {...selected,questions:fixedClockQuestions(count)};
   if(!written&&selected.id==="MA-Q07"&&[10,20,50,100].includes(count))return {...selected,questions:fixedMoneyQuestions(count)};
   if(!written&&selected.id==="MA-F05"&&[10,20,50,100].includes(count))return {...selected,questions:fixedFractionQuestions(count)};
   if(!written&&selected.id==="MA-N06"&&[10,20,50,100].includes(count))return {...selected,questions:fixedOrdinalQuestions(count)};
