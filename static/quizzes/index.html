@@ -1503,7 +1503,29 @@ const mathUnits = [
 ].map(unit=>{const acquired=['MA-N02','MA-N03','MA-N04','MA-N05','MA-F01','MA-F02','MA-F03','MA-F04'].includes(unit.id);return {...unit,subject:'Mathématiques',language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon le jugement du parent, appuyé par le diagnostic et la revue des réponses.':'CE1 à vérifier ; questions CE2 pour situer le niveau.',statusBasis:acquired?'Décision explicite du parent après observation et revue des réponses.':'',source:'Programme officiel français de mathématiques, cycle 2 (2024), compétence locale '+unit.id,questions:[]}});
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...njGrade2LanguageUnits,...audioUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext, audioPlayCount=0;
+// Three bounded, distinct 20-item practice sets; no recycled long format.
+const tenseRows=[
+  ['I','wait','wait','waited','for the bus'],['She','play','plays','played','chess'],['They','watch','watch','watched','the birds'],['He','wash','washes','washed','the dishes'],['We','visit','visit','visited','the museum'],['The dog','jump','jumps','jumped','over the log'],['You','help','help','helped','your friend'],['Mia','carry','carries','carried','a basket'],['The birds','sing','sing','sang','in the garden'],['Leo','read','reads','read','a book'],['The children','walk','walk','walked','to the park'],['My sister','study','studies','studied','the map'],['I','eat','eat','ate','an apple'],['The cat','sleep','sleeps','slept','on the sofa'],['We','make','make','made','a model'],['Dad','fix','fixes','fixed','the bicycle'],['You','open','open','opened','the window'],['Ava','go','goes','went','to the library'],['The frogs','hop','hop','hopped','near the pond'],['The baby','cry','cries','cried','loudly']
+];
+const tenseUnits=[['NJ2-L-PRESENT','Present tense','present'],['NJ2-L-PAST','Past tense','past'],['NJ2-L-FUTURE','Future tense','future']].map(([id,title,tense])=>({
+  id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',status:'pas-testee',statusScope:'Entraînement au temps choisi ; production écrite à observer séparément.',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
+  questions:tenseRows.map(([subject,base,present,past,rest],i)=>{
+    const correct=tense==='present'?present:tense==='past'?past:`will ${base}`;
+    const wrong=[present,past,`will ${base}`,`${base}ing`,`to ${base}`].filter((x,j,a)=>x!==correct&&a.indexOf(x)===j).slice(0,3);
+    const choices=[correct,...wrong],answer=i%4;choices.splice(answer,0,choices.shift());
+    const when=tense==='present'?'Every day':tense==='past'?'Yesterday':'Tomorrow';
+    const inSentence=subject==='I'||['Mia','Leo','Ava','Dad'].includes(subject)?subject:subject.charAt(0).toLowerCase()+subject.slice(1);
+    return {itemId:`${id}-v1-${String(i+1).padStart(3,'0')}`,level:'Grade 2',skill:tense,subskillId:`${id}-${tense.toUpperCase()}`,prompt:`${when}, ${inSentence} ___ ${rest}.`,choices,answer,explanation:tense==='present'?`The subject and present tense call for “${correct}”.`:tense==='past'?`“Yesterday” points to the past: “${correct}”.`:`“Tomorrow” points to the future: “${correct}”.`};
+  })
+}));
+quizzes.push(...tenseUnits);
 const lessons={
+  'NJ2-L-TENSES':{
+    title:'The present tense',
+    offer:'Lire une petite leçon en anglais sur le présent.',
+    html:`<p>We use the <strong>simple present</strong> to talk about habits and things that are generally true.</p><p><strong>Examples:</strong> I read every day. Snakes live in many different places.</p><p>With <strong>I, you, we</strong> and <strong>they</strong>, use the base form of the verb: <strong>I play</strong>; <strong>they play</strong>.</p><p>With <strong>he, she</strong> and <strong>it</strong>, the verb usually ends in <strong>-s</strong>: <strong>he plays</strong>; <strong>she reads</strong>. A name or a singular noun works the same way: <strong>G plays</strong>; <strong>the snake eats</strong>.</p><p>Some verbs take <strong>-es</strong>: she <strong>watches</strong>, he <strong>goes</strong>. A consonant + y often changes to <strong>-ies</strong>: she <strong>carries</strong>. But: he <strong>plays</strong>.</p><p><strong>Be</strong> is special: I <strong>am</strong>, you/we/they <strong>are</strong>, he/she/it <strong>is</strong>.</p><p>For an action happening right now, English often uses <strong>am / is / are + verb-ing</strong>: I <strong>am reading</strong>; she <strong>is reading</strong>.</p><p class="lesson-rule"><strong>Try it:</strong> “The dog ___ every day.” → The dog <strong>runs</strong> every day.</p>`
+  },
+
   'QLM-C2-H05':{
     title:'Calendrier et durées',
     offer:'Lire une petite leçon sur les dates et les durées.',
@@ -1534,6 +1556,8 @@ const lessons={
       <p class="lesson-check">Dans 5/8, le numérateur est 5 et le dénominateur est 8.</p>`
   }
 };
+lessons['NJ2-L-SUBJECT-VERB']=lessons['NJ2-L-TENSES'];
+lessons['NJ2-L-PRESENT']=lessons['NJ2-L-TENSES'];
 let lessonViewedFor=null;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
 const unit=(n,label)=>`${n} ${label}${n>1?'s':''}`;
