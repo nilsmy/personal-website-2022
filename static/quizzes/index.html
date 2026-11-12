@@ -1669,6 +1669,7 @@ function renderQuestionCounts(){
   if(selected?.id==="MA-F05")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-Q07")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-Q08")counts.splice(0,counts.length,10,20,50,100);
+  if(selected?.id==="MA-Q09")counts.splice(0,counts.length,10,20,50,100);
   const runs=readFormatRuns();
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.disabled=!!runs[formatRunKey(selected?.id,count)];o.textContent=o.disabled?`${count} (déjà passée)`:String(count);return o}));
   const firstAvailable=counts.find(count=>!runs[formatRunKey(selected?.id,count)]);
@@ -1962,7 +1963,19 @@ function fixedClockQuestions(count){
     return {itemId:`MA-Q08-v1-${String(i+1).padStart(3,'0')}`,level,skill:level==='CE1'?'Heures, demies et quarts':'Heures et minutes',subskillId:level==='CE1'?'MA-Q08-QUARTS':'MA-Q08-MINUTES',programmeSkills:['MA-Q08'],prompt:'Quelle heure montre cette horloge ? Choisis une heure entre 1 h et 12 h.',...extraChoice(correct,wrong,i),explanation:`La petite aiguille indique l’heure ${hour} et la grande aiguille indique ${minute} minute${minute>1?'s':''} : il est ${correct}.`,visual:{kind:'clock',hour,minute},generationParameters:{hour,minute,bankVersion:1},difficultyBand:level};
   });
 }
+function fixedDurationQuestions(count){
+  const offsets={10:0,20:10,50:30,100:80},durations=[15,30,45,60,75,90,105,120,20,25,35,40,50,65,95];
+  if(!Object.hasOwn(offsets,count))throw Error('Format indisponible pour MA-Q09.');
+  const clock=n=>`${Math.floor(n/60)} h ${String(n%60).padStart(2,'0')}`;
+  const duration=n=>n<60?`${n} min`:`${Math.floor(n/60)} h${n%60?' '+String(n%60).padStart(2,'0')+' min':''}`;
+  return Array.from({length:count},(_,j)=>{
+    const i=offsets[count]+j,start=8*60+15*Math.floor(i/durations.length),minutes=durations[i%durations.length],end=start+minutes,level=minutes%15===0?'CE1':'CE2';
+    const correct=duration(minutes),wrong=[duration(minutes+5),duration(minutes+10),duration(minutes+15)];
+    return {itemId:`MA-Q09-v1-${String(i+1).padStart(3,'0')}`,level,skill:level==='CE1'?'Durées en heures et quarts d’heure':'Durées en heures et minutes',subskillId:level==='CE1'?'MA-Q09-QUARTS':'MA-Q09-MINUTES',programmeSkills:['MA-Q09'],prompt:`De ${clock(start)} à ${clock(end)}, combien de temps s’écoule ?`,...extraChoice(correct,wrong,i),explanation:`De ${clock(start)} à ${clock(end)}, il s’écoule ${correct}.`,generationParameters:{startMinutes:start,endMinutes:end,durationMinutes:minutes,bankVersion:1},difficultyBand:level};
+  });
+}
 function buildQuizForRun(selected,count,written){
+  if(!written&&selected.id==="MA-Q09"&&[10,20,50,100].includes(count))return {...selected,questions:fixedDurationQuestions(count)};
   if(!written&&selected.id==="MA-Q08"&&[10,20,50,100].includes(count))return {...selected,questions:fixedClockQuestions(count)};
   if(!written&&selected.id==="MA-Q07"&&[10,20,50,100].includes(count))return {...selected,questions:fixedMoneyQuestions(count)};
   if(!written&&selected.id==="MA-F05"&&[10,20,50,100].includes(count))return {...selected,questions:fixedFractionQuestions(count)};
