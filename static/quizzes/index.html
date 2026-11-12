@@ -1504,6 +1504,22 @@ const mathUnits = [
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...njGrade2LanguageUnits,...audioUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext, audioPlayCount=0;
 const lessons={
+  'QLM-C2-H05':{
+    title:'Calendrier et durées',
+    offer:'Lire une petite leçon sur les dates et les durées.',
+    html:`<p>Un <strong>calendrier</strong> permet de situer les jours, les mois et les années.</p><ul><li>Une semaine compte <strong>7 jours</strong>.</li><li>Une année compte <strong>12 mois</strong> et, en général, 365 jours. Une année bissextile compte 366 jours : février a alors 29 jours.</li><li>Un siècle correspond à <strong>100 années</strong>.</li><li>Une journée complète dure 24 heures et une heure dure 60 minutes.</li></ul><p><strong>Exemple :</strong> le 31 décembre 2025 est suivi du 1er janvier 2026. Une nouvelle année commence.</p><p>Dans l’hémisphère Nord, les saisons se succèdent ainsi : hiver, printemps, été, automne, puis à nouveau hiver.</p>`
+  },
+  'QLM-C2-H06':{
+    title:'Chronologie et frises',
+    offer:'Lire une petite leçon pour placer les événements dans le temps.',
+    html:`<p>La <strong>chronologie</strong> consiste à placer les événements dans l’ordre où ils se sont produits.</p><p><strong>Exemple :</strong> une graine germe, puis la plante fleurit. La germination vient <strong>avant</strong> la floraison ; la floraison vient <strong>après</strong> la germination.</p><p>Deux événements qui se produisent au même moment sont <strong>simultanés</strong>. S’ils se produisent l’un après l’autre, ils sont <strong>successifs</strong>.</p><p>Sur une frise où le temps avance vers la droite, les événements les plus anciens sont à gauche :</p><p class="lesson-rule"><strong>1900 → 1950 → 2000</strong></p><p>Entre 2000 et 2010, il s’est écoulé <strong>10 ans</strong>.</p>`
+  },
+  'QLM-CE2-H08':{
+    title:'Les grandes périodes de l’histoire',
+    offer:'Découvrir les périodes et quelques événements avant le quiz.',
+    html:`<p>Pour se repérer dans le passé, on utilise souvent ces grandes périodes :</p><p class="lesson-rule"><strong>Préhistoire → Antiquité → Moyen Âge → Temps modernes → époque contemporaine</strong></p><p>Ce découpage est un outil : les changements ne se produisent pas partout au même moment. On utilise traditionnellement l’apparition de l’écriture comme repère entre la Préhistoire et l’histoire ; elle apparaît à des dates différentes selon les régions.</p><ul><li><strong>Antiquité :</strong> l’Empire romain en est un exemple.</li><li><strong>1492 :</strong> l’expédition de Christophe Colomb atteint des îles des Caraïbes, où vivent déjà des peuples.</li><li><strong>1789 :</strong> la Révolution française commence.</li><li><strong>1914 :</strong> la Première Guerre mondiale commence.</li><li><strong>1945 :</strong> la Seconde Guerre mondiale se termine en Europe.</li></ul><p>Ces dates sont des repères pour ordonner les événements, pas des noms de périodes.</p>`
+  },
+
   'MA-F03':{
     title:'Numérateur et dénominateur',
     offer:'Découvrir les deux mots avant de répondre aux questions.',
