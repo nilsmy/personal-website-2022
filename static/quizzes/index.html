@@ -1504,6 +1504,12 @@ const mathUnits = [
 const $ = id => document.getElementById(id);
 let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...njGrade2LanguageUnits,...audioUnits], quiz, index=0, responses=[], answered=false, selectedChoice, startedAt, immediateFeedback=true, soundEnabled=true, audioContext, audioPlayCount=0;
 const lessons={
+  'NJ2-L-TENSES':{
+    title:'The present tense',
+    offer:'Lire une petite leçon en anglais sur le présent.',
+    html:`<p>We use the <strong>simple present</strong> to talk about habits and things that are generally true.</p><p><strong>Examples:</strong> I read every day. Snakes live in many different places.</p><p>With <strong>I, you, we</strong> and <strong>they</strong>, use the base form of the verb: <strong>I play</strong>; <strong>they play</strong>.</p><p>With <strong>he, she</strong> and <strong>it</strong>, the verb usually ends in <strong>-s</strong>: <strong>he plays</strong>; <strong>she reads</strong>. A name or a singular noun works the same way: <strong>G plays</strong>; <strong>the snake eats</strong>.</p><p>Some verbs take <strong>-es</strong>: she <strong>watches</strong>, he <strong>goes</strong>. A consonant + y often changes to <strong>-ies</strong>: she <strong>carries</strong>. But: he <strong>plays</strong>.</p><p><strong>Be</strong> is special: I <strong>am</strong>, you/we/they <strong>are</strong>, he/she/it <strong>is</strong>.</p><p>For an action happening right now, English often uses <strong>am / is / are + verb-ing</strong>: I <strong>am reading</strong>; she <strong>is reading</strong>.</p><p class="lesson-rule"><strong>Try it:</strong> “The dog ___ every day.” → The dog <strong>runs</strong> every day.</p>`
+  },
+
   'QLM-C2-H05':{
     title:'Calendrier et durées',
     offer:'Lire une petite leçon sur les dates et les durées.',
@@ -1534,6 +1540,7 @@ const lessons={
       <p class="lesson-check">Dans 5/8, le numérateur est 5 et le dénominateur est 8.</p>`
   }
 };
+lessons['NJ2-L-SUBJECT-VERB']=lessons['NJ2-L-TENSES'];
 let lessonViewedFor=null;
 const fmt=n=>new Intl.NumberFormat('fr-FR').format(n);
 const unit=(n,label)=>`${n} ${label}${n>1?'s':''}`;
