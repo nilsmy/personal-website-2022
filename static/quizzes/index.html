@@ -1670,6 +1670,7 @@ function renderQuestionCounts(){
   if(selected?.id==="MA-Q07")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-Q08")counts.splice(0,counts.length,10,20,50,100);
   if(selected?.id==="MA-Q09")counts.splice(0,counts.length,10,20,50,100);
+  if(selected?.id==="MA-G03")counts.splice(0,counts.length,10,20,50,100);
   const runs=readFormatRuns();
   $('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.disabled=!!runs[formatRunKey(selected?.id,count)];o.textContent=o.disabled?`${count} (déjà passée)`:String(count);return o}));
   const firstAvailable=counts.find(count=>!runs[formatRunKey(selected?.id,count)]);
@@ -1739,8 +1740,15 @@ function drawVisual(visual){
     add('circle',{cx,cy,r:6,fill:'#333'});
   }else if(visual.kind==='shape'){
     svg.setAttribute('viewBox','0 0 720 240');svg.setAttribute('aria-label','Figure géométrique');
-    const points={carre:'280,30 440,30 440,190 280,190',rectangle:'210,55 510,55 510,165 210,165',triangle:'360,25 120,195 600,195',triangleRectangle:'180,35 180,195 560,195',losange:'360,25 570,110 360,195 150,110'};
-    add('polygon',{points:points[visual.shape],fill:'#f8edcf',stroke:'#333','stroke-width':5,'stroke-linejoin':'round'});
+    let points={carre:'280,30 440,30 440,190 280,190',rectangle:'210,55 510,55 510,165 210,165',triangle:'360,25 120,195 600,195',triangleRectangle:'180,35 180,195 560,195',losange:'360,25 570,110 360,195 150,110'}[visual.shape],transform='';
+    if(Number.isInteger(visual.variant)&&visual.generated){
+      const v=visual.variant,size=Math.floor(v/12),angle=(v%12)*5,cx=360,cy=120;
+      const w=(visual.shape==='carre'?120+size*20:visual.shape==='rectangle'?180+size*35:visual.shape==='losange'?180+size*25:180+size*20)*0.85;
+      const h=visual.shape==='carre'?w:(visual.shape==='rectangle'?90+size*5:visual.shape==='losange'?100+size*10:120+size*10)*0.85;
+      const shapes={carre:[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]],rectangle:[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w/2,h/2]],triangle:[[0,-h/2],[-w/2,h/2],[w/2,h/2]],triangleRectangle:[[-w/2,-h/2],[-w/2,h/2],[w/2,h/2]],losange:[[0,-h/2],[w/2,0],[0,h/2],[-w/2,0]]};
+      points=shapes[visual.shape].map(([x,y])=>`${cx+x},${cy+y}`).join(' ');transform=`rotate(${angle} ${cx} ${cy})`;
+    }
+    add('polygon',{points,transform,fill:'#f8edcf',stroke:'#333','stroke-width':5,'stroke-linejoin':'round'});
   }else if(visual.kind==='bars'){
     svg.setAttribute('viewBox','0 0 720 310');svg.setAttribute('aria-label','Diagramme en barres : '+visual.labels.map((label,i)=>`${label}, ${visual.values[i]}`).join(' ; '));
     const max=Math.ceil(Math.max(...visual.values)/visual.step)*visual.step,top=40,bottom=250,height=bottom-top;
@@ -1974,7 +1982,22 @@ function fixedDurationQuestions(count){
     return {itemId:`MA-Q09-v1-${String(i+1).padStart(3,'0')}`,level,skill:level==='CE1'?'Durées en heures et quarts d’heure':'Durées en heures et minutes',subskillId:level==='CE1'?'MA-Q09-QUARTS':'MA-Q09-MINUTES',programmeSkills:['MA-Q09'],prompt:`De ${clock(start)} à ${clock(end)}, combien de temps s’écoule ?`,...extraChoice(correct,wrong,i),explanation:`De ${clock(start)} à ${clock(end)}, il s’écoule ${correct}.`,generationParameters:{startMinutes:start,endMinutes:end,durationMinutes:minutes,bankVersion:1},difficultyBand:level};
   });
 }
+function fixedPlaneShapeQuestions(count){
+  const offsets={10:0,20:10,50:30,100:80},shapes=['carre','rectangle','triangle','triangleRectangle','losange'];
+  const names={carre:'Un carré',rectangle:'Un rectangle',triangle:'Un triangle',triangleRectangle:'Un triangle rectangle',losange:'Un losange'};
+  if(!Object.hasOwn(offsets,count))throw Error('Format indisponible pour MA-G03.');
+  return Array.from({length:count},(_,j)=>{
+    const i=offsets[count]+j,shapeIndex=i%shapes.length,shape=shapes[shapeIndex],variant=Math.floor(i/shapes.length),kind=(variant+shapeIndex)%3,level=shape==='losange'?'CE2':'CE1';
+    let prompt,correct,wrong,explanation,skill,subskillId;
+    if(kind===0){prompt='Quel est le nom le plus précis de cette figure ?';correct=names[shape];wrong=Object.values(names).filter(x=>x!==correct).slice(0,3);explanation=`Cette figure est ${correct.toLowerCase()}.`;skill='Nommer une figure';subskillId='MA-G03-NOM';}
+    else if(kind===1){const n=shape.startsWith('triangle')?3:4;prompt='Combien de côtés possède cette figure ?';correct=n;wrong=[2,5,6];explanation=`Cette figure possède ${n} côtés.`;skill='Nombre de côtés';subskillId='MA-G03-COTES';}
+    else {const n=shape==='carre'||shape==='rectangle'?4:shape==='triangleRectangle'?1:0;prompt='Combien d’angles droits possède cette figure ?';correct=n;wrong=[0,1,2,3,4].filter(x=>x!==n).slice(0,3);explanation=`Cette figure possède ${n} angle${n>1?'s':''} droit${n>1?'s':''}.`;skill='Angles droits';subskillId='MA-G03-ANGLES';}
+    const choices=typeof correct==='number'?extraNumber(correct,wrong,i):extraChoice(correct,wrong,i);
+    return {itemId:`MA-G03-v1-${String(i+1).padStart(3,'0')}`,level,skill,subskillId,programmeSkills:['MA-G03'],prompt,...choices,explanation,visual:{kind:'shape',shape,variant,generated:true},generationParameters:{shape,variant,kind,bankVersion:1},difficultyBand:level};
+  });
+}
 function buildQuizForRun(selected,count,written){
+  if(!written&&selected.id==="MA-G03"&&[10,20,50,100].includes(count))return {...selected,questions:fixedPlaneShapeQuestions(count)};
   if(!written&&selected.id==="MA-Q09"&&[10,20,50,100].includes(count))return {...selected,questions:fixedDurationQuestions(count)};
   if(!written&&selected.id==="MA-Q08"&&[10,20,50,100].includes(count))return {...selected,questions:fixedClockQuestions(count)};
   if(!written&&selected.id==="MA-Q07"&&[10,20,50,100].includes(count))return {...selected,questions:fixedMoneyQuestions(count)};
