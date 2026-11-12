@@ -174,7 +174,7 @@ const extraSpecs=[
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
 const acquiredExtraUnits=['MA-M01','MA-M02','FR-G01','FR-G07','FR-G09-ETRE-AVOIR','FR-G11'];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:longMath||longFrench?[10,20,50,100,180]:counts||[10,20],language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques',irregular=id==='FR-G09-IRREG';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:irregular?[10,20,50,100]:(longMath||longFrench?[10,20,50,100,180]:counts||[10,20]),language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -1020,11 +1020,30 @@ function readingQuestions(id){
 function extraQuestions(id,count){
   if(id.startsWith('QLM-'))return qlmQuestions(id,count);
   if(id.startsWith('FR-L'))return readingQuestions(id);
+  if(id==='FR-G09-IRREG')return irregularPresentQuestions(count);
   const all=Array.from({length:count>20?count:20},(_,i)=>advancedIds.has(id)?advancedQuestion(id,i):visualMathIds.has(id)?visualMathQuestion(id,i):additionalMathIds.has(id)?additionalMathQuestion(id,i):extraQuestion(id,i));
   const annotated=all.map((q,i)=>({...q,generationParameters:{generatorIndex:i,cycle:Math.floor(i/20),level:q.level||null,source:'procedural-template'},difficultyBand:q.level==='CE2'?'CE2':'CE1'}));
   if(count===10&&id==='FR-G09-IRREG')return [0,1,2,3,4,5,6,7,12,19].map(i=>annotated[i]);
   if(count===10&&id==='FR-V04')return [0,1,4,6,8,9,12,14,16,18].map(i=>annotated[i]);
   return count===10?[...annotated.slice(0,6),...annotated.slice(12,16)]:annotated;
+}
+function irregularPresentQuestions(count){
+  const forms={faire:['fais','fais','fait','faisons','faites','font'],aller:['vais','vas','va','allons','allez','vont'],dire:['dis','dis','dit','disons','dites','disent'],venir:['viens','viens','vient','venons','venez','viennent'],pouvoir:['peux','peux','peut','pouvons','pouvez','peuvent'],voir:['vois','vois','voit','voyons','voyez','voient'],vouloir:['veux','veux','veut','voulons','voulez','veulent'],prendre:['prends','prends','prend','prenons','prenez','prennent']};
+  const subjects=[['Je',0],['Tu',1],['Il',2],['Nous',3],['Vous',4],['Ils',5]];
+  const contexts=[['un dessin pour le livre','faire'],['à la bibliothèque','aller'],['bonjour à leur voisine','dire'],['chez nos grands-parents','venir'],['ouvrir la fenêtre','pouvoir'],['les étoiles ce soir','voir'],['finir cette partie','vouloir'],['le train demain','prendre'],['une expérience','faire'],['au musée','aller'],['le nom de la plante','dire'],['avec moi au parc','venir'],['comparer les deux cartes','pouvoir'],['un oiseau sur la branche','voir'],['vérifier son idée','vouloir'],['nos carnets pour noter','prendre'],['un plan du quartier','faire'],['nous voir dimanche','venir'],['la montagne au loin','voir'],['la route vers le village','prendre']];
+  const variants=['Complète la phrase :','Choisis la forme correcte :','Quel verbe convient ?','Lis la phrase puis complète :','Au présent, écris le verbe :'];
+  const items=[];
+  for(let cycle=0;items.length<180;cycle++)for(const [rest,verb] of contexts)for(const [subject,person] of subjects){
+    if(items.length>=180)break;
+    const correct=forms[verb][person];
+    const wrong=[...new Set(forms[verb])].filter(x=>x!==correct).slice(0,3);
+    const prompt=`${variants[cycle%variants.length]} ${subject} ___ ${rest}.`;
+    const choice=extraChoice(correct,wrong,items.length);
+    items.push({itemId:`FR-G09-IRREG-v1-${String(items.length+1).padStart(3,'0')}`,level:items.length<60?'CE1':'CE2',skill:`Présent ${verb==='aller'?"d’aller":'de '+verb}`,subskillId:`FR-G09-IRREG-${verb.toUpperCase()}`,programmeSkills:['FR-G09'],prompt,...choice,explanation:`Au présent, avec « ${subject} », le verbe ${verb} s’écrit « ${correct} » : ${subject} ${correct} ${rest}.`,generationParameters:{verb,person,context:rest,variant:cycle%variants.length,bankVersion:2},difficultyBand:items.length<60?'CE1':'CE2'});
+  }
+  const start=count===10?0:count===20?0:count===50?20:count===100?70:0;
+  const length=count===10||count===20?count:count;
+  return items.slice(start,start+length);
 }
 
 // Additional CE1/CE2 units. All pictures are drawn by app.js and described in reports.
