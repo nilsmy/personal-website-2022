@@ -173,7 +173,7 @@ const extraSpecs=[
   ['QLM-C2-H06','Histoire','Chronologie et frises','Avant, après et succession',[10]],
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
-const acquiredExtraUnits=['MA-M01','MA-M02','FR-G01','FR-G07','FR-G09-ETRE-AVOIR','FR-G11'];
+const acquiredExtraUnits=['MA-M01','MA-M02','MA-M07','MA-M08','FR-G01','FR-G02','FR-G07','FR-G09-ETRE-AVOIR','FR-G11','QLM-C2-S02'];
 const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques',irregular=id==='FR-G09-IRREG';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:irregular?[10,20,50,100]:(longMath||longFrench?[10,20,50,100,180]:counts||[10,20]),language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
@@ -1366,10 +1366,11 @@ function njCode(id,item){
   if(!suffix)throw Error('Unmapped NJ section: '+prefix);
   return `${prefix}.${grade}.${suffix}`;
 }
+const acquiredNjUnits=new Set(['NJ-RL-EVENTS','NJ2-L-TENSES']);
 const njElaUnits=njSpecs.map(([id,title,sourceCodes])=>({
   id,subject:'Anglais',title,language:'en-US',levels:'Grade 2 et grade 3',
   counts:[10,20,50,100,180],
-  status:'pas-testee',statusScope:'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',
+  status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',
   source:'2023 NJSLS-ELA (NJDOE): '+sourceCodes,
   questions:njBanks[id].filter(item=>item.level==='Grade 2').map((item,i)=>({...item,subskillId:item.subskillId+'-G2',answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:[njCode(id,item)]}))
 }));
@@ -1452,7 +1453,7 @@ function grade2HundredItems(id){
 const njGrade2LanguageUnits=njGrade2LanguageSpecs.map(([id,title,sourceIds,skills])=>{
   const sourceItems=sourceIds.flatMap(sourceId=>njBanks[sourceId]).filter(item=>item.level==='Grade 2'&&skills.includes(item.skill));
   const items=(grade2HundredItems(id).length?grade2HundredItems(id):(grade2GeneratedItems(id).length?grade2GeneratedItems(id):(sourceItems.length?sourceItems:njBanks[sourceIds[0]].filter(item=>item.level==='Grade 2')))).map((item,i)=>({...item,subskillId:id+'-'+item.skill.toUpperCase().replace(/[^A-Z0-9]+/g,'-'),answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:['L.WF.2.3']}));
-  return {id,subject:'Anglais',title,language:'en-US',levels:'Grade 2',counts:[10,20,50,100,180],status:'pas-testee',statusScope:'Diagnostic grade 2 par QCM ; la production écrite ou orale demande une tâche complémentaire.',source:'2023 NJSLS-ELA (NJDOE), grade 2 : L.WF.2.2–2.3',questions:items};
+  return {id,subject:'Anglais',title,language:'en-US',levels:'Grade 2',counts:[10,20,50,100,180],status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:'Diagnostic grade 2 par QCM ; la production écrite ou orale demande une tâche complémentaire.',source:'2023 NJSLS-ELA (NJDOE), grade 2 : L.WF.2.2–2.3',questions:items};
 });
 
 // Generated from audio/stories.json; edit that source, then run prepare_update.py.
