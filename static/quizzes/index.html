@@ -2196,7 +2196,10 @@ function fixedProblemQuestions(id,count){
   const offsets={10:0,20:10,50:30,100:80};
   if(!Object.hasOwn(offsets,count))return null;
   return Array.from({length:count},(_,j)=>{
-    const i=offsets[count]+j,groups=2+Math.floor(i/30),each=2+i%30,total=groups*each;
+    // Parcours cartésien contrôlé : chaque index correspond à une paire
+    // (groupes, quantité par groupe) unique. Ainsi même la version 20
+    // répartit les diviseurs/groupes au lieu de tester seulement 2.
+    const i=offsets[count]+j,groups=2+(i%6),each=2+Math.floor(i/6),total=groups*each;
     let prompt,answer,wrong,explanation,skill;
     if(id==='MA-C02'){
       prompt=`${groups} boîtes contiennent chacune ${each} billes. Combien y a-t-il de billes en tout ?`;answer=total;wrong=[groups+each,total+groups,total-groups];explanation=`${groups} groupes de ${each} font ${groups} × ${each} = ${total}.`;skill='Groupes égaux';
