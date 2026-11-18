@@ -63,7 +63,10 @@
 Français : FR-G03 — formes de phrases
 Français : FR-G04 — classes de mots
 Français : FR-G09-IRREG — présent des verbes irréguliers
-Français : FR-G06 — accords dans le groupe nominal</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
+Français : FR-G06 — accords dans le groupe nominal
+Anglais : NJ2-L-PRESENT — present tense
+Anglais : NJ2-L-PAST — past tense
+Anglais : NJ2-L-FUTURE — future tense</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
     <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="suggestionLabel"></span> : <span id="suggestionName"></span></div><p id="suggestionNote"></p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
     <div id="levelControl"><label for="levelSelect">Niveau ciblé</label><select id="levelSelect"><option value="mixed">Tous les niveaux</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option></select></div>
@@ -1557,13 +1560,13 @@ const tenseRows=[
 ];
 const tenseUnits=[['NJ2-L-PRESENT','Present tense','present'],['NJ2-L-PAST','Past tense','past'],['NJ2-L-FUTURE','Future tense','future']].map(([id,title,tense])=>({
   id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',status:'pas-testee',statusScope:'Entraînement au temps choisi ; production écrite à observer séparément.',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
-  questions:tenseRows.map(([subject,base,present,past,rest],i)=>{
+  questions:Array.from({length:180},(_,n)=>{const [subject,base,present,past,rest]=tenseRows[n%tenseRows.length],variant=Math.floor(n/tenseRows.length),markers=['before school','after lunch','at home','with a friend','on Mondays','in the afternoon','near the park','during the lesson','before dinner'];
     const correct=tense==='present'?present:tense==='past'?past:`will ${base}`;
     const wrong=[present,past,`will ${base}`,`${base}ing`,`to ${base}`].filter((x,j,a)=>x!==correct&&a.indexOf(x)===j).slice(0,3);
-    const choices=[correct,...wrong],answer=i%4;choices.splice(answer,0,choices.shift());
+    const choices=[correct,...wrong],answer=n%4;choices.splice(answer,0,choices.shift());
     const when=tense==='present'?'Every day':tense==='past'?'Yesterday':'Tomorrow';
     const inSentence=subject==='I'||['Mia','Leo','Ava','Dad'].includes(subject)?subject:subject.charAt(0).toLowerCase()+subject.slice(1);
-    return {itemId:`${id}-v1-${String(i+1).padStart(3,'0')}`,level:'Grade 2',skill:tense,subskillId:`${id}-${tense.toUpperCase()}`,prompt:`${when}, ${inSentence} ___ ${rest}.`,choices,answer,explanation:tense==='present'?`The subject and present tense call for “${correct}”.`:tense==='past'?`“Yesterday” points to the past: “${correct}”.`:`“Tomorrow” points to the future: “${correct}”.`};
+    return {itemId:`${id}-v1-${String(n+1).padStart(3,'0')}`,level:'Grade 2',skill:tense,subskillId:`${id}-${tense.toUpperCase()}`,prompt:`${when}, ${markers[variant]}, ${inSentence} ___ ${rest}.`,choices,answer,explanation:tense==='present'?`The subject and present tense call for “${correct}”.`:tense==='past'?`“Yesterday” points to the past: “${correct}”.`:`“Tomorrow” points to the future: “${correct}”.`,generationParameters:{baseIndex:n%tenseRows.length,variant,bankVersion:2}};
   })
 }));
 quizzes.push(...tenseUnits);
@@ -2293,7 +2296,7 @@ el('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;el('sub
 el('chooseSubjectSuggestion').onclick=()=>{const q=suggestedInSubject();if(!q)return;el('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
 el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(el('report').textContent);el('copyStatus').textContent='Rapport copié.'}catch{el('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
 el('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
-const recommendationKey='education-quiz-recommendations-v3';
+const recommendationKey='education-quiz-recommendations-v4';
 try{const saved=localStorage.getItem(recommendationKey);if(saved!==null)el('recommendationNotes').value=saved;}catch{el('recommendationStatus').textContent='Enregistrement indisponible dans ce navigateur.';}
 function renderRecommendationList(){
   const list=el('recommendationList');list.replaceChildren();
