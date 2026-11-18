@@ -60,6 +60,7 @@
   <section id="setup" class="card">
     <h2>Choisir une compétence</h2>
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Maths : MA-P06 — problèmes mêlant addition et multiplication
+Maths : MA-P07 — problèmes de comparaison
 Français : FR-G03 — formes de phrases
 Français : FR-G04 — classes de mots
 Français : FR-G09-IRREG — présent des verbes irréguliers
@@ -2298,7 +2299,7 @@ el('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;el('sub
 el('chooseSubjectSuggestion').onclick=()=>{const q=suggestedInSubject();if(!q)return;el('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
 el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(el('report').textContent);el('copyStatus').textContent='Rapport copié.'}catch{el('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
 el('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
-const recommendationKey='education-quiz-recommendations-v5';
+const recommendationKey='education-quiz-recommendations-v6';
 try{const saved=localStorage.getItem(recommendationKey);if(saved!==null)el('recommendationNotes').value=saved;}catch{el('recommendationStatus').textContent='Enregistrement indisponible dans ce navigateur.';}
 function renderRecommendationList(){
   const list=el('recommendationList');list.replaceChildren();
