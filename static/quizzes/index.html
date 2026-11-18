@@ -87,7 +87,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.18.2 · Dernière mise à jour : 18 novembre 2026</p>
+  <p class="site-version">Version 2026.11.18.3 · Dernière mise à jour : 18 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -106,7 +106,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <button id="next" class="primary footer hidden"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg><span id="nextLabel">Question suivante</span></button>
     <button id="cancel" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Annuler le quiz</button>
   </section>
-  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><details id="reviewDetails" class="review-details"><summary id="reviewSummary">Revoir les réponses à corriger</summary><div id="reviewList" class="review-list"></div></details><label for="exportDecision">Décision pour ce rapport</label><select id="exportDecision"><option value="testee">Testée</option><option value="acquise">Acquise</option><option value="en-cours">À renforcer</option></select><div class="toolbar"><button id="email" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envoyer par e-mail</button><button id="saveFolder" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Retour au menu</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport JSON</summary><pre id="report"></pre></details></section>
+  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><details id="reviewDetails" class="review-details"><summary id="reviewSummary">Revoir les réponses à corriger</summary><div id="reviewList" class="review-list"></div></details><label for="exportDecision">Décision pour ce rapport</label><select id="exportDecision"><option value="">Aucune décision</option><option value="testee">Testée</option><option value="acquise">Acquise</option><option value="en-cours">À renforcer</option></select><div class="toolbar"><button id="email" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envoyer par e-mail</button><button id="saveFolder" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Retour au menu</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport JSON</summary><pre id="report"></pre></details></section>
 </main><script>
 // Additional bounded CE1/CE2 diagnostics. Codes refer to the local programme maps.
 const extraSpecs=[
@@ -2327,12 +2327,12 @@ function skipItem(){
 }
 el('skip').onclick=skipItem;
 const baseReport=report;
-report=function(){const data=baseReport();data.skipped=responses.filter(r=>r.skipped).length;data.scoredTotal=data.total-data.skipped;data.decision={status:el('exportDecision').value,label:el('exportDecision').selectedOptions[0].textContent,source:'Choix sur la page de résultat avant export'};return data;};
+function selectedExportDecision(){const select=el('exportDecision');return select.value?{status:select.value,label:select.selectedOptions[0].textContent,source:'Choix sur la page de résultat avant export'}:null;}
+report=function(){const data=baseReport();data.skipped=responses.filter(r=>r.skipped).length;data.scoredTotal=data.total-data.skipped;data.decision=selectedExportDecision();return data;};
 const baseFinish=finish;
-finish=function(incomplete=false){el('exportDecision').value='testee';baseFinish(incomplete);const data=JSON.parse(el('report').textContent);el('summary').textContent=`${data.completed?'':'Passation interrompue : '}${data.initialCorrect}/${data.scoredTotal} réponses évaluées. ${data.skipped} item(s) passé(s), ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;};
-el('exportDecision').onchange=()=>{const data=JSON.parse(el('report').textContent);data.decision={status:el('exportDecision').value,label:el('exportDecision').selectedOptions[0].textContent,source:'Choix sur la page de résultat avant export'};el('report').textContent=JSON.stringify(data,null,2);};
+finish=function(incomplete=false){el('exportDecision').value='';baseFinish(incomplete);const data=JSON.parse(el('report').textContent);el('summary').textContent=`${data.completed?'':'Passation interrompue : '}${data.initialCorrect}/${data.scoredTotal} réponses évaluées. ${data.skipped} item(s) passé(s), ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;};
+el('exportDecision').onchange=()=>{const data=JSON.parse(el('report').textContent);data.decision=selectedExportDecision();el('report').textContent=JSON.stringify(data,null,2);};
 renderRecommendationList();
 renderSubjects();
 
 </script></body></html>
-
