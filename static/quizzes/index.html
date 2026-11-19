@@ -1565,7 +1565,7 @@ const tenseRows=[
 ];
 const tenseUnits=[['NJ2-L-PRESENT','Present tense','present'],['NJ2-L-PAST','Past tense','past'],['NJ2-L-FUTURE','Future tense','future']].map(([id,title,tense])=>({
   id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',counts:[10,20,50,100],status:'pas-testee',statusScope:'Entraînement au temps choisi ; production écrite à observer séparément.',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
-  questions:Array.from({length:180},(_,n)=>{const [subject,base,present,past,rest]=tenseRows[n%tenseRows.length],variant=Math.floor(n/tenseRows.length),timeMarkers={present:['Every day','Usually','Often','On most days','Each week','Sometimes','Most mornings','From time to time','Regularly'],past:['Yesterday','Last week','Last month','A few days ago','Earlier today','Last Tuesday','Over the weekend','The other day','Last year'],future:['Tomorrow','Next week','Next month','In a few days','Later today','Next Tuesday','Next weekend','Soon','Next year']};
+  questions:Array.from({length:180},(_,n)=>{const [subject,base,present,past,rest]=tenseRows[n%tenseRows.length],variant=Math.floor(n/tenseRows.length),timeMarkers={present:['Every day','Usually','Often','On most days','Each week','Sometimes','Most mornings','From time to time','Regularly'],past:['Yesterday','Last week','Last month','A few days ago','Earlier today','Last Tuesday','Over the weekend','The other day','Earlier this week'],future:['Tomorrow','Next week','Next month','In a few days','Later today','Next Tuesday','Next weekend','Soon','Next Friday']};
     const correct=tense==='present'?present:tense==='past'?past:`will ${base}`;
     const wrong=[present,past,`will ${base}`,`${base}ing`,`to ${base}`].filter((x,j,a)=>x!==correct&&a.indexOf(x)===j).slice(0,3);
     const choices=[correct,...wrong],answer=n%4;choices.splice(answer,0,choices.shift());
@@ -2124,7 +2124,7 @@ function fixedTenseQuestions(selected,count){
   const items=[];
   for(let row=0;row<tenseRows.length;row++){
     const variants=count===100?[0,1,2,3,4]:count===50?(tenRows.has(row)?[5,6]:[5,6,7]):count===20?[8]:tenRows.has(row)?[7]:[];
-    for(const variant of variants)items.push(selected.questions[variant*tenseRows.length+row]);
+    for(const baseVariant of variants){const variant=(baseVariant+row)%9;items.push(selected.questions[variant*tenseRows.length+row]);}
   }
   if(items.length!==count||items.some(item=>!item))throw Error('Banque de temps verbal incomplète.');
   return items.sort((a,b)=>a.generationParameters.variant-b.generationParameters.variant||a.generationParameters.baseIndex-b.generationParameters.baseIndex);
