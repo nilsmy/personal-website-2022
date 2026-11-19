@@ -61,7 +61,6 @@
   <section id="setup" class="card">
     <h2>Choisir une compétence</h2>
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Maths : MA-P06 — problèmes mêlant addition et multiplication
-Maths : MA-P07 — problèmes de comparaison
 Français : FR-G03 — formes de phrases
 Français : FR-G04 — classes de mots
 Français : FR-G09-IRREG — présent des verbes irréguliers
@@ -87,7 +86,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.18.4 · Dernière mise à jour : 18 novembre 2026</p>
+  <p class="site-version">Version 2026.11.18.5 · Dernière mise à jour : 18 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -184,6 +183,9 @@ const extraSpecs=[
 ];
 const acquiredExtraUnits=['MA-M01','MA-M02','MA-M07','MA-M08','MA-M10','MA-P02','MA-P03','MA-P04','MA-P05','MA-P06','FR-G01','FR-G02','FR-G07','FR-G09-ETRE-AVOIR','FR-G11','QLM-C2-S02'];
 const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques',irregular=id==='FR-G09-IRREG';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:irregular?[10,20,50,100]:(longMath||longFrench?[10,20,50,100,180]:counts||[10,20]),language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
+// Explicit decisions supplied with the 18 November reports.
+Object.assign(extraUnits.find(q=>q.id==='MA-P07'),{status:'acquise',statusScope:'Acquise pour les comparaisons additives et multiplicatives testées : 20/20, items étiquetés CE1.',statusBasis:'Décision Acquise dans le rapport exporté du 18 novembre 2026.'});
+Object.assign(extraUnits.find(q=>q.id==='FR-G09-IRREG'),{status:'en-cours',statusScope:'À renforcer selon la décision parentale : 19/20 sur faire, aller, dire et deux formes de venir ; les autres verbes restent à observer.',statusBasis:'Décision À renforcer dans le rapport exporté du 18 novembre 2026.'});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
@@ -2349,3 +2351,4 @@ renderRecommendationList();
 renderSubjects();
 
 </script></body></html>
+></html>
