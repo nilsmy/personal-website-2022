@@ -87,7 +87,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.18.3 · Dernière mise à jour : 18 novembre 2026</p>
+  <p class="site-version">Version 2026.11.18.4 · Dernière mise à jour : 18 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -1564,14 +1564,14 @@ const tenseRows=[
   ['I','wait','wait','waited','for the bus'],['She','play','plays','played','chess'],['They','watch','watch','watched','the birds'],['He','wash','washes','washed','the dishes'],['We','visit','visit','visited','the museum'],['The dog','jump','jumps','jumped','over the log'],['You','help','help','helped','your friend'],['Mia','carry','carries','carried','a basket'],['The birds','sing','sing','sang','in the garden'],['Leo','read','reads','read','a book'],['The children','walk','walk','walked','to the park'],['My sister','study','studies','studied','the map'],['I','eat','eat','ate','an apple'],['The cat','sleep','sleeps','slept','on the sofa'],['We','make','make','made','a model'],['Dad','fix','fixes','fixed','the bicycle'],['You','open','open','opened','the window'],['Ava','go','goes','went','to the library'],['The frogs','hop','hop','hopped','near the pond'],['The baby','cry','cries','cried','loudly']
 ];
 const tenseUnits=[['NJ2-L-PRESENT','Present tense','present'],['NJ2-L-PAST','Past tense','past'],['NJ2-L-FUTURE','Future tense','future']].map(([id,title,tense])=>({
-  id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',status:'pas-testee',statusScope:'Entraînement au temps choisi ; production écrite à observer séparément.',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
-  questions:Array.from({length:180},(_,n)=>{const [subject,base,present,past,rest]=tenseRows[n%tenseRows.length],variant=Math.floor(n/tenseRows.length),markers=['before school','after lunch','at home','with a friend','on Mondays','in the afternoon','near the park','during the lesson','before dinner'];
+  id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',counts:[10,20,50,100],status:'pas-testee',statusScope:'Entraînement au temps choisi ; production écrite à observer séparément.',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
+  questions:Array.from({length:180},(_,n)=>{const [subject,base,present,past,rest]=tenseRows[n%tenseRows.length],variant=Math.floor(n/tenseRows.length),timeMarkers={present:['Every day','Usually','Often','On most days','Each week','Sometimes','Most mornings','From time to time','Regularly'],past:['Yesterday','Last week','Last month','A few days ago','Earlier today','Last Tuesday','Over the weekend','The other day','Last year'],future:['Tomorrow','Next week','Next month','In a few days','Later today','Next Tuesday','Next weekend','Soon','Next year']};
     const correct=tense==='present'?present:tense==='past'?past:`will ${base}`;
     const wrong=[present,past,`will ${base}`,`${base}ing`,`to ${base}`].filter((x,j,a)=>x!==correct&&a.indexOf(x)===j).slice(0,3);
     const choices=[correct,...wrong],answer=n%4;choices.splice(answer,0,choices.shift());
-    const when=tense==='present'?'Every day':tense==='past'?'Yesterday':'Tomorrow';
+    const when=timeMarkers[tense][variant];
     const inSentence=subject==='I'||['Mia','Leo','Ava','Dad'].includes(subject)?subject:subject.charAt(0).toLowerCase()+subject.slice(1);
-    return {itemId:`${id}-v1-${String(n+1).padStart(3,'0')}`,level:'Grade 2',skill:tense,subskillId:`${id}-${tense.toUpperCase()}`,prompt:`${when}, ${markers[variant]}, ${inSentence} ___ ${rest}.`,choices,answer,explanation:tense==='present'?`The subject and present tense call for “${correct}”.`:tense==='past'?`“Yesterday” points to the past: “${correct}”.`:`“Tomorrow” points to the future: “${correct}”.`,generationParameters:{baseIndex:n%tenseRows.length,variant,bankVersion:2}};
+    return {itemId:`${id}-v2-${String(n+1).padStart(3,'0')}`,level:'Grade 2',skill:tense,subskillId:`${id}-${tense.toUpperCase()}`,prompt:`${when}, ${inSentence} ___ ${rest}.`,choices,answer,explanation:tense==='present'?`“${when}” describes a habit, so use “${correct}”.`:tense==='past'?`“${when}” points to the past, so use “${correct}”.`:`“${when}” points to the future, so use “${correct}”.`,generationParameters:{baseIndex:n%tenseRows.length,variant,bankVersion:3}};
   })
 }));
 quizzes.push(...tenseUnits);
@@ -1880,7 +1880,7 @@ function renderQuizStatus(){
   const lesson=lessons[selected.id];el('lessonOffer').classList.toggle('hidden',!lesson);if(lesson)el('lessonOfferText').textContent=lesson.offer;
 }
 function renderQuestionCounts(){
-  const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)],counts=el('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:selected&&(['MA-N06','MA-F05','MA-Q07','MA-Q08','MA-Q09','MA-G03'].includes(selected.id)||fixedProblemIds.has(selected.id))?[10,20,50,100]:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
+  const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)],counts=el('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:selected&&(['MA-N06','MA-F05','MA-Q07','MA-Q08','MA-Q09','MA-G03'].includes(selected.id)||fixedProblemIds.has(selected.id))?[10,20,50,100]:tenseUnits.includes(selected)?selected.counts:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   // Une version peut être repassée : l’historique sert au suivi, pas à verrouiller les passations.
   el('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
   el('questionCount').value=String(counts.includes(20)?20:(counts[0]??20));
@@ -2117,6 +2117,18 @@ function chooseFreshQuestions(id,questions,count){
   const fresh=normalized.filter(q=>!seen.has(q.itemId)),old=normalized.filter(q=>seen.has(q.itemId));
   return [...fresh,...old].slice(0,count);
 }
+// Each version has its own variants of the same 20 base contexts; no item is reused across formats.
+function fixedTenseQuestions(selected,count){
+  if(!selected.counts.includes(count))throw Error('Format indisponible pour ce temps verbal.');
+  const tenRows=new Set([0,3,5,7,8,9,12,13,17,19]);
+  const items=[];
+  for(let row=0;row<tenseRows.length;row++){
+    const variants=count===100?[0,1,2,3,4]:count===50?(tenRows.has(row)?[5,6]:[5,6,7]):count===20?[8]:tenRows.has(row)?[7]:[];
+    for(const variant of variants)items.push(selected.questions[variant*tenseRows.length+row]);
+  }
+  if(items.length!==count||items.some(item=>!item))throw Error('Banque de temps verbal incomplète.');
+  return items.sort((a,b)=>a.generationParameters.variant-b.generationParameters.variant||a.generationParameters.baseIndex-b.generationParameters.baseIndex);
+}
 // Versions fixes : les intervalles ne se recouvrent pas.
 function fixedPlaneShapeQuestions(count){
   const offsets={10:0,20:10,50:30,100:80},shapes=['carre','rectangle','triangle','triangleRectangle','losange'];
@@ -2265,6 +2277,7 @@ function fixedProblemQuestions(id,count){
   });
 }
 function buildQuizForRun(selected,count,written){
+  if(!written&&tenseUnits.includes(selected))return {...selected,questions:fixedTenseQuestions(selected,count)};
   if(!written&&selected.id==='MA-G03'&&[10,20,50,100].includes(count))return {...selected,questions:fixedPlaneShapeQuestions(count)};
   if(!written&&selected.id==='MA-Q09'&&[10,20,50,100].includes(count))return {...selected,questions:fixedDurationQuestions(count)};
   if(!written&&selected.id==='MA-Q08'&&[10,20,50,100].includes(count))return {...selected,questions:fixedClockQuestions(count)};
