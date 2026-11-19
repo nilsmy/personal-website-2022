@@ -74,6 +74,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
     <div id="levelControl"><label for="levelSelect">Niveau ciblé</label><select id="levelSelect"><option value="mixed">Tous les niveaux</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option></select></div>
     <div id="subjectSuggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="subjectSuggestionLabel"></span> : <span id="subjectSuggestionName"></span></div><p id="subjectSuggestionNote"></p></div><button id="chooseSubjectSuggestion" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir dans cette matière</button></div>
+    <label class="toolbar" for="hideAcquired"><input id="hideAcquired" type="checkbox" checked> Masquer les compétences acquises</label>
     <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
     <div id="lessonOffer" class="lesson-offer hidden"><div><strong>Petite leçon disponible</strong><p id="lessonOfferText"></p></div><button id="openLesson" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Lire la leçon</button></div>
@@ -86,7 +87,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.18.5 · Dernière mise à jour : 18 novembre 2026</p>
+  <p class="site-version">Version 2026.11.18.6 · Dernière mise à jour : 18 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -1848,6 +1849,10 @@ function renderSubjects(){
   renderSuggestion();
 }
 const statusKey='education-quiz-status-v1';
+const hideAcquiredKey='education-quiz-hide-acquired-v1';
+try{el('hideAcquired').checked=localStorage.getItem(hideAcquiredKey)!=='false';}catch{}
+function saveAcquiredFilter(){try{localStorage.setItem(hideAcquiredKey,String(el('hideAcquired').checked));}catch{}}
+function revealAcquired(q){if(q&&effectiveStatus(q)==='acquise'&&el('hideAcquired').checked){el('hideAcquired').checked=false;saveAcquiredFilter();}}
 let statusOverrides={};
 try{const stored=JSON.parse(localStorage.getItem(statusKey)||'{}');if(stored&&typeof stored==='object'&&!Array.isArray(stored))statusOverrides=stored;}catch{}
 const allowedStatuses=['pas-testee','testee','en-cours','acquise'];
@@ -1855,7 +1860,7 @@ const statusLabels={'acquise':'Acquise','en-cours':'En cours d’apprentissage',
 function effectiveStatus(q){return allowedStatuses.includes(statusOverrides[q.id])?statusOverrides[q.id]:['acquise','en-cours'].includes(q.status)?q.status:completedMath.has(q.id)?'testee':(q.status||'pas-testee');}
 function quizOptionText(q){return `${q.id} — ${q.title} · ${statusLabels[effectiveStatus(q)]||statusLabels['pas-testee']}`;}
 const completedKey='education-quiz-completed-v1';
-let completedMath=new Set(['MA-F01','MA-F02','MA-F03','MA-F04','MA-M01','MA-M02','MA-M03','MA-M04','MA-M05','MA-M06','MA-M07','MA-M08','MA-M10','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05','MA-P02','MA-P03','MA-P04','MA-P05','MA-P06']); // REVIEWED_QUIZ_IDS; completion is not mastery.
+let completedMath=new Set(['MA-F01','MA-F02','MA-F03','MA-F04','MA-M01','MA-M02','MA-M03','MA-M04','MA-M05','MA-M06','MA-M07','MA-M08','MA-M10','MA-N01','MA-N02','MA-N03','MA-N04','MA-N05','MA-P02','MA-P03','MA-P04','MA-P05','MA-P06','MA-P07']); // REVIEWED_QUIZ_IDS; completion is not mastery.
 try{for(const id of JSON.parse(localStorage.getItem(completedKey)||'[]'))if(typeof id==='string')completedMath.add(id)}catch{}
 function nextMathSuggestion(){return mathUnits.find(q=>!completedMath.has(q.id)&&effectiveStatus(q)!=='acquise')||null;}
 function suggestedQuiz(){return nextMathSuggestion()||quizzes.find(q=>effectiveStatus(q)==='en-cours')||quizzes.find(q=>effectiveStatus(q)==='pas-testee')||null;}
@@ -1863,18 +1868,21 @@ function renderSuggestion(){const q=suggestedQuiz();el('suggestion').classList.t
 function suggestedInSubject(){const subject=el('subjectSelect').value,available=quizzes.filter(q=>(q.subject||'Autres')===subject);return (subject==='Mathématiques'?nextMathSuggestion():null)||available.find(q=>effectiveStatus(q)==='en-cours')||available.find(q=>effectiveStatus(q)==='pas-testee')||null;}
 function renderSubjectSuggestion(){const q=suggestedInSubject();el('subjectSuggestion').classList.toggle('hidden',!q);if(!q)return;const inProgress=effectiveStatus(q)==='en-cours';el('subjectSuggestionLabel').textContent=inProgress?'À travailler dans cette matière':'À découvrir dans cette matière';el('subjectSuggestionNote').textContent=inProgress?'Compétence en cours d’apprentissage':'Compétence non encore testée sur cet appareil';el('subjectSuggestionName').textContent=q.title;}
 function renderSelect(){
-  const subject=el('subjectSelect').value,target=el('levelSelect').value,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject&&(!target||target==='mixed'||!(q.subject==='Anglais')||String(q.levels||'').includes(target)));
+  const previous=el('quizSelect').value,subject=el('subjectSelect').value,target=el('levelSelect').value,hideAcquired=el('hideAcquired').checked,available=quizzes.map((q,i)=>({q,i})).filter(({q})=>(q.subject||'Autres')===subject&&(!target||target==='mixed'||!(q.subject==='Anglais')||String(q.levels||'').includes(target))&&(!hideAcquired||effectiveStatus(q)!=='acquise'));
   el('quizSelect').replaceChildren(...available.map(({q,i})=>{const o=document.createElement('option');o.value=i;o.textContent=quizOptionText(q);return o}));
-  if(!available.length){const o=document.createElement('option');o.textContent='Aucune compétence pour cette matière';o.value='';el('quizSelect').append(o)}
+  if(available.some(({i})=>String(i)===previous))el('quizSelect').value=previous;
+  if(!available.length){const o=document.createElement('option');o.textContent='Aucune compétence avec ces filtres';o.value='';el('quizSelect').append(o)}
+  el('quizSelect').disabled=!available.length;
+  el('statusSelect').disabled=!available.length;
   el('start').disabled=!available.length;
-  el('loadStatus').textContent=available.length?`${available.length} compétences disponibles en ${subject.toLowerCase()}.`:`Aucune compétence en ${subject.toLowerCase()} pour l’instant.`;
+  el('loadStatus').textContent=available.length?`${available.length} compétences affichées en ${subject.toLowerCase()}.`:'Aucune compétence avec ces filtres. Tu peux afficher les compétences acquises ou changer de niveau.';
   renderFormats();renderQuestionCounts();
   renderQuizStatus();
   renderSubjectSuggestion();
 }
 function renderQuizStatus(){
   const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)];
-  el('skillStatus').classList.toggle('hidden',!selected);if(!selected)return;
+  el('skillStatus').classList.toggle('hidden',!selected);if(!selected){el('lessonOffer').classList.add('hidden');return;}
   const status=effectiveStatus(selected),option=[...el('quizSelect').options].find(o=>Number(o.value)===quizzes.indexOf(selected));if(option)option.textContent=quizOptionText(selected);
   el('statusBadge').className=`status-badge status-${status}`;el('statusBadge').textContent=statusLabels[status]||statusLabels['pas-testee'];
   el('statusSelect').value=status;
@@ -2305,17 +2313,18 @@ el('again').onclick=()=>{el('audioPlayer').pause();show('setup')};el('download')
 el('saveFolder').onclick=saveToFolder;
 el('subjectSelect').onchange=renderSelect;
 el('levelSelect').onchange=renderSelect;
+el('hideAcquired').onchange=()=>{saveAcquiredFilter();renderSelect();};
 el('quizSelect').onchange=()=>{renderFormats();renderQuestionCounts();renderQuizStatus()};
 el('openLesson').onclick=openLesson;
 el('lessonBack').onclick=()=>show('setup');
 el('lessonStart').onclick=()=>el('start').click();
 el('formatSelect').onchange=renderQuestionCounts;
 el('questionCount').onchange=renderLongFormatWarning;
-el('statusSelect').onchange=()=>{const q=quizzes[Number(el('quizSelect').value)],status=el('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}renderQuizStatus();renderSuggestion();renderSubjectSuggestion();};
+el('statusSelect').onchange=()=>{const q=quizzes[Number(el('quizSelect').value)],status=el('statusSelect').value;if(!q||!allowedStatuses.includes(status))return;statusOverrides[q.id]=status;try{localStorage.setItem(statusKey,JSON.stringify(statusOverrides));}catch{}if(el('hideAcquired').checked&&status==='acquise')renderSelect();else renderQuizStatus();renderSuggestion();renderSubjectSuggestion();};
 el('chooseSuggestion').onclick=()=>{const q=suggestedQuiz();if(!q)return;el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
 el('chooseSubjectSuggestion').onclick=()=>{const q=suggestedInSubject();if(!q)return;el('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();};
 el('copy').onclick=async()=>{try{await navigator.clipboard.writeText(el('report').textContent);el('copyStatus').textContent='Rapport copié.'}catch{el('copyStatus').textContent='Copie indisponible ici : utilise le téléchargement JSON.'}};
-el('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);renderSubjects();el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.length-1)}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
+el('loadQuiz').onchange=async e=>{try{const q=validate(JSON.parse(await e.target.files[0].text()));quizzes.push(q);revealAcquired(q);renderSubjects();el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.length-1);renderFormats();renderQuestionCounts();renderQuizStatus()}catch(err){alert(`Import impossible : ${err.message}`)}e.target.value=''};
 const recommendationKey='education-quiz-recommendations-v6';
 try{const saved=localStorage.getItem(recommendationKey);if(saved!==null)el('recommendationNotes').value=saved;}catch{el('recommendationStatus').textContent='Enregistrement indisponible dans ce navigateur.';}
 function renderRecommendationList(){
@@ -2324,7 +2333,7 @@ function renderRecommendationList(){
     const line=raw.trim();if(!line)continue;
     const li=document.createElement('li'),match=line.match(/\b(?:MA|FR|NJ2?|QLM)(?:-[A-Z0-9]+)+\b/i),code=match?.[0].toUpperCase(),q=quizzes.find(item=>item.id.toUpperCase()===code);
     if(q){const check=document.createElement('input');check.type='checkbox';check.title='Marquer cette recommandation comme faite sur cet écran';check.setAttribute('aria-label',`Marquer « ${line} » comme faite`);const button=document.createElement('button');button.type='button';button.textContent=line;button.addEventListener('click',()=>{
-      el('levelSelect').value='mixed';el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();
+      revealAcquired(q);el('levelSelect').value='mixed';el('subjectSelect').value=q.subject||'Autres';renderSelect();el('quizSelect').value=String(quizzes.indexOf(q));renderFormats();renderQuestionCounts();renderQuizStatus();
       const option=[...el('questionCount').options].find(o=>o.value==='20');if(option){el('questionCount').value='20';el('questionCount').dispatchEvent(new Event('change'));}
       el('recommendationActionStatus').textContent=`Sélection : ${q.title}.`; el('quizSelect').focus();
     });li.append(check,button);}else li.textContent=line;
@@ -2351,4 +2360,3 @@ renderRecommendationList();
 renderSubjects();
 
 </script></body></html>
-></html>
