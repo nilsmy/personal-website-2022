@@ -116,6 +116,11 @@
 - Avoid heavy new JS/CSS and large unoptimized media unless necessary.
 - Keep meaningful alt text/captions and maintain heading structure in Markdown/R Markdown content.
 
+## Future Interactive Visualizations
+- Reference: [R Psychologist](https://rpsychologist.com/) ([source](https://github.com/rpsychologist/rpsychologist-com)). It uses SvelteKit to prerender static pages; older D3 demos are served as standalone files.
+- For this site, keep blogdown/Hugo and the existing Netlify build. Embed browser-side JavaScript in a regular Hugo page to match the site's layout, or serve a standalone demo from `static/`. R can validate formulas or precompute data; traditional Shiny apps that run R on demand need a separate runtime.
+- Possible first demo: an item response curve explorer with sliders for difficulty and discrimination. Build only when requested.
+
 ## Safe Ways to Add Content
 - New post/page:
   - Copy a nearby item in the same section as template.
