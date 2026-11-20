@@ -63,7 +63,6 @@
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Maths : MA-P06 — problèmes mêlant addition et multiplication
 Français : FR-G03 — formes de phrases
 Français : FR-G04 — classes de mots
-Français : FR-G09-IRREG — présent des verbes irréguliers
 Français : FR-G06 — accords dans le groupe nominal
 Anglais : NJ2-L-PRESENT — present tense
 Anglais : NJ2-L-PAST — past tense
@@ -87,7 +86,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.20.1 · Dernière mise à jour : 20 novembre 2026</p>
+  <p class="site-version">Version 2026.11.20.2 · Dernière mise à jour : 20 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -187,7 +186,7 @@ const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquir
 // Explicit decisions supplied with the 18 November reports.
 for(const id of ['MA-M03','MA-M04','MA-M05','MA-M06'])Object.assign(extraUnits.find(q=>q.id===id),{statusScope:'Acquise pour les tâches QCM testées le 6 novembre : '+(id==='MA-M04'?'10/10.':'20/20.'),statusBasis:'Décision du parent confirmée le 18 novembre 2026.'});
 Object.assign(extraUnits.find(q=>q.id==='MA-P07'),{status:'acquise',statusScope:'Acquise pour les comparaisons additives et multiplicatives testées : 20/20, items étiquetés CE1.',statusBasis:'Décision Acquise dans le rapport exporté du 18 novembre 2026.'});
-Object.assign(extraUnits.find(q=>q.id==='FR-G09-IRREG'),{status:'en-cours',statusScope:'À renforcer selon la décision parentale : 19/20 sur faire, aller, dire et deux formes de venir ; les autres verbes restent à observer.',statusBasis:'Décision À renforcer dans le rapport exporté du 18 novembre 2026.'});
+Object.assign(extraUnits.find(q=>q.id==='FR-G09-IRREG'),{status:'acquise',statusScope:'Acquise pour les formes QCM testées de faire, aller, dire et venir ; les autres verbes et la production écrite restent à observer.',statusBasis:'Décision explicite du parent le 20 novembre 2026, après une passation à 20/20 le 19 novembre. Les trois passations réutilisent les mêmes 20 items v1.'});
 function extraChoice(right,wrong,i){
   const unique=[String(right),...wrong.map(String)].filter((v,j,a)=>a.indexOf(v)===j).slice(0,4);
   if(unique.length!==4)throw Error(`Choix insuffisants pour ${right} (${i}).`);
