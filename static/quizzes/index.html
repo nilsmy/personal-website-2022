@@ -37,6 +37,7 @@
     .recommendations{background:#fff9e9;border:1px solid #d8c385;border-radius:9px;padding:14px 18px;margin:0 0 24px}.recommendations h3{margin:0 0 10px;color:#5d4615;font-size:1rem}.recommendations ul{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:6px}.recommendations li{display:flex;align-items:center;gap:8px}.recommendations li button{border:0;background:transparent;color:#205f87;text-decoration:underline;text-align:left;padding:4px 0;font:inherit}.recommendations summary{cursor:pointer;color:#205f87}.recommendations textarea{display:block;width:100%;min-height:100px;resize:vertical;padding:10px;border:1px solid #b9b9b9;border-radius:5px;font:inherit;color:#444;background:#fff}.recommendations p{margin:7px 0 0;color:#666;font-size:.9rem}
     .site-version{text-align:center;color:#777;font-size:.85rem;margin:12px 0 0}
     #exportDecision{margin-bottom:16px}#play button.footer{vertical-align:middle}
+    .skill-card,.item-issue{margin:18px 0;background:#fff;border:1px solid #d4d4d4;border-radius:8px;padding:16px 18px}.skill-card summary,.item-issue summary{cursor:pointer;color:#205f87;font-weight:600}.skill-card h3{font-size:1rem;margin:14px 0 6px}.item-issue label{display:block;margin:12px 0 6px}.item-issue textarea{width:100%;min-height:70px;font:inherit;padding:10px;border:1px solid #b9b9b9;border-radius:5px}.item-issue p{margin:8px 0 0;color:#666;font-size:.9rem}
     .lesson-offer{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;background:#eef6fb;border:1px solid #a9cce2;border-radius:9px;padding:15px 18px;margin:18px 0}.lesson-offer p{margin:3px 0;color:#555}.lesson-shell{max-width:760px;margin:0 auto}.lesson-intro{font-size:1.12rem}.fraction-example{display:grid;grid-template-columns:minmax(180px,1fr) minmax(220px,1.2fr);gap:28px;align-items:center;background:#fff;border:1px solid #d4d4d4;border-radius:10px;padding:24px;margin:24px 0}.fraction-large{display:flex;justify-content:center;align-items:center;gap:22px}.stacked-fraction{display:inline-grid;grid-template-rows:1fr 3px 1fr;text-align:center;font-size:3.2rem;line-height:1;padding:0 8px;color:#333}.fraction-line{background:#333}.fraction-labels p{margin:8px 0}.fraction-labels strong{color:#205f87}.fraction-bar{display:grid;grid-template-columns:repeat(4,1fr);height:82px;margin:22px 0 10px;border:3px solid #444;border-radius:5px;overflow:hidden}.fraction-bar span{border-right:2px solid #444;background:#d6a93b}.fraction-bar span:last-child{border-right:0;background:#fff}.lesson-rule{background:#fff9e9;border-left:5px solid #b38a2a;padding:15px 18px;border-radius:4px}.lesson-check{font-weight:700;color:#24633a}
     #writtenAnswer label{display:block;font-weight:700;margin-bottom:8px}#writtenAnswer input{font-size:1.3rem;padding:16px}#writtenAnswer p{font-size:.92rem;color:#666;margin:8px 0 0}
     :root{background:#090909}
@@ -70,17 +71,19 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="hideAcquired"><input id="hideAcquired" type="checkbox" checked> Masquer les compétences acquises</label>
     <label for="quizSelect">Compétence</label><select id="quizSelect"><option>Chargement des compétences…</option></select>
     <div id="skillStatus" class="skill-status" aria-live="polite"><span id="statusBadge" class="status-badge"></span><span id="statusNote" class="status-note"></span></div>
+    <details id="skillCard" class="skill-card"><summary>À propos de cette compétence</summary><p id="skillObjective"></p><p id="skillScope"></p><h3>Exemple expliqué</h3><p id="skillExample"></p><p id="skillExampleAnswer"></p><p id="skillFormats"></p></details>
     <div id="lessonOffer" class="lesson-offer hidden"><div><strong>Petite leçon disponible</strong><p id="lessonOfferText"></p></div><button id="openLesson" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-help"/></svg>Lire la leçon</button></div>
     <label for="statusSelect">Statut sur cet appareil</label><select id="statusSelect"><option value="pas-testee">Pas testée</option><option value="testee">Testée</option><option value="en-cours">En cours d’apprentissage</option><option value="acquise">Acquise</option></select>
     <div id="formatControl" class="hidden"><label for="formatSelect">Format</label><select id="formatSelect"><option value="qcm">QCM</option><option value="written">Réponse écrite</option></select></div>
     <label for="questionCount">Nombre de questions</label><select id="questionCount"><option>Chargement…</option></select>
     <p id="longFormatWarning" class="long-format-warning hidden" role="status">Les formats longs peuvent contenir des questions répétées ou similaires, y compris à celles des formats courts.</p>
     <p id="loadStatus"><small>Si ce message reste affiché, ouvre le fichier HTML téléchargé directement dans un navigateur : l’aperçu Google Drive peut bloquer le JavaScript.</small></p>
+    <label for="sessionMode">Mode</label><select id="sessionMode"><option value="practice">Entraînement — correction après chaque question</option><option value="assessment">Bilan — correction à la fin</option><option value="custom">Personnalisé</option></select>
     <label class="toolbar" for="immediate"><input id="immediate" type="checkbox" checked> Afficher la correction après chaque question</label>
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.25.3 · Dernière mise à jour : 25 novembre 2026</p>
+  <p class="site-version">Version 2026.11.25.4 · Dernière mise à jour : 25 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -98,6 +101,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <div id="feedback" class="feedback hidden"></div>
     <button id="next" class="primary footer hidden"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg><span id="nextLabel">Question suivante</span></button>
     <button id="cancel" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Annuler le quiz</button>
+    <details id="itemIssue" class="item-issue"><summary>Signaler un problème avec cette question</summary><label for="issueReason">Problème rencontré</label><select id="issueReason"><option value="">Aucun signalement</option value="ambiguous">Énoncé ambigu ou peu clair</option><option value="answer-key">Bonne réponse contestée</option><option value="vocabulary">Vocabulaire inconnu</option><option value="irrelevant">Question non pertinente</option><option value="other">Autre problème</option></select><label for="issueComment">Précision (facultative)</label><textarea id="issueComment" maxlength="1000"></textarea><p id="issueStatus" role="status">Le signalement sera inclus dans le rapport. Il ne change pas la réponse ni le score.</p></details>
   </section>
   <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><details id="reviewDetails" class="review-details"><summary id="reviewSummary">Revoir les réponses à corriger</summary><div id="reviewList" class="review-list"></div></details><label for="exportDecision">Décision pour ce rapport</label><select id="exportDecision"><option value="">Aucune décision</option><option value="testee">Testée</option><option value="acquise">Acquise</option><option value="en-cours">À renforcer</option></select><div class="toolbar"><button id="email" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envoyer par e-mail</button><button id="saveFolder" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Retour au menu</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport JSON</summary><pre id="report"></pre></details></section>
 </main><script>
@@ -2378,6 +2382,37 @@ report=function(){const data=baseReport();data.skipped=responses.filter(r=>r.ski
 const baseFinish=finish;
 finish=function(incomplete=false){el('exportDecision').value='';baseFinish(incomplete);const data=JSON.parse(el('report').textContent);el('summary').textContent=`${data.completed?'':'Passation interrompue : '}${data.initialCorrect}/${data.scoredTotal} réponses évaluées. ${data.skipped} item(s) passé(s), ${data.unknown} « je ne sais pas ». Tu peux enregistrer le détail pour le suivi.`;};
 el('exportDecision').onchange=()=>{const data=JSON.parse(el('report').textContent);data.decision=selectedExportDecision();el('report').textContent=JSON.stringify(data,null,2);};
+// Interface additions: item reports stay attached to the original attempt.
+let itemIssues={},skillCardId=null;
+function saveItemIssue(){
+  const q=quiz.questions[index],key=String(index),reason=el('issueReason').value,comment=el('issueComment').value.trim();
+  if(reason||comment)itemIssues[key]={number:index+1,itemId:q.itemId||itemId(q),prompt:q.prompt,reason:reason||'other',comment};else delete itemIssues[key];
+  el('issueStatus').textContent=reason||comment?'Signalement ajouté au rapport. La réponse et le score sont conservés.':'Le signalement sera inclus dans le rapport. Il ne change pas la réponse ni le score.';
+}
+el('issueReason').onchange=saveItemIssue;
+el('issueComment').oninput=saveItemIssue;
+const renderBeforeIssues=render;
+render=function(){renderBeforeIssues();const issue=itemIssues[String(index)];el('itemIssue').open=false;el('issueReason').value=issue?.reason||'';el('issueComment').value=issue?.comment||'';el('issueStatus').textContent=issue?'Signalement ajouté au rapport.':'Le signalement sera inclus dans le rapport. Il ne change pas la réponse ni le score.';};
+const startBeforeIssues=el('start').onclick;
+el('start').onclick=()=>{itemIssues={};startBeforeIssues();};
+const reportBeforeIssues=report;
+report=function(){const data=reportBeforeIssues();data.itemIssues=Object.values(itemIssues);data.flaggedItems=data.itemIssues.length;data.responses=data.responses.map(r=>({...r,...(itemIssues[String(r.number-1)]?{itemIssue:itemIssues[String(r.number-1)]}:{})}));return data;};
+const finishBeforeIssues=finish;
+finish=function(incomplete=false){finishBeforeIssues(incomplete);const data=JSON.parse(el('report').textContent),notes=[...data.itemIssues,...data.responses.filter(r=>r.skipped&&!r.itemIssue).map(r=>({number:r.number,prompt:r.prompt,skipped:true}))];let details=el('attemptNotes');details.replaceChildren();details.classList.toggle('hidden',!notes.length);const summary=document.createElement('summary');summary.textContent=`Items signalés ou passés (${notes.length})`;details.append(summary);for(const note of notes){const p=document.createElement('p');p.textContent=`Question ${note.number} — ${note.prompt} : ${note.skipped?'item passé':({'ambiguous':'Énoncé ambigu','answer-key':'Bonne réponse contestée','vocabulary':'Vocabulaire inconnu','irrelevant':'Question non pertinente','other':'Autre problème'}[note.reason]||note.reason)}${note.comment?' — '+note.comment:''}`;details.append(p);}details.open=false;};
+const attemptNotes=document.createElement('details');attemptNotes.id='attemptNotes';attemptNotes.className='review-details hidden';el('reviewDetails').after(attemptNotes);
+el('sessionMode').onchange=()=>{if(el('sessionMode').value!=='custom')el('immediate').checked=el('sessionMode').value==='practice';};
+el('immediate').onchange=()=>{el('sessionMode').value='custom';};
+function renderSkillCard(){
+  const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)];el('skillCard').classList.toggle('hidden',!selected);if(!selected)return;
+  if(skillCardId!==selected.id)el('skillCard').open=false;skillCardId=selected.id;
+  el('skillObjective').textContent=selected.focus||selected.title;
+  el('skillScope').textContent=selected.levels||'';
+  if(selected.audioFile){el('skillExample').textContent='Écouter l’enregistrement, puis répondre aux questions.';el('skillExampleAnswer').textContent='Les questions et leur correction seront présentées pendant la passation.';}
+  else {const sample=buildQuizForRun(selected,10,el('formatSelect').value==='written').questions[0];el('skillExample').textContent=(sample.passage?sample.passage+'\n':'')+sample.prompt;el('skillExampleAnswer').textContent=(sample.axis||sample.figure||sample.visual?'Cet exemple utilise un support visuel dans le quiz. ':'')+'Réponse : '+(sample.format==='written'?sample.expected:sample.choices[sample.answer])+'. '+sample.explanation;}
+  el('skillFormats').textContent='Formats disponibles : '+[...el('questionCount').options].map(o=>o.textContent).join(', ')+' question(s).';
+}
+const renderStatusBeforeCard=renderQuizStatus;
+renderQuizStatus=function(){renderStatusBeforeCard();renderSkillCard();};
 renderRecommendationList();
 renderSubjects();
 
