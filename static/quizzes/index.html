@@ -62,9 +62,6 @@
     <h2>Choisir une compétence</h2>
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Français : FR-G04 — classes de mots
 Français : FR-G06 — accords dans le groupe nominal
-Anglais : NJ2-L-PAST — past tense
-Anglais : NJ2-L-FUTURE — future tense
-Anglais : NJ-L-SENTENCES — sentence boundaries
 Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
     <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="suggestionLabel"></span> : <span id="suggestionName"></span></div><p id="suggestionNote"></p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
@@ -83,7 +80,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.22.1 · Dernière mise à jour : 22 novembre 2026</p>
+  <p class="site-version">Version 2026.11.25.2 · Dernière mise à jour : 25 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -940,13 +937,16 @@ function distinctFrenchGrammarQuestions(id,count){
   return items.slice(start,end);
 }
 function distinctFrenchAgreementQuestions(count){
-  const ranges={10:[0,10],20:[0,20],50:[20,70],100:[70,170]},[start,end]=ranges[count]||[0,count];
-  const cases=[
-    ['Le chat','dort','sur le canapé'],['Les enfants','jouent','dans le jardin'],['La boulangère','prépare','du pain'],['Un avion','survole','la ville'],['Les abeilles','butinent','les fleurs'],['Le train','arrive','à la gare'],['Ma sœur','dessine','un arbre'],['Les voisins','rangent','leurs vélos'],['Le facteur','apporte','une lettre'],['Les musiciens','répètent','dans la salle'],['La tortue','avance','lentement'],['Les oiseaux','chantent','dans les arbres'],['Le chien de mes voisins','aboie','près du portail'],['Les chiens de mon voisin','aboient','près du portail'],['La fille et son frère','jouent','aux échecs'],['Le bouquet de fleurs','reste','sur la table'],['Les fleurs du jardin','poussent','près du mur'],['Un livre sur les océans','repose','sur l’étagère'],['Les livres de ce rayon','racontent','des voyages'],['La lumière des étoiles','brille','dans la nuit'],['Le groupe de randonneurs','avance','vers le sommet'],['Les groupes de randonneurs','avancent','vers le sommet'],['Une famille de renards','habite','dans la forêt'],['Des familles de renards','habitent','dans la forêt'],['Le panier de pommes','tombe','sur le sol'],['Les paniers de pommes','tombent','sur le sol'],['La collection de timbres','grandit','chaque année'],['Les collections de timbres','grandissent','chaque année'],['Un bouquet de roses','parfume','la pièce'],['Des bouquets de roses','parfument','la pièce']];
-  const stems=['Complète la phrase :','Choisis la forme correcte :','Quel accord convient ?','Lis puis complète :','Quel verbe s’accorde avec le sujet ?','Observe le sujet et complète :'];
+  const nouns=[['chat','chatte','chats','chattes'],['chien','chienne','chiens','chiennes'],['lapin','lapine','lapins','lapines'],['renard','renarde','renards','renardes'],['lion','lionne','lions','lionnes'],['loup','louve','loups','louves'],['voisin','voisine','voisins','voisines'],['copain','copine','copains','copines'],['cousin','cousine','cousins','cousines'],['client','cliente','clients','clientes'],['marchand','marchande','marchands','marchandes'],['passant','passante','passants','passantes'],['riverain','riveraine','riverains','riveraines'],['candidat','candidate','candidats','candidates'],['lycéen','lycéenne','lycéens','lycéennes']];
+  const adjectives=[['petit','petite','petits','petites'],['grand','grande','grands','grandes'],['discret','discrète','discrets','discrètes']];
+  const determiners=['Le','La','Les','Les'];
   const items=[];
-  for(let n=0;n<180;n++){const [subject,verb,rest]=cases[n%cases.length],stem=stems[Math.floor(n/cases.length)%stems.length],correct=verb,wrong=cases[(n+1)%cases.length][1],wrong2=cases[(n+7)%cases.length][1],wrong3=cases[(n+13)%cases.length][1],prompt=`${stem} « ${subject} ___ ${rest}. »`;items.push({itemId:`FR-G06-v1-${String(n+1).padStart(3,'0')}`,level:n<120?'CE1':'CE2',skill:'Accord dans le groupe nominal et la phrase',subskillId:'FR-G06-SUJET-VERBE',programmeSkills:['FR-G06'],prompt,...extraChoice(correct,[wrong,wrong2,wrong3],n),explanation:`Le sujet « ${subject} » commande la forme « ${correct} ».`,generationParameters:{caseIndex:n%cases.length,stemIndex:Math.floor(n/cases.length)%stems.length,bankVersion:1},difficultyBand:n<120?'CE1':'CE2'});}
-  return items.slice(start,end);
+  for(const [nounIndex,forms] of nouns.entries())for(const [adjectiveIndex,adjective] of adjectives.entries())for(let form=0;form<4;form++){
+    const n=items.length,correct=adjective[form],noun=forms[form],determiner=determiners[form];
+    items.push({itemId:'FR-G06-v2-'+String(n+1).padStart(3,'0'),level:adjectiveIndex===2?'CE2':'CE1',skill:'Accord de l’adjectif dans le groupe nominal',subskillId:'FR-G06-ADJECTIF',programmeSkills:['FR-G06'],prompt:'Complète le groupe nominal : « '+determiner+' ___ '+noun+' ».',...extraChoice(correct,adjective.filter(x=>x!==correct),n),explanation:'L’adjectif s’accorde en genre et en nombre avec le nom : « '+determiner+' '+correct+' '+noun+' ».',generationParameters:{nounIndex,adjectiveIndex,form,bankVersion:2}});
+  }
+  const starts={10:0,20:10,50:30,100:80};
+  return items.slice(starts[count]||0,(starts[count]||0)+count);
 }
 function irregularPresentQuestions(count){
   const forms={faire:['fais','fais','fait','faisons','faites','font'],aller:['vais','vas','va','allons','allez','vont'],dire:['dis','dis','dit','disons','dites','disent'],venir:['viens','viens','vient','venons','venez','viennent'],pouvoir:['peux','peux','peut','pouvons','pouvez','peuvent'],voir:['vois','vois','voit','voyons','voyez','voient'],vouloir:['veux','veux','veut','voulons','voulez','veulent'],prendre:['prends','prends','prend','prenons','prenez','prennent']};
@@ -1401,11 +1401,14 @@ function njCode(id,item){
   if(!suffix)throw Error('Unmapped NJ section: '+prefix);
   return `${prefix}.${grade}.${suffix}`;
 }
-const acquiredNjUnits=new Set(['NJ-RL-EVENTS','NJ2-L-TENSES']);
+const acquiredNjUnits=new Set(['NJ-RL-EVENTS','NJ2-L-TENSES','NJ-L-SENTENCES']);
+const njUnitStatusBasis={
+  'NJ-L-SENTENCES':'Convention parentale par défaut appliquée au rapport du 23 novembre 2026 : 19/20. L’unique écart porte sur une description moins précise ; les autres sous-compétences sont à 4/4.'
+};
 const njElaUnits=njSpecs.map(([id,title,sourceCodes])=>({
   id,subject:'Anglais',title,language:'en-US',levels:'Grade 2 et grade 3',
   counts:[10,20,50,100,180],
-  status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',
+  status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:acquiredNjUnits.has(id)?'Acquise pour le périmètre QCM testé ; les productions et la lecture autonome demandent des tâches complémentaires.':'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',statusBasis:njUnitStatusBasis[id]||'',
   source:'2023 NJSLS-ELA (NJDOE): '+sourceCodes,
   questions:njBanks[id].filter(item=>item.level==='Grade 2').map((item,i)=>({...item,subskillId:item.subskillId+'-G2',answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:[njCode(id,item)]}))
 }));
@@ -1481,7 +1484,7 @@ function grade2HundredItems(id){
     return Array.from({length:100},(_,i)=>{const [base,correct,wrong]=rows[i%rows.length],prefix=['Choose carefully:','Read each option:','Check the punctuation:','Look for the most precise wording:'][Math.floor(i/25)];return mk('Adjectives and punctuation',`${prefix} ${base}`,correct,wrong,'Good sentences use precise words, capitals, and appropriate punctuation.');});
   }
   if(id==='NJ2-L-SPELLING-MORPHOLOGY'){
-    const rows=[['Which word has the long /a/ sound spelled ai?','rain',['ran','ren','run']],['What does unhappy mean?','not happy',['very happy','happy again','a person']],['Which spelling is correct?','bought',['bot','baut','bott']],['Which word means write again?','rewrite',['writer','writing','wrongwrite']],['Which word has two syllables?','robot',['rob','rat','rock']],['Which word means able to wash?','washable',['washless','rewash','washing']],['Which word has the long /e/ sound spelled ee?','green',['gran','grin','groan']],['What does reread mean?','read again',['read badly','stop reading','read once']],['Which spelling is correct?','friend',['freind','frend','friand']],['Which word has three syllables?','elephant',['cat','fish','train']],['What does preview mean?','view before',['view again','view after','never view']],['Which word has the long /o/ sound spelled oa?','boat',['bat','boot','but']],['Which spelling is correct?','because',['becaus','becose','becouse']],['What does careless mean?','not careful',['very careful','care again','a person']],['Which word means a person who teaches?','teacher',['teachful','teachingly','taught']],['Which word has two syllables?','sunset',['sun','set','sand']],['Which spelling is correct?','little',['littel','litle','littul']],['What does unhappy mean?','not happy',['happy again','very happy','a place']],['Which word has a prefix?','unfair',['fairly','fairness','fair']],['Which word has a suffix?','helpful',['help','helping','helper']],['Which spelling is correct?','running',['runing','runnning','runing']],['What does replay mean?','play again',['play before','stop playing','play once']],['Which word has two syllables?','sunny',['sun','sky','rain']],['Which word has the long /i/ sound spelled igh?','night',['net','not','nut']],['Which spelling is correct?','jumped',['jumpt','jumpped','jumpted']]];
+    const rows=[['Which word has the long /a/ sound spelled ai?','rain',['ran','ren','run']],['What does unhappy mean?','not happy',['very happy','happy again','a person']],['Which spelling is correct?','bought',['bot','baut','bott']],['Which word means write again?','rewrite',['writer','writing','wrongwrite']],['Which word has two syllables?','robot',['rob','rat','rock']],['Which word means able to wash?','washable',['washless','rewash','washing']],['Which word has the long /e/ sound spelled ee?','green',['gran','grin','groan']],['What does reread mean?','read again',['read badly','stop reading','read once']],['Which spelling is correct?','friend',['freind','frend','friand']],['Which word has three syllables?','elephant',['cat','fish','train']],['What does preview mean?','view before',['view again','view after','never view']],['Which word has the long /o/ sound spelled oa?','boat',['bat','boot','but']],['Which spelling is correct?','because',['becaus','becose','becouse']],['What does careless mean?','not careful',['very careful','care again','a person']],['Which word means a person who teaches?','teacher',['teachful','teachingly','taught']],['Which word has two syllables?','sunset',['sun','set','sand']],['Which spelling is correct?','little',['littel','litle','littul']],['What does unhappy mean?','not happy',['happy again','very happy','a place']],['Which word has a prefix?','unfair',['fairly','fairness','fair']],['Which word ends with the suffix -ful?','helpful',['help','helping','helper']],['Which spelling is correct?','running',['runing','runnning','runinng']],['What does replay mean?','play again',['play before','stop playing','play once']],['Which word has two syllables?','sunny',['sun','sky','rain']],['Which word has the long /i/ sound spelled igh?','night',['net','not','nut']],['Which spelling is correct?','jumped',['jumpt','jumpped','jumpted']]];
     return Array.from({length:100},(_,i)=>{const [base,correct,wrong]=rows[i%rows.length],prefix=['Choose the best answer:','Look closely at the spelling:','Use the word parts as clues:','Check each letter:'][Math.floor(i/25)];return mk('Spelling and morphology',`${prefix} ${base}`,correct,wrong,'The spelling pattern or prefix/suffix helps identify the correct answer.');});
   }
   return [];
@@ -1563,8 +1566,13 @@ let quizzes=[fullQuiz,...mathUnits,...extraUnits,frenchQuiz,...njElaUnits,...njG
 const tenseRows=[
   ['I','wait','wait','waited','for the bus'],['She','play','plays','played','chess'],['They','watch','watch','watched','the birds'],['He','wash','washes','washed','the dishes'],['We','visit','visit','visited','the museum'],['The dog','jump','jumps','jumped','over the log'],['You','help','help','helped','your friend'],['Mia','carry','carries','carried','a basket'],['The birds','sing','sing','sang','in the garden'],['Leo','read','reads','read','a book'],['The children','walk','walk','walked','to the park'],['My sister','study','studies','studied','the map'],['I','eat','eat','ate','an apple'],['The cat','sleep','sleeps','slept','on the sofa'],['We','make','make','made','a model'],['Dad','fix','fixes','fixed','the bicycle'],['You','open','open','opened','the window'],['Ava','go','goes','went','to the library'],['The frogs','hop','hop','hopped','near the pond'],['The baby','cry','cries','cried','loudly']
 ];
+const acquiredTenseResults={
+  'NJ2-L-PRESENT':{scope:'Acquise dans les phrases de présent grade 2 testées ; production écrite à observer séparément.',basis:'Décision explicite dans le rapport exporté du 21 novembre 2026 : 20/20.'},
+  'NJ2-L-PAST':{scope:'Acquise dans les phrases de passé grade 2 testées ; production écrite à observer séparément.',basis:'Convention parentale par défaut appliquée au rapport du 24 novembre 2026 : 20/20 sur 20 items v2 distincts.'},
+  'NJ2-L-FUTURE':{scope:'Acquise dans les phrases de futur avec will grade 2 testées ; production écrite à observer séparément.',basis:'Convention parentale par défaut appliquée au rapport du 24 novembre 2026 : 20/20 sur 20 items v2 distincts.'}
+};
 const tenseUnits=[['NJ2-L-PRESENT','Present tense','present'],['NJ2-L-PAST','Past tense','past'],['NJ2-L-FUTURE','Future tense','future']].map(([id,title,tense])=>({
-  id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',counts:[10,20,50,100],status:id==='NJ2-L-PRESENT'?'acquise':'pas-testee',statusScope:id==='NJ2-L-PRESENT'?'Acquise dans les phrases de présent grade 2 testées ; production écrite à observer séparément.':'Entraînement au temps choisi ; production écrite à observer séparément.',statusBasis:id==='NJ2-L-PRESENT'?'Décision explicite dans le rapport exporté du 21 novembre 2026 : 20/20.':'',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
+  id,title,subject:'Anglais',language:'en-US',levels:'Grade 2',counts:[10,20,50,100],status:acquiredTenseResults[id]?'acquise':'pas-testee',statusScope:acquiredTenseResults[id]?.scope||'Entraînement au temps choisi ; production écrite à observer séparément.',statusBasis:acquiredTenseResults[id]?.basis||'',source:'2023 NJSLS-ELA, grade 2, L.WF.2.3',
   questions:Array.from({length:180},(_,n)=>{const [subject,base,present,past,rest]=tenseRows[n%tenseRows.length],variant=Math.floor(n/tenseRows.length),timeMarkers={present:['Every day','Usually','Often','On most days','Each week','Sometimes','Most mornings','From time to time','Regularly'],past:['Yesterday','Last week','Last month','A few days ago','Earlier today','Last Tuesday','Over the weekend','The other day','Earlier this week'],future:['Tomorrow','Next week','Next month','In a few days','Later today','Next Tuesday','Next weekend','Soon','Next Friday']};
     const correct=tense==='present'?present:tense==='past'?past:`will ${base}`;
     const wrong=[present,past,`will ${base}`,`${base}ing`,`to ${base}`].filter((x,j,a)=>x!==correct&&a.indexOf(x)===j).slice(0,3);
@@ -1889,7 +1897,7 @@ function renderQuizStatus(){
 function renderQuestionCounts(){
   const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)],counts=el('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:selected&&(['MA-N06','MA-F05','MA-Q07','MA-Q08','MA-Q09','MA-G03'].includes(selected.id)||fixedProblemIds.has(selected.id))?[10,20,50,100]:tenseUnits.includes(selected)?selected.counts:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   // Une version peut être repassée : l’historique sert au suivi, pas à verrouiller les passations.
-  el('questionCount').replaceChildren(...counts.map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
+  el('questionCount').replaceChildren(...counts.filter(count=>count<=100).map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
   el('questionCount').value=String(counts.includes(20)?20:(counts[0]??20));
   el('questionCount').disabled=counts.length<2;
   el('start').disabled=!selected;
