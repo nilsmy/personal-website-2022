@@ -62,8 +62,8 @@
   <section id="setup" class="card">
     <h2>Choisir une compétence</h2>
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Français : FR-G04 — classes de mots
-Français : FR-G06 — accords dans le groupe nominal
-Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
+Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations
+Histoire : QLM-C2-H05 — Calendriers et durées</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
     <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="suggestionLabel"></span> : <span id="suggestionName"></span></div><p id="suggestionNote"></p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
     <div id="levelControl"><label for="levelSelect">Niveau ciblé</label><select id="levelSelect"><option value="mixed">Tous les niveaux</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option></select></div>
@@ -83,7 +83,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.25.5 · Dernière mise à jour : 25 novembre 2026</p>
+  <p class="site-version">Version 2026.11.25.6 · Dernière mise à jour : 25 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -181,6 +181,9 @@ const extraSpecs=[
 ];
 const acquiredExtraUnits=['MA-M01','MA-M02','MA-M03','MA-M04','MA-M05','MA-M06','MA-M07','MA-M08','MA-M10','MA-P02','MA-P03','MA-P04','MA-P05','MA-P06','FR-G01','FR-G02','FR-G03','FR-G07','FR-G09-ETRE-AVOIR','FR-G11','QLM-C2-S02'];
 const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques',irregular=id==='FR-G09-IRREG';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:irregular?[10,20,50,100]:(longMath||longFrench?[10,20,50,100]:counts||[10,20]),language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
+Object.assign(extraUnits.find(q=>q.id==='FR-G06'),{status:'acquise',statusScope:'Acquise pour les accords de l’adjectif dans le groupe nominal testés par QCM.',statusBasis:'Décision explicite du parent le 25 novembre 2026 après 19/20. Répétitions signalées : réserve sur la qualité du test, sans annuler la décision.'});
+Object.assign(extraUnits.find(q=>q.id==='QLM-C2-S04'),{status:'acquise',statusScope:'Acquise pour les tâches QCM testées sur le vivant et les cycles de vie.',statusBasis:'Décision explicite du parent le 25 novembre 2026 après 19/20 ; un écart sur le stade précédant la chenille.'});
+Object.assign(extraUnits.find(q=>q.id==='FR-G12'),{status:'acquise',statusScope:'Acquise pour les formes du passé composé testées par QCM ; production écrite à observer séparément.',statusBasis:'Décision Acquise dans le rapport exporté du 25 novembre 2026 : 20/20.'});
 // Explicit decisions supplied with the 18 November reports.
 for(const id of ['MA-M03','MA-M04','MA-M05','MA-M06'])Object.assign(extraUnits.find(q=>q.id===id),{statusScope:'Acquise pour les tâches QCM testées le 6 novembre : '+(id==='MA-M04'?'10/10.':'20/20.'),statusBasis:'Décision du parent confirmée le 18 novembre 2026.'});
 Object.assign(extraUnits.find(q=>q.id==='MA-P07'),{status:'acquise',statusScope:'Acquise pour les comparaisons additives et multiplicatives testées : 20/20, items étiquetés CE1.',statusBasis:'Décision Acquise dans le rapport exporté du 18 novembre 2026.'});
