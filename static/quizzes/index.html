@@ -80,7 +80,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.25.2 · Dernière mise à jour : 25 novembre 2026</p>
+  <p class="site-version">Version 2026.11.25.3 · Dernière mise à jour : 25 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -176,7 +176,7 @@ const extraSpecs=[
   ['QLM-CE2-H08','Histoire','Grandes périodes de l’histoire','Premiers repères chronologiques CE2',[10]]
 ];
 const acquiredExtraUnits=['MA-M01','MA-M02','MA-M03','MA-M04','MA-M05','MA-M06','MA-M07','MA-M08','MA-M10','MA-P02','MA-P03','MA-P04','MA-P05','MA-P06','FR-G01','FR-G02','FR-G03','FR-G07','FR-G09-ETRE-AVOIR','FR-G11','QLM-C2-S02'];
-const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques',irregular=id==='FR-G09-IRREG';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:irregular?[10,20,50,100]:(longMath||longFrench?[10,20,50,100,180]:counts||[10,20]),language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
+const extraUnits=extraSpecs.map(([id,subject,title,focus,counts])=>{const acquired=acquiredExtraUnits.includes(id),longFrench=subject==='Français'&&!id.startsWith('FR-L'),longMath=subject==='Mathématiques',irregular=id==='FR-G09-IRREG';return {id,subject,title,focus,levels:['MA-P08','MA-Q03','MA-Q05','MA-G07','FR-G09-IRREG'].includes(id)||id.startsWith('QLM-CE2')?'CE2':id.startsWith('QLM-')?'Cycle 2':'CE1–CE2',counts:irregular?[10,20,50,100]:(longMath||longFrench?[10,20,50,100]:counts||[10,20]),language:'fr-FR',status:acquired?'acquise':'pas-testee',statusScope:acquired?'Acquise au niveau CE2 selon la décision explicite du parent, appuyée par le diagnostic.':'Repérage par QCM ; une activité complémentaire peut être nécessaire pour conclure.',statusBasis:acquired?'Décision explicite du parent après observation des réponses.':'',source:id.startsWith('QLM-')?'Programme officiel Questionner le monde, cycle 2 (2020), compétence locale '+id:`Programme officiel de ${subject==='Français'?'français':'mathématiques'}, cycle 2 (2024), compétence locale ${id}`,questions:[]}});
 // Explicit decisions supplied with the 18 November reports.
 for(const id of ['MA-M03','MA-M04','MA-M05','MA-M06'])Object.assign(extraUnits.find(q=>q.id===id),{statusScope:'Acquise pour les tâches QCM testées le 6 novembre : '+(id==='MA-M04'?'10/10.':'20/20.'),statusBasis:'Décision du parent confirmée le 18 novembre 2026.'});
 Object.assign(extraUnits.find(q=>q.id==='MA-P07'),{status:'acquise',statusScope:'Acquise pour les comparaisons additives et multiplicatives testées : 20/20, items étiquetés CE1.',statusBasis:'Décision Acquise dans le rapport exporté du 18 novembre 2026.'});
@@ -1407,7 +1407,7 @@ const njUnitStatusBasis={
 };
 const njElaUnits=njSpecs.map(([id,title,sourceCodes])=>({
   id,subject:'Anglais',title,language:'en-US',levels:'Grade 2 et grade 3',
-  counts:[10,20,50,100,180],
+  counts:[10,20,50,100],
   status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:acquiredNjUnits.has(id)?'Acquise pour le périmètre QCM testé ; les productions et la lecture autonome demandent des tâches complémentaires.':'Diagnostic QCM ; les productions et la lecture autonome demandent des tâches complémentaires.',statusBasis:njUnitStatusBasis[id]||'',
   source:'2023 NJSLS-ELA (NJDOE): '+sourceCodes,
   questions:njBanks[id].filter(item=>item.level==='Grade 2').map((item,i)=>({...item,subskillId:item.subskillId+'-G2',answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:[njCode(id,item)]}))
@@ -1492,7 +1492,7 @@ function grade2HundredItems(id){
 const njGrade2LanguageUnits=njGrade2LanguageSpecs.map(([id,title,sourceIds,skills])=>{
   const sourceItems=sourceIds.flatMap(sourceId=>njBanks[sourceId]).filter(item=>item.level==='Grade 2'&&skills.includes(item.skill));
   const items=(grade2HundredItems(id).length?grade2HundredItems(id):(grade2GeneratedItems(id).length?grade2GeneratedItems(id):(sourceItems.length?sourceItems:njBanks[sourceIds[0]].filter(item=>item.level==='Grade 2')))).map((item,i)=>({...item,subskillId:id+'-'+item.skill.toUpperCase().replace(/[^A-Z0-9]+/g,'-'),answer:i%4,choices:[...item.choices.slice(1,i%4+1),item.choices[0],...item.choices.slice(i%4+1)],programmeSkills:['L.WF.2.3']}));
-  return {id,subject:'Anglais',title,language:'en-US',levels:'Grade 2',counts:[10,20,50,100,180],status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:'Diagnostic grade 2 par QCM ; la production écrite ou orale demande une tâche complémentaire.',source:'2023 NJSLS-ELA (NJDOE), grade 2 : L.WF.2.2–2.3',questions:items};
+  return {id,subject:'Anglais',title,language:'en-US',levels:'Grade 2',counts:[10,20,50,100],status:acquiredNjUnits.has(id)?'acquise':'pas-testee',statusScope:'Diagnostic grade 2 par QCM ; la production écrite ou orale demande une tâche complémentaire.',source:'2023 NJSLS-ELA (NJDOE), grade 2 : L.WF.2.2–2.3',questions:items};
 });
 
 // Generated from audio/stories.json; edit that source, then run prepare_update.py.
@@ -1895,7 +1895,7 @@ function renderQuizStatus(){
   const lesson=lessons[selected.id];el('lessonOffer').classList.toggle('hidden',!lesson);if(lesson)el('lessonOfferText').textContent=lesson.offer;
 }
 function renderQuestionCounts(){
-  const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)],counts=el('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:selected&&(['MA-N06','MA-F05','MA-Q07','MA-Q08','MA-Q09','MA-G03'].includes(selected.id)||fixedProblemIds.has(selected.id))?[10,20,50,100]:tenseUnits.includes(selected)?selected.counts:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100,180]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
+  const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)],counts=el('formatSelect').value==='written'&&selected&&writtenIds.has(selected.id)?[10,20]:selected&&(['MA-N06','MA-F05','MA-Q07','MA-Q08','MA-Q09','MA-G03'].includes(selected.id)||fixedProblemIds.has(selected.id))?[10,20,50,100]:tenseUnits.includes(selected)?selected.counts:(selected===fullQuiz||selected===frenchQuiz||mathUnits.includes(selected)||njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected))?[10,20,50,100]:extraUnits.includes(selected)?selected.counts:selected?[selected.questions.length]:[];
   // Une version peut être repassée : l’historique sert au suivi, pas à verrouiller les passations.
   el('questionCount').replaceChildren(...counts.filter(count=>count<=100).map(count=>{const o=document.createElement('option');o.value=count;o.textContent=String(count);return o}));
   el('questionCount').value=String(counts.includes(20)?20:(counts[0]??20));
@@ -1903,7 +1903,13 @@ function renderQuestionCounts(){
   el('start').disabled=!selected;
   renderLongFormatWarning();
 }
-function renderLongFormatWarning(){const count=Number(el('questionCount').value),isWritten=el('formatSelect').value==='written';el('longFormatWarning').classList.toggle('hidden',isWritten||![50,100,180].includes(count));}
+function renderLongFormatWarning(){
+  const selected=quizzes[Number(el('quizSelect').value)],count=Number(el('questionCount').value),written=el('formatSelect').value==='written',warning=el('longFormatWarning');
+  if(!selected||selected.audioFile){warning.classList.add('hidden');return;}
+  const bank=fixedFormatBank(selected,written);
+  warning.classList.toggle('hidden',bank.distinct>=180);
+  warning.textContent='Cette banque contient '+bank.distinct+' items distincts : les versions peuvent se recouper'+(count>bank.distinct?' et cette version contient des répétitions':'')+'. La séparation complète des quatre formats demande 180 items.';
+}
 function renderFormats(){const selected=el('start').disabled?null:quizzes[Number(el('quizSelect').value)],available=!!selected&&writtenIds.has(selected.id);el('formatControl').classList.toggle('hidden',!available);el('formatSelect').value='qcm';}
 function show(id){['setup','lesson','play','result'].forEach(x=>el(x).classList.toggle('hidden',x!==id));}
 function openLesson(){
@@ -2117,20 +2123,8 @@ function readFormatRuns(){try{const stored=JSON.parse(localStorage.getItem(forma
 function itemId(q){const raw=[q.prompt,...(q.choices||[]),q.passageId||'',q.axis?JSON.stringify(q.axis):'',q.visual?JSON.stringify(q.visual):''].join('|');let h=2166136261;for(let i=0;i<raw.length;i++){h^=raw.charCodeAt(i);h=Math.imul(h,16777619)}return `item-${(h>>>0).toString(16)}`;}
 function difficultyBand(q){if(q.difficultyBand)return q.difficultyBand;const text=`${q.level||''} ${q.skill||''} ${q.prompt||''}`;if(/CE2|Grade 3|complex|irrégulier|irregular|decomposition|décomposition|deux étapes|two-step/i.test(text))return 'avancée';if(/CE1|Grade 2/i.test(text))return 'base';return 'non classée';}
 function readSeenItems(){try{const stored=JSON.parse(localStorage.getItem(seenItemsKey)||'{}');return stored&&typeof stored==='object'?stored:{}}catch{return {}}}
-function uniqueLongBank(questions){
-  const seen=new Set();
-  return questions.map((q,i)=>{
-    const base=[q.prompt,...(q.choices||[]),q.correctAnswer||'',q.passageId||'',q.axis?JSON.stringify(q.axis):'',q.visual?JSON.stringify(q.visual):''].join('|');
-    if(!seen.has(base)){seen.add(base);return q;}
-    let n=2,out={...q};
-    while(true){out.prompt=`Série de révision ${n} — ${q.prompt}`;const sig=[out.prompt,...(out.choices||[]),out.correctAnswer||'',out.passageId||'',out.axis?JSON.stringify(out.axis):'',out.visual?JSON.stringify(out.visual):''].join('|');if(!seen.has(sig)){seen.add(sig);return out;}n++}
-  });
-}
 function chooseFreshQuestions(id,questions,count){
-  const normalized=uniqueLongBank(questions).map((q,i)=>({...q,itemId:q.itemId||itemId(q),difficultyBand:difficultyBand(q),generationParameters:q.generationParameters||{selectionIndex:i,level:q.level||null,source:'quiz-bank'}}));
-  const seen=new Set(readSeenItems()[id]||[]);
-  const fresh=normalized.filter(q=>!seen.has(q.itemId)),old=normalized.filter(q=>seen.has(q.itemId));
-  return [...fresh,...old].slice(0,count);
+  return questions.slice(0,count).map((q,i)=>({...q,itemId:q.itemId||itemId(q),difficultyBand:difficultyBand(q),generationParameters:q.generationParameters||{selectionIndex:i,level:q.level||null,source:'quiz-bank'}}));
 }
 // Each version has its own variants of the same 20 base contexts; no item is reused across formats.
 function fixedTenseQuestions(selected,count){
@@ -2291,7 +2285,7 @@ function fixedProblemQuestions(id,count){
     return {itemId:`${id}-v1-${String(i+1).padStart(3,'0')}`,level,skill,subskillId:`${id}-${id==='MA-P05'?(i%2===0?'VALEUR':'NOMBRE'):'BASE'}`,programmeSkills:[id],prompt,...extraNumber(answer,wrong,i),explanation,generationParameters:{groups,each,bankVersion:1},difficultyBand:level};
   });
 }
-function buildQuizForRun(selected,count,written){
+function buildRawQuizForRun(selected,count,written){
   if(!written&&tenseUnits.includes(selected))return {...selected,questions:fixedTenseQuestions(selected,count)};
   if(!written&&selected.id==='MA-G03'&&[10,20,50,100].includes(count))return {...selected,questions:fixedPlaneShapeQuestions(count)};
   if(!written&&selected.id==='MA-Q09'&&[10,20,50,100].includes(count))return {...selected,questions:fixedDurationQuestions(count)};
@@ -2302,6 +2296,29 @@ function buildQuizForRun(selected,count,written){
   if(!written&&fixedProblemIds.has(selected.id)&&[10,20,50,100].includes(count))return {...selected,questions:fixedProblemQuestions(selected.id,count)};
   const base=written?{...selected,responseFormat:'written',questions:writtenQuestions(selected.id,count)}:selected===fullQuiz?{...fullQuiz,questions:generatedQuestions(count)}:selected===frenchQuiz?{...frenchQuiz,questions:frenchQuestions(count)}:mathUnits.includes(selected)?{...selected,questions:['MA-N02','MA-N03','MA-N04','MA-N05'].includes(selected.id)?mathQuestions(selected.id,count):nextMathQuestions(selected.id,count)}:extraUnits.includes(selected)?{...selected,questions:extraQuestions(selected.id,count)}:njElaUnits.includes(selected)||njGrade2LanguageUnits.includes(selected)?{...selected,questions:targetedEnglishQuestions(selected,count)}:selected;
   return {...base,questions:chooseFreshQuestions(selected.id,base.questions,count)};
+}
+const fixedFormatBanks=new Map();
+function itemContentKey(q){
+  const prompt=q.prompt.replace(/^(?:(?:Série de révision \d+ — |Practice set \d+: |Example \d+: |Lis attentivement : |Observe la phrase : |Choisis la bonne réponse : |Pour vérifier la règle : |Complète ce repérage : |Dans cet exemple : |Regarde bien : |Applique la règle : |Dernier exemple : ))+/,'');
+  return JSON.stringify([prompt,q.format==='written'?q.expected:q.choices?.[q.answer],q.passage||q.passageId||null,q.axis||null,q.figure||null,q.visual||null]);
+}
+function fixedFormatBank(selected,written){
+  const key=selected.id+'|'+written+'|'+el('levelSelect').value;
+  if(fixedFormatBanks.has(key))return fixedFormatBanks.get(key);
+  const seen=new Set(),pool=[];
+  // Legacy generators may already partition their banks; gather every partition first.
+  for(const size of written?[20,10]:[10,20,50,100,180]){
+    try{for(const q of buildRawQuizForRun(selected,size,written).questions){const sig=itemContentKey(q);if(!seen.has(sig)){seen.add(sig);pool.push(q);}}}catch{}
+  }
+  if(!pool.length)throw Error('Banque indisponible : '+selected.id);
+  const bank={pool,distinct:pool.length};fixedFormatBanks.set(key,bank);return bank;
+}
+function buildQuizForRun(selected,count,written){
+  if(![10,20,50,100].includes(count)&&!selected.audioFile)throw Error('Choisir 10, 20, 50 ou 100 questions.');
+  if(selected.audioFile)return buildRawQuizForRun(selected,count,written);
+  const {pool,distinct}=fixedFormatBank(selected,written),start=({10:0,20:10,50:30,100:80})[count];
+  const questions=Array.from({length:count},(_,i)=>pool[(start+i)%distinct]);
+  return {...selected,...(written?{responseFormat:'written'}:{}),questions,bankCoverage:{distinct,disjoint:distinct>=180,partitionVersion:1}};
 }
 el('start').onclick=()=>{const selected=quizzes[Number(el('quizSelect').value)],count=Number(el('questionCount').value),written=el('formatSelect').value==='written'&&writtenIds.has(selected.id);quiz=validate(buildQuizForRun(selected,count,written));index=0;responses=[];immediateFeedback=el('immediate').checked;soundEnabled=el('sound').checked;if(soundEnabled){const AudioContextClass=window.AudioContext||window.webkitAudioContext;if(AudioContextClass){if(!audioContext)audioContext=new AudioContextClass();audioContext.resume().catch(()=>{});}}startedAt=new Date().toISOString();show('play');el('audioPanel').classList.toggle('hidden',!quiz.audioFile);if(quiz.audioFile)prepareAudioStory();else render()};
 el('audioPlayer').onplay=()=>{audioPlayCount++};
