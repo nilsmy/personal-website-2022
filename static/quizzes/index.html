@@ -2384,6 +2384,8 @@ finish=function(incomplete=false){el('exportDecision').value='';baseFinish(incom
 el('exportDecision').onchange=()=>{const data=JSON.parse(el('report').textContent);data.decision=selectedExportDecision();el('report').textContent=JSON.stringify(data,null,2);};
 // Interface additions: item reports stay attached to the original attempt.
 let itemIssues={},skillCardId=null;
+const viewedSkillExamples=new Set();
+el('skillCard').ontoggle=()=>{if(el('skillCard').open&&skillCardId)viewedSkillExamples.add(skillCardId);};
 function saveItemIssue(){
   const q=quiz.questions[index],key=String(index),reason=el('issueReason').value,comment=el('issueComment').value.trim();
   if(reason||comment)itemIssues[key]={number:index+1,itemId:q.itemId||itemId(q),prompt:q.prompt,reason:reason||'other',comment};else delete itemIssues[key];
@@ -2396,7 +2398,7 @@ render=function(){renderBeforeIssues();const issue=itemIssues[String(index)];el(
 const startBeforeIssues=el('start').onclick;
 el('start').onclick=()=>{itemIssues={};startBeforeIssues();};
 const reportBeforeIssues=report;
-report=function(){const data=reportBeforeIssues();data.itemIssues=Object.values(itemIssues);data.flaggedItems=data.itemIssues.length;data.responses=data.responses.map(r=>({...r,...(itemIssues[String(r.number-1)]?{itemIssue:itemIssues[String(r.number-1)]}:{})}));return data;};
+report=function(){const data=reportBeforeIssues();data.skillExampleViewed=viewedSkillExamples.has(quiz.id);data.itemIssues=Object.values(itemIssues);data.flaggedItems=data.itemIssues.length;data.responses=data.responses.map(r=>({...r,...(itemIssues[String(r.number-1)]?{itemIssue:itemIssues[String(r.number-1)]}:{})}));return data;};
 const finishBeforeIssues=finish;
 finish=function(incomplete=false){finishBeforeIssues(incomplete);const data=JSON.parse(el('report').textContent),notes=[...data.itemIssues,...data.responses.filter(r=>r.skipped&&!r.itemIssue).map(r=>({number:r.number,prompt:r.prompt,skipped:true}))];let details=el('attemptNotes');details.replaceChildren();details.classList.toggle('hidden',!notes.length);const summary=document.createElement('summary');summary.textContent=`Items signalés ou passés (${notes.length})`;details.append(summary);for(const note of notes){const p=document.createElement('p');p.textContent=`Question ${note.number} — ${note.prompt} : ${note.skipped?'item passé':({'ambiguous':'Énoncé ambigu','answer-key':'Bonne réponse contestée','vocabulary':'Vocabulaire inconnu','irrelevant':'Question non pertinente','other':'Autre problème'}[note.reason]||note.reason)}${note.comment?' — '+note.comment:''}`;details.append(p);}details.open=false;};
 const attemptNotes=document.createElement('details');attemptNotes.id='attemptNotes';attemptNotes.className='review-details hidden';el('reviewDetails').after(attemptNotes);
