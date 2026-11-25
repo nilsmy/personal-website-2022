@@ -83,7 +83,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.25.4 · Dernière mise à jour : 25 novembre 2026</p>
+  <p class="site-version">Version 2026.11.25.5 · Dernière mise à jour : 25 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -103,7 +103,7 @@ Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p
     <button id="cancel" class="secondary footer"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg>Annuler le quiz</button>
     <details id="itemIssue" class="item-issue"><summary>Signaler un problème avec cette question</summary><label for="issueReason">Problème rencontré</label><select id="issueReason"><option value="">Aucun signalement</option><option value="ambiguous">Énoncé ambigu ou peu clair</option><option value="answer-key">Bonne réponse contestée</option><option value="vocabulary">Vocabulaire inconnu</option><option value="irrelevant">Question non pertinente</option><option value="other">Autre problème</option></select><label for="issueComment">Précision (facultative)</label><textarea id="issueComment" maxlength="1000"></textarea><p id="issueStatus" role="status">Le signalement sera inclus dans le rapport. Il ne change pas la réponse ni le score.</p></details>
   </section>
-  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><details id="reviewDetails" class="review-details"><summary id="reviewSummary">Revoir les réponses à corriger</summary><div id="reviewList" class="review-list"></div></details><label for="exportDecision">Décision pour ce rapport</label><select id="exportDecision"><option value="">Aucune décision</option><option value="testee">Testée</option><option value="acquise">Acquise</option><option value="en-cours">À renforcer</option></select><div class="toolbar"><button id="email" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envoyer par e-mail</button><button id="saveFolder" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Retour au menu</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport JSON</summary><pre id="report"></pre></details></section>
+  <section id="result" class="card hidden"><h2>Défi terminé !</h2><p id="summary"></p><div id="breakdown"></div><details id="reviewDetails" class="review-details"><summary id="reviewSummary">Revoir les réponses à corriger</summary><div id="reviewList" class="review-list"></div></details><label for="exportDecision">Décision pour ce rapport</label><select id="exportDecision"><option value="">Aucune décision</option><option value="testee">Testée</option><option value="acquise">Acquise</option><option value="en-cours">À renforcer</option></select><div class="toolbar"><button id="saveOnline" class="primary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer les résultats</button><button id="email" class="secondary" type="button"><svg class="icon" aria-hidden="true"><use href="#i-mail"/></svg>Envoyer par e-mail</button><button id="saveFolder" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-save"/></svg>Enregistrer dans un dossier…</button><button id="download" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Télécharger le rapport JSON</button><button id="copy" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>Copier le rapport</button><button id="again" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-repeat"/></svg>Retour au menu</button></div><p id="copyStatus" role="status"></p><details><summary>Voir le rapport JSON</summary><pre id="report"></pre></details></section>
 </main><script>
 // Additional bounded CE1/CE2 diagnostics. Codes refer to the local programme maps.
 const extraSpecs=[
@@ -2415,6 +2415,32 @@ function renderSkillCard(){
 }
 const renderStatusBeforeCard=renderQuizStatus;
 renderQuizStatus=function(){renderStatusBeforeCard();renderSkillCard();};
+// Online persistence has no credentials in this page. Reads are private server-side.
+let savedOnlinePayload=null;
+function onlineSaveState(){
+  const unchanged=el('report').textContent===savedOnlinePayload;
+  el('saveOnline').disabled=unchanged;
+  el('saveOnline').textContent=unchanged?'Résultats enregistrés':'Enregistrer les résultats';
+}
+const finishBeforeOnline=finish;
+finish=function(incomplete=false){finishBeforeOnline(incomplete);savedOnlinePayload=null;onlineSaveState();};
+const decisionBeforeOnline=el('exportDecision').onchange;
+el('exportDecision').onchange=()=>{decisionBeforeOnline();onlineSaveState();el('copyStatus').textContent='Décision modifiée : enregistre à nouveau pour la transmettre.';};
+el('saveOnline').onclick=async()=>{
+  const button=el('saveOnline'),payload=el('report').textContent;
+  button.disabled=true;button.textContent='Enregistrement…';el('copyStatus').textContent='Enregistrement en cours…';
+  try {
+    try{localStorage.setItem('education-quiz-last-report-v1',payload);}catch{}
+    const endpoint=location.protocol==='file:'?'https://www.nilsmyszkowski.com/.netlify/functions/quiz-results':'/.netlify/functions/quiz-results';
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),20000);
+    let response;try{response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:payload,signal:controller.signal});}finally{clearTimeout(timeout);}
+    const ack=await response.json();
+    if(!response.ok||ack.ok!==true||!ack.id||!ack.savedAt)throw Error(ack.error||'Le serveur n’a pas confirmé l’enregistrement.');
+    savedOnlinePayload=payload;
+    el('copyStatus').textContent='Résultats enregistrés sur le serveur. '+(ack.duplicate?'Ce rapport était déjà enregistré.':'')+(el('report').textContent!==payload?' La décision a changé pendant l’envoi : enregistre à nouveau.':'');
+  } catch(error){el('copyStatus').textContent='Enregistrement non confirmé. Tu peux réessayer ou télécharger le rapport JSON.';}
+  finally{onlineSaveState();}
+};
 renderRecommendationList();
 renderSubjects();
 
