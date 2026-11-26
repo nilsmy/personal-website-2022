@@ -58,7 +58,7 @@
     <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 4.5 1.5c-.6.8-2 1.2-2 2.5M12 17h.01"/></symbol>
     <symbol id="i-import" viewBox="0 0 24 24"><path d="M12 21V9m-5 5 5-5 5 5M4 7V3h16v4"/></symbol>
   </svg>
-  <header><h1>Quizzes</h1></header>
+  <header><h1>Quizzes</h1><a href="dashboard/" style="color:#cbdce8">Suivi parent</a></header>
   <section id="setup" class="card">
     <h2>Choisir une compétence</h2>
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Français : FR-G04 — classes de mots
@@ -83,7 +83,7 @@ Histoire : QLM-C2-H05 — Calendriers et durées</textarea><p id="recommendation
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.25.6 · Dernière mise à jour : 25 novembre 2026</p>
+  <p class="site-version">Version 2026.11.25.7 · Dernière mise à jour : 25 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -2446,5 +2446,8 @@ el('saveOnline').onclick=async()=>{
 };
 renderRecommendationList();
 renderSubjects();
+// Links from the parent dashboard select a competency without starting a run.
+const linkedCompetency=new URLSearchParams(location.search).get('competence');
+if(linkedCompetency){const linked=quizzes.find(q=>q.id===linkedCompetency);if(linked){if(effectiveStatus(linked)==='acquise')el('hideAcquired').checked=false;el('subjectSelect').value=linked.subject;renderSelect();el('quizSelect').value=String(quizzes.indexOf(linked));renderFormats();renderQuestionCounts();renderQuizStatus();}}
 
 </script></body></html>

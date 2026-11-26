@@ -893,6 +893,14 @@ var getStore = (input, options) => {
 
 // handler.mjs
 import { createHash, timingSafeEqual } from "node:crypto";
+
+// summary.mjs
+function compactRecord(record) {
+  const r = record.report, answers = r.responses || [], scored = answers.filter((x) => !x.skipped), issues = r.itemIssues || answers.filter((x) => x.itemIssue).map((x) => x.itemIssue);
+  return { id: record.id, savedAt: record.savedAt, quizId: r.quizId === "MA-N01-20" ? "MA-N01" : r.quizId, title: r.quizTitle || r.quizId, subject: r.subject || ((r.quizId || "").startsWith("MA-") ? "Math\xE9matiques" : (r.quizId || "").startsWith("FR-") ? "Fran\xE7ais" : (r.quizId || "").startsWith("NJ") ? "Anglais" : "Sciences"), language: r.language || "", startedAt: r.startedAt || "", completedAt: r.completedAt || "", date: r.dateLocal || (r.startedAt || "").slice(0, 10), completed: typeof r.completed === "boolean" ? r.completed : null, plannedTotal: r.plannedTotal ?? null, total: answers.length, scoredTotal: scored.length, correct: scored.filter((x) => x.correct).length, declaredCorrect: r.initialCorrect ?? null, skipped: answers.length - scored.length, unknown: scored.filter((x) => x.unknown).length, decision: r.decision || null, issues, feedback: r.immediateFeedback ?? null, format: r.responseFormat || "qcm", testOnly: !!r.testOnly, bankCoverage: r.bankCoverage || null };
+}
+
+// handler.mjs
 var MAX_BYTES = 512 * 1024;
 var cors = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "GET, POST, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Authorization" };
 var json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { ...cors, "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
@@ -913,7 +921,7 @@ function createHandler(getStore2, env = process.env) {
     const url = new URL(request.url);
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     const password = env.QUIZ_RESULTS_READ_TOKEN;
-    if (request.method === "GET" && !url.searchParams.has("health")) {
+    if (request.method === "GET" && !url.searchParams.has("health") || url.searchParams.has("snapshot")) {
       if (!password) return json({ error: "Lecture priv\xE9e non configur\xE9e.", code: "read-token-not-configured" }, 503);
       const supplied = request.headers.get("authorization")?.replace(/^Bearer /, "") || "";
       if (!timingSafeEqual(Buffer.from(hash(supplied)), Buffer.from(hash(password)))) return json({ error: "Mot de passe requis.", code: "password-required" }, 401);
@@ -925,11 +933,12 @@ function createHandler(getStore2, env = process.env) {
       const store = getStore2(storeName(url.hostname));
       if (request.method === "GET") {
         if (url.searchParams.has("health")) return json({ ok: true, storage: "netlify-blobs", environment: storeName(url.hostname).includes("preview") ? "preview" : "production", privateReads: !!password });
+        if (url.searchParams.has("context")) return json(await store.get("dashboard/context", { type: "json", consistency: "strong" }) || { schema: "education-dashboard-context-v1", statuses: {}, reviews: {}, recommendations: [] });
         const id2 = url.searchParams.get("id");
         if (id2) {
           if (!/^[a-f0-9]{64}$/.test(id2)) return json({ error: "Identifiant invalide." }, 400);
           const record2 = await store.get("reports/" + id2, { type: "json", consistency: "strong" });
-          return record2 ? json(record2) : json({ error: "Rapport introuvable." }, 404);
+          return record2 ? json(url.searchParams.has("summary") ? compactRecord(record2) : record2) : json({ error: "Rapport introuvable." }, 404);
         }
         const after = url.searchParams.get("after") || "";
         if (after && !/^[a-f0-9]{64}$/.test(after)) return json({ error: "Curseur invalide." }, 400);
@@ -939,7 +948,8 @@ function createHandler(getStore2, env = process.env) {
         return json({ schema: "education-quiz-index-v1", ids: page, next: ids.length > 100 ? page[page.length - 1] : null });
       }
       if (!request.headers.get("content-type")?.includes("application/json")) return json({ error: "JSON requis." }, 415);
-      if (Number(request.headers.get("content-length")) > MAX_BYTES) return json({ error: "Rapport trop volumineux." }, 413);
+      const limit = url.searchParams.has("snapshot") ? 4 * 1024 * 1024 : MAX_BYTES;
+      if (Number(request.headers.get("content-length")) > limit) return json({ error: "Rapport trop volumineux." }, 413);
       const reader = request.body?.getReader();
       if (!reader) return json({ error: "Rapport manquant." }, 400);
       let size = 0;
@@ -948,7 +958,7 @@ function createHandler(getStore2, env = process.env) {
         const { done, value } = await reader.read();
         if (done) break;
         size += value.length;
-        if (size > MAX_BYTES) {
+        if (size > limit) {
           await reader.cancel();
           return json({ error: "Rapport trop volumineux." }, 413);
         }
@@ -959,6 +969,21 @@ function createHandler(getStore2, env = process.env) {
         report = JSON.parse(Buffer.concat(chunks).toString("utf8"));
       } catch {
         return json({ error: "JSON invalide." }, 400);
+      }
+      if (url.searchParams.has("snapshot")) {
+        if (report.schema !== "education-dashboard-snapshot-v1" || !Array.isArray(report.reports) || report.reports.length > 1e3 || !report.statuses || !Array.isArray(report.recommendations)) return json({ error: "Archive invalide." }, 400);
+        if (report.reports.some((entry) => !entry?.report || !["education-quiz-v1", "g-education-quiz-v1"].includes(entry.report.schema) || typeof entry.report.quizId !== "string" || !Array.isArray(entry.report.responses) || entry.report.responses.length > 100 || entry.report.responses.some((x) => typeof x?.correct !== "boolean"))) return json({ error: "Rapport archiv\xE9 invalide." }, 400);
+        let added = 0;
+        const reviews = {};
+        for (const entry of report.reports) {
+          const id2 = hash(JSON.stringify(stable(entry.report)));
+          if (entry.review) reviews[id2] = entry.review;
+          const { modified: modified2 } = await store.setJSON("reports/" + id2, { schema: "education-quiz-storage-v1", id: id2, savedAt: (/* @__PURE__ */ new Date()).toISOString(), archived: true, report: entry.report }, { onlyIfNew: true });
+          if (modified2) added++;
+        }
+        const context = { schema: "education-dashboard-context-v1", updatedAt: (/* @__PURE__ */ new Date()).toISOString(), statuses: report.statuses, reviews, recommendations: report.recommendations };
+        await store.setJSON("dashboard/context", context);
+        return json({ ok: true, added, archiveReports: report.reports.length, updatedAt: context.updatedAt });
       }
       if (!validReport(report)) return json({ error: "Structure du rapport invalide." }, 400);
       const id = hash(JSON.stringify(stable(report))), key = "reports/" + id;
