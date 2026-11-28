@@ -62,8 +62,7 @@
   <section id="setup" class="card">
     <h2>Choisir une compétence</h2>
     <section class="recommendations" aria-labelledby="recommendationsTitle"><h3 id="recommendationsTitle">Recommandations</h3><ul id="recommendationList"></ul><details><summary>Modifier la liste</summary><label for="recommendationNotes">Une recommandation par ligne</label><textarea id="recommendationNotes" placeholder="Une recommandation par ligne…" aria-describedby="recommendationStatus">Français : FR-G04 — classes de mots
-Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations
-Histoire : QLM-C2-H05 — Calendriers et durées</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
+Anglais : NJ-RL-CHARACTERS — characters, feelings and motivations</textarea><p id="recommendationStatus" aria-live="polite">Modifications enregistrées sur cet appareil.</p></details><p id="recommendationActionStatus" role="status"></p></section>
     <div id="suggestion" class="suggestion hidden"><div><div class="suggestion-title"><span id="suggestionLabel"></span> : <span id="suggestionName"></span></div><p id="suggestionNote"></p></div><button id="chooseSuggestion" class="secondary"><svg class="icon" aria-hidden="true"><use href="#i-next"/></svg>Choisir cette compétence</button></div>
     <label for="subjectSelect">Matière</label><select id="subjectSelect"><option>Chargement…</option></select>
     <div id="levelControl"><label for="levelSelect">Niveau ciblé</label><select id="levelSelect"><option value="mixed">Tous les niveaux</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option></select></div>
@@ -83,7 +82,7 @@ Histoire : QLM-C2-H05 — Calendriers et durées</textarea><p id="recommendation
     <label class="toolbar" for="sound"><input id="sound" type="checkbox" checked> Activer les sons de validation et de fin</label>
     <div class="toolbar footer"><button id="start" class="primary"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Commencer</button><label class="secondary" for="loadQuiz"><svg class="icon" aria-hidden="true"><use href="#i-import"/></svg>Importer un quiz JSON</label><input id="loadQuiz" class="hidden" type="file" accept=".json,application/json"></div>
   </section>
-  <p class="site-version">Version 2026.11.25.7 · Dernière mise à jour : 25 novembre 2026</p>
+  <p class="site-version">Version 2026.11.27.1 · Dernière mise à jour : 27 novembre 2026</p>
   <section id="lesson" class="card hidden">
     <div class="lesson-shell">
       <p id="lessonEyebrow" class="eyebrow"></p><h2 id="lessonTitle"></h2><div id="lessonContent"></div>
@@ -1860,6 +1859,10 @@ function renderSubjects(){
   renderSelect();
   renderSuggestion();
 }
+// BEGIN_REVIEWED_PUBLIC_STATUSES
+const reviewedPublicStatuses={"QLM-C2-S04":"acquise","FR-G12":"acquise","FR-G06":"acquise","MA-N01":"acquise","MA-N02":"acquise","MA-N03":"acquise","MA-N04":"acquise","MA-N05":"acquise","MA-N06":"acquise","MA-F01":"acquise","MA-F02":"acquise","MA-F03":"acquise","MA-F04":"acquise","MA-M01":"acquise","MA-M02":"acquise","MA-M03":"acquise","MA-M04":"acquise","MA-M05":"acquise","MA-M06":"acquise","MA-M07":"acquise","MA-M08":"acquise","MA-M09":"en-cours","FR-G09-ER-PRESENT":"acquise","FR-G01":"acquise","FR-G07":"acquise","FR-G09-ETRE-AVOIR":"acquise","FR-G11":"acquise","FR-G02":"acquise","FR-G03":"acquise","NJ2-L-PRESENT":"acquise","NJ2-L-PAST":"acquise","NJ2-L-FUTURE":"acquise","NJ-L-SENTENCES":"acquise","NJ2-L-TENSES":"acquise","QLM-C2-S02":"acquise","NJ-RL-EVENTS":"acquise","MA-P03":"acquise","MA-P02":"acquise","MA-M10":"acquise","MA-P04":"acquise","MA-P05":"acquise","MA-P06":"acquise","FR-G04":"en-cours","FR-G09-IRREG":"acquise","MA-P07":"acquise","MA-P08":"acquise","QLM-C2-H05":"acquise","QLM-C2-H06":"acquise"};
+for(const q of quizzes){const status=reviewedPublicStatuses[q.id];if(status){if(q.status!==status)q.statusScope=status==='acquise'?'Acquise dans le périmètre testé.':status==='en-cours'?'Compétence à renforcer.':q.statusScope;q.status=status;}}
+// END_REVIEWED_PUBLIC_STATUSES
 const statusKey='education-quiz-status-v1';
 const hideAcquiredKey='education-quiz-hide-acquired-v1';
 try{el('hideAcquired').checked=localStorage.getItem(hideAcquiredKey)!=='false';}catch{}
